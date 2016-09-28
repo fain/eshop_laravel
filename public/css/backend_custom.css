@@ -1,0 +1,18 @@
+li.subcat {
+    margin-left: 15px;
+}
+
+li.subcat > i {
+    color: #ffcc00;
+}
+
+li.maincat > a, li.maincat > a:hover, li.maincat > i{
+    text-decoration: none;
+    color: #ffcc00;
+}
+
+li.maincat > a.maincat_link, li.maincat > a.maincat_link:hover,
+li.subcat > a, li.subcat > a:hover{
+    color: #0099cc;
+    text-decoration: none;
+}

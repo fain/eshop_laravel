@@ -23,6 +23,8 @@
     <!-- Custom Fonts -->
     <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
+    @yield('css_section')
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -162,6 +164,8 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
+
+    @yield('js_section')
 
     <!-- Morris Charts JavaScript -->
     <script src="{{asset('js/plugins/morris/raphael.min.js')}}"></script>

@@ -158,12 +158,15 @@ class Back extends Controller
 
             $treecat = Category::with('subcat')->get();
 
+            $treecat = Category::with('subcat')->get();
+
             return view('back.categories',
                 array(
                     'title' => 'Categories',
                     'page' => 'categories',
                     'users_name' => $merchants_info->name,
-                    'treecat' => $treecat
+                    'treecat' => $treecat,
+                    'basecat_url' => '/backend/categories/'
                 ));
         }else{
             return redirect('/backend/login');
