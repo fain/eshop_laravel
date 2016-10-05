@@ -228,4 +228,24 @@ class Back extends Controller
         $request->session()->flash('success', 'Category detail successfully updated');
         return redirect('/backend/categories/'.$category->id);
     }
+
+    public function product_listing() {
+        if(Auth::guard('merchants')->check()){
+            $merchants_id = Auth::guard('merchants')->user()->id;
+            $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
+
+            return view('back.product_listing',
+                array(
+                    'title' => 'Product Listing',
+                    'page' => 'product_listing',
+                    'users_name' => $merchants_info->name,
+                    'basecat_url' => '/backend/product_listing/',
+                    'currmenu' => '',
+                    'mainmenu' => 'product'
+                ));
+        }else{
+            return redirect('/backend/login');
+        }
+
+    }
 }

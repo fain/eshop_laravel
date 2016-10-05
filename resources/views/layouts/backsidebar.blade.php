@@ -4,49 +4,118 @@
                     <li {{ $page=='home' ? 'class=active' : '' }}>
                         <a href="/backend/home"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#product"><i class="fa fa-cube" aria-hidden="true"></i> Product Management <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="product" class="collapse @if($mainmenu=='product') in @endif">
+                            {{--<li>--}}
+                                {{--<a href="/backend/categories">Categories</a>--}}
+                            {{--</li>--}}
+                            <li {{ $page=='product_listing' ? 'class=active' : '' }}>
+                                <a href="/backend/product_listing">Product Listing</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Product Bulk Listing</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Product Info. Management</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Templates</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Customer Reviews / Comments</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Product Q & A</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li {{ $page=='categories' || $page=='products' ? 'class=active' : '' }}>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-cube" aria-hidden="true"></i> Products <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#order"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Order Management <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="order" class="collapse">
                             <li>
-                                <a href="/backend/categories">Categories</a>
+                                <a href="/backend/products">Awaiting Payment</a>
                             </li>
                             <li>
-                                <a href="/backend/products">Products</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- <li>
-                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                    </li>
-                    <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="/backend/products">Shipping Management</a>
                             </li>
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="/backend/products">Completed Order Details</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Pre-Order Details</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Cancelled Transaction Details</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Cancellation Management</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Return Management</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Exchange Management</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Non-Arrival Management</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">E-Voucher Management</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                    <li {{ $page=='categories' || $page=='products' ? 'class=active' : '' }}>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#settle"><i class="fa fa-money" aria-hidden="true"></i> Settlement Management <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="settle" class="collapse">
+                            <li>
+                                <a href="/backend/products">Transfer History</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Sales / Settlement Status</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">History Received Tax Invoice</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
-                    </li> -->
+                    <li {{ $page=='categories' || $page=='products' ? 'class=active' : '' }}>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#promo"><i class="fa fa-bullhorn" aria-hidden="true"></i> Promotion Management <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="promo" class="collapse">
+                            <li>
+                                <a href="/backend/products">Seller Coupon Status</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Promotion Page</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Credit Offer Status</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li {{ $page=='categories' || $page=='products' ? 'class=active' : '' }}>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#promo"><i class="fa fa-users" aria-hidden="true"></i> Member Management <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="promo" class="collapse">
+                            <li>
+                                <a href="/backend/products">Seller Details</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Merchant Details</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Seller Grade & Score</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Seller Cash</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Seller Credit</a>
+                            </li>
+                            <li>
+                                <a href="/backend/products">Listing Ad Coupon</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

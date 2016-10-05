@@ -13,18 +13,18 @@
 @endsection
 
 @section('content')
-    <div class="col-md-10">
-        {{--<div class="panel panel-default">--}}
-            {{--<div class="panel-heading">Order Status <small>(Recent 3 months)</small></div>--}}
-            {{--<div class="panel-body">--}}
-        <div class="sub-title">
-            <h3>Order Status</h3> <small>(Recent 3 months)</small>
-            <button class="btn btn-sm pull-right"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="sub-title col-md-12">
+                <h3>Order Status</h3> <small>(Recent 3 months)</small>
+                <button class="btn btn-sm pull-right"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+            </div>
         </div>
 
-        <div>
-            <div class="order-box">
-                <div class="panel panel-default">
+        <div class="row">
+            <div class="one-box col-md-12">
+                <div class="order-box">
+                    <div class="panel panel-default">
                         <div class="row">
                             <div class="col-xs-12 text-center">
                                 <i class="fa fa-credit-card fa-3x" aria-hidden="true"></i>
@@ -38,176 +38,270 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
                 </div>
-            </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-external-link fa-3x" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Order Confirmed</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-external-link fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Order Confirmed</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-truck fa-3x" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Shipping in Progress</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-home fa-3x" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Shipping Complete</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-truck fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Shipping in Progress</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-check-square-o fa-3x" aria-hidden="true"></i>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-home fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Shipping Complete</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Purchase Confirmed</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+                    </div>
+                </div>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-check-square-o fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Purchase Confirmed</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            {{--</div>--}}
-        {{--</div>--}}
 
-        <div class="sub-title">
-            <h3>Product Status</h3> <small>(Recent 3 months)</small>
-            <button class="btn btn-sm pull-right"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+        <div class="row">
+            <div class="sub-title col-md-12">
+                <h3>Cancellation/Return/Exchange Status</h3> <small>(Recent 3 months)</small>
+                <button class="btn btn-sm pull-right"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+            </div>
         </div>
 
-        <div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-ban fa-3x" aria-hidden="true"></i>
+        <div class="row">
+            <div class="one-box col-md-12">
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-ban fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Cancellation Requested</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Cancellation Requested</div>
+                    </div>
+                </div>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-reply fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Return Requested</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
+                            <hr>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Return Approved</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+                    </div>
+                </div>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-exchange fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Exchange Requested</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
+                            <hr>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Exchange Approved</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-times-circle-o fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Product Non-arrival</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-question-circle-o fa-3x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Product Q&A<br>Unanswered</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-reply fa-3x" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Return Requested</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
-                        </div>
-                        <hr>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Return Approved</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+        </div>
+
+        <div class="row">
+            <div class="sub-title col-md-12">
+                <h3>Product Status</h3> <small>(Recent 3 months)</small>
+                <button class="btn btn-sm pull-right"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="one-box col-md-12">
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Stock Balance<br>(less than 3 left)</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-truck fa-3x" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Shipping in Progress</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Selling Period<br>(less than 7 days left)</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-home fa-3x" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Shipping Complete</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Plus Add<br>(less than 7 days left)</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="order-box">
-                <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            <i class="fa fa-check-square-o fa-3x" aria-hidden="true"></i>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Bold Add<br>(less than 7 days left)</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-xs-12 text-center">
-                            <div class="order-box-title">Purchase Confirmed</div>
-                        </div>
-                        <div class="col-xs-12 text-center">
-                            <a class="text-center count-order-stat" href="#">
-                                0
-                            </a>
+                    </div>
+                </div>
+                <div class="order-box">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <div class="order-box-title">Background Color Add<br>(less than 7 days left)</div>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <a class="text-center count-order-stat" href="#">
+                                    0
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,8 +309,40 @@
         </div>
     </div>
 
-    <div class="col-md-2">
-
+    <div class="col-md-3">
+        <div class="row">
+            <div class="panel panel-default seller-info">
+                <div class="panel-heading">
+                    Seller Info
+                </div>
+                <div class="panel-body form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label">Seller Grade :</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">Grade 6</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label">Seller Credit :</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">0</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label">Seller Cash :</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">RM 0</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label">Next Settlement Amount :</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">RM 0<br><small>({{ date('d-m-Y') }})</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

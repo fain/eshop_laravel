@@ -120,30 +120,6 @@
                     $("#sub_cat").show();
                 }
             });
-
-//            //this part is for expand the active submenu
-//
-//            $("a.link_subcat").click(function(event) {
-//                var linkid = event.target.id;
-//
-//                var pieces = linkid.split("_subcat");
-//
-//                var maincatlink = (pieces[0]);
-//                maincatlink.attr("aria-expanded","true");
-//            });
-
-
-//            var pgurl = window.location.href.substr(window.location.href
-//                            .lastIndexOf("/")+1);
-//
-//            $("#link_"+pgurl).removeClass("collapsed");
-//            $("#nav ul li a").each(function(){
-//                if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
-//                    $(this).addClass("active");
-//            });
-
-//            alert(pgurl);
-
         });
 
     </script>

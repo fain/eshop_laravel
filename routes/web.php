@@ -57,6 +57,8 @@ Route::get('/backend/categories','Back@categories');
 Route::get('/backend/categories/{category}','Back@categories_more');
 Route::post('/backend/categories/update/{category}','Back@categories_update');
 
+Route::get('/backend/product_listing','Back@product_listing');
+
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index');
