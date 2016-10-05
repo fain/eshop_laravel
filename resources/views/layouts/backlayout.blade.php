@@ -9,6 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>{{$title}}</title>
 
     <!-- Bootstrap Core CSS -->
@@ -34,12 +37,12 @@
 
 </head>
 
-<body>
+<body class="custombackground">
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-fixed-top navbar-custom" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -154,8 +157,43 @@
             @include('layouts.backsidebar')
         </nav>
 
-            @yield('content')
+        <div id="page-wrapper">
+            <div class="container-fluid">
 
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            @yield('pageheading')
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                @yield('breadcrumb')
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    @yield('content')
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <div class="for-footer">
+            <footer class="footer">
+                {{--<div class="container-fluid">--}}
+                {{--<div class="row">--}}
+                <div class="col-md-12">
+                    <p class="text-muted pad-top-10">Copyright © 1971 - 2015 angkasa.coop | All rights reserved for ANGKASA</p>
+                </div>
+                {{--</div>--}}
+                {{--</div>--}}
+            </footer>
+        </div>
+
+        <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
 

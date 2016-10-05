@@ -156,9 +156,9 @@ class Back extends Controller
             $merchants_id = Auth::guard('merchants')->user()->id;
             $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
 
-            $treecat = Category::with('subcat')->get();
+            $treecat = Category::where('main_category_id', 0)->where('menu_type', 'main')->with('subcat')->get();
 
-            $treecat = Category::with('subcat')->get();
+//            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
 
             return view('back.categories',
                 array(
@@ -166,11 +166,66 @@ class Back extends Controller
                     'page' => 'categories',
                     'users_name' => $merchants_info->name,
                     'treecat' => $treecat,
-                    'basecat_url' => '/backend/categories/'
+                    'basecat_url' => '/backend/categories/',
+                    'currmenu' => ''
                 ));
         }else{
             return redirect('/backend/login');
         }
 
+    }
+
+    public function categories_more($category) {
+        if(Auth::guard('merchants')->check()){
+            $merchants_id = Auth::guard('merchants')->user()->id;
+            $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
+
+            $treecat = Category::where('main_category_id', 0)->where('menu_type', 'main')->with('subcat')->get();
+            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+
+            $catdetails = Category::where('id', $category)->first();
+
+            return view('back.cat_detail',
+                array(
+                    'title' => 'Categories',
+                    'page' => 'categories',
+                    'users_name' => $merchants_info->name,
+                    'treecat' => $treecat,
+                    'basecat_url' => '/backend/categories/',
+                    'maincat' => $maincat,
+                    'catdetails' => $catdetails,
+                    'currmenu' => $category
+                ));
+        }else{
+            return redirect('/backend/login');
+        }
+
+    }
+
+    public function categories_update(Request $request, Category $category){
+        $cattype = $request->type;
+        $cur_datetime = date("Y-m-d h:i:s");
+
+        if($cattype=="sub"){
+            $maincat = $request->main_cat_id;
+        }else{
+            $maincat = 0;
+        }
+
+        $cats = array(
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'menu_type' => $cattype,
+            'main_category_id' => $maincat,
+            'status' => $request->status,
+            'description' => $request->description,
+            'updated_at' => $cur_datetime,
+            'updated_at_ip' => $request->ip
+        );
+
+        $category->where('id', $category->id)->update($cats);
+
+        $request->session()->flash('success', 'Category detail successfully updated');
+        return redirect('/backend/categories/'.$category->id);
     }
 }

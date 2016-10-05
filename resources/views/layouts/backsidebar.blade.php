@@ -1,5 +1,5 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="collapse navbar-collapse navbar-ex1-collapse sidenav-custom">
                 <ul class="nav navbar-nav side-nav">
                     <li {{ $page=='home' ? 'class=active' : '' }}>
                         <a href="/backend/home"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
