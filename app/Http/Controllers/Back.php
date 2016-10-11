@@ -48,7 +48,8 @@ class Back extends Controller
                     'title' => 'Dashboard',
                     'description' => '',
                     'page' => 'home',
-                    'users_name' => $merchants_info->name
+                    'users_name' => $merchants_info->name,
+                    'mainmenu' => 'dashboard'
                 ));
         }else{
             return redirect('/backend/login');

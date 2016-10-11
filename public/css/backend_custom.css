@@ -196,3 +196,8 @@ div.seller-info div.panel-default{
     border-color: #6f8bc3;
 }
 
+span.req{
+    color: #ff1a1a;
+}
+
+#editor {overflow:scroll; max-height:300px}

@@ -94,8 +94,8 @@
                         </ul>
                     </li>
                     <li {{ $page=='categories' || $page=='products' ? 'class=active' : '' }}>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#promo"><i class="fa fa-users" aria-hidden="true"></i> Member Management <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="promo" class="collapse">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#member"><i class="fa fa-users" aria-hidden="true"></i> Member Management <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="member" class="collapse">
                             <li>
                                 <a href="/backend/products">Seller Details</a>
                             </li>
