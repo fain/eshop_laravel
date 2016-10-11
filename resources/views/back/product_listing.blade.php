@@ -345,6 +345,137 @@
                     </label>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-2">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="coo_region" value="set"> Set Specific Region
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control">
+                        <option value="">Select Region</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Credit Offer </label>
+                <div class="col-md-1">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="set_co" value="set"> Set
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control">
+                        <option value="RM">RM</option>
+                        <option value="%">%</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <p class="form-control-static">Accumulation</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Multiple Purchase Discount </label>
+                <div class="col-md-1">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="set_co" value="set"> Set
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <p class="form-control-static">For purchases of</p>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <p class="form-control-static">or more</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-3">
+                    <select class="form-control">
+                        <option value="RM">RM</option>
+                        <option value="%">%</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <p class="form-control-static">Discount (for per item)</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-3">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="selling_period" value="set"> Set Period
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-1 text-center">
+                    ~
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Minimum Purchase Qty</label>
+                <div class="col-md-3">
+                    <label class="radio-inline">
+                        <input type="radio" name="min_pur" id="min_pur1" value="no_limit"> No Limit
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="min_pur" id="min_pur2" value="minimum"> Minimum
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <p class="form-control-static">Set minimum quantity for one time purchase</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Maximum Purchase Qty</label>
+                <div class="col-md-2">
+                    <label class="radio-inline">
+                        <input type="radio" name="max_pur" id="max_pur1" value="no_limit"> No Limit
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <label class="radio-inline">
+                        <input type="radio" name="max_pur" id="max_pur2" value="per_ord"> Per Order
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <p class="form-control-static">Set maximum quantity for one time purchase</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-4">
+                    <label class="radio-inline">
+                        <input type="radio" name="max_pur" id="max_pur2" value="per_ord"> Per Person (ID)
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-5">
+                    <p class="form-control-static">Set maximum quantity for one time purchase. The setting is applied for 30 days upon purchase.</p>
+                </div>
+            </div>
         </form>
     </div>
 @endsection
