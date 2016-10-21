@@ -18,6 +18,8 @@ use Validator;
 
 use Illuminate\Support\Facades\Auth;
 
+use Session;
+
 class Back extends Controller
 {
     //
@@ -52,6 +54,9 @@ class Back extends Controller
                     'mainmenu' => 'dashboard'
                 ));
         }else{
+//            $request->session()->flush();
+            Auth::guard('merchants')->logout();
+            Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
 
@@ -171,6 +176,9 @@ class Back extends Controller
                     'currmenu' => ''
                 ));
         }else{
+//            $request->session()->flush();
+            Auth::guard('merchants')->logout();
+            Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
 
@@ -198,6 +206,9 @@ class Back extends Controller
                     'currmenu' => $category
                 ));
         }else{
+//            $request->session()->flush();
+            Auth::guard('merchants')->logout();
+            Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
 
@@ -235,6 +246,9 @@ class Back extends Controller
             $merchants_id = Auth::guard('merchants')->user()->id;
             $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
 
+            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+//            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
+
             return view('back.product_listing',
                 array(
                     'title' => 'Product Listing',
@@ -242,11 +256,22 @@ class Back extends Controller
                     'users_name' => $merchants_info->name,
                     'basecat_url' => '/backend/product_listing/',
                     'currmenu' => '',
-                    'mainmenu' => 'product'
+                    'mainmenu' => 'product',
+                    'maincat' => $maincat,
+//                    'subcat' => $subcat
                 ));
         }else{
+//            $request->session()->flush();
+            Auth::guard('merchants')->logout();
+            Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
 
+    }
+
+    public function logout(){
+        Auth::guard('merchants')->logout();
+        Session::flash('success', 'You are successfully logged out!');
+        return redirect('/backend/login');
     }
 }

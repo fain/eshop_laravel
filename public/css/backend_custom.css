@@ -206,3 +206,16 @@ span.req{
 }
 
 #editor {overflow:scroll; max-height:300px}
+
+.ship-kg{
+    margin-right: 5px;
+}
+
+.ship-rm{
+    margin-left: 5px;
+}
+
+.ship-kg, .ship-rm{
+    width: 60%;
+    display: inline-block;
+}

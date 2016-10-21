@@ -28,6 +28,14 @@
 
     <link href="{{asset('metisMenu/metisMenu.min.css')}}" rel="stylesheet">
 
+    <!-- /**
+    <script>
+        window.Laravel = <?php #echo json_encode([
+                #'csrfToken' => csrf_token(),
+        #]); ?>
+    </script>
+    **/ -->
+
     @yield('css_section')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -255,7 +263,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

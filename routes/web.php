@@ -47,6 +47,7 @@ Route::get('/search/{query}','Front@search');
 Route::post('/cart', 'Front@cart');
 
 Route::get('/backend/login','Back@login');
+Route::get('/backend/logout','Back@logout');
 Route::post('backend/login_handler', 'Back@login_handler');
 Route::get('/backend/register','Back@register');
 Route::get('/backend/home','Back@home');
@@ -58,6 +59,9 @@ Route::get('/backend/categories/{category}','Back@categories_more');
 Route::post('/backend/categories/update/{category}','Back@categories_update');
 
 Route::get('/backend/product_listing','Back@product_listing');
+
+//for dropdown
+Route::get('api/category-dropdown/{id}', 'ApiController@categoryDropDownData');
 
 // Auth::routes();
 
