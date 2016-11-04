@@ -35,12 +35,12 @@
 
 @section('content')
     <div class="col-md-12">
-        <form class="form-horizontal" enctype="multipart/form-data" id="fileupload">
+        <form class="form-horizontal" enctype="multipart/form-data" id="fileupload" method="post" action="/backend/product_listing_handler">
             <div class="form-group">
                 <label class="col-md-2 control-label">Sales Type <span class="req">*</span> </label>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type1" value="new" checked="checked"> New
+                        <input type="radio" name="sales_type" id="sales_type1" value="New" checked="checked"> New
                     </label>
                     <label class="radio-inline">
                         <input type="radio" name="sales_type" id="sales_type2" value="Pre-Order"> Pre-Order
@@ -61,8 +61,20 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-control" name="sub_category" id="sub_category" style="display: none">
+                    <select class="form-control" name="sub_category" id="sub_category">
                         <option value="">Select Sub Category</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Brand <span class="req">*</span> </label>
+                <div class="col-md-3">
+                    <select class="form-control" name="main_category" id="main_category">
+                        <option value="">Select Brand</option>
+                        <option value="others">Others</option>
+                        {{--@foreach($maincat as $mc)--}}
+                            {{--<option value="{{ $mc->id }}">{{ ucfirst(strtolower($mc->name)) }}</option>--}}
+                        {{--@endforeach--}}
                     </select>
                 </div>
             </div>
@@ -130,23 +142,23 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Detailed Description <span class="req">*</span> </label>
                 <div class="col-md-9">
-                    <textarea id="mytextarea"></textarea>
+                    <textarea id="mytextarea" name="details"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Sales Type <span class="req">*</span> </label>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="gst_app" id="gst_app1" value="Standard"> Standard Rate
+                        <input type="radio" name="sales_type" id="sales_type1" value="Standard"> Standard Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="gst_app" id="gst_app2" value="Exempted" checked="checked"> Exempted Rate
+                        <input type="radio" name="sales_type" id="sales_type2" value="Exempted" checked="checked"> Exempted Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="gst_app" id="gst_app3" value="Zero"> Zero Rate
+                        <input type="radio" name="sales_type" id="sales_type3" value="Zero"> Zero Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="gst_app" id="gst_app4" value="Flat"> Flat Rate
+                        <input type="radio" name="sales_type" id="sales_type3" value="Flat"> Flat Rate
                     </label>
                 </div>
             </div>
@@ -155,7 +167,7 @@
                 <label class="col-md-2 control-label">Selling Period</label>
                 <div class="col-md-1">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="selling_period_set" value="set" checked="checked"> Set
+                        <input type="checkbox" id="selling_period_set" value="Y" checked="checked"> Set
                     </label>
                 </div>
                 <div id="selling_period_cont">
@@ -190,13 +202,13 @@
                 <label class="col-md-2 control-label">Selling Price <span class="req">*</span> </label>
                 <label class="col-md-1 control-label"><span class="req">RM</span> </label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="price">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Tier Price <span class="req"></span> </label>
                 <div class="col-md-3">
-                    <select class="form-control">
+                    <select class="form-control" name="tier_price">
                         <option value="">Select Plan</option>
                         <option value="12">12 Months</option>
                         <option value="24">24 Months</option>
@@ -210,24 +222,24 @@
                     <p class="form-control-static text-right">RM</p>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="inst_price">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Discount by Seller </label>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="discount_set" value="set"> Set
+                        <input type="checkbox" id="discount_set" value="Y"> Set
                     </label>
                 </div>
                 <div class="col-md-2">
-                    <select class="form-control">
+                    <select class="form-control" name="discount_sel">
                         <option value="RM">RM</option>
                         <option value="%">%</option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="discount_val">
                 </div>
             </div>
             <div class="form-group">
@@ -253,7 +265,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Product Weight <span class="req">*</span> </label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="weight">
                 </div>
                 <div class="col-md-2">
                     <p class="form-control-static">Kg</p>
@@ -262,7 +274,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Stock Quantity <span class="req">*</span> </label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="stock_quantity">
                 </div>
                 <div class="col-md-2">
                     <p class="form-control-static">Units</p>
@@ -289,7 +301,7 @@
                     <p class="form-control-static">Ship-From Address</p>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="shipping_add">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info">Edit</button>
@@ -300,7 +312,7 @@
                     <p class="form-control-static">Return/Exchange Address</p>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="return_add">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info">Edit</button>
@@ -309,9 +321,9 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Shipping Method <span class="req">*</span> </label>
                 <div class="col-md-4">
-                    <select class="form-control">
-                        <option value="">Courier Service</option>
-                        <option value="">Direct Shipping</option>
+                    <select class="form-control" name="shipping_method">
+                        <option value="courier">Courier Service</option>
+                        <option value="direct">Direct Shipping</option>
                     </select>
                 </div>
             </div>
@@ -336,46 +348,46 @@
                             <tr>
                                 <td rowspan="2" width="15%">West Malaysia</td>
                                 <td width="15%">Up to</td>
-                                <td width="25%"><div class="ship-kg"><input type="text" class="form-control"></div>Kg</td>
-                                <td width="25%">RM<div class="ship-rm"><input type="text" class="form-control"></div></td>
+                                <td width="25%"><div class="ship-kg"><input type="text" class="form-control" name="wm_kg"></div>Kg</td>
+                                <td width="25%">RM<div class="ship-rm"><input type="text" class="form-control" name="wm_rm"></div></td>
                                 <td rowspan="2" width="20%">
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" id="same-all-region" value="set"> Same for all region
+                                        <input type="checkbox" id="same-all-region" value="Y" name="same_all_reg"> Same for all region
                                     </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_wm_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_wm_rm"></div> added</td>
                             </tr>
 
                             <tr>
                                 <td rowspan="2">Sabah</td>
                                 <td>Up to</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control"></div></td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="sbh_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="sbh_rm"></div></td>
                                 <td rowspan="2">
                                 </td>
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_sbh_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_sbh_rm"></div> added</td>
                             </tr>
 
                             <tr>
                                 <td rowspan="2">Sarawak</td>
                                 <td>Up to</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control"></div></td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="srk_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="srk_rm"></div></td>
                                 <td rowspan="2">
                                 </td>
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_srk_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_srk_rm"></div> added</td>
                             </tr>
                         </table>
 
@@ -396,7 +408,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">After Sale Service </label>
                 <div class="col-md-9">
-                    <textarea class="form-control"></textarea>
+                    <textarea class="form-control" name="after_sale_serv"></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -406,192 +418,203 @@
                 </div>
             </div>
             <hr>
-            <h3>Promotions or Advertisement</h3>
+
             <div class="form-group">
-                <label class="col-md-2 control-label">Promotional Text</label>
-                <div class="col-md-8">
-                    <input type="text" name="promo_text" id="promo_text"  class="form-control">
-                </div>
-                <div class="col-md-1">
-                    <p class="form-control-static"><span id="promo_text_count">0</span>/40</p>
+                <div class="col-md-12">
+                    <div class="text-center well">
+                        <p>Increase your sales by settings promotion or buy advertising features to boost your ads</p>
+                        <button type="button" class="btn btn-info" id="promo_set" onclick="togglepromo();">Promotions & Advertising</button>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Country of Origin</label>
-                {{--<div class="col-md-6">--}}
-                    {{--<label class="radio-inline">--}}
-                        {{--<input type="radio" name="coo" id="coo1" value="None"> None--}}
-                    {{--</label>--}}
-                    {{--<label class="radio-inline">--}}
-                        {{--<input type="radio" name="coo" id="coo2" value="Domestic"> Domestic--}}
-                    {{--</label>--}}
-                    {{--<label class="radio-inline">--}}
-                        {{--<input type="radio" name="coo" id="coo3" value="Foreign"> Foreign--}}
-                    {{--</label>--}}
+            <div id="promo_box" style="display:none;">
+                <h3>Promotions or Advertisement</h3>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Promotional Text</label>
+                    <div class="col-md-8">
+                        <input type="text" name="promo_text" id="promo_text"  class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <p class="form-control-static"><span id="promo_text_count">0</span>/40</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Country of Origin</label>
+                    {{--<div class="col-md-6">--}}
+                        {{--<label class="radio-inline">--}}
+                            {{--<input type="radio" name="coo" id="coo1" value="None"> None--}}
+                        {{--</label>--}}
+                        {{--<label class="radio-inline">--}}
+                            {{--<input type="radio" name="coo" id="coo2" value="Domestic"> Domestic--}}
+                        {{--</label>--}}
+                        {{--<label class="radio-inline">--}}
+                            {{--<input type="radio" name="coo" id="coo3" value="Foreign"> Foreign--}}
+                        {{--</label>--}}
+                    {{--</div>--}}
+                    <div class="col-md-4">
+                        <input type="text" name="country_origin" id="promo_text"  class="form-control">
+                    </div>
+                </div>
+                {{--<div class="form-group">--}}
+                    {{--<div class="col-md-2 col-md-offset-2">--}}
+                        {{--<label class="checkbox-inline">--}}
+                            {{--<input type="checkbox" id="coo_region" value="set"> Set Specific Region--}}
+                        {{--</label>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-4">--}}
+                        {{--<select class="form-control">--}}
+                            {{--<option value="">Select Region</option>--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-3">--}}
+                        {{--<input type="text" class="form-control">--}}
+                    {{--</div>--}}
                 {{--</div>--}}
-                <div class="col-md-4">
-                    <input type="text" name="promo_text" id="promo_text"  class="form-control">
-                </div>
-            </div>
-            {{--<div class="form-group">--}}
-                {{--<div class="col-md-2 col-md-offset-2">--}}
-                    {{--<label class="checkbox-inline">--}}
-                        {{--<input type="checkbox" id="coo_region" value="set"> Set Specific Region--}}
-                    {{--</label>--}}
+                {{--<div class="form-group">--}}
+                    {{--<label class="col-md-2 control-label">Credit Offer </label>--}}
+                    {{--<div class="col-md-1">--}}
+                        {{--<label class="checkbox-inline">--}}
+                            {{--<input type="checkbox" id="set_co" value="set"> Set--}}
+                        {{--</label>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-2">--}}
+                        {{--<select class="form-control">--}}
+                            {{--<option value="RM">RM</option>--}}
+                            {{--<option value="%">%</option>--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-3">--}}
+                        {{--<input type="text" class="form-control">--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-2">--}}
+                        {{--<p class="form-control-static">Accumulation</p>--}}
+                    {{--</div>--}}
                 {{--</div>--}}
-                {{--<div class="col-md-4">--}}
-                    {{--<select class="form-control">--}}
-                        {{--<option value="">Select Region</option>--}}
-                    {{--</select>--}}
-                {{--</div>--}}
-                {{--<div class="col-md-3">--}}
-                    {{--<input type="text" class="form-control">--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<div class="form-group">--}}
-                {{--<label class="col-md-2 control-label">Credit Offer </label>--}}
-                {{--<div class="col-md-1">--}}
-                    {{--<label class="checkbox-inline">--}}
-                        {{--<input type="checkbox" id="set_co" value="set"> Set--}}
-                    {{--</label>--}}
-                {{--</div>--}}
-                {{--<div class="col-md-2">--}}
-                    {{--<select class="form-control">--}}
-                        {{--<option value="RM">RM</option>--}}
-                        {{--<option value="%">%</option>--}}
-                    {{--</select>--}}
-                {{--</div>--}}
-                {{--<div class="col-md-3">--}}
-                    {{--<input type="text" class="form-control">--}}
-                {{--</div>--}}
-                {{--<div class="col-md-2">--}}
-                    {{--<p class="form-control-static">Accumulation</p>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            <div class="form-group">
-                <label class="col-md-2 control-label">Multiple Purchase Discount </label>
-                <div class="col-md-1">
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="mul_pur_disc_set" value="set"> Set
-                    </label>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Multiple Purchase Discount </label>
+                    <div class="col-md-1">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="mul_pur_disc_set" value="Y"> Set
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="form-control-static">For purchases of</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="mul_pur_disc_item" id="mul_pur_disc_item">
+                    </div>
+                    <div class="col-md-2">
+                        <p class="form-control-static">or more</p>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <p class="form-control-static">For purchases of</p>
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-3">
+                        <select class="form-control" id="mul_pur_disc_sel" name="mul_pur_disc_sel">
+                            <option value="RM">RM</option>
+                            <option value="%">%</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="mul_pur_disc" name="mul_pur_disc">
+                    </div>
+                    <div class="col-md-2">
+                        <p class="form-control-static">Discount (for per item)</p>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" name="mul_pur_disc_item" id="mul_pur_disc_item">
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-3">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="mul_pur_disc_period_set" value="Y"> Set Period
+                        </label>
+                    </div>
+                    <div id="disc_set_period_cont">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
+                                    <input type="text" class="form-control" id="mul_pur_period_start" name="mul_pur_period_start">
+                                </div>
+                                <div class="input-group-addon">to</div>
+                                <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
+                                    <input type="text" class="form-control" id="mul_pur_period_end" name="mul_pur_period_end">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <p class="form-control-static">or more</p>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Minimum Purchase Qty</label>
+                    <div class="col-md-2">
+                        <label class="radio-inline">
+                            <input type="radio" name="min_pur" id="min_pur1" value="no_limit" checked="checked"> No Limit
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="radio-inline">
+                            <input type="radio" name="min_pur" id="min_pur2" value="minimum"> Minimum
+                        </label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" id="min_pur_val">
+                    </div>
+                    <div class="col-md-4">
+                        <p class="form-control-static">Set minimum quantity for one time purchase</p>
+                        <div id="min_pur_err" class="alert alert-danger">The value must be more than 2!</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-2 col-md-offset-3">
-                    <select class="form-control" id="mul_pur_disc_sel" name="mul_pur_disc_sel">
-                        <option value="RM">RM</option>
-                        <option value="%">%</option>
-                    </select>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Maximum Purchase Qty</label>
+                    <div class="col-md-2">
+                        <label class="radio-inline">
+                            <input type="radio" name="max_pur" id="max_pur1" value="no_limit" checked="checked"> No Limit
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="radio-inline">
+                            <input type="radio" name="max_pur" id="max_pur2" value="per_ord"> Per Order
+                        </label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" id="max_per_ord">
+                    </div>
+                    <div class="col-md-4">
+                        <p class="form-control-static">Set maximum quantity for one time purchase</p>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" id="mul_pur_disc" name="mul_pur_disc">
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-4">
+                        <label class="radio-inline">
+                            <input type="radio" name="max_pur" id="max_pur3" value="per_pers"> Per Person (ID)
+                        </label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" id="max_per_pers">
+                    </div>
+                    <div class="col-md-5">
+                        <p class="form-control-static">Set maximum quantity for one time purchase. The setting is applied for 30 days upon purchase.</p>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <p class="form-control-static">Discount (for per item)</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-2 col-md-offset-3">
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="mul_pur_disc_period_set" value="set"> Set Period
-                    </label>
-                </div>
-                <div id="disc_set_period_cont">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Listing Ad Setting</label>
+                    <div class="col-md-2">
+                        <select class="form-control" id="ad_sel">
+                            <option value="">Ad Type</option>
+                            <option value="top">Top</option>
+                        </select>
+                    </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="mul_pur_period_start" name="mul_pur_period_start">
+                                <input type="text" class="form-control" id="ad_start" name="ad_start">
                             </div>
                             <div class="input-group-addon">to</div>
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="mul_pur_period_end" name="mul_pur_period_end">
+                                <input type="text" class="form-control" id="ad_end" name="ad_end">
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Minimum Purchase Qty</label>
-                <div class="col-md-2">
-                    <label class="radio-inline">
-                        <input type="radio" name="min_pur" id="min_pur1" value="no_limit" checked="checked"> No Limit
-                    </label>
-                </div>
-                <div class="col-md-2">
-                    <label class="radio-inline">
-                        <input type="radio" name="min_pur" id="min_pur2" value="minimum"> Minimum
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <input type="text" class="form-control" id="min_pur_val">
-                </div>
-                <div class="col-md-4">
-                    <p class="form-control-static">Set minimum quantity for one time purchase</p>
-                    <div id="min_pur_err" class="alert alert-danger">The value must be more than 2!</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Maximum Purchase Qty</label>
-                <div class="col-md-2">
-                    <label class="radio-inline">
-                        <input type="radio" name="max_pur" id="max_pur1" value="no_limit" checked="checked"> No Limit
-                    </label>
-                </div>
-                <div class="col-md-2">
-                    <label class="radio-inline">
-                        <input type="radio" name="max_pur" id="max_pur2" value="per_ord"> Per Order
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <input type="text" class="form-control" id="max_per_ord">
-                </div>
-                <div class="col-md-4">
-                    <p class="form-control-static">Set maximum quantity for one time purchase</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-2 col-md-offset-4">
-                    <label class="radio-inline">
-                        <input type="radio" name="max_pur" id="max_pur3" value="per_pers"> Per Person (ID)
-                    </label>
-                </div>
-                <div class="col-md-1">
-                    <input type="text" class="form-control" id="max_per_pers">
-                </div>
-                <div class="col-md-5">
-                    <p class="form-control-static">Set maximum quantity for one time purchase. The setting is applied for 30 days upon purchase.</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Listing Ad Setting</label>
-                <div class="col-md-2">
-                    <select class="form-control" id="ad_sel">
-                        <option value="">Ad Type</option>
-                        <option value="top">Top</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                            <input type="text" class="form-control" id="ad_start" name="ad_start">
-                        </div>
-                        <div class="input-group-addon">to</div>
-                        <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                            <input type="text" class="form-control" id="ad_end" name="ad_end">
-                        </div>
+                    <div class="col-md-2">
+                        <p class="form-control-static">RM 0</p>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <p class="form-control-static">RM 0</p>
                 </div>
             </div>
             <div class="form-group">
@@ -1088,7 +1111,32 @@
                             + $.ucfirst(name) + '</option>');
                 });
             });
+
+
+//            $('#promo_set').click(function(){
+//                $("#promo_box").toggle();
+//                alert('a');
+//                var div = document.getElementById('promo_box');
+//
+//                if (div.style.display !== 'none') {
+//                    div.style.display = 'none';
+//                }
+//                else {
+//                    div.style.display = 'block';
+//                }
+//            });
+
         });
+
+        function togglepromo(){
+            var div = document.getElementById('promo_box');
+            if (div.style.display !== 'none') {
+                div.style.display = 'none';
+            }
+            else {
+                div.style.display = 'block';
+            }
+        }
     </script>
 
     <script id="template-upload" type="text/x-tmpl">

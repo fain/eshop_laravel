@@ -13,15 +13,21 @@
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
 	<link href="{{asset('css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
+
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+
+	@yield('css_content')
+
     <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    {{--<script src="js/html5shiv.js"></script>--}}
+    {{--<script src="js/respond.min.js"></script>--}}
+    {{--<![endif]-->       --}}
+    {{--<link rel="shortcut icon" href="images/ico/favicon.ico">--}}
+    {{--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">--}}
+    {{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">--}}
+    {{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">--}}
+    {{--<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">--}}
 </head><!--/head-->
 
 <body>
@@ -57,7 +63,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="{{url('')}}"><img src="{{asset('images/home/logo.png')}}" alt="" /></a>
+                            <a href="{{url('')}}"><img src="{{asset('images/home/logo-eshop-angkasa.png')}}" alt="" height="40px;"/></a>
                         </div>
                     </div>
                     <div class="col-sm-8">
@@ -67,7 +73,23 @@
                                 <!-- <li><a href="{{url('checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
                                 <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
                                 <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li><a href="{{Auth::check() ? url('auth/logout') : url('auth/login')}}"><i class="fa fa-lock"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a></li>
+                                <li class="main-dropdown">
+									<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
+									@if(Auth::check())
+									<ul class="dropdown-menu dropdown-user">
+										<li>
+											<a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
+										</li>
+										<li>
+											<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+										</li>
+										<li class="divider"></li>
+										<li>
+											<a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+										</li>
+									</ul>
+									@endif
+								</li>
                             </ul>
                         </div>
                     </div>
@@ -276,5 +298,7 @@
 	<script src="{{asset('js/price-range.js')}}"></script>
     <script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
+
+	@yield('js_content')
 </body>
 </html>

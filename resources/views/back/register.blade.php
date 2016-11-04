@@ -49,7 +49,7 @@
                     <label for="dob" class="col-md-2 control-label">Date of Birth</label>
 
                     <div class="col-md-2">
-                        <input id="dob" type="text" class="form-control" name="dob" value="{{ old('dob') }}" placeholder="dd-mm-yyyy">
+                        <input id="dob" type="text" class="form-control" name="dob" value="{{ old('dob') }}" placeholder="dd-mm-yyyy" data-date-viewmode="years">
 
                         @if ($errors->has('dob'))
                             <span class="help-block">
@@ -122,20 +122,6 @@
 
                 <h4>Login Information</h4>
 
-                <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                    <label for="username" class="col-md-2 control-label">Username</label>
-
-                    <div class="col-md-3">
-                        <input id="username" type="text" class="form-control" name="username" >
-
-                        @if ($errors->has('username'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('username') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                </div>
-
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     <label for="password" class="col-md-2 control-label">Password</label>
 
@@ -175,7 +161,7 @@
                 <div class="form-group">
                     <div class="checkbox col-md-offset-2 col-md-6">
                         <label>
-                            <input type="checkbox" name="same_seller"> Same as <b>Seller Information</b>
+                            <input type="checkbox" name="same_seller" id="same_seller"> Same as <b>Seller Information</b>
                         </label>
                     </div>
                 </div>
@@ -283,7 +269,7 @@
                 <div class="form-group">
                     <div class="checkbox col-md-offset-2 col-md-6">
                         <label>
-                            <input type="checkbox" name="same_ship"> Same as <b>Shipping Address</b>
+                            <input type="checkbox" name="same_ship" id="same_ship"> Same as <b>Shipping Address</b>
                         </label>
                     </div>
                 </div>
@@ -361,12 +347,43 @@
 <script src="{{asset('js/bootstrap-datepicker.js')}}"></script>
 
 <script type="text/javascript">
-var dob = $('#dob').datepicker({ format: 'dd-mm-yyyy' })
-  .on('changeDate', function(ev){
-    // if (ev.date.valueOf() < startDate.valueOf()){
-    //   ....
-    // }
-//    $('.datepicker').hide();
+var dob = $('#dob').datepicker({ format: 'dd-mm-yyyy' });
+
+$("#same_seller").change(function() {
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var contact_number = $("#contact_number").val();
+
+    if(this.checked) {
+        //Do stuff
+        $("#pic_name").val(name);
+        $("#pic_email").val(email);
+        $("#pic_phone").val(contact_number);
+    }else{
+        $("#pic_name").val("");
+        $("#pic_email").val("");
+        $("#pic_phone").val("");
+    }
+});
+
+$("#same_ship").change(function() {
+    var ship_add = $("#ship_add").val();
+    var ship_state = $("#ship_state").val();
+    var ship_city = $("#ship_city").val();
+    var ship_pcode = $("#ship_pcode").val();
+
+    if(this.checked) {
+        //Do stuff
+        $("#rtn_add").val(ship_add);
+        $("#rtn_state").val(ship_state);
+        $("#rtn_city").val(ship_city);
+        $("#rtn_pcode").val(ship_pcode);
+    }else{
+        $("#rtn_add").val("");
+        $("#rtn_state").val("");
+        $("#rtn_city").val("");
+        $("#rtn_pcode").val("");
+    }
 });
 
 $(document).ready(function() {

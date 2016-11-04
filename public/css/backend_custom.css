@@ -219,3 +219,24 @@ span.req{
     width: 60%;
     display: inline-block;
 }
+
+a.new_cat:hover{
+    text-decoration: none;
+}
+
+li.subcat{
+    padding-left: 15px;
+}
+
+li.maincat a, li.maincat i{
+    color: #337ab7;
+}
+
+li.maincat a:hover, li.maincat a:focus{
+    text-decoration: none;
+    color: #23527c;
+}
+
+.navbar-default .navbar-brand{
+    color: #337ab7;
+}

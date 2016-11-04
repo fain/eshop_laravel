@@ -16,6 +16,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/backend_custom.css')}}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{{asset('css/sb-admin-2.css')}}" rel="stylesheet">
@@ -258,7 +259,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> {{$users_name}}</a>
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
@@ -290,6 +291,10 @@
             </div>
             <!-- /.row -->
             <div class="row">
+                <div class="col-md-12">
+                    @include('back.message')
+                </div>
+
                 @yield('content')
             </div>
             <!-- /.row -->

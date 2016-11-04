@@ -3,6 +3,10 @@
         List of categories
     </div>
     <div class="panel-body">
+        <a href="/backend/new_categories" class="btn-sm btn-info new_cat">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add New Category
+        </a>
+        <hr>
         @if(count($treecat) > 0)
             @foreach($treecat as $tc)
                 <ul class="list-unstyled">

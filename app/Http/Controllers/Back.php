@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Eshop\Http\Requests;
 
 use Eshop\State;
-use Eshop\Merchants;
+use Eshop\User;
+use Eshop\UserInfo;
 use Eshop\MerchantsInfo;
 use Eshop\MerchantsBusDetails;
 
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\Auth;
 
 use Session;
 
+//for timestamp
+use Carbon\Carbon;
+
 class Back extends Controller
 {
     //
@@ -28,8 +32,8 @@ class Back extends Controller
     }
 
     public function login_handler(Request $request) {
-//        if(Auth::attempt(['email' => $request->username, 'password' => $request->password])){
-        if(Auth::guard('merchants')->attempt(['username' => $request->username, 'password' => $request->password])){
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+//        if(Auth::guard('merchants')->attempt(['username' => $request->username, 'password' => $request->password])){
 //            return redirect('/');
             $request->session()->flash('success', 'You are successfully logged in!');
             return redirect('/backend/home');
@@ -40,22 +44,18 @@ class Back extends Controller
     }
 
     public function home() {
-        if(Auth::guard('merchants')->check()){
-            $merchants_id = Auth::guard('merchants')->user()->id;
-
-            $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
+        if(Auth::check()){
 
             return view('back.home',
                 array(
                     'title' => 'Dashboard',
                     'description' => '',
                     'page' => 'home',
-                    'users_name' => $merchants_info->name,
                     'mainmenu' => 'dashboard'
                 ));
         }else{
 //            $request->session()->flush();
-            Auth::guard('merchants')->logout();
+            Auth::logout();
             Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
@@ -79,17 +79,16 @@ class Back extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:100',
-            'email' => 'required|email|max:50|unique:merchants_info,email',
+            'email' => 'required|email|max:50|unique:users,email',
             'dob' => 'required|date_format:d-m-Y',
             'contact_number' => 'required|numeric|digits_between:10,12',
             'gender' => 'required',
             'store_name' => 'required|max:30|unique:merchants_info,store_name',
             'store_url' => 'required|max:30|unique:merchants_info,store_url',
-            'username' => 'required|min:6|max:20|unique:merchants,username',
             'password' => 'required|min:6',
             'password_confirmation' => 'required|min:6|same:password',
             'pic_name' => 'required|max:100',
-            'pic_email' => 'required|max:50|unique:merchants_info,email|email',
+            'pic_email' => 'required|max:50|unique:users,email|email',
             'pic_phone' => 'required|numeric|digits_between:10,12',
             'ship_add' => 'required|max:200',
             'ship_state' => 'required',
@@ -101,41 +100,48 @@ class Back extends Controller
             'rtn_pcode' => 'required|max:5',
         ]);
 
-        $cur_datetime = date("Y-m-d h:i:s");
+        $cur_datetime = Carbon::now();
 
         if ($validator->fails()){
             return redirect('/backend/register')
                 ->withErrors($validator)
                 ->withInput();
         }else{
-            $merchants = new Merchants;
+            $user = new User;
+            $user_info = new UserInfo;
             $merchants_info = new MerchantsInfo;
             $merchants_bus_details = new MerchantsBusDetails;
 
-            $merchants->username = $request->username;
-            $merchants->password = Hash::make($request->password);
-            $merchants->user_group = "Merchant";
-            $merchants->updated_at = $cur_datetime;
-            $merchants->created_at = $cur_datetime;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->user_group = "Merchant";
+            $user->updated_at = $cur_datetime;
+            $user->created_at = $cur_datetime;
 
-            $merchants->save();
+            $user->save();
 
-            $merchants_id = $merchants->id;
+            $user_id = $user->id;
 
-            $merchants_info->merchants_id = $merchants_id;
-            $merchants_info->name = $request->name;
-            $merchants_info->email = $request->email;
-            $merchants_info->dob = date("Y-m-d", strtotime($request->dob));
-            $merchants_info->phone = $request->contact_number;
-            $merchants_info->gender = $request->gender;
+            $user_info->user_id = $user_id;
+            $user_info->dob = date("Y-m-d", strtotime($request->dob));
+            $user_info->c_number = $request->contact_number;
+            $user_info->gender = $request->gender;
+            $user_info->updated_at = $cur_datetime;
+            $user_info->created_at = $cur_datetime;
+
+            $user_info->save();
+
+            $merchants_info->user_id = $user_id;
             $merchants_info->store_name = $request->store_name;
             $merchants_info->store_url = $request->store_url;
+            $merchants_info->status = "Pending";
             $merchants_info->updated_at = $cur_datetime;
             $merchants_info->created_at = $cur_datetime;
 
             $merchants_info->save();
 
-            $merchants_bus_details->merchants_id = $merchants_id;
+            $merchants_bus_details->user_id = $user_id;
             $merchants_bus_details->name = $request->pic_name;
             $merchants_bus_details->email = $request->pic_email;
             $merchants_bus_details->phone = $request->pic_phone;
@@ -158,26 +164,26 @@ class Back extends Controller
     }
 
     public function categories() {
-        if(Auth::guard('merchants')->check()){
-            $merchants_id = Auth::guard('merchants')->user()->id;
-            $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
+        if(Auth::check()){
+            if(Auth::user()->user_group == 'Admin'){
+                $treecat = Category::where('main_category_id', 0)->where('menu_type', 'main')->with('subcat')->get();
 
-            $treecat = Category::where('main_category_id', 0)->where('menu_type', 'main')->with('subcat')->get();
+                return view('back.categories',
+                    array(
+                        'title' => 'Categories',
+                        'page' => 'categories',
+                        'treecat' => $treecat,
+                        'basecat_url' => '/backend/categories/',
+                        'currmenu' => ''
+                    ));
+            }else{
+                Session::flash('danger', 'You are not authorized to view this page!');
+                return redirect('/backend/home');
+            }
 
-//            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
-
-            return view('back.categories',
-                array(
-                    'title' => 'Categories',
-                    'page' => 'categories',
-                    'users_name' => $merchants_info->name,
-                    'treecat' => $treecat,
-                    'basecat_url' => '/backend/categories/',
-                    'currmenu' => ''
-                ));
         }else{
 //            $request->session()->flush();
-            Auth::guard('merchants')->logout();
+            Auth::logout();
             Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
@@ -185,9 +191,7 @@ class Back extends Controller
     }
 
     public function categories_more($category) {
-        if(Auth::guard('merchants')->check()){
-            $merchants_id = Auth::guard('merchants')->user()->id;
-            $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
+        if(Auth::check()){
 
             $treecat = Category::where('main_category_id', 0)->where('menu_type', 'main')->with('subcat')->get();
             $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
@@ -198,7 +202,6 @@ class Back extends Controller
                 array(
                     'title' => 'Categories',
                     'page' => 'categories',
-                    'users_name' => $merchants_info->name,
                     'treecat' => $treecat,
                     'basecat_url' => '/backend/categories/',
                     'maincat' => $maincat,
@@ -207,7 +210,7 @@ class Back extends Controller
                 ));
         }else{
 //            $request->session()->flush();
-            Auth::guard('merchants')->logout();
+            Auth::logout();
             Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
@@ -216,7 +219,7 @@ class Back extends Controller
 
     public function categories_update(Request $request, Category $category){
         $cattype = $request->type;
-        $cur_datetime = date("Y-m-d h:i:s");
+        $cur_datetime = Carbon::now();
 
         if($cattype=="sub"){
             $maincat = $request->main_cat_id;
@@ -227,6 +230,7 @@ class Back extends Controller
         $cats = array(
             'name' => $request->name,
             'slug' => $request->slug,
+            'menu_set' => $request->menu_set,
             'menu_type' => $cattype,
             'main_category_id' => $maincat,
             'status' => $request->status,
@@ -242,9 +246,7 @@ class Back extends Controller
     }
 
     public function product_listing() {
-        if(Auth::guard('merchants')->check()){
-            $merchants_id = Auth::guard('merchants')->user()->id;
-            $merchants_info = MerchantsInfo::where('merchants_id', $merchants_id)->first();
+        if(Auth::check()){
 
             $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
 //            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
@@ -253,7 +255,6 @@ class Back extends Controller
                 array(
                     'title' => 'Product Listing',
                     'page' => 'product_listing',
-                    'users_name' => $merchants_info->name,
                     'basecat_url' => '/backend/product_listing/',
                     'currmenu' => '',
                     'mainmenu' => 'product',
@@ -262,7 +263,7 @@ class Back extends Controller
                 ));
         }else{
 //            $request->session()->flush();
-            Auth::guard('merchants')->logout();
+            Auth::logout();
             Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
@@ -270,8 +271,100 @@ class Back extends Controller
     }
 
     public function logout(){
-        Auth::guard('merchants')->logout();
+        Auth::logout();
         Session::flash('success', 'You are successfully logged out!');
         return redirect('/backend/login');
+    }
+
+    public function new_cat() {
+        if(Auth::check()){
+            if(Auth::user()->user_group == 'Admin'){
+                $treecat = Category::where('main_category_id', 0)->where('menu_type', 'main')->with('subcat')->get();
+                $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+
+                return view('back.new_cat',
+                    array(
+                        'title' => 'Add New Categories',
+                        'page' => 'categories',
+                        'treecat' => $treecat,
+                        'maincat' => $maincat,
+                        'basecat_url' => '/backend/categories/',
+                        'currmenu' => ''
+                    ));
+            }else{
+                Session::flash('danger', 'You are not authorized to view this page!');
+                return redirect('/backend/home');
+            }
+
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+
+    }
+
+    public function new_cat_handler(Request $request, Category $category){
+        $cattype = $request->type;
+        $cur_datetime = Carbon::now();
+
+        if($cattype=="sub"){
+            $maincat = $request->main_cat_id;
+        }else{
+            $maincat = 0;
+        }
+
+        $categories = new Category();
+
+        $categories->name = $request->name;
+        $categories->slug = $request->slug;
+        $categories->menu_set = $request->menu_set;
+        $categories->menu_type = $cattype;
+        $categories->main_category_id = $maincat;
+        $categories->status = $request->status;
+        $categories->description = $request->description;
+        $categories->updated_at = $cur_datetime;
+        $categories->created_at = $cur_datetime;
+        $categories->updated_at_ip = $request->ip;
+        $categories->created_at_ip = $request->ip;
+
+        $categories->save();
+
+        $request->session()->flash('success', 'New categories successfully inserted!');
+        return redirect('/backend/categories/');
+    }
+
+    public function product_listing_handler(Request $request){
+        $cur_datetime = Carbon::now();
+
+        $products = new Product();
+
+        if($request->sub_category!=""){
+            $cat_id = $request->sub_category;
+        }else{
+            $cat_id = $request->main_category;
+        }
+
+        $products->category_id = $cat_id;
+        $products->category_id = $cat_id;
+
+
+
+
+
+//        $categories->save();
+
+        $request->session()->flash('success', 'New product successfully inserted!');
+        return redirect('/backend/categories/');
+    }
+
+    public function delete_cat($category){
+        $categories = new Category();
+
+        $categories->destroy($category);
+
+        Session::flash('success', 'Category had been successfully deleted!');
+        return redirect('/backend/categories/');
     }
 }

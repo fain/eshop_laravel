@@ -19,8 +19,11 @@
 
 // Authentication routes...
 Route::get('auth/login', 'Front@login');
-Route::post('auth/login', 'Front@authenticate');
+Route::post('auth/login_handler', 'Front@login_handler');
 Route::get('auth/logout', 'Front@logout');
+Route::get('auth/register', 'Front@register');
+Route::post('auth/register_handler', 'Front@register_handler');
+
 
 // Registration routes...
 Route::post('/register', 'Front@register');
@@ -59,9 +62,15 @@ Route::get('/backend/categories/{category}','Back@categories_more');
 Route::post('/backend/categories/update/{category}','Back@categories_update');
 
 Route::get('/backend/product_listing','Back@product_listing');
+Route::post('/backend/product_listing_handler','Back@product_listing_handler');
 
 //for dropdown
 Route::get('api/category-dropdown/{id}', 'ApiController@categoryDropDownData');
+
+Route::get('/backend/new_categories','Back@new_cat');
+Route::post('/backend/new_categories_handler','Back@new_cat_handler');
+
+Route::get('/backend/delete_cat/{id}', 'Back@delete_cat');
 
 // Auth::routes();
 

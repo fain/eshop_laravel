@@ -8,9 +8,11 @@
                         <li>
                             <a href="#"><i class="fa fa-cube fa-fw" aria-hidden="true"></i> Product Management <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                {{--<li>--}}
-                                {{--<a href="/backend/categories">Categories</a>--}}
-                                {{--</li>--}}
+                                @if(Auth::user()->user_group == 'Admin')
+                                <li>
+                                <a href="/backend/categories">Categories</a>
+                                </li>
+                                @endif
                                 <li>
                                     <a href="/backend/product_listing">Product Listing</a>
                                 </li>

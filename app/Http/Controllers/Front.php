@@ -2,10 +2,11 @@
 
 namespace Eshop\Http\Controllers;
 
-// use Illuminate\Http\Request;
+ use Illuminate\Http\Request;
 // use Illuminate\Http\Redirect;
 
 use Eshop\User;
+use Eshop\UserInfo;
 use Illuminate\Support\Facades\Auth;
 
 use Eshop\Http\Requests;
@@ -15,11 +16,17 @@ use Eshop\Category;
 use Eshop\Product;
 use Eshop\Http\Controllers\Controller;
 
-use Illuminate\Support\Facades\Request;
+//use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 use Cart;
 
 use Eshop\Post;
+
+use Validator;
+use Session;
+
+//for timestamp
+use Carbon\Carbon;
 
 class Front extends Controller {
 
@@ -36,7 +43,16 @@ class Front extends Controller {
     }
 
     public function index() {
-        return view('front.home', array('title' => 'Welcome','description' => '','page' => 'home', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
+        return view('front.home',
+            array(
+                'title' => 'Welcome',
+                'description' => '',
+                'page' => 'home',
+                'brands' => $this->brands,
+                'categories' => $this->categories,
+                'products' => $this->products
+            )
+        );
     }
 
     public function products() {
@@ -95,11 +111,76 @@ class Front extends Controller {
     }
 
     public function login() {
-        return view('front.login', array('title' => 'Welcome','description' => '','page' => 'home'));
+        return view('front.login', array('title' => 'Log in or Sign Up','description' => '','page' => ''));
     }
 
-    public function logout() {
-        return view('front.login', array('title' => 'Welcome','description' => '','page' => 'home'));
+    public function login_handler(Request $request) {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+//        if(Auth::guard('merchants')->attempt(['username' => $request->username, 'password' => $request->password])){
+//            return redirect('/');
+            $request->session()->flash('success', 'You are successfully logged in!');
+            return redirect('/');
+        }else{
+            $request->session()->flash('danger', 'Your Username or Password might be wrong!');
+            return redirect('/login');
+        }
+    }
+
+    public function register() {
+        return view('front.register', array('title' => 'Register new account','description' => '','page' => ''));
+    }
+
+    public function register_handler(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'email' => 'required|email|max:50|unique:merchants_info,email',
+            'dob' => 'required|date_format:d-m-Y',
+            'gender' => 'required',
+            'c_number' => 'required|numeric|digits_between:10,12',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|min:6|same:password',
+        ]);
+
+        $cur_datetime = Carbon::now();
+
+        if ($validator->fails()){
+            return redirect('/auth/register')
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+            $user = new User;
+            $user_info = new UserInfo;
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->user_group = "Customer";
+            $user->updated_at = $cur_datetime;
+            $user->created_at = $cur_datetime;
+
+            $user->save();
+
+            $user_id = $user->id;
+
+            $user_info->user_id = $user_id;
+            $user_info->dob = date("Y-m-d", strtotime($request->dob));
+            $user_info->gender = $request->gender;
+            $user_info->c_number = $request->c_number;
+            $user_info->updated_at = $cur_datetime;
+            $user_info->created_at = $cur_datetime;
+
+            $user_info->save();
+
+            $request->session()->flash('success', 'You had been successfully Registered. You can log in now.');
+            return redirect('/auth/login');
+        }
+    }
+
+    public function logout(){
+        Auth::logout();
+        Session::flash('success', 'You are successfully logged out!');
+        return redirect('/auth/login');
     }
 
     public function cart() {
