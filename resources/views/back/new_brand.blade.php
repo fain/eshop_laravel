@@ -24,6 +24,13 @@
             <div class="panel panel-default panel-body">
                 <form class="form-horizontal" method="post" action="/backend/new_brand_handler">
                     {{ csrf_field() }}
+                    @if(count($errors)>0)
+                        <div class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label class="col-md-3 control-label">Category <span class="req">*</span> </label>
                         <div class="col-md-4">
@@ -36,15 +43,20 @@
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <select class="form-control" name="sub_category" id="sub_category" style="display: none;">
+                            <select class="form-control" name="sub_category" id="sub_category">
                                 <option value="">Select Sub Category</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Name <span class="req">*</span> </label>
                         <div class="col-md-6">
                             <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group">

@@ -432,26 +432,37 @@ class Back extends Controller
     public function new_brand_handler(Request $request){
         $cur_datetime = Carbon::now();
 
-        $brands = new Brand();
+        $validator = Validator::make($request->all(), [
+            'main_category' => 'required',
+            'name' => 'required|unique:brands,name'
+        ]);
 
-        if($request->sub_category!=""){
-            $cat_id = $request->sub_category;
+        if ($validator->fails()){
+            return redirect('/backend/new_brand')
+                ->withErrors($validator)
+                ->withInput();
         }else{
-            $cat_id = $request->main_category;
+            $brands = new Brand();
+
+            if($request->sub_category!=""){
+                $cat_id = $request->sub_category;
+            }else{
+                $cat_id = $request->main_category;
+            }
+
+            $brands->category_id = $cat_id;
+            $brands->name = $request->name;
+            $brands->status = $request->status;
+            $brands->updated_at = $cur_datetime;
+            $brands->created_at = $cur_datetime;
+            $brands->updated_at_ip = $request->ip;
+            $brands->created_at_ip = $request->ip;
+
+            $brands->save();
+
+            $request->session()->flash('success', 'New brand successfully inserted!');
+            return redirect('/backend/brand/');
         }
-
-        $brands->category_id = $cat_id;
-        $brands->name = $request->name;
-        $brands->status = $request->status;
-        $brands->updated_at = $cur_datetime;
-        $brands->created_at = $cur_datetime;
-        $brands->updated_at_ip = $request->ip;
-        $brands->created_at_ip = $request->ip;
-
-        $brands->save();
-
-        $request->session()->flash('success', 'New brand successfully inserted!');
-        return redirect('/backend/brand/');
     }
     /*******************************Brand ends*********************************/
 
