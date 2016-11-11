@@ -2,16 +2,9 @@
 
 namespace Eshop\Http\Controllers;
 
-use Eshop\Category;
 use Illuminate\Http\Request;
 
 use Eshop\Http\Requests;
-
-use Eshop\State;
-use Eshop\User;
-use Eshop\UserInfo;
-use Eshop\MerchantsInfo;
-use Eshop\MerchantsBusDetails;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -24,9 +17,18 @@ use Session;
 //for timestamp
 use Carbon\Carbon;
 
+//model
+use Eshop\State;
+use Eshop\User;
+use Eshop\UserInfo;
+use Eshop\MerchantsInfo;
+use Eshop\MerchantsBusDetails;
+use Eshop\Category;
+use Eshop\Brand;
+
 class Back extends Controller
 {
-    //
+    /*******************************Auth start*********************************/
     public function login(Request $request) {
         return view('back.login', array('title' => 'Eshop - Seller Login Page','description' => '','page' => 'home'));
     }
@@ -43,25 +45,14 @@ class Back extends Controller
         }
     }
 
-    public function home() {
-        if(Auth::check()){
-
-            return view('back.home',
-                array(
-                    'title' => 'Dashboard',
-                    'description' => '',
-                    'page' => 'home',
-                    'mainmenu' => 'dashboard'
-                ));
-        }else{
-//            $request->session()->flush();
-            Auth::logout();
-            Session::flash('warning', 'You have been logged out!');
-            return redirect('/backend/login');
-        }
-
+    public function logout(){
+        Auth::logout();
+        Session::flash('success', 'You are successfully logged out!');
+        return redirect('/backend/login');
     }
+    /*******************************Auth end*********************************/
 
+    /*******************************Reg start*********************************/
     public function register() {
 
         $states = State::get();
@@ -162,7 +153,31 @@ class Back extends Controller
             return redirect('/backend/login');
         }
     }
+    /*******************************Reg end*********************************/
 
+
+    /*******************************Home start*********************************/
+    public function home() {
+        if(Auth::check()){
+
+            return view('back.home',
+                array(
+                    'title' => 'Dashboard',
+                    'description' => '',
+                    'page' => 'home',
+                    'mainmenu' => 'dashboard'
+                ));
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+
+    }
+    /*******************************Home ends*********************************/
+
+    /*******************************Categories start*********************************/
     public function categories() {
         if(Auth::check()){
             if(Auth::user()->user_group == 'Admin'){
@@ -245,37 +260,6 @@ class Back extends Controller
         return redirect('/backend/categories/'.$category->id);
     }
 
-    public function product_listing() {
-        if(Auth::check()){
-
-            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
-//            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
-
-            return view('back.product_listing',
-                array(
-                    'title' => 'Product Listing',
-                    'page' => 'product_listing',
-                    'basecat_url' => '/backend/product_listing/',
-                    'currmenu' => '',
-                    'mainmenu' => 'product',
-                    'maincat' => $maincat,
-//                    'subcat' => $subcat
-                ));
-        }else{
-//            $request->session()->flush();
-            Auth::logout();
-            Session::flash('warning', 'You have been logged out!');
-            return redirect('/backend/login');
-        }
-
-    }
-
-    public function logout(){
-        Auth::logout();
-        Session::flash('success', 'You are successfully logged out!');
-        return redirect('/backend/login');
-    }
-
     public function new_cat() {
         if(Auth::check()){
             if(Auth::user()->user_group == 'Admin'){
@@ -335,6 +319,42 @@ class Back extends Controller
         return redirect('/backend/categories/');
     }
 
+    public function delete_cat($category){
+        $categories = new Category();
+
+        $categories->destroy($category);
+
+        Session::flash('success', 'Category had been successfully deleted!');
+        return redirect('/backend/categories/');
+    }
+    /*******************************Categories ends*********************************/
+
+    /*******************************Product Listing start*********************************/
+    public function product_listing() {
+        if(Auth::check()){
+
+            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+//            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
+
+            return view('back.product_listing',
+                array(
+                    'title' => 'Product Listing',
+                    'page' => 'product_listing',
+                    'basecat_url' => '/backend/product_listing/',
+                    'currmenu' => '',
+                    'mainmenu' => 'product',
+                    'maincat' => $maincat,
+//                    'subcat' => $subcat
+                ));
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+
+    }
+
     public function product_listing_handler(Request $request){
         $cur_datetime = Carbon::now();
 
@@ -349,22 +369,90 @@ class Back extends Controller
         $products->category_id = $cat_id;
         $products->category_id = $cat_id;
 
-
-
-
-
 //        $categories->save();
 
         $request->session()->flash('success', 'New product successfully inserted!');
         return redirect('/backend/categories/');
     }
+    /*******************************Product Listing ends*********************************/
 
-    public function delete_cat($category){
-        $categories = new Category();
+    /*******************************Brand starts*********************************/
+    public function brand() {
+        if(Auth::check()){
+            if(Auth::user()->user_group == 'Admin'){
+                $brandlist = Brand::where('status', 'A')->get();
 
-        $categories->destroy($category);
+                return view('back.brand',
+                    array(
+                        'title' => 'Brands',
+                        'page' => 'brand',
+                        'basecat_url' => '/backend/brand/',
+                        'currmenu' => '',
+                        'brandlist' => $brandlist
+                    ));
+            }else{
+                Session::flash('danger', 'You are not authorized to view this page!');
+                return redirect('/backend/home');
+            }
 
-        Session::flash('success', 'Category had been successfully deleted!');
-        return redirect('/backend/categories/');
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
     }
+
+    public function new_brand() {
+        if(Auth::check()){
+            if(Auth::user()->user_group == 'Admin'){
+                $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+
+                return view('back.new_brand',
+                    array(
+                        'title' => 'Brands',
+                        'page' => 'brand',
+                        'basecat_url' => '/backend/brand/',
+                        'maincat' => $maincat,
+                        'currmenu' => ''
+                    ));
+            }else{
+                Session::flash('danger', 'You are not authorized to view this page!');
+                return redirect('/backend/home');
+            }
+
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+    }
+
+    public function new_brand_handler(Request $request){
+        $cur_datetime = Carbon::now();
+
+        $brands = new Brand();
+
+        if($request->sub_category!=""){
+            $cat_id = $request->sub_category;
+        }else{
+            $cat_id = $request->main_category;
+        }
+
+        $brands->category_id = $cat_id;
+        $brands->name = $request->name;
+        $brands->status = $request->status;
+        $brands->updated_at = $cur_datetime;
+        $brands->created_at = $cur_datetime;
+        $brands->updated_at_ip = $request->ip;
+        $brands->created_at_ip = $request->ip;
+
+        $brands->save();
+
+        $request->session()->flash('success', 'New brand successfully inserted!');
+        return redirect('/backend/brand/');
+    }
+    /*******************************Brand ends*********************************/
+
 }

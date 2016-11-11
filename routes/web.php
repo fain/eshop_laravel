@@ -57,20 +57,26 @@ Route::get('/backend/home','Back@home');
 
 Route::post('/backend/register_seller','Back@register_seller');
 
-Route::get('/backend/categories','Back@categories');
-Route::get('/backend/categories/{category}','Back@categories_more');
-Route::post('/backend/categories/update/{category}','Back@categories_update');
-
 Route::get('/backend/product_listing','Back@product_listing');
 Route::post('/backend/product_listing_handler','Back@product_listing_handler');
 
 //for dropdown
 Route::get('api/category-dropdown/{id}', 'ApiController@categoryDropDownData');
 
+/*******************************categories start*********************************/
+Route::get('/backend/categories','Back@categories');
+Route::get('/backend/categories/{category}','Back@categories_more');
+Route::post('/backend/categories/update/{category}','Back@categories_update');
 Route::get('/backend/new_categories','Back@new_cat');
 Route::post('/backend/new_categories_handler','Back@new_cat_handler');
-
 Route::get('/backend/delete_cat/{id}', 'Back@delete_cat');
+/*******************************categories end*********************************/
+
+/*******************************brand start*********************************/
+Route::get('/backend/brand','Back@brand');
+Route::get('/backend/new_brand','Back@new_brand');
+Route::post('/backend/new_brand_handler','Back@new_brand_handler');
+/*******************************brand end*********************************/
 
 // Auth::routes();
 
