@@ -260,12 +260,12 @@ a#scrollUp i{
 .mainmenu ul li a.active,  .shop-menu ul li a.active{
 	/*background:none;*/
 	/*color:#fdb45e;*/
-  background-color: #0B3C5D;
+  background-color: #696763; 
   color: #FFFFFF;
 }
 
 .mainmenu ul li a:hover{
-  background-color: #328CC1;
+  background-color: #2b0ffe; 
   color: #FFFFFF;
 }
 
@@ -642,7 +642,6 @@ ul.sub-menu {
 }
 
 .get {
-  background: #FE980F;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;
@@ -654,7 +653,7 @@ ul.sub-menu {
 
 
 .item button:hover {
-  background: #FE980F;
+  background: #2b0ffe;
 }
 
 .control-carousel {
@@ -679,7 +678,7 @@ ul.sub-menu {
   padding-top: 15px;
 }
 .left-sidebar h2, .brands_products h2 {
-  color: #FE980F;
+  color: #2b0ffe;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -869,7 +868,7 @@ h2.title:before{
 
 
 h2.title {
-  color: #FE980F;
+  color: #2b0ffe;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 700;
