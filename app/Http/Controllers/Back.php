@@ -26,6 +26,8 @@ use Eshop\MerchantsBusDetails;
 use Eshop\Category;
 use Eshop\Brand;
 
+use Illuminate\Support\Facades\DB;
+
 class Back extends Controller
 {
     /*******************************Auth start*********************************/
@@ -380,7 +382,13 @@ class Back extends Controller
     public function brand() {
         if(Auth::check()){
             if(Auth::user()->user_group == 'Admin'){
-                $brandlist = Brand::where('status', 'A')->get();
+//                $brandlist = Brand::leftjoin('categories', 'brands.category_id', '=', 'categories.id')
+//                    ->select('brands.*', 'categories.name')
+//                    ->get();
+                $brandlist = DB::table('brands')
+                                ->leftjoin('categories', 'brands.category_id', '=', 'categories.id')
+                                ->select('brands.*', 'categories.name as catname')
+                                ->get();
 
                 return view('back.brand',
                     array(
