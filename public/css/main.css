@@ -652,6 +652,9 @@ ul.sub-menu {
   margin-top: 23px;
 }
 
+.btn-default:hover{
+  color: #FFFFFF;
+}
 
 .item button:hover {
   background: #2b0ffe;
