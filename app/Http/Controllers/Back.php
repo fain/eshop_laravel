@@ -472,6 +472,76 @@ class Back extends Controller
             return redirect('/backend/brand/');
         }
     }
+
+    public function edit_brand($brand) {
+        if(Auth::check()){
+            if(Auth::user()->user_group == 'Admin'){
+                $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+
+                $bdetails = DB::table('brands')
+                    ->leftjoin('categories', 'brands.category_id', '=', 'categories.id')
+                    ->select('brands.*', 'categories.name as catname','categories.id as catid',
+                        'categories.main_category_id as cat_maincatid', 'categories.menu_type as cat_menutype')
+                    ->where('brands.id', $brand)
+                    ->first();
+
+                return view('back.edit_brand',
+                    array(
+                        'title' => 'Brands',
+                        'page' => 'brand',
+                        'basecat_url' => '/backend/brand/',
+                        'maincat' => $maincat,
+                        'bdetails' => $bdetails,
+                        'currmenu' => ''
+                    ));
+            }else{
+                Session::flash('danger', 'You are not authorized to view this page!');
+                return redirect('/backend/home');
+            }
+
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+    }
+
+    public function edit_brand_handler(Request $request, Brand $brand){
+        $cur_datetime = Carbon::now();
+
+        $validator = Validator::make($request->all(), [
+            'main_category' => 'required',
+            'name' => 'required'
+        ]);
+
+        if ($validator->fails()){
+            echo $brand;
+            echo 'aaa';
+//            return redirect('/backend/edit_brand/'.$brand->id)
+//                ->withErrors($validator)
+//                ->withInput();
+        }else{
+            if($request->sub_category!=""){
+                $cat_id = $request->sub_category;
+            }else{
+                $cat_id = $request->main_category;
+            }
+
+            $brnd = array(
+                'category_id' => $cat_id,
+                'name' => $request->name,
+                'status' => $request->status,
+                'updated_at' => $cur_datetime,
+                'updated_at_ip' => $request->ip
+            );
+
+            $brand->where('id', $brand->id)->update($brnd);
+
+            $request->session()->flash('success', 'Brand successfully updated!');
+            return redirect('/backend/brand/');
+        }
+    }
     /*******************************Brand ends*********************************/
 
 }
