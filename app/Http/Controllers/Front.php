@@ -72,11 +72,11 @@ class Front extends Controller {
     }
 
     public function product_categories($name) {
-        return view('front.products', array('title' => ''Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More'','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
+        return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
     }
 
     public function product_brands($name, $category = null) {
-        return view('front.products', array('title' => ''Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More'','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
+        return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
     }
 
     public function blog() {
@@ -107,7 +107,7 @@ class Front extends Controller {
     }
 
     public function contact_us() {
-        return view('front.contact_us', array('title' => 'Welcome','description' => '','page' => 'contact_us'));
+        return view('front.contact_us', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'contact_us'));
     }
 
     public function login() {
@@ -209,14 +209,14 @@ class Front extends Controller {
 
         $cart = Cart::content();
 
-        return view('front.cart', array('cart' => $cart, 'title' => ''Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More'', 'description' => '', 'page' => 'home'));
+        return view('front.cart', array('cart' => $cart, 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More', 'description' => '', 'page' => 'home'));
     }
 
     public function checkout() {
-        return view('front.checkout', array('title' => ''Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More'','description' => '','page' => 'home'));
+        return view('front.checkout', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'home'));
     }
 
     public function search($query) {
-        return view('front.products', array('title' => ''Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More'','description' => '','page' => 'products'));
+        return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products'));
     }
 }
