@@ -33,6 +33,7 @@
                     @endif
 
                     <input type="hidden" name="cat_id" value="{{ $bdetails->catid }}" id="catid">
+                    <input type="hidden" name="b_id" value="{{ $bdetails->id }}" id="bid">
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Category <span class="req">*</span> </label>

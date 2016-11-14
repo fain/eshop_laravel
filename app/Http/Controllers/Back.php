@@ -516,11 +516,9 @@ class Back extends Controller
         ]);
 
         if ($validator->fails()){
-            echo $brand;
-            echo 'aaa';
-//            return redirect('/backend/edit_brand/'.$brand->id)
-//                ->withErrors($validator)
-//                ->withInput();
+            return redirect('/backend/edit_brand/'.$request->b_id)
+                ->withErrors($validator)
+                ->withInput();
         }else{
             if($request->sub_category!=""){
                 $cat_id = $request->sub_category;
@@ -536,7 +534,7 @@ class Back extends Controller
                 'updated_at_ip' => $request->ip
             );
 
-            $brand->where('id', $brand->id)->update($brnd);
+            $brand->where('id', $request->b_id)->update($brnd);
 
             $request->session()->flash('success', 'Brand successfully updated!');
             return redirect('/backend/brand/');
