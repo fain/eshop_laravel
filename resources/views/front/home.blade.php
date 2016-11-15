@@ -68,6 +68,7 @@
 
 	<section>
 	    <div class="container">
+
 	        <div class="row">
 	            <div class="col-sm-3">
 	                <div class="left-sidebar">
@@ -146,55 +147,50 @@
 			   <!--Top Selling items-->
 	               <div class="top_selling_items">
 						<h2 class="title text-center">Top Selling Items</h2>
-						
-					
-					<div id="top-selling-item-carousel" class="carousel slide" data-ride="carousel">
-							
-						<div class="carousel-inner">
+										
+						<div id="top-selling-item-carousel" class="carousel slide" data-ride="carousel">
+								
+							<div class="carousel-inner">
 
-							<div class="item active">
+								<div class="item active">
 
-								@foreach ($products as $product)
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{{asset('images/home/top_selling1.jpg')}}" alt="" />
+									@foreach ($products as $product)
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="{{asset('images/home/top_selling1.jpg')}}" alt="" />
+													<h2>${{$product->price}}</h2>
+	                                    			<p>{{$product->name}}</p>
 
-												<!--<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>-->
-												<h2>${{$product->price}}</h2>
-                                    			<p>{{$product->name}}</p>
+	                                    			<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+	                                    			<a href='{{url("products/details/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
 
-                                    			<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                             					<!--<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>-->
-
+												</div>
+												<img src="images/home/sale.png" class="sale" alt="" />
 											</div>
 										</div>
 									</div>
-								</div>@endforeach
+									@endforeach
+
+								</div>
 
 							</div>
 
+
+							 <a class="left top-selling-item-control" href="#top-selling-item-carousel" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+							  <a class="right top-selling-item-control" href="#top-selling-item-carousel" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>	
+
 						</div>
-
-
-						 <a class="left top-selling-item-control" href="#top-selling-item-carousel" data-slide="prev">
-							<i class="fa fa-angle-left"></i>
-						  </a>
-						  <a class="right top-selling-item-control" href="#top-selling-item-carousel" data-slide="next">
-							<i class="fa fa-angle-right"></i>
-						  </a>			
-					</div>
 
 					</div><!--/top-selling_items-->
 
-
-
 	            </div>
 	             
-	           
-
 	            </div>
 	        </div>
 	    </div>
