@@ -109,7 +109,7 @@
 	                                <div class="product-overlay">
 	                                    <div class="overlay-content">
 	                                        <h2>${{$product->price}}</h2>
-	                                        <p>${{$product->name}}</p>
+	                                        <p>{{$product->name}}</p>
 	                                        <form method="POST" action="{{url('cart')}}">
 	                                            {{ csrf_field() }}
 	                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -173,7 +173,7 @@
 										</div>
 									</div>
 								</div>@endforeach
-								
+
 							</div>
 
 						</div>
