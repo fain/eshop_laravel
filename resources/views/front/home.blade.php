@@ -101,7 +101,7 @@
 
 	                                <div class="productinfo text-center">
 	                                    <img src="{{asset('images/shop/product9.jpg')}}" alt="" />
-	                                    <h2>${{$product->price}}</h2>
+	                                    <h2>RM{{$product->price}}</h2>
 	                                    <p>{{$product->name}}</p>
 	                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 	                                    <a href='{{url("products/details/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
@@ -109,7 +109,7 @@
 	                                
 	                                <div class="product-overlay">
 	                                    <div class="overlay-content">
-	                                        <h2>${{$product->price}}</h2>
+	                                        <h2>RM{{$product->price}}</h2>
 	                                        <p>{{$product->name}}</p>
 	                                        <form method="POST" action="{{url('cart')}}">
 	                                            {{ csrf_field() }}
@@ -160,7 +160,7 @@
 											<div class="single-products">
 												<div class="productinfo text-center">
 													<img src="{{asset('images/home/top_selling1.jpg')}}" alt="" />
-													<h2>${{$product->price}}</h2>
+													<h2>RM{{$product->price}}</h2>
 	                                    			<p>{{$product->name}}</p>
 
 	                                    			<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>

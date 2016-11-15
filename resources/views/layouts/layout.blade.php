@@ -138,8 +138,8 @@
 				<div class="row">
 					<div class="col-sm-2">
 						<div class="companyinfo">
-							<h2><span>e</span>-shopper</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+							<h2><span>E-Shop</span></h2>
+							<p>E-Shop is an online shopping portal for its members to purchase products and apply for financing from Koperasi.</p>
 						</div>
 					</div>
 					<div class="col-sm-7">
@@ -206,7 +206,7 @@
 					<div class="col-sm-3">
 						<div class="address">
 							<img src="{{asset('images/home/map.png')}}" alt="" />
-							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+							<p>Angkasa Kuala Lumpur, Malaysia (MY)</p>
 						</div>
 					</div>
 				</div>
