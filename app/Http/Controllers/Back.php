@@ -331,53 +331,6 @@ class Back extends Controller
     }
     /*******************************Categories ends*********************************/
 
-    /*******************************Product Listing start*********************************/
-    public function product_listing() {
-        if(Auth::check()){
-
-            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
-//            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
-
-            return view('back.product_listing',
-                array(
-                    'title' => 'Product Listing',
-                    'page' => 'product_listing',
-                    'basecat_url' => '/backend/product_listing/',
-                    'currmenu' => '',
-                    'mainmenu' => 'product',
-                    'maincat' => $maincat,
-//                    'subcat' => $subcat
-                ));
-        }else{
-//            $request->session()->flush();
-            Auth::logout();
-            Session::flash('warning', 'You have been logged out!');
-            return redirect('/backend/login');
-        }
-
-    }
-
-    public function product_listing_handler(Request $request){
-        $cur_datetime = Carbon::now();
-
-        $products = new Product();
-
-        if($request->sub_category!=""){
-            $cat_id = $request->sub_category;
-        }else{
-            $cat_id = $request->main_category;
-        }
-
-        $products->category_id = $cat_id;
-        $products->category_id = $cat_id;
-
-//        $categories->save();
-
-        $request->session()->flash('success', 'New product successfully inserted!');
-        return redirect('/backend/categories/');
-    }
-    /*******************************Product Listing ends*********************************/
-
     /*******************************Brand starts*********************************/
     public function brand() {
         if(Auth::check()){
@@ -551,4 +504,50 @@ class Back extends Controller
     }
     /*******************************Brand ends*********************************/
 
+    /*******************************Product Listing start*********************************/
+    public function product_listing() {
+        if(Auth::check()){
+
+            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+//            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
+
+            return view('back.product_listing',
+                array(
+                    'title' => 'Product Listing',
+                    'page' => 'product_listing',
+                    'basecat_url' => '/backend/product_listing/',
+                    'currmenu' => '',
+                    'mainmenu' => 'product',
+                    'maincat' => $maincat,
+//                    'subcat' => $subcat
+                ));
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+
+    }
+
+    public function product_listing_handler(Request $request){
+        $cur_datetime = Carbon::now();
+
+        $products = new Product();
+
+        if($request->sub_category!=""){
+            $cat_id = $request->sub_category;
+        }else{
+            $cat_id = $request->main_category;
+        }
+
+        $products->category_id = $cat_id;
+        $products->category_id = $cat_id;
+
+//        $categories->save();
+
+        $request->session()->flash('success', 'New product successfully inserted!');
+        return redirect('/backend/categories/');
+    }
+    /*******************************Product Listing ends*********************************/
 }

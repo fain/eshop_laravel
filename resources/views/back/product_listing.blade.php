@@ -16,11 +16,22 @@
             selector: '#mytextarea',
             height: 230,
             plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
+                'advlist autolink lists link image charmap preview anchor',
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste code'
             ],
             toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+        });
+
+        tinymce.init({
+            selector: '#mytextarea2',
+            height: 150,
+            plugins: [
+                'advlist autolink lists charmap preview',
+                'searchreplace visualblocks code fullscreen',
+                'table contextmenu paste code'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent'
         });
     </script>
 @endsection
@@ -66,16 +77,18 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Brand <span class="req">*</span> </label>
-                <div class="col-md-3">
-                    <select class="form-control" name="main_category" id="main_category">
-                        <option value="">Select Brand</option>
-                        <option value="others">Others</option>
-                        {{--@foreach($maincat as $mc)--}}
+            <div id="brand_box" style="display: none">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Brand <span class="req">*</span> </label>
+                    <div class="col-md-3">
+                        <select class="form-control" name="brand_sel" id="brand_sel">
+                            <option value="">Select Brand</option>
+                            <option value="others">Others</option>
+                            {{--@foreach($maincat as $mc)--}}
                             {{--<option value="{{ $mc->id }}">{{ ucfirst(strtolower($mc->name)) }}</option>--}}
-                        {{--@endforeach--}}
-                    </select>
+                            {{--@endforeach--}}
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -104,11 +117,12 @@
                     <div class="row fileupload-buttonbar">
                         <div class="col-lg-7">
                             <!-- The fileinput-button span is used to style the file input field as button -->
-                                <span class="btn btn-success fileinput-button">
-                                    <i class="glyphicon glyphicon-plus"></i>
-                                    <span>Add files...</span>
-                                    <input type="file" name="files[]" multiple>
-                                </span>
+                            <span class="btn btn-success fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Add files</span>
+                                <input type="file" name="files[]" multiple>
+                            </span>
+                            <!--
                             <button type="submit" class="btn btn-primary start">
                                 <i class="glyphicon glyphicon-upload"></i>
                                 <span>Start upload</span>
@@ -122,8 +136,10 @@
                                 <span>Delete</span>
                             </button>
                             <input type="checkbox" class="toggle">
+                            -->
                             <!-- The global file processing state -->
                             <span class="fileupload-process"></span>
+
                         </div>
                         <!-- The global progress state -->
                         <div class="col-lg-5 fileupload-progress fade">
@@ -137,6 +153,12 @@
                     </div>
                     <!-- The table listing the files available for upload/download -->
                     <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Short Description <span class="req">*</span> </label>
+                <div class="col-md-9">
+                    <textarea id="mytextarea2" name="short_details"></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -1113,19 +1135,71 @@
             });
 
 
-//            $('#promo_set').click(function(){
-//                $("#promo_box").toggle();
-//                alert('a');
-//                var div = document.getElementById('promo_box');
-//
-//                if (div.style.display !== 'none') {
-//                    div.style.display = 'none';
-//                }
-//                else {
-//                    div.style.display = 'block';
-//                }
-//            });
+            $.get('../api/brand-dropdown/' + main_category, function(data){
+                //success data
+                $('#brand_sel').empty();
 
+                $('#brand_sel').append('<option value="">Select Brand</option>');
+
+                if(data==''){
+                    $('#brand_box').hide();
+                }else{
+                    $('#brand_box').show();
+                }
+
+                $.each(data, function(index, brandObj){
+                    var id = brandObj.id;
+                    var name = brandObj.name;
+
+                    $('#brand_sel').append('<option value="'+ id +'">'
+                            + $.ucfirst(name) + '</option>');
+                });
+            });
+        });
+
+        $('#sub_category').on('change', function(e){
+
+            $.ucfirst = function(str) {
+
+                var text = str;
+
+
+                var parts = text.split(' '),
+                        len = parts.length,
+                        i, words = [];
+                for (i = 0; i < len; i++) {
+                    var part = parts[i];
+                    var first = part[0].toUpperCase();
+                    var rest = part.substring(1, part.length);
+                    var word = first + rest;
+                    words.push(word);
+
+                }
+                return words.join(' ');
+            };
+
+            var sub_category = e.target.value;
+
+            $.get('../api/brand-dropdown/' + sub_category, function(data){
+                //success data
+                $('#brand_sel').empty();
+
+                $('#brand_sel').append('<option value="">Select Brand</option>');
+
+                if(data==''){
+                    $('#brand_box').hide();
+                }else{
+                    $('#brand_box').show();
+                }
+
+                $.each(data, function(index, brandObj){
+                    var id = brandObj.id;
+                    var name = brandObj.name;
+
+                    $('#brand_sel').append('<option value="'+ id +'">'
+                            + $.ucfirst(name) + '</option>');
+                });
+            });
         });
 
         function togglepromo(){
@@ -1155,10 +1229,10 @@
             </td>
             <td>
                 {% if (!i && !o.options.autoUpload) { %}
-                    <button class="btn btn-primary start" disabled>
+                    <!--<button class="btn btn-primary start" disabled>
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>Start</span>
-                    </button>
+                    </button>-->
                 {% } %}
                 {% if (!i) { %}
                     <button class="btn btn-warning cancel">

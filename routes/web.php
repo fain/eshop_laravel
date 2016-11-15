@@ -60,8 +60,10 @@ Route::post('/backend/register_seller','Back@register_seller');
 Route::get('/backend/product_listing','Back@product_listing');
 Route::post('/backend/product_listing_handler','Back@product_listing_handler');
 
-//for dropdown
+/*******************************ajax dropdown start*********************************/
 Route::get('/api/category-dropdown/{id}', 'ApiController@categoryDropDownData');
+Route::get('/api/brand-dropdown/{id}', 'ApiController@brandDropDownData');
+/*******************************ajax dropdown end*********************************/
 
 /*******************************categories start*********************************/
 Route::get('/backend/categories','Back@categories');
