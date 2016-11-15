@@ -36,11 +36,12 @@
                     @foreach($brandlist as $index => $bl)
                     <tr>
                         <td>{{ $index+1 }}</td>
-                        <td>{{ $bl->name }}</td>
-                        <td>@if($bl->catname=="00") Others @elseif($bl->catname=="") None @else {{ $bl->catname }} @endif</td>
+                        <td>{{ ucfirst(strtolower($bl->name)) }}</td>
+                        <td>@if($bl->catname=="00") Others @elseif($bl->catname=="") None @else {{ ucfirst(strtolower($bl->catname)) }} @endif</td>
                         <td>@if($bl->status=="" || $bl->status=="N") Not Active @elseif($bl->status=="A") Active @endif</td>
-                        <td><a href="/backend/edit_brand/{{ $bl->id }}" class="btn-sm btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a href="#" class="btn-sm btn-danger" title="delete"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        <td>
+                            <a href="/backend/edit_brand/{{ $bl->id }}" class="btn-sm btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="/backend/delete_brand/{{ $bl->id }}" class="btn-sm btn-danger" title="delete" onclick="return confirm('Are you sure to delete this brand?')"><i class="fa fa-times" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                     @endforeach

@@ -540,6 +540,15 @@ class Back extends Controller
             return redirect('/backend/brand/');
         }
     }
+
+    public function delete_brand($brand){
+        $brands = new Brand();
+
+        $brands->destroy($brand);
+
+        Session::flash('success', 'Brand had been successfully deleted!');
+        return redirect('/backend/brand/');
+    }
     /*******************************Brand ends*********************************/
 
 }

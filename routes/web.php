@@ -78,6 +78,7 @@ Route::get('/backend/new_brand','Back@new_brand');
 Route::post('/backend/new_brand_handler','Back@new_brand_handler');
 Route::get('/backend/edit_brand/{brand}','Back@edit_brand');
 Route::post('/backend/edit_brand_handler','Back@edit_brand_handler');
+Route::get('/backend/delete_brand/{id}', 'Back@delete_brand');
 /*******************************brand end*********************************/
 
 // Auth::routes();
