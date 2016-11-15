@@ -76,7 +76,9 @@
 	            </div>
 
 	            <div class="col-sm-9 padding-right">
-	                <div class="features_items"><!--features_items-->
+
+
+    		 <div class="features_items"><!--features_items-->
 	                    <h2 class="title text-center">Features Items</h2>
 	                    @foreach ($products as $product)
 	                    <div class="col-sm-4">
@@ -103,6 +105,7 @@
 	                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 	                                    <a href='{{url("products/details/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
 	                                </div>
+	                                
 	                                <div class="product-overlay">
 	                                    <div class="overlay-content">
 	                                        <h2>${{$product->price}}</h2>
@@ -119,13 +122,16 @@
 	                                        <a href='{{url("products/details/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
 	                                    </div>
 	                                </div>
+
 	                            </div>
+
 	                            <div class="choose">
 	                                <ul class="nav nav-pills nav-justified">
 	                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
 	                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
 	                                </ul>
 	                            </div>
+
 	                        </div>
 	                    </div>
 	                    @endforeach
@@ -136,6 +142,59 @@
 	                        <li><a href="">»</a></li>
 	                    </ul>
 	                </div><!--features_items-->
+
+			   <!--Top Selling items-->
+	               <div class="top_selling_items">
+						<h2 class="title text-center">Top Selling Items</h2>
+						
+					
+					<div id="top-selling-item-carousel" class="carousel slide" data-ride="carousel">
+							
+						<div class="carousel-inner">
+
+							<div class="item active">
+
+								@foreach ($products as $product)
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src="{{asset('images/home/top_selling1.jpg')}}" alt="" />
+
+												<!--<h2>$56</h2>
+												<p>Easy Polo Black Edition</p>-->
+												<h2>${{$product->price}}</h2>
+                                    			<p>{{$product->name}}</p>
+
+                                    			<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                             					<!--<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>-->
+
+											</div>
+										</div>
+									</div>
+								</div>@endforeach
+								
+							</div>
+
+						</div>
+
+
+						 <a class="left top-selling-item-control" href="#top-selling-item-carousel" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						  </a>
+						  <a class="right top-selling-item-control" href="#top-selling-item-carousel" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						  </a>			
+					</div>
+
+					</div><!--/top-selling_items-->
+
+
+
+	            </div>
+	             
+	           
+
 	            </div>
 	        </div>
 	    </div>
