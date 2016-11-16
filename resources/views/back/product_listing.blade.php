@@ -4,11 +4,6 @@
     <link href="{{asset('css/datepicker.css')}}" rel="stylesheet" type="text/css">
 
     <link href="{{asset('css/backend_custom.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/jquery.fileupload.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/jquery.fileupload-ui.css')}}" rel="stylesheet" type="text/css">
-
-    <noscript><link href="{{asset('css/jquery.fileupload-noscript.css')}}" rel="stylesheet" type="text/css"></noscript>
-    <noscript><link href="{{asset('css/jquery.fileupload-ui-noscript.css')}}" rel="stylesheet" type="text/css"></noscript>
 
     {{--file upload start--}}
     <link href="{{asset('css/fileinput.min.css')}}" media="all" rel="stylesheet" type="text/css" />
@@ -120,52 +115,6 @@
                     <input id="input-id" type="file" class="file" data-preview-file-type="text" name="images[]" multiple data-show-upload="false">
                 </div>
             </div>
-            {{--<div class="form-group">--}}
-                {{--<label class="col-md-2 control-label">Image</label>--}}
-                {{--<div class="col-md-10">--}}
-                    {{--<noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>--}}
-                    {{--<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->--}}
-                    {{--<div class="row fileupload-buttonbar">--}}
-                        {{--<div class="col-lg-7">--}}
-                            {{--<!-- The fileinput-button span is used to style the file input field as button -->--}}
-                            {{--<span class="btn btn-success fileinput-button">--}}
-                                {{--<i class="glyphicon glyphicon-plus"></i>--}}
-                                {{--<span>Add files</span>--}}
-                                {{--<input type="file" name="files[]" multiple>--}}
-                            {{--</span>--}}
-                            {{--<!----}}
-                            {{--<button type="submit" class="btn btn-primary start">--}}
-                                {{--<i class="glyphicon glyphicon-upload"></i>--}}
-                                {{--<span>Start upload</span>--}}
-                            {{--</button>--}}
-                            {{--<button type="reset" class="btn btn-warning cancel">--}}
-                                {{--<i class="glyphicon glyphicon-ban-circle"></i>--}}
-                                {{--<span>Cancel upload</span>--}}
-                            {{--</button>--}}
-                            {{--<button type="button" class="btn btn-danger delete">--}}
-                                {{--<i class="glyphicon glyphicon-trash"></i>--}}
-                                {{--<span>Delete</span>--}}
-                            {{--</button>--}}
-                            {{--<input type="checkbox" class="toggle">--}}
-                            {{---->--}}
-                            {{--<!-- The global file processing state -->--}}
-                            {{--<span class="fileupload-process"></span>--}}
-
-                        {{--</div>--}}
-                        {{--<!-- The global progress state -->--}}
-                        {{--<div class="col-lg-5 fileupload-progress fade">--}}
-                            {{--<!-- The global progress bar -->--}}
-                            {{--<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">--}}
-                                {{--<div class="progress-bar progress-bar-success" style="width:0%;"></div>--}}
-                            {{--</div>--}}
-                            {{--<!-- The extended global progress state -->--}}
-                            {{--<div class="progress-extended">&nbsp;</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<!-- The table listing the files available for upload/download -->--}}
-                    {{--<table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>--}}
-                {{--</div>--}}
-            {{--</div>--}}
             <div class="form-group">
                 <label class="col-md-2 control-label">Short Description <span class="req">*</span> </label>
                 <div class="col-md-9">
@@ -179,19 +128,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label">Sales Type <span class="req">*</span> </label>
+                <label class="col-md-2 control-label">GST Applicable <span class="req">*</span> </label>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type1" value="Standard"> Standard Rate
+                        <input type="radio" name="gst_type" id="gst_type1" value="Standard"> Standard Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type2" value="Exempted" checked="checked"> Exempted Rate
+                        <input type="radio" name="gst_type" id="gst_type2" value="Exempted" checked="checked"> Exempted Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type3" value="Zero"> Zero Rate
+                        <input type="radio" name="gst_type" id="gst_type3" value="Zero"> Zero Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type3" value="Flat"> Flat Rate
+                        <input type="radio" name="gst_type" id="gst_type3" value="Flat"> Flat Rate
                     </label>
                 </div>
             </div>
@@ -200,7 +149,7 @@
                 <label class="col-md-2 control-label">Selling Period</label>
                 <div class="col-md-1">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="selling_period_set" value="Y" checked="checked"> Set
+                        <input type="checkbox" name="selling_period_set" id="selling_period_set" value="Y" checked="checked"> Set
                     </label>
                 </div>
                 <div id="selling_period_cont">
@@ -262,7 +211,7 @@
                 <label class="col-md-2 control-label">Discount by Seller </label>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="discount_set" value="Y"> Set
+                        <input type="checkbox" id="discount_set" name="discount_set" value="Y"> Set
                     </label>
                 </div>
                 <div class="col-md-2">
@@ -278,7 +227,7 @@
             <div class="form-group">
                 <div class="col-md-2 col-md-offset-2">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="discount_period_set" value="set"> Set Period
+                        <input type="checkbox" id="discount_period_set" name="discount_period_set" value="set"> Set Period
                     </label>
                 </div>
                 <div id="discount-period-cont">
@@ -447,7 +396,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Return Policy <span class="req">*</span> </label>
                 <div class="col-md-9">
-                    <textarea class="form-control"></textarea>
+                    <textarea class="form-control" name="return_policy"></textarea>
                 </div>
             </div>
             <hr>
@@ -460,7 +409,9 @@
                     </div>
                 </div>
             </div>
-            <div id="promo_box" style="display:none;">
+
+            <div id="promo_box" style="display:none">
+                <input type="hidden" name="promo_set" id="promo_set" value="">
                 <h3>Promotions or Advertisement</h3>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Promotional Text</label>
@@ -1191,6 +1142,10 @@
 
             var sub_category = e.target.value;
 
+            if(sub_category==""){
+                sub_category = $('#main_category').val();
+            }
+
             $.get('../api/brand-dropdown/' + sub_category, function(data){
                 //success data
                 $('#brand_sel').empty();
@@ -1217,9 +1172,11 @@
             var div = document.getElementById('promo_box');
             if (div.style.display !== 'none') {
                 div.style.display = 'none';
+                $('#promo_set').val("N");
             }
             else {
                 div.style.display = 'block';
+                $('#promo_set').val("Y");
             }
         }
 
@@ -1245,109 +1202,6 @@
     <!-- bootstrap.js below is needed if you wish to zoom and view file content
          in a larger detailed modal dialog -->
     {{--file upload end--}}
-
-    {{--<script id="template-upload" type="text/x-tmpl">--}}
-    {{--{% for (var i=0, file; file=o.files[i]; i++) { %}--}}
-        {{--<tr class="template-upload fade">--}}
-            {{--<td>--}}
-                {{--<span class="preview"></span>--}}
-            {{--</td>--}}
-            {{--<td>--}}
-                {{--<p class="name">{%=file.name%}</p>--}}
-                {{--<input type="file" name="images[]" value="{%=file.name%}">--}}
-                {{--<strong class="error text-danger"></strong>--}}
-            {{--</td>--}}
-            {{--<td>--}}
-                {{--<p class="size">Processing...</p>--}}
-                {{--<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>--}}
-            {{--</td>--}}
-            {{--<td>--}}
-                {{--{% if (!i && !o.options.autoUpload) { %}--}}
-                    {{--<!--<button class="btn btn-primary start" disabled>--}}
-                        {{--<i class="glyphicon glyphicon-upload"></i>--}}
-                        {{--<span>Start</span>--}}
-                    {{--</button>-->--}}
-                {{--{% } %}--}}
-                {{--{% if (!i) { %}--}}
-                    {{--<button class="btn btn-warning cancel">--}}
-                        {{--<i class="glyphicon glyphicon-ban-circle"></i>--}}
-                        {{--<span>Cancel</span>--}}
-                    {{--</button>--}}
-                {{--{% } %}--}}
-            {{--</td>--}}
-        {{--</tr>--}}
-    {{--{% } %}--}}
-    {{--</script>--}}
-    {{--<!-- The template to display files available for download -->--}}
-    {{--<script id="template-download" type="text/x-tmpl">--}}
-    {{--{% for (var i=0, file; file=o.files[i]; i++) { %}--}}
-        {{--<tr class="template-download fade">--}}
-            {{--<td>--}}
-                {{--<span class="preview">--}}
-                    {{--{% if (file.thumbnailUrl) { %}--}}
-                        {{--<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>--}}
-                    {{--{% } %}--}}
-                {{--</span>--}}
-            {{--</td>--}}
-            {{--<td>--}}
-                {{--<p class="name">--}}
-                    {{--{% if (file.url) { %}--}}
-                        {{--<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>--}}
-                    {{--{% } else { %}--}}
-                        {{--<span>{%=file.name%}</span>--}}
-                    {{--{% } %}--}}
-                {{--</p>--}}
-                {{--{% if (file.error) { %}--}}
-                    {{--<div><span class="label label-danger">Error</span> {%=file.error%}</div>--}}
-                {{--{% } %}--}}
-            {{--</td>--}}
-            {{--<td>--}}
-                {{--<span class="size">{%=o.formatFileSize(file.size)%}</span>--}}
-            {{--</td>--}}
-            {{--<td>--}}
-                {{--{% if (file.deleteUrl) { %}--}}
-                    {{--<button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>--}}
-                        {{--<i class="glyphicon glyphicon-trash"></i>--}}
-                        {{--<span>Delete</span>--}}
-                    {{--</button>--}}
-                    {{--<input type="checkbox" name="delete" value="1" class="toggle">--}}
-                {{--{% } else { %}--}}
-                    {{--<button class="btn btn-warning cancel">--}}
-                        {{--<i class="glyphicon glyphicon-ban-circle"></i>--}}
-                        {{--<span>Cancel</span>--}}
-                    {{--</button>--}}
-                {{--{% } %}--}}
-            {{--</td>--}}
-        {{--</tr>--}}
-    {{--{% } %}--}}
-    {{--</script>--}}
-
-    <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-    {{--<script src="{{ asset('js/vendor/jquery.ui.widget.js') }}"></script>--}}
-    <!-- The Templates plugin is included to render the upload/download listings -->
-    {{--<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>--}}
-    <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-    {{--<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>--}}
-    <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-    {{--<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>--}}
-    <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
-    {{--<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>--}}
-    <!-- blueimp Gallery script -->
-    {{--<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>--}}
-
-    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-{{--    <script src="{{ asset('js/jquery.iframe-transport.js') }}"></script>--}}
-    <!-- The basic File Upload plugin -->
-{{--    <script src="{{ asset('js/jquery.fileupload.js') }}"></script>--}}
-    <!-- The File Upload processing plugin -->
-{{--    <script src="{{ asset('js/jquery.fileupload-process.js') }}"></script>--}}
-    <!-- The File Upload image preview & resize plugin -->
-{{--    <script src="{{ asset('js/jquery.fileupload-image.js') }}"></script>--}}
-
-    <!-- The File Upload validation plugin -->
-{{--    <script src="{{ asset('js/jquery.fileupload-validate.js') }}"></script>--}}
-    <!-- The File Upload user interface plugin -->
-{{--    <script src="{{ asset('js/jquery.fileupload-ui.js') }}"></script>--}}
 
     <!-- The main application script -->
     <script src="{{ asset('js/main1.js') }}"></script>

@@ -542,7 +542,6 @@ class Back extends Controller
 
         $products = new Product();
         $product_info = new ProductInfo();
-        $product_image = new ProductImage();
         $promotions = new Promotion();
         $shipping_rate = new ShippingRate();
         $merchant_shipping = new MerchantShipping();
@@ -553,54 +552,196 @@ class Back extends Controller
             $cat_id = $request->main_category;
         }
 
+        //get user id
         $userid = Auth::user()->id;
 
+        /*******************************products start*********************************/
+        $brands = $request->brand_sel;
+        if($brands==""){
+            $brands=0;
+        }
+
         $products->category_id = $cat_id;
-        $products->brand_id = $request->brand_sel;
+        $products->brand_id = $brands;
         $products->merchants_id = $userid;
         $products->created_at = $cur_datetime;
         $products->updated_at = $cur_datetime;
         $products->created_at_ip = $request->ip;
         $products->updated_at_ip = $request->ip;
 
-//        $products->save();
+        $products->save();
+        /*******************************products end*********************************/
 
+        //last insert id in products
         $product_id = $products->id;
 
+        /*******************************product image start*********************************/
         $images = $request->file('images');
         $image_count = count($images);
 
         $uploadcount = 0;
+
+        //make directory
+        mkdir("uploads/". $product_id ."/");
+
         foreach($images as $file) {
             $rules = array('file' => 'required|mimes:png,gif,jpeg'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
             $validator = Validator::make(array('file'=> $file), $rules);
-            if($validator->passes()){
-                $destinationPath = 'uploads';
-                $filename = $file->getClientOriginalName();
-                $upload_success = $file->move($destinationPath, $filename);
 
+            $destinationPath = 'uploads/'.$product_id.'/';
+            $filename = $file->getClientOriginalName();
+
+            if($validator->passes()){
+                $upload_success = $file->move($destinationPath, $filename);
                 $uploadcount ++;
             }
+
+            $product_image = new ProductImage();
+
+            $product_image->products_id = $product_id;
+            $product_image->name = $filename;
+            $product_image->path = $destinationPath;
+            $product_image->created_at = $cur_datetime;
+            $product_image->updated_at = $cur_datetime;
+
+            $product_image->save();
         }
 
         if($uploadcount == $image_count){
 //            Session::flash('success', 'Upload successfully');
 //            return Redirect::to('upload');
         }
-//        $product_image->products_id =
-//
-//        $product_info->products_id = $product_id;
-//        $product_info->type = $request->sales_type;
-//        $product_info->prod_name = $request->name;
-//        $product_info->prod_code = $request->prod_code;
-//        $product_info->prod_img_id = $request->sales_type;
-//        $product_info->type = $request->sales_type;
-//        $product_info->type = $request->sales_type;
-//        $product_info->type = $request->sales_type;
-//        $product_info->type = $request->sales_type;
-//        $product_info->type = $request->sales_type;
-//        $product_info->type = $request->sales_type;
-//        $product_info->type = $request->sales_type;
+        /*******************************product image end*********************************/
+
+        /*******************************product info start*********************************/
+        $product_info->products_id = $product_id;
+        $product_info->type = $request->sales_type;
+        $product_info->prod_name = $request->name;
+
+        $prod_code = $request->prod_code;
+        if($prod_code==""){
+            $prod_code=NULL;
+        }
+
+        $product_info->prod_code = $prod_code;
+        $product_info->short_details = $request->short_details;
+        $product_info->details = $request->details;
+        $product_info->gst_type = $request->gst_type;
+        $product_info->selling_period_set = $request->selling_period_set;
+
+        $period_day = $request->selling_period_day;
+        if($period_day==""){
+            $period_day=NULL;
+        }
+
+        $product_info->selling_period_day = $period_day;
+
+        $period_start = $request->selling_period_start;
+        if($period_start==""){
+            $period_start = NULL;
+        }else{
+            $period_start = date("Y-m-d", strtotime($request->selling_period_start));
+        }
+
+        $product_info->selling_period_start = $period_start;
+
+        $period_end = $request->selling_period_end;
+        if($period_end==""){
+            $period_end = NULL;
+        }else{
+            $period_end = date("Y-m-d", strtotime($request->selling_period_end));
+        }
+
+        $product_info->selling_period_end = $period_end;
+        $product_info->price = $request->price;
+
+        $tier_price = $request->tier_price;
+        if($tier_price==""){
+            $tier_price = NULL;
+        }
+
+        $product_info->tier_price = $tier_price;
+
+        $inst_price = $request->inst_price;
+        if($inst_price==""){
+            $inst_price = NULL;
+        }
+
+        $product_info->inst_price = $inst_price;
+
+        $discount_set = $request->discount_set;
+        if($discount_set==""){
+            $discount_set = 'N';
+        }
+
+        $product_info->discount_set = $discount_set;
+
+        $discount_sel = $request->discount_sel;
+        if($discount_sel==""){
+            $discount_sel=NULL;
+        }
+
+        $product_info->discount_sel = $discount_sel;
+
+        $discount_val = $request->discount_val;
+        if($discount_val==""){
+            $discount_val = NULL;
+        }
+
+        $product_info->discount_val = $discount_val;
+
+        $discount_period_set = $request->discount_period_set;
+        if($discount_period_set==""){
+            $discount_period_set=NULL;
+        }
+
+        $product_info->discount_period_set = $discount_period_set;
+
+        $discount_period_start = $request->discount_period_start;
+        if($discount_period_start==""){
+            $discount_period_start = NULL;
+        }else{
+            $discount_period_start = date("Y-m-d", strtotime($request->discount_period_start));
+        }
+
+        $product_info->discount_period_start = $discount_period_start;
+
+        $discount_period_end = $request->discount_period_end;
+        if($discount_period_end==""){
+            $discount_period_end = NULL;
+        }else{
+            $discount_period_end = date("Y-m-d", strtotime($request->discount_period_end));
+        }
+
+        $product_info->discount_period_end = $discount_period_end;
+        $product_info->weight = $request->weight;
+        $product_info->stock_quantity = $request->stock_quantity;
+
+        //product option belum ada
+        $product_info->option_id = "";
+
+        //merchant shipping belum ada
+        $product_info->merchant_shipping_id = "";
+        $product_info->merchant_return_id = "";
+
+
+        $product_info->shipping_method = $request->shipping_method;
+        $product_info->ship_rate = $request->ship_rate;
+
+        //shipping rate belum buat
+        $product_info->ship_rate_id = "";
+
+        $product_info->after_sale_serv = $request->after_sale_serv;
+        $product_info->return_policy = $request->return_policy;
+        $product_info->promo_set = $request->promo_set;
+
+        //promotion belum ada
+        $product_info->promo_id = "";
+
+        $product_info->created_at = $request->$cur_datetime;
+        $product_info->updated_at = $request->$cur_datetime;
+
+        $product_info->save();
 
         $request->session()->flash('success', 'New product successfully inserted!');
 //        return redirect('/backend/categories/');
