@@ -2,6 +2,7 @@
 
 namespace Eshop\Http\Controllers;
 
+use Eshop\Merchants;
 use Illuminate\Http\Request;
 
 use Eshop\Http\Requests;
@@ -25,6 +26,12 @@ use Eshop\MerchantsInfo;
 use Eshop\MerchantsBusDetails;
 use Eshop\Category;
 use Eshop\Brand;
+use Eshop\Product;
+use Eshop\ProductInfo;
+use Eshop\ProductImage;
+use Eshop\Promotion;
+use Eshop\ShippingRate;
+use Eshop\MerchantShipping;
 
 use Illuminate\Support\Facades\DB;
 
@@ -534,6 +541,11 @@ class Back extends Controller
         $cur_datetime = Carbon::now();
 
         $products = new Product();
+        $product_info = new ProductInfo();
+        $product_image = new ProductImage();
+        $promotions = new Promotion();
+        $shipping_rate = new ShippingRate();
+        $merchant_shipping = new MerchantShipping();
 
         if($request->sub_category!=""){
             $cat_id = $request->sub_category;
@@ -541,13 +553,57 @@ class Back extends Controller
             $cat_id = $request->main_category;
         }
 
-        $products->category_id = $cat_id;
-        $products->category_id = $cat_id;
+        $userid = Auth::user()->id;
 
-//        $categories->save();
+        $products->category_id = $cat_id;
+        $products->brand_id = $request->brand_sel;
+        $products->merchants_id = $userid;
+        $products->created_at = $cur_datetime;
+        $products->updated_at = $cur_datetime;
+        $products->created_at_ip = $request->ip;
+        $products->updated_at_ip = $request->ip;
+
+//        $products->save();
+
+        $product_id = $products->id;
+
+        $images = $request->file('images');
+        $image_count = count($images);
+
+        $uploadcount = 0;
+        foreach($images as $file) {
+            $rules = array('file' => 'required|mimes:png,gif,jpeg'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+            $validator = Validator::make(array('file'=> $file), $rules);
+            if($validator->passes()){
+                $destinationPath = 'uploads';
+                $filename = $file->getClientOriginalName();
+                $upload_success = $file->move($destinationPath, $filename);
+
+                $uploadcount ++;
+            }
+        }
+
+        if($uploadcount == $image_count){
+//            Session::flash('success', 'Upload successfully');
+//            return Redirect::to('upload');
+        }
+//        $product_image->products_id =
+//
+//        $product_info->products_id = $product_id;
+//        $product_info->type = $request->sales_type;
+//        $product_info->prod_name = $request->name;
+//        $product_info->prod_code = $request->prod_code;
+//        $product_info->prod_img_id = $request->sales_type;
+//        $product_info->type = $request->sales_type;
+//        $product_info->type = $request->sales_type;
+//        $product_info->type = $request->sales_type;
+//        $product_info->type = $request->sales_type;
+//        $product_info->type = $request->sales_type;
+//        $product_info->type = $request->sales_type;
+//        $product_info->type = $request->sales_type;
 
         $request->session()->flash('success', 'New product successfully inserted!');
-        return redirect('/backend/categories/');
+//        return redirect('/backend/categories/');
     }
     /*******************************Product Listing ends*********************************/
 }
