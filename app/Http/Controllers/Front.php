@@ -15,6 +15,7 @@ use Eshop\Brand;
 use Eshop\Category;
 use Eshop\Product;
 use Eshop\ProductInfo;
+use Eshop\ShippingRate;
 use Eshop\Http\Controllers\Controller;
 
 //use Illuminate\Support\Facades\Request;
@@ -33,6 +34,7 @@ use DB;
 
 class Front extends Controller {
 
+    var $shipping_rate;
     var $brands;
     var $categories;
     var $products;
@@ -44,6 +46,8 @@ class Front extends Controller {
         $this->brands = Brand::all(array('name'));
         $this->categories = Category::all(array('name'));
         $this->products = Product::all(array('id','name','price'));
+        $this->shipping_rate = ShippingRate::all(array('id'));
+
     }
 
     public function index() {
@@ -54,6 +58,7 @@ class Front extends Controller {
                 'page' => 'home',
                 'brands' => $this->brands,
                 'categories' => $this->categories,
+                'shipping_rate' => $this->shipping_rate,
                 'products' => $this->products
             )
         );
@@ -66,6 +71,7 @@ class Front extends Controller {
                 'page' => 'products', 
                 'brands' => $this->brands, 
                 'categories' => $this->categories, 
+                'shipping_rate' => $this->shipping_rate,
                 'products' => $this->products
             ));
     }
@@ -74,7 +80,8 @@ class Front extends Controller {
         $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-                                ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name')
+                                ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
+                                ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name', 'shipping_rate.*')
                                 ->first();
 
         $brand= Brand::find($id);
@@ -84,7 +91,8 @@ class Front extends Controller {
                 'title' => $product->p_name,'description' => '',
                 'page' => 'products',
                 'brands' => $this->brands, 
-                'categories' => $this->categories,                 
+                'categories' => $this->categories,    
+                'shipping_rate' => $this->shipping_rate,             
                 'products' => $this->products
                 ));
     }
@@ -97,14 +105,6 @@ class Front extends Controller {
    
         return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
     }
-
-// public function product_brands() {
-//     $productsArray = DB::table('products')->get();
-//     $productsCollection = collect($productsArray);
-//     $groupedProducts = $productsCollection->groupBy('brands');
-
-//     return view('front.product_brands')->with('data', $groupedProducts);
-// }
 
     public function blog() {
         $posts = Post::where('id', '>', 0)->paginate(3);
