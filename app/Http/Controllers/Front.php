@@ -14,6 +14,7 @@ use Eshop\Http\Requests;
 use Eshop\Brand;
 use Eshop\Category;
 use Eshop\Product;
+use Eshop\ProductInfo;
 use Eshop\Http\Controllers\Controller;
 
 //use Illuminate\Support\Facades\Request;
@@ -28,11 +29,14 @@ use Session;
 //for timestamp
 use Carbon\Carbon;
 
+use DB;
+
 class Front extends Controller {
 
     var $brands;
     var $categories;
     var $products;
+    var $productinfo;
     var $title;
     var $description;
 
@@ -67,8 +71,22 @@ class Front extends Controller {
     }
 
     public function product_details($id) {
-        $product = Product::find($id);
-        return view('front.product_details', array('product' => $product, 'title' => $product->name,'description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
+        $product = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name')
+                                ->first();
+
+        $brand= Brand::find($id);
+
+        return view('front.product_details', 
+            array('product' => $product, 
+                'title' => $product->p_name,'description' => '',
+                'page' => 'products',
+                'brands' => $this->brands, 
+                'categories' => $this->categories,                 
+                'products' => $this->products
+                ));
     }
 
     public function product_categories($name) {
@@ -76,8 +94,17 @@ class Front extends Controller {
     }
 
     public function product_brands($name, $category = null) {
+   
         return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
     }
+
+// public function product_brands() {
+//     $productsArray = DB::table('products')->get();
+//     $productsCollection = collect($productsArray);
+//     $groupedProducts = $productsCollection->groupBy('brands');
+
+//     return view('front.product_brands')->with('data', $groupedProducts);
+// }
 
     public function blog() {
         $posts = Post::where('id', '>', 0)->paginate(3);
