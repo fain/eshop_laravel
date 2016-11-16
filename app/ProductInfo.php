@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProductInfo extends BaseModel {
     protected $primaryKey = 'id';
     protected $table = 'products_info';
-    protected $fillable = array('products_id', 'type', 'prod_name', 'prod_code', 'prod_img_id',
-                                    'short_details', 'details', 'sales_type', 'selling_period_set',
+    protected $fillable = array('products_id', 'type', 'prod_name', 'prod_code', 
+                                    'short_details', 'details', 'gst_type', 'selling_period_set',
                                     'selling_period_day', 'selling_period_start', 'selling_period_end',
                                     'price', 'tier_price', 'inst_price', 'discount_set', 'discount_sel',
                                     'discount_val', 'discount_period_set', 'discount_period_start',
