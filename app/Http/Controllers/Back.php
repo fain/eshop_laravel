@@ -515,10 +515,47 @@ class Back extends Controller
     public function product_listing() {
         if(Auth::check()){
 
+            $productlist = DB::table('products')
+                ->leftjoin('products_info', 'products.id', '=', 'products_info.products_id')
+                ->leftjoin('product_image', function($q){
+                    $q->on('products.id', '=', 'product_image.products_id')
+                        ->where('product_image.primary_img', '=', 'Y');
+                })
+                ->leftjoin('categories', 'products.category_id', '=', 'categories.id')
+                ->select('products.id as p_id', 'categories.name as prod_cat',
+                         'product_image.id as img_id',
+                         'product_image.name as img_name', 'product_image.path as img_path',
+                         'products_info.prod_name as prod_name', 'products_info.type as prod_type',
+                         'products_info.prod_code as prod_code', 'products_info.price as prod_price',
+                         'products_info.stock_quantity as quantity',
+                         DB::raw('(CASE WHEN products_info.selling_period_end > CURDATE() THEN "Active" ELSE "In-Active" END) AS prod_status'))
+                ->get();
+
+            return view('back.product_listing',
+                array(
+                    'title' => 'Product Listing',
+                    'page' => 'product_listing',
+                    'basecat_url' => '/backend/product_listing/',
+                    'currmenu' => '',
+                    'mainmenu' => 'product',
+                    'product_list' => $productlist
+                ));
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+
+    }
+
+    public function new_product() {
+        if(Auth::check()){
+
             $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
 //            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
 
-            return view('back.product_listing',
+            return view('back.new_product',
                 array(
                     'title' => 'Product Listing',
                     'page' => 'product_listing',
@@ -538,6 +575,9 @@ class Back extends Controller
     }
 
     public function product_listing_handler(Request $request){
+
+        //Jangan lupa buat validation nanti
+
         $cur_datetime = Carbon::now();
 
         $products = new Product();
@@ -718,25 +758,36 @@ class Back extends Controller
         $product_info->stock_quantity = $request->stock_quantity;
 
         //product option belum ada
-        $product_info->option_id = "";
+        $product_info->option_id = NULL;
 
         //merchant shipping belum ada
-        $product_info->merchant_shipping_id = "";
-        $product_info->merchant_return_id = "";
+        $product_info->merchant_shipping_id = NULL;
+        $product_info->merchant_return_id = NULL;
 
 
         $product_info->shipping_method = $request->shipping_method;
         $product_info->ship_rate = $request->ship_rate;
 
         //shipping rate belum buat
-        $product_info->ship_rate_id = "";
+        $product_info->ship_rate_id = NULL;
 
-        $product_info->after_sale_serv = $request->after_sale_serv;
+        $after_sale_serv = $request->after_sale_serv;
+        if($after_sale_serv==""){
+            $after_sale_serv=NULL;
+        }
+
+        $product_info->after_sale_serv = $after_sale_serv;
         $product_info->return_policy = $request->return_policy;
-        $product_info->promo_set = $request->promo_set;
+
+        $promo_set = $request->promo_set;
+        if($promo_set==""){
+            $promo_set='N';
+        }
+
+        $product_info->promo_set = $promo_set;
 
         //promotion belum ada
-        $product_info->promo_id = "";
+        $product_info->promo_id = NULL;
 
         $product_info->created_at = $request->$cur_datetime;
         $product_info->updated_at = $request->$cur_datetime;
@@ -744,7 +795,7 @@ class Back extends Controller
         $product_info->save();
 
         $request->session()->flash('success', 'New product successfully inserted!');
-//        return redirect('/backend/categories/');
+        return redirect('/backend/product_listing/');
     }
     /*******************************Product Listing ends*********************************/
 }

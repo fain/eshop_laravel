@@ -82,6 +82,7 @@ Route::get('/backend/delete_brand/{id}', 'Back@delete_brand');
 
 /*******************************prod listing start*********************************/
 Route::get('/backend/product_listing','Back@product_listing');
+Route::get('/backend/new_product','Back@new_product');
 Route::post('/backend/product_listing_handler','Back@product_listing_handler');
 /*******************************prod listing end*********************************/
 // Auth::routes();
