@@ -15,6 +15,9 @@
                                     <li>
                                         <a href="/backend/categories">Categories</a>
                                     </li>
+                                    <li>
+                                        <a href="/backend/prod_opt_mgmt">Product Option Management</a>
+                                    </li>
                                 @endif
                                 <li>
                                     <a href="/backend/product_listing">Product Listing</a>

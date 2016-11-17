@@ -511,6 +511,32 @@ class Back extends Controller
     }
     /*******************************Brand ends*********************************/
 
+    /*******************************Product Option start*********************************/
+    public function prod_opt_mgmt() {
+        if(Auth::check()){
+            if(Auth::user()->user_group == 'Admin'){
+
+                return view('back.prod_opt_mgmt_main',
+                    array(
+                        'title' => 'Brands',
+                        'page' => 'brand',
+                        'basecat_url' => '/backend/prod_opt_mgmt/',
+                        'currmenu' => ''
+                    ));
+            }else{
+                Session::flash('danger', 'You are not authorized to view this page!');
+                return redirect('/backend/home');
+            }
+
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+    }
+    /*******************************Product Option end*********************************/
+
     /*******************************Product Listing start*********************************/
     public function product_listing() {
         if(Auth::check()){
