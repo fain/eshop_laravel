@@ -639,6 +639,11 @@ class Back extends Controller
             $product_image = new ProductImage();
 
             $product_image->products_id = $product_id;
+
+            if($uploadcount==1){
+                $product_image->primary_img = "Y";
+            }
+
             $product_image->name = $filename;
             $product_image->path = $destinationPath;
             $product_image->created_at = $cur_datetime;
