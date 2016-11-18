@@ -3,6 +3,7 @@
 namespace Eshop\Http\Controllers;
 
 use Eshop\Merchants;
+use Eshop\ProductOptionBridge;
 use Illuminate\Http\Request;
 
 use Eshop\Http\Requests;
@@ -32,6 +33,9 @@ use Eshop\ProductImage;
 use Eshop\Promotion;
 use Eshop\ShippingRate;
 use Eshop\MerchantShipping;
+use Eshop\ProductOption;
+//use Eshop\ProductOptionBridge;
+use Eshop\ProductOptionGroup;
 
 use Illuminate\Support\Facades\DB;
 
@@ -516,12 +520,15 @@ class Back extends Controller
         if(Auth::check()){
             if(Auth::user()->user_group == 'Admin'){
 
+                $prod_opt = ProductOption::where('status', '=', 'A')->get();
+
                 return view('back.prod_opt_mgmt_main',
                     array(
-                        'title' => 'Brands',
-                        'page' => 'brand',
+                        'title' => 'Product Option Management',
+                        'page' => 'prod_opt_mgmt_main',
                         'basecat_url' => '/backend/prod_opt_mgmt/',
-                        'currmenu' => ''
+                        'currmenu' => '',
+                        'prod_opt' => $prod_opt
                     ));
             }else{
                 Session::flash('danger', 'You are not authorized to view this page!');
@@ -534,6 +541,44 @@ class Back extends Controller
             Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
         }
+    }
+
+    public function new_prod_opt(Request $request){
+        $cur_datetime = Carbon::now();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'slug' => 'required|unique:product_option,slug'
+        ]);
+
+        if ($validator->fails()){
+            return redirect('/backend/prod_opt_mgmt')
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+            $prod_opt = new ProductOption();
+
+            $prod_opt->name = $request->name;
+            $prod_opt->slug = $request->slug;
+            $prod_opt->status = $request->status;
+            $prod_opt->updated_at = $cur_datetime;
+            $prod_opt->created_at = $cur_datetime;
+
+            $prod_opt->save();
+
+//            $request->session()->push('active_tabs', 'opt');
+            $request->session()->flash('success', 'New Product Option successfully inserted!');
+            return redirect('/backend/prod_opt_mgmt')->with('active_tabs', 'opt');
+        }
+    }
+
+    public function delete_prod_opt($prod_opt){
+        $prodopt = new ProductOption();
+
+        $prodopt->destroy($prod_opt);
+
+        Session::flash('success', 'Product Option had been successfully deleted!');
+        return redirect('/backend/prod_opt_mgmt/')->with('active_tabs', 'opt');;
     }
     /*******************************Product Option end*********************************/
 
