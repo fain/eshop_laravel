@@ -1603,7 +1603,6 @@ if (typeof jQuery === 'undefined') {
   $.fn.popover             = Plugin
   $.fn.popover.Constructor = Popover
 
-
   // POPOVER NO CONFLICT
   // ===================
 

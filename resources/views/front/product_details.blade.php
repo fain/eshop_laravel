@@ -1,5 +1,4 @@
 @extends('layouts.layout')
-
 @section('content')
 <section>
 	<div class="container">
@@ -56,33 +55,103 @@
 									</button></a>
 								</span>
 								
-								
-								<p><b>Availability: </b>{{$product->stock_quantity}}</p>
-								<p><b>Condition: </b>{{$product->type}}</p>
-								<p><b>Brand: </b>{{$product->name}}</p>
-									<div class="shipping-information">
-										<tr><td><b>Shipping: </b> West Malaysia	  {{$product->wm_rm}}</td></tr>
-										<tr><td>Sabah</td></tr>											
-									</div>
-								</div><!--/product-information-->
+									<table class="table table-borderless">
+									    <tbody>
+									        <tr>
+									            <th scope class="">Availability</th>
+									            <td class="">{{$product->stock_quantity}}</td>
+									        </tr>
+									        <tr>
+												<th scope class="">Condition</th>
+									            <td class="">{{$product->type}}</td>          
+									      	</tr>
+									      	<tr>
+												<th scope class="">Brand</th>
+									            <td class="">{{$product->name}}</td>          
+									      	</tr>
+									      	<tr>
+												<th scope class="">Shipping
+
+									            <td class="">West Malaysia RM{{$product->wm_rm}}</td>  
+	   								            <td class="">Sabah RM{{$product->sbh_rm}}</td>          
+									            <td class="">Sarawak RM{{$product->srk_rm}}</td>          
+	        									
+									      	</tr>
+									    </tbody>
+									</table>
+							</div><!--/product-information-->
 						</div>
-						
 					</div><!--/product-details-->
 
 					<div class="category-tab shop-details-tab"><!--category-tab-->
-					<div class="col-sm-12">
-						<ul class="nav nav-tabs">
-							<li><a href="#details" data-toggle="tab">Product Details</a></li>
-							<li><a href="#companyprofile" data-toggle="tab">Reviews/Comments</a></li>
-							<li><a href="#tag" data-toggle="tab">Product Q & A</a></li>
-							<li class="active"><a href="#reviews" data-toggle="tab">Sell/Return/Exchange</a></li>
-						</ul>
-					</div>
-			
-				</div><!--/category-tab-->
+						<div class="col-sm-12">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#details" data-toggle="tab">Product Details</a></li>
+								<li><a href="#reviewscomments" data-toggle="tab">Reviews/Comments</a></li>
+								<li><a href="#qa" data-toggle="tab">Product Q & A</a></li>
+								<li><a href="#sellreturnexchange" data-toggle="tab">Sell/Return/Exchange</a></li>
+							</ul>
+						</div>
 
+						<div class="panel-body">
+		                    <div class="tab-content">
+		                        <div class="tab-pane fade in active" id="details">
+								<div class="col-lg-12">
+									<table class="table table-no-hover">
+										<h4>Basic Information of a Product</h4>
+									    <tbody>
+									        <tr>
+									            <th scope class="">Product Status/Sales Type</th>
+									            <td class="">{{$product->stock_quantity}}</td>
+									            <th scope class="">Product No.</th>
+									            <td class="">{{$product->prod_code}}</td> 
+									        </tr>
+									         <tr>
+												<th scope class="">Brand</th>
+									            <td class="">{{$product->name}}</td>    
+												<th scope class="">Country of Origin</th>
+									            <td class="">{{$product->name}}</td>          
+									      	</tr>
+									        <tr>
+												<th scope class="">Weight(kg)</th>
+									            <td colspan=3 class="">{{$product->weight}} kg</td>         
+									      	</tr>
+									      	<tr>
+												<th scope class="">Shipping Method</th>
+									            <td colspan=3class="">{{$product->shipping_method}}</td>          
+									      	</tr>
+									      		<tr>
+												<th scope class="">GST Applicable</th>
+									            <td colspan=3class="">{{$product->name}}</td>          
+									      	</tr>
+									      		<tr>
+												<th scope class="">Tax Invoice</th>
+									            <td colspan=3 class="">{{$product->name}}</td>          
+									      	</tr>
+									      		<tr>
+												<th scope class="">After Sale Service</th>
+									            <td colspan=3 class="">{{$product->after_sale_serv}}</td>          
+									      	</tr>
+									    </tbody>
+									</table> 
+
+								</div>
+
+		                        </div>
+		                        <div class="tab-pane fade" id="reviewscomments">review comment</div>
+		                        <div class="tab-pane fade" id="qa">q and a</div>
+		                        <div class="tab-pane fade" id="sellreturnexchange">sell</div>
+		                    </div>
+		                </div>
+					</div><!--/category-tab-->
+				<ul>
+					<li>Angkasa E-Shop receives report on products to protect buyers’ right. For further information please contact us. Reportgo</li>
+					<li>For order related and other issues, kindly click on E-mail Enquiry here.  E-mailEnquiry</li>
+				</ul>
 			</div>
 	</div>
 </div>
+
+
 </section>
 @endsection
