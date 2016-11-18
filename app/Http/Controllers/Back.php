@@ -520,7 +520,7 @@ class Back extends Controller
         if(Auth::check()){
             if(Auth::user()->user_group == 'Admin'){
 
-                $prod_opt = ProductOption::where('status', '=', 'A')->get();
+                $prod_opt = ProductOption::get();
 
                 return view('back.prod_opt_mgmt_main',
                     array(
@@ -572,13 +572,30 @@ class Back extends Controller
         }
     }
 
+    public function edit_prod_opt(Request $request, ProductOption $prod_opt){
+        $cur_datetime = Carbon::now();
+
+        $prodopt = array(
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'status' => $request->status,
+            'updated_at' => $cur_datetime
+        );
+
+        $prod_opt->where('id', $request->id)->update($prodopt);
+
+        $request->session()->flash('success', 'Product Option successfully updated!');
+        return redirect('/backend/prod_opt_mgmt/')->with('active_tabs', 'opt');
+
+    }
+
     public function delete_prod_opt($prod_opt){
         $prodopt = new ProductOption();
 
         $prodopt->destroy($prod_opt);
 
         Session::flash('success', 'Product Option had been successfully deleted!');
-        return redirect('/backend/prod_opt_mgmt/')->with('active_tabs', 'opt');;
+        return redirect('/backend/prod_opt_mgmt/')->with('active_tabs', 'opt');
     }
     /*******************************Product Option end*********************************/
 
