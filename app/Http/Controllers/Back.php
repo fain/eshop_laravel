@@ -34,7 +34,6 @@ use Eshop\Promotion;
 use Eshop\ShippingRate;
 use Eshop\MerchantShipping;
 use Eshop\ProductOption;
-//use Eshop\ProductOptionBridge;
 use Eshop\ProductOptionGroup;
 
 use Illuminate\Support\Facades\DB;
@@ -522,13 +521,16 @@ class Back extends Controller
 
                 $prod_opt = ProductOption::get();
 
+                $prod_opt_grp = ProductOptionGroup::get();
+
                 return view('back.prod_opt_mgmt_main',
                     array(
                         'title' => 'Product Option Management',
                         'page' => 'prod_opt_mgmt_main',
                         'basecat_url' => '/backend/prod_opt_mgmt/',
                         'currmenu' => '',
-                        'prod_opt' => $prod_opt
+                        'prod_opt' => $prod_opt,
+                        'prod_opt_grp' => $prod_opt_grp
                     ));
             }else{
                 Session::flash('danger', 'You are not authorized to view this page!');
@@ -547,14 +549,14 @@ class Back extends Controller
         $cur_datetime = Carbon::now();
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
             'slug' => 'required|unique:product_option,slug'
         ]);
 
         if ($validator->fails()){
             return redirect('/backend/prod_opt_mgmt')
                 ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->with('active_tabs', 'opt');
         }else{
             $prod_opt = new ProductOption();
 
@@ -596,6 +598,22 @@ class Back extends Controller
 
         Session::flash('success', 'Product Option had been successfully deleted!');
         return redirect('/backend/prod_opt_mgmt/')->with('active_tabs', 'opt');
+    }
+
+    public function new_prod_opt_grp(Request $request){
+        $cur_datetime = Carbon::now();
+
+        $prod_opt_grp = new ProductOptionGroup();
+
+        $prod_opt_grp->name = $request->name;
+        $prod_opt_grp->status = $request->status;
+        $prod_opt_grp->updated_at = $cur_datetime;
+        $prod_opt_grp->created_at = $cur_datetime;
+
+        $prod_opt_grp->save();
+
+        $request->session()->flash('success', 'New Product Option successfully inserted!');
+        return redirect('/backend/prod_opt_mgmt');
     }
     /*******************************Product Option end*********************************/
 

@@ -240,3 +240,7 @@ li.maincat a:hover, li.maincat a:focus{
 .navbar-default .navbar-brand{
     color: #337ab7;
 }
+
+a.btn-sm:hover, a.btn-sm:focus{
+    text-decoration: none;
+}
