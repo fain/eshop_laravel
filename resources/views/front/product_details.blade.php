@@ -12,16 +12,23 @@
 			<div class="col-sm-9 padding-right">
 			<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
-							<div class="view-product">
-								<img src="{{asset('images/product-details/1.jpg')}}" alt="" />
-								<h3>ZOOM</h3>
+							<div class="mag">
+					               <img data-toggle="magnify" src="{{asset('images/product-details/1.jpg')}}" alt="" />
 							</div>
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
 								
 								  <!-- Wrapper for slides -->
 								    <div class="carousel-inner">
 										<div class="item active">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt=""></a>
+										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt="" ></a>
+										</div>
+
+										<div class="item">
+										  <a href="#two"><img src="{{asset('images/product-details/similar2.jpg')}}" alt="" id="two"></a>
+										</div>
+
+										<div class="item">
+										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
 										</div>
 									</div>
 
@@ -55,7 +62,7 @@
 									</button></a>
 								</span>
 								
-									<table class="table table-borderless">
+									<table class="table table-borderless-short-desc">
 									    <tbody>
 									        <tr>
 									            <th scope class="">Availability</th>
@@ -311,122 +318,129 @@
 												      	</tr>
 												      	<tr>
 															<th scope class="">Notice on Return/Exchange</th>
-												            <td colspan=3class="">{{$product->shipping_method}}</td>          
+												            <td colspan=3 class="">{{$product->shipping_method}}</td>          
 												      	</tr>
 												    </tbody>
 												</table> 
 
-												<!-- <table class="table table-no-hover">
-													<h4>Return / Exchange Policy</h4>
-													 <thead> 
-													    	<p>
-															<tr>
-													            <th scope class="">Cancellation</th>
-													            <th scope class="">Return</th>
-																<th scope class="">Exchange</th>
-													        </tr>
-													    </thead>
-													    <tbody id="comments">
-													         <tr>
-													            <td class="">
-													            <ul>
-													            	<li>saf</li>
-													            	<li>fsfs</li>
-													            </ul>
-													            </td>          
-													            <td class="">{{$product->name}}</td>          
-													            <td class="">{{$product->name}}</td>          
-													      	</tr>
-													    </tbody>
-
-												</table> -->
 
 												<h4>Return / Exchange Policy</h4>
+													
+													<div class = "col-md-4 justify-content">
+													   <div class = "list-group-item active">
+													      <h4 class = "list-group-item-heading">
+													         Cancellation
+													      </h4>
+													   </div>
+													   
+													   <div class="list-group-item">												      
+													      <p class = "list-group-item-text">
+															<div class="well">
+															<ul>
+																<li>Request for cancellation if product has not been dispatched after payment completion.</li>
+													  		</ul>
+													  		</div>
+														 </p>
+														</div>
+													</div>
 
-												<div class = "list-group">
-												   <div class = "list-group-item active">
-												      <h4 class = "list-group-item-heading">
-												         Cancellation
-												      </h4>
-												   </div>
-												   
-												   <div class = "list-group-item">
-												      <h5 class = "list-group-item-heading">Request for cancellation if product has not been dispatched after payment completion.</h5>
-												   </div>
-
-												   <div class="list-group-item">
-												      <h5 class = "list-group-item-heading">
-													  How to Request for Cancellation/Return/Exchange?</h5>
-												      <p class = "list-group-item-text">
-														<div class="well">
-														<ul>
-															<li>You can request for cancellation after completing payment and if product has not been dispatched by then, cancellation request is approved and you can receive refund.
-															But, in case seller has already dispatched product, cancellation request can be rejected.</li>
-															<li>You can request for return after obtaining product, you should send the product in question to seller.
-															After seller checks if returned product is flawed, and approves your request, return is completed and payment is refunded.</li>
-															<li>You can request for exchange if wrong product is shipped, you should send the product in question to seller.
-															After seller checks if returned product is flawed, seller approves your request, and re-sends new product.</li>											      
-														</p>
-												  		</ul>
-												  		</div>
-												   </div>
-												   
-												   
-												   
-												</div>
-
-												<div class = "list-group">
-												   <div class = "list-group-item active">
-												      <h4 class = "list-group-item-heading">
-												         Return
-												      </h4>
-												   </div>
-												   
-												   <div class="list-group-item">
-												      <h5 class = "list-group-item-heading">
-												         Return Policy
-												      </h5>
-												      
-												      <p class = "list-group-item-text">
-														<div class="well">
-														<ul>
+													<div class = "col-md-4 justify-content">
+													   <div class = "list-group-item active">
+													      <h4 class = "list-group-item-heading">
+													         Return
+													      </h4>
+													   </div>
+													   
+													   <div class="list-group-item">												      
+													      <p class = "list-group-item-text">
+															<div class="well">
+															<ul>
 															<li>Request for return within 7 calendar days following delivery date.</li>
 															<li>Check seller’s approval on buyer’s request.</li>
-															<li>You can request for exchange if wrong product is shipped, you should send the product in question to seller.</li>
-															<li>Buyer sends product in question to seller.</li>
-															<li>Seller receives and checks returned product</li>
+															<li>Request for exchange if wrong product is shipped. Send the product in question to seller.</li>
+															<li>Seller receives and checks returned product.</li>
 															<li>Seller approves return and return is completed.</li>
-														</p>
-												  		</ul>
-												  		</div>
-												   </div>
-												   
+													  		</ul>
+													  		</div>
+														 </p>
+														</div>
+													</div>
+
+													<div class = "col-md-4 justify-content">
+													   <div class = "list-group-item active">
+													      <h4 class = "list-group-item-heading">
+													         Exchange
+													      </h4>
+													   </div>
+													   
+													   <div class="list-group-item">												      
+													      <p class = "list-group-item-text">
+															<div class="well">
+															<ul>
+																<li>Request for exchange within 7 calendar days following receipt of delivery.</li>
+																<li>Check seller’s approval on buyer’s request.</li>
+																<li>Buyer can sends product in question to seller.</li>
+																<li>Seller receives and checks for returned product.</li>
+																<li>Seller can send new product to buyer and buyer receives it. Then exchange process is completed.</li>
+													  	 	</ul>
+													  		</div>
+														 </p>
+														</div>
+													</div>
+<p><i class="glyphicon glyphicon-exclamation-sign text-danger" style="font-size:18px;"></i>As Mobile Top-up products are directly reloaded on your cell phone number, returns/exchanges are not available. Please take note of this before purchase, and enter your cell phone number correctly.</p>
+
+													<div class="list-group">
+	   													<div class = "list-group-item active">
+													      <h4 class = "list-group-item-heading">
+														   How to Request for Cancellation/Return/Exchange?
+													      </h4>
+													   	</div>
+
+													   <div class="list-group-item">
+														<p class = "list-group-item-text">
+															<div class="well">
+															<ul>
+																<li>You request for cancellation after completing payment. If product has not been dispatched by then, cancellation request is approved and you can receive refund.
+																But, in case seller has already dispatched product, cancellation request can be rejected.</li>
+																<li>You request for return after obtaining product, you should send the product in question to seller.
+																After seller checks if returned product is flawed, and approves your request, return is completed and payment is refunded.</li>
+																<li>You request for exchange if wrong product is shipped, you should send the product in question to seller.
+																After seller checks if returned product is flawed, seller approves your request, and re-sends new product.</li>											      
+															</p>
+													  		</ul>
+													  		</div>
+													   </div>
+
+													    <div class="list-group-item active">
+															<h4 class = "list-group-item-heading">
+															   Criteria for Return/Exchange?
+														    </h4>
+														</div>
+
+													      <div class = "list-group-item">
+   															<p class = "list-group-item-text">
+															<div class="well">
+																<h5>You can request for return/exchange within 7 calendar days following delivery date. But return/exchange request cannot be made in following cases:
+																</h5>
+																<ul>
+																	<li>When request due to change of mind is made after 7 calendar days following delivery date.</li>
+																	<li>When product is used, destroyed or damaged.</li>
+																	<li>When tag attached to product is removed or package of product is opened and product value is damaged.</li>
+																	<li>When sealed package is opened or packaging materials are lost.</li>
+																	<li>When too much time has passed and product value has so decreased that its re-sale is not possible.</li>
+																	<li>When return/exchange request is made for customized product such as hand-made shoes or accessories.</li>
+																	<li>When components of product (including free gift) have been used or lost.</li>
+																	<li>When buyer did not follow instructions included in product.</li>
+														  		</ul>
+														  	</div>
+													  	 	</p>
+													  		
+													   </div>
+
+													</div> 
+													
 												</div>
-												   
-												<div class = "list-group">
-												   <div class = "list-group-item active">
-												      <h4 class = "list-group-item-heading">
-												         Exchange
-												      </h4>
-												   </div>
-												   
-												   <div class="list-group-item">
-												      <h4 class = "list-group-item-heading">
-												     fsdfafsa
-												      </h4>
-												      
-												      <p class = "list-group-item-text">
-												         Exchange 
-												     </p>
-												   </div>
-												   
-												   <div class = "list-group-item">
-												      <h4 class = "list-group-item-heading">24*7 support</h4>
-												      <p class = "list-group-item-text">We provide 24*7 support.</p>
-												   </div>
-												   
-												</div>
-												</div>
+
 					                        </div>
 					                    </div>
 					                </div>

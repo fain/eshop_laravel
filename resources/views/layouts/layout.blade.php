@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -29,6 +30,17 @@
     {{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">--}}
     {{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">--}}
     {{--<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">--}}
+
+
+
+
+   <!-- Zoom product --><!-- 
+    <script src="{{asset('js/jquery.elevatezoom.js')}}"></script>
+    <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
+ -->
+
+
+
 </head><!--/head-->
 
 <body>
@@ -299,6 +311,8 @@
 	<script src="{{asset('js/price-range.js')}}"></script>
     <script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
+
+    <script src="{{asset('js/zoom_product.js')}}"></script>
 
 	@yield('js_content')
 </body>
