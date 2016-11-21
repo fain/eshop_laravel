@@ -1,5 +1,7 @@
 <div class="form-group">
-    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addProdOpt"><i class="fa fa-plus" aria-hidden="true"></i> Add New Product Option</a>
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addProdOpt" onclick="addProduct()">
+        <i class="fa fa-plus" aria-hidden="true"></i> Add New Product Option
+    </a>
 </div>
 @if(count($prod_opt)==0)
     <div class="alert alert-warning">No Product Options Available!</div>
@@ -22,7 +24,7 @@
                 <td>{{ $po->slug }}</td>
                 <td>@if($po->status=='A') Active @else In-Active @endif</td>
                 <td>
-                    <a href="#" class="btn-sm btn-info" title="Edit" data-toggle="modal" data-target="#editProdOpt" onclick="editProduct('{{ $po->id }}', '{{ $po->name }}', '{{ $po->slug }}', '{{ $po->status }}')"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="#" class="btn-sm btn-info" title="Edit" data-toggle="modal" data-target="#addProdOpt" onclick="editProduct('{{ $po->id }}', '{{ $po->name }}', '{{ $po->slug }}', '{{ $po->status }}')"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     <a href="/backend/delete_prod_opt/{{ $po->id }}" class="btn-sm btn-danger" title="delete" onclick="return confirm('Are you sure to delete this product option?')"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </td>
             </tr>
@@ -31,28 +33,34 @@
     </table>
 @endif
 
-<!---------------------------------add product option modal start------------------------------>
+<!---------------------------------product option modal start------------------------------>
 <div class="modal fade" id="addProdOpt" tabindex="-1" role="dialog" aria-labelledby="addProdOptLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addProdOptLabel">Add New Product Option</h4>
+                <h4 class="modal-title" id="addProdOptLabel">Label</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="post" action="/backend/new_prod_opt" id="new_prod_opt">
+                <form class="form-horizontal" method="post" id="new_prod_opt" onsubmit="return validateForm()">
                     {{ csrf_field() }}
-                    <input type="hidden" name="active_tab" value="opt">
-                    <div class="form-group">
+                    <input type="hidden" name="id" id="opt_id">
+                    <div class="form-group " id="name_group">
                         <label class="control-label col-md-2">Name</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="name" id="opt_name">
                         </div>
+                        <div class="col-md-10 col-md-offset-2" id="name_group_error" style="display: none">
+                            <span class="help-block"><strong>Name field is required</strong></span>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group " id="slug_group">
                         <label class="control-label col-md-2">Slug</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" name="slug">
+                            <input type="text" class="form-control" name="slug" id="opt_slug">
+                        </div>
+                        <div class="col-md-10 col-md-offset-2" id="slug_group_error" style="display: none">
+                            <span class="help-block"><strong>Slug field is required</strong></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -73,84 +81,74 @@
         </div>
     </div>
 </div>
-<!---------------------------------add product option modal end------------------------------>
-
-<!---------------------------------edit product option modal start------------------------------>
-<div class="modal fade" id="editProdOpt" tabindex="-1" role="dialog" aria-labelledby="editProdOptLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="editProdOptLabel">Edit Product Option</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="post" action="/backend/edit_prod_opt" id="edit_prod_opt" name="edit_prod_opt" onsubmit="return validateForm()">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="id" id="opt_id">
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Name</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="name" id="edit_opt_name" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Slug</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" name="slug" id="opt_slug" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Status</label>
-                        <div class="col-md-3">
-                            <select class="form-control" name="status" id="opt_status">
-                                <option value="A">Active</option>
-                                <option value="N">In-Active</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="updateBtn">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!---------------------------------edit product option modal end------------------------------>
+<!---------------------------------product option modal end------------------------------>
 
 @section('js_section')
     <script>
+        function editProduct(a, b, c, d){
+            $("#addProdOptLabel").text('Edit New Product Option');
+
+            $("#opt_id").val(a);
+            $("#opt_name").val(b);
+            $("#opt_slug").val(c);
+            $("#opt_status").val(d);
+
+            $('#new_prod_opt').attr('action', '/backend/edit_prod_opt');
+            $("#submitBtn").text('Update');
+
+            $("#name_group").removeClass('has-error');
+            $("#slug_group").removeClass('has-error');
+        }
+
+        function addProduct(){
+            $("#addProdOptLabel").text('Add New Product Option');
+
+            $("#opt_id").val('');
+            $("#opt_name").val('');
+            $("#opt_slug").val('');
+            $("#opt_status").val('');
+
+            $('#new_prod_opt').attr('action', '/backend/new_prod_opt');
+            $("#submitBtn").text('Submit');
+
+            $("#name_group").removeClass('has-error');
+            $("#slug_group").removeClass('has-error');
+        }
+
+        function validateForm() {
+            var x = $("#opt_name").val();
+            var y = $("#opt_slug").val();
+
+            if (x == "" && y == "") {
+                $("#name_group").addClass('has-error');
+                $('#opt_name').focus();
+                $("#name_group_error").show();
+
+                $("#slug_group").addClass('has-error');
+                $("#slug_group_error").show();
+                return false;
+            }
+
+            if (x == "") {
+                $("#name_group").addClass('has-error');
+                $('#opt_name').focus();
+                $("#name_group_error").show();
+                return false;
+            }
+
+            if (y == "") {
+                $("#slug_group").addClass('has-error');
+                $('#opt_slug').focus();
+                $("#slug_group_error").show();
+                return false;
+            }
+        }
+
         $('#addProdOpt').on('shown.bs.modal', function () {
             $('#opt_name').focus();
 
             $("#submitBtn").click(function(e){
                 $("#new_prod_opt").submit();
-            });
-        })
-    </script>
-
-    <script>
-        function editProduct(a, b, c, d){
-            $("#opt_id").val(a);
-            $("#edit_opt_name").val(b);
-            $("#opt_slug").val(c);
-            $("#opt_status").val(d);
-        }
-
-        function validateForm() {
-            var x = $("#edit_opt_name").value;
-            if (x == "") {
-                alert("Name must be filled out");
-                return false;
-            }
-        }
-
-        $('#editProdOpt').on('shown.bs.modal', function () {
-            $('#edit_opt_name').focus();
-
-            $("#updateBtn").click(function(e){
-                $("#edit_prod_opt").submit();
             });
         })
     </script>
