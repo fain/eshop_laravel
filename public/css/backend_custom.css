@@ -244,3 +244,13 @@ li.maincat a:hover, li.maincat a:focus{
 a.btn-sm:hover, a.btn-sm:focus{
     text-decoration: none;
 }
+
+a.btn-add{
+    color: #337ab7;
+    font-size: 25px;
+}
+
+a.btn-remove{
+    color: #d9534f;
+    font-size: 25px;
+}

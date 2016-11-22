@@ -155,11 +155,8 @@
         function addProductGroup(){
             $("#addProdOptGrpLabel").text('Add New Product Option Group');
 
-            $("#opt_grp_id").val('');
             $("#opt_grp_name").val('');
             $("#opt_grp_status").val('A');
-
-            $('#new_prod_grp_opt').attr('action', '/backend/new_prod_opt_grp');
             $("#submiGrptBtn").text('Submit');
 
             $("#grp_name_group").removeClass('has-error');
@@ -174,6 +171,98 @@
                 $('#opt_grp_name').focus();
                 $("#grp_name_group_error").show();
                 return false;
+            }
+        }
+
+        function validateFormGrpEdit() {
+            var x = $("#opt_grp_name_edit").val();
+
+            if (x == "") {
+                $("#grp_name_group_edit").addClass('has-error');
+                $('#opt_grp_name_edit').focus();
+                $("#grp_name_group_error_edit").show();
+                return false;
+            }
+        }
+
+        $('#add_field_btn').click(function(e) {
+            e.preventDefault();
+            //do other stuff when a click happens
+        });
+
+        $('#delete_field_btn').click(function(e) {
+            e.preventDefault();
+            //do other stuff when a click happens
+        });
+
+        function addField (argument) {
+            var myTable = document.getElementById("prod_opt_table");
+            var currentIndex = myTable.rows.length;
+
+            if(currentIndex==2){
+                var currentRow = myTable.insertRow(1);
+            }else{
+                var currentRow = myTable.insertRow(currentIndex-1);
+            }
+
+            var nameBox = document.createElement("select");
+            nameBox.setAttribute("name", "opt" + (currentIndex-1));
+            nameBox.setAttribute("id", "opt" + (currentIndex-1));
+            nameBox.setAttribute("class", "form-control");
+
+            var chosen_item = false;
+
+            var sel_val = document.getElementById("opt" + (currentIndex-2));
+            if(sel_val!=null){
+                alert(sel_val.value);
+            }
+
+
+            var arr = <?php echo json_encode($dropdown); ?>;
+            var len = (arr.length)-1;
+
+            for(var i=0; i<=len; i++){
+                var option = document.createElement("option");
+
+                $.each(arr[i], function(key, value){
+                    option.value = key;
+                    option.text = value;
+                });
+
+                nameBox.add(option);
+            }
+
+
+//            var addRowBox = document.createElement("input");
+//            addRowBox.setAttribute("type", "button");
+//            addRowBox.setAttribute("value", "Delete");
+////            addRowBox.setAttribute("onclick", "addField();");
+//            addRowBox.setAttribute("class", "btn-sm btn-danger disabled");
+
+            var index = currentRow.insertCell(0);
+            index.innerHTML = currentIndex-1;
+
+            var name = currentRow.insertCell(1);
+            name.appendChild(nameBox);
+
+            var act_btn = currentRow.insertCell(2);
+//            act_btn.appendChild(addRowBox);
+            act_btn.innerHTML = "";
+        }
+
+        function deleteField() {
+//            var myTable = document.getElementById("prod_opt_table");
+//            var currentIndex = myTable.rows.length;
+//
+//            var currentRow = myTable.deleteRow(e-1);
+
+            var myTable = document.getElementById("prod_opt_table");
+            var currentIndex = myTable.rows.length;
+
+            if(currentIndex==2){
+                var currentRow = myTable.deleteRow(1);
+            }else{
+                var currentRow = myTable.deleteRow(currentIndex-2);
             }
         }
     </script>

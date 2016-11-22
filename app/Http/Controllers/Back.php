@@ -615,6 +615,71 @@ class Back extends Controller
         $request->session()->flash('success', 'New Product Option successfully inserted!');
         return redirect('/backend/prod_opt_mgmt');
     }
+
+    public function prod_opt_mgmt_edit($id) {
+        if(Auth::check()){
+            if(Auth::user()->user_group == 'Admin'){
+
+                $prod_opt = ProductOption::get();
+
+                $prod_opt_grp = ProductOptionGroup::get();
+
+                $prod_group_detail = ProductOptionGroup::where('id', '=', $id)->first();
+
+                $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
+
+                foreach($prod_opt_actv as $poa){
+                    $arr[] = array($poa->id => $poa->name);
+                }
+
+                return view('back.prod_opt_mgmt_main',
+                    array(
+                        'title' => 'Product Option Management',
+                        'page' => 'prod_opt_mgmt_main',
+                        'basecat_url' => '/backend/prod_opt_mgmt/',
+                        'currmenu' => '',
+                        'prod_opt' => $prod_opt,
+                        'prod_opt_grp' => $prod_opt_grp,
+                        'prod_group_detail' => $prod_group_detail,
+                        'prod_opt_actv' => $prod_opt_actv,
+                        'dropdown' => $arr
+                    ));
+            }else{
+                Session::flash('danger', 'You are not authorized to view this page!');
+                return redirect('/backend/home');
+            }
+
+        }else{
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+    }
+
+    public function prod_opt_mgmt_update_handler(Request $request, ProductOptionGroup $prod_opt_grp){
+        $cur_datetime = Carbon::now();
+
+        $prodoptgrp = array(
+            'name' => $request->name,
+            'status' => $request->status,
+            'updated_at' => $cur_datetime
+        );
+
+        $prod_opt_grp->where('id', $request->id)->update($prodoptgrp);
+
+        $request->session()->flash('success', 'Product Option Group successfully updated!');
+        return redirect('/backend/prod_opt_mgmt/'.$request->id);
+
+    }
+
+    public function delete_prod_grp($prod_opt_grp){
+        $prodoptgrp = new ProductOptionGroup();
+
+        $prodoptgrp->destroy($prod_opt_grp);
+
+        Session::flash('success', 'Product Option Group had been successfully deleted!');
+        return redirect('/backend/prod_opt_mgmt/');
+    }
     /*******************************Product Option end*********************************/
 
     /*******************************Product Listing start*********************************/
