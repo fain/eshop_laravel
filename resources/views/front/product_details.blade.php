@@ -12,41 +12,26 @@
 			<div class="col-sm-9 padding-right">
 			<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
-							<div class="mag">
-					               <img data-toggle="magnify" src="{{asset('images/product-details/1.jpg')}}" alt="" />
-							</div>
-							<div id="similar-product" class="carousel slide" data-ride="carousel">
-								
-								  <!-- Wrapper for slides -->
-								    <div class="carousel-inner">
-										<div class="item active">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt="" ></a>
-										</div>
-
-										<div class="item">
-										  <a href="#two"><img src="{{asset('images/product-details/similar2.jpg')}}" alt="" id="two"></a>
-										</div>
-
-										<div class="item">
-										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
-										</div>
-									</div>
-
-								  <!-- Controls -->
-								  <a class="left item-control" href="#similar-product" data-slide="prev">
-									<i class="fa fa-angle-left"></i>
-								  </a>
-								  <a class="right item-control" href="#similar-product" data-slide="next">
-									<i class="fa fa-angle-right"></i>
-								  </a>
-							</div>
-
+							
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1"><img src="{{asset('images/product-details/1.jpg')}}" data-toggle="magnify"/></div>
+						  <div class="tab-pane" id="pic-2"><img src="{{asset('images/product-details/4.jpg')}}" data-toggle="magnify" /></div>
+						  <div class="tab-pane" id="pic-3"><img src="{{asset('images/product-details/2.jpg')}}" data-toggle="magnify"/></div>
+						  <div class="tab-pane" id="pic-4"><img src="{{asset('images/product-details/3.jpg')}}" data-toggle="magnify"/></div>
+						  <div class="tab-pane" id="pic-5"><img src="{{asset('images/product-details/4.jpg')}}" data-toggle="magnify"/></div>
 						</div>
-	                 
-									                    
+						<ul class="preview-thumbnail nav nav-tabs">
+						  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="{{asset('images/product-details/1.jpg')}}" /></a></li>
+						  <li><a data-target="#pic-2" data-toggle="tab"><img src="{{asset('images/product-details/4.jpg')}}" /></a></li>
+						  <li><a data-target="#pic-3" data-toggle="tab"><img src="{{asset('images/product-details/2.jpg')}}" /></a></li>
+						  <li><a data-target="#pic-4" data-toggle="tab"><img src="{{asset('images/product-details/3.jpg')}}" /></a></li>
+						  <li><a data-target="#pic-5" data-toggle="tab"><img src="{{asset('images/product-details/4.jpg')}}" /></a></li>
+						</ul>
+						
+					</div>
 
 						<div class="col-sm-7">
-							<div class="product-information"><!--/product-information-->
+							<div class="content-product-information"><!--/product-information-->
 								<img src="{{asset('images/product-details/new.jpg')}}" class="newarrival" alt="" />
 								<h2>{{$product->description}}</h2>
 								<p>Product ID: {{$product->prod_code}}</p>

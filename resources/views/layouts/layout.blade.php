@@ -16,6 +16,7 @@
 	<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
 	<link href="{{asset('css/custom.css')}}" rel="stylesheet">
 
+
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -30,15 +31,6 @@
     {{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">--}}
     {{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">--}}
     {{--<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">--}}
-
-
-
-
-   <!-- Zoom product --><!-- 
-    <script src="{{asset('js/jquery.elevatezoom.js')}}"></script>
-    <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
- -->
-
 
 
 </head><!--/head-->
@@ -312,8 +304,11 @@
     <script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
 
-    <script src="{{asset('js/zoom_product.js')}}"></script>
+    <!-- Zoom Product -->
+   < <script src="{{asset('js/zoom_product.js')}}"></script>
+   
+   	@yield('js_content')
 
-	@yield('js_content')
+
 </body>
 </html>
