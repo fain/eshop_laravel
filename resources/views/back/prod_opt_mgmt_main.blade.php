@@ -252,12 +252,15 @@
 //            act_btn.appendChild(addRowBox);
             act_btn.innerHTML = "";
 
+            $('#total_item').val(currentIndex-1);
+
             if((curr_indx) >= (sel_length-1)){
                 $('#add_field_btn').addClass(' disabled');
             }
 
             $('#delete_field_btn').removeClass(' disabled');
-            $('#savetogrp').removeClass(' disabled');
+//            $('#savetogrp').removeClass(' disabled');
+            $('#savetogrp').prop('disabled', false);
         }
 
         function deleteField() {
@@ -276,12 +279,17 @@
                 var currentRow = myTable.deleteRow(currentIndex-2);
                 if(currentIndex==3){
                     $('#delete_field_btn').addClass(' disabled');
-                    $('#savetogrp').addClass(' disabled');
+//                    $('#savetogrp').addClass(' disabled');
+                    $('#savetogrp').prop('disabled', true);
                 }
+
+                $('#total_item').val(currentIndex-3);
             }
 
             $('#add_field_btn').removeClass(' disabled');
         }
+
+        $('#savetogrp').prop('disabled', true);
     </script>
     <!---------------------------------javascript part for product option group end------------------------------>
 @endsection

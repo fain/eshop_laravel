@@ -70,34 +70,38 @@
             <hr>
 
                 @if(isset($prod_opt_actv) && count($prod_opt_actv)>0)
+                    <form class="" action="/backend/prod_opt_handler" method="post">
+                        {{ csrf_field() }}
+                        <table class="table table-bordered table-striped" id="prod_opt_table">
+                            <thead>
+                                <tr>
+                                    <th width="15%">No.</th>
+                                    <th>Product Option</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        <a class="btn-add" href="#" onclick="addField();" id="add_field_btn">
+                                            <i class="fa fa-plus-circle" aria-hidden="true" style=""></i>
+                                        </a>
 
-                    <table class="table table-bordered table-striped" id="prod_opt_table">
-                        <thead>
-                            <tr>
-                                <th width="15%">No.</th>
-                                <th>Product Option</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="3" class="text-center">
-                                    <a class="btn-add" href="#" onclick="addField();" id="add_field_btn">
-                                        <i class="fa fa-plus-circle" aria-hidden="true" style=""></i>
-                                    </a>
+                                        <a class="btn-remove disabled" href="#" onclick="deleteField();" id="delete_field_btn">
+                                            <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                        </a>
 
-                                    <a class="btn-remove disabled" href="#" onclick="deleteField();" id="delete_field_btn">
-                                        <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                    </a>
+                                        <button type="submit" class="btn btn-info pull-right" href="#" id="savetogrp">
+                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                        </button>
 
-                                    <a class="btn btn-info pull-right disabled" href="#" id="savetogrp">
-                                        Save to Group
-                                    </a>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="hidden" id="total_item" name="total_item">
+                        <input type="hidden" id="grp_id" name="grp_id" value="{{ $prod_group_detail->id }}">
+                    </form>
                 @else
                     <div class="alert alert-warning">No active Product Option found!</div>
                 @endif
