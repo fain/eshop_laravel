@@ -716,6 +716,9 @@ ul.sub-menu {
 	margin-left: -65px;
 }
 
+
+
+
 h2.title:before{
 	content: " ";
 	position: absolute;
@@ -1210,6 +1213,7 @@ img.new, img.sale {
 
 .product-details{
 	overflow:hidden;
+  
 }
 
 
