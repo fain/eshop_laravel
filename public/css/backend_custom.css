@@ -250,7 +250,21 @@ a.btn-add{
     font-size: 25px;
 }
 
+a.btn-add.disabled{
+    color: #e0e0dd;
+    pointer-events: none;
+}
+
 a.btn-remove{
     color: #d9534f;
     font-size: 25px;
+}
+
+a.btn-remove.disabled{
+    color: #e0e0dd;
+    pointer-events: none;
+}
+
+a.btn-add:hover, a.btn-remove:hover, a.btn-add:focus, a.btn-remove:focus{
+    text-decoration: none;
 }

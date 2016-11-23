@@ -199,12 +199,6 @@
             var myTable = document.getElementById("prod_opt_table");
             var currentIndex = myTable.rows.length;
 
-            if(currentIndex==2){
-                var currentRow = myTable.insertRow(1);
-            }else{
-                var currentRow = myTable.insertRow(currentIndex-1);
-            }
-
             var nameBox = document.createElement("select");
             nameBox.setAttribute("name", "opt" + (currentIndex-1));
             nameBox.setAttribute("id", "opt" + (currentIndex-1));
@@ -214,11 +208,11 @@
 
             var sel_val = document.getElementById("opt" + (currentIndex-2));
             if(sel_val!=null){
-                alert(sel_val.value);
+//                alert(sel_val.value);
             }
 
 
-            var arr = <?php echo json_encode($dropdown); ?>;
+            var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
             var len = (arr.length)-1;
 
             for(var i=0; i<=len; i++){
@@ -239,6 +233,15 @@
 ////            addRowBox.setAttribute("onclick", "addField();");
 //            addRowBox.setAttribute("class", "btn-sm btn-danger disabled");
 
+            var curr_indx = currentIndex-2;
+            var sel_length = arr.length;
+
+            if(currentIndex==2){
+                var currentRow = myTable.insertRow(1);
+            }else{
+                var currentRow = myTable.insertRow(currentIndex-1);
+            }
+
             var index = currentRow.insertCell(0);
             index.innerHTML = currentIndex-1;
 
@@ -248,6 +251,13 @@
             var act_btn = currentRow.insertCell(2);
 //            act_btn.appendChild(addRowBox);
             act_btn.innerHTML = "";
+
+            if((curr_indx) >= (sel_length-1)){
+                $('#add_field_btn').addClass(' disabled');
+            }
+
+            $('#delete_field_btn').removeClass(' disabled');
+            $('#savetogrp').removeClass(' disabled');
         }
 
         function deleteField() {
@@ -260,10 +270,17 @@
             var currentIndex = myTable.rows.length;
 
             if(currentIndex==2){
-                var currentRow = myTable.deleteRow(1);
-            }else{
-                var currentRow = myTable.deleteRow(currentIndex-2);
+                $('#delete_field_btn').addClass(' disabled');
             }
+            else if(currentIndex>=2){
+                var currentRow = myTable.deleteRow(currentIndex-2);
+                if(currentIndex==3){
+                    $('#delete_field_btn').addClass(' disabled');
+                    $('#savetogrp').addClass(' disabled');
+                }
+            }
+
+            $('#add_field_btn').removeClass(' disabled');
         }
     </script>
     <!---------------------------------javascript part for product option group end------------------------------>

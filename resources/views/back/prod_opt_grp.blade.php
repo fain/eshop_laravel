@@ -82,9 +82,18 @@
                         <tbody>
                             <tr>
                                 <td colspan="3" class="text-center">
-                                    <a class="btn-add" href="#" onclick="addField();" id="add_field_btn"><i class="fa fa-plus-circle" aria-hidden="true" style=""></i></a>
+                                    <a class="btn-add" href="#" onclick="addField();" id="add_field_btn">
+                                        <i class="fa fa-plus-circle" aria-hidden="true" style=""></i>
+                                    </a>
 
-                                    <a class="btn-remove" href="#" onclick="deleteField();" id="delete_field_btn"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                    <a class="btn-remove disabled" href="#" onclick="deleteField();" id="delete_field_btn">
+                                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                    </a>
+
+                                    <a class="btn btn-info pull-right disabled" href="#" id="savetogrp">
+                                        Save to Group
+                                    </a>
+
                                 </td>
                             </tr>
                         </tbody>
