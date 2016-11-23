@@ -81,6 +81,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if(isset($list_opt))
+                                    @if(is_array($list_opt))
+                                        @foreach($list_opt as $index=>$lo)
+                                        <tr>
+                                            <td>{{ $index+1 }}</td>
+                                            <td>{{ $lo->name }}</td>
+                                            <td><button class="btn-sm btn-warning"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
+                                @endif
                                 <tr>
                                     <td colspan="3" class="text-center">
                                         <a class="btn-add" href="#" onclick="addField();" id="add_field_btn">

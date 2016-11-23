@@ -626,6 +626,19 @@ class Back extends Controller
 
                 $prod_group_detail = ProductOptionGroup::where('id', '=', $id)->first();
 
+                $prod_opt_in = $prod_group_detail->prod_opt;
+                $list_opt = "";
+
+                if(isset($prod_opt_in) && $prod_opt_in!=""){
+                    $arr_opt = explode(",", $prod_opt_in);
+
+                    $len = (count($arr_opt))-1;
+
+                    for($i=0; $i<=$len; $i++){
+                        $list_opt[] = ProductOption::where('id', '=', $arr_opt[$i])->select('id', 'name')->first();
+                    }
+                }
+
                 $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
 
                 foreach($prod_opt_actv as $poa){
@@ -642,7 +655,8 @@ class Back extends Controller
                         'prod_opt_grp' => $prod_opt_grp,
                         'prod_group_detail' => $prod_group_detail,
                         'prod_opt_actv' => $prod_opt_actv,
-                        'dropdown' => $arr
+                        'dropdown' => $arr,
+                        'list_opt' => $list_opt
                     ));
             }else{
                 Session::flash('danger', 'You are not authorized to view this page!');
@@ -700,7 +714,7 @@ class Back extends Controller
         $prod_opt_grp->where('id', $request->grp_id)->update($prodoptgrp);
 
         $request->session()->flash('success', 'Product Option Group successfully updated!');
-        return redirect('/backend/prod_opt_mgmt/'.$request->id);
+        return redirect('/backend/prod_opt_mgmt/'.$request->grp_id);
 
     }
     /*******************************Product Option end*********************************/
