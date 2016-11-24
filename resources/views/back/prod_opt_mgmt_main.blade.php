@@ -152,6 +152,43 @@
             });
         })
 
+        $(function() {
+            /**-----------------------------disable add into list-------------------------------**/
+            var myTable = document.getElementById("prod_opt_table");
+            var currentIndex = myTable.rows.length;
+
+            //total in list added
+            var list_opt = <?php if(isset($list_opt)) echo json_encode($list_opt); ?>;
+            var len = (list_opt.length)+2;
+
+            var orilen = (list_opt.length);
+
+            //dropdown total
+            var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
+            var sel_length = arr.length;
+
+
+            if(orilen==(sel_length)){
+                $('#add_field_btn').addClass(' disabled');
+            }
+            else if(orilen>=(sel_length)){
+                if(list_opt!=""){
+                    if(currentIndex>=len){
+                        $('#add_field_btn').addClass(' disabled');
+                    }
+                }
+            }
+//            else{
+//
+//            }
+
+//            if(list_opt!=""){
+//                if(currentIndex>=len){
+//                    $('#add_field_btn').addClass(' disabled');
+//                }
+//            }
+        });
+
         function addProductGroup(){
             $("#addProdOptGrpLabel").text('Add New Product Option Group');
 
@@ -195,6 +232,7 @@
             //do other stuff when a click happens
         });
 
+        /**-----------------------------add into list button-------------------------------**/
         function addField (argument) {
             var myTable = document.getElementById("prod_opt_table");
             var currentIndex = myTable.rows.length;
@@ -211,9 +249,10 @@
 //                alert(sel_val.value);
             }
 
-
             var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
             var len = (arr.length)-1;
+
+            var arrj = [];
 
             for(var i=0; i<=len; i++){
                 var option = document.createElement("option");
@@ -223,9 +262,45 @@
                     option.text = value;
                 });
 
-                nameBox.add(option);
-            }
+//                var opt = parseInt($('#opt'+(i+1)).val());
+//
+//                for(var j=0; j<=len; j++){
+//                    var ok = Object.keys(arr[j]);
+//                    arrj[j] = parseInt(ok);
+//                }
+//
+//
+//                var keys = [];
+//                for(var k in arr) keys.push(k);
+//
+//                var obj = parseInt(Object.keys(arr[i]));
+//
+////                if(obj!==opt){
+////                    alert(obj+ " "+opt);
+////                }
+//
+//
+//                if(i<=0){
+//                    arrj.forEach(function(element) {
+//                        var eint = parseInt(element);
+//
+//                        if(eint!=opt){
+//                            var option = document.createElement("option");
+//
+//                            alert(Object.keys(arr[i]));
+////
+//                            option.value = Object.keys(arr[i]);
+//                            option.text = Object.values(arr[i]);
+//
+//                            nameBox.add(option);
+//                        }
+//                    });
+//                }
 
+                nameBox.add(option);
+
+
+            }
 
 //            var addRowBox = document.createElement("input");
 //            addRowBox.setAttribute("type", "button");
@@ -263,6 +338,7 @@
             $('#savetogrp').prop('disabled', false);
         }
 
+        /**-----------------------------delete from list button-------------------------------**/
         function deleteField() {
 //            var myTable = document.getElementById("prod_opt_table");
 //            var currentIndex = myTable.rows.length;
@@ -280,6 +356,13 @@
                 if(currentIndex==3){
                     $('#delete_field_btn').addClass(' disabled');
 //                    $('#savetogrp').addClass(' disabled');
+                    $('#savetogrp').prop('disabled', true);
+                }
+
+                var list_opt = <?php if(isset($list_opt)) echo json_encode($list_opt); ?>;
+                var len = (list_opt.length)+3;
+                if(currentIndex<=len){
+                    $('#delete_field_btn').addClass(' disabled');
                     $('#savetogrp').prop('disabled', true);
                 }
 

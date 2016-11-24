@@ -86,8 +86,11 @@
                                         @foreach($list_opt as $index=>$lo)
                                         <tr>
                                             <td>{{ $index+1 }}</td>
-                                            <td>{{ $lo->name }}</td>
-                                            <td><button class="btn-sm btn-warning"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                            <td>
+                                                {{ $lo->name }}
+                                                <input type="hidden" name="opt{{ $index+1 }}" id="opt{{ $index+1 }}" value="{{ $lo->id }}">
+                                            </td>
+                                            <td><button type="button" class="btn-sm btn-warning"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
                                         </tr>
                                         @endforeach
                                     @endif
