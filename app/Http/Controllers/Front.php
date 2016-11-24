@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Eshop\Http\Requests;
 
 use Eshop\Brand;
+use Eshop\Merchants;
+use Eshop\MerchantsInfo;
 use Eshop\Category;
 use Eshop\Product;
 use Eshop\ProductInfo;
@@ -36,6 +38,8 @@ class Front extends Controller {
 
     var $shipping_rate;
     var $brands;
+    var $merchants;
+    var $merchantsinfo;
     var $categories;
     var $products;
     var $productinfo;
@@ -44,6 +48,7 @@ class Front extends Controller {
 
     public function __construct() {
         $this->brands = Brand::all(array('name'));
+        $this->merchantsinfo = MerchantsInfo::all(array('id', 'store_name'));
         $this->categories = Category::all(array('name'));
         $this->products = Product::all(array('id','name','price'));
         $this->shipping_rate = ShippingRate::all(array('id'));
@@ -57,6 +62,7 @@ class Front extends Controller {
                 'description' => '',
                 'page' => 'home',
                 'brands' => $this->brands,
+                'merchantsinfo' => $this->merchantsinfo,
                 'categories' => $this->categories,
                 'shipping_rate' => $this->shipping_rate,
                 'products' => $this->products
@@ -70,6 +76,7 @@ class Front extends Controller {
                 'description' => '',
                 'page' => 'products', 
                 'brands' => $this->brands, 
+                'merchantsinfo' => $this->merchantsinfo,
                 'categories' => $this->categories, 
                 'shipping_rate' => $this->shipping_rate,
                 'products' => $this->products
@@ -83,6 +90,7 @@ class Front extends Controller {
                                 ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
                                 ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name', 'shipping_rate.*')
                                 ->first();
+ 
 
         $brand= Brand::find($id);
 
@@ -90,20 +98,27 @@ class Front extends Controller {
             array('product' => $product, 
                 'title' => $product->p_name,'description' => '',
                 'page' => 'products',
-                'brands' => $this->brands, 
+                'brands' => $this->brands,
+                'merchants' => $this->merchants,
                 'categories' => $this->categories,    
                 'shipping_rate' => $this->shipping_rate,             
                 'products' => $this->products
                 ));
     }
 
+    public function product_merchants($id) {
+        $merchantinfo = DB::table('merchantsinfo')
+                                ->leftjoin('merchants', 'merchants.id', '=', 'merchantsinfo.id')
+                                ->first();
+
+    }
     public function product_categories($name) {
-        return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
+        return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'merchants' => $this->merchants, 'categories' => $this->categories, 'products' => $this->products));
     }
 
     public function product_brands($name, $category = null) {
    
-        return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
+        return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'merchants' => $this->merchants, 'categories' => $this->categories, 'products' => $this->products));
     }
 
     public function blog() {
@@ -112,7 +127,7 @@ class Front extends Controller {
 
         $data['posts'] = $posts;
 
-        return view('front.blog', array('data' => $data, 'title' => 'Latest Blog Posts', 'description' => '', 'page' => 'blog', 'brands' => $this->brands, 'categories' => $this->categories, 'products' => $this->products));
+        return view('front.blog', array('data' => $data, 'title' => 'Latest Blog Posts', 'description' => '', 'page' => 'blog', 'brands' => $this->brands, 'merchants' => $this->merchants, 'categories' => $this->categories, 'products' => $this->products));
     }
 
     public function blog_post($url) {
@@ -128,7 +143,7 @@ class Front extends Controller {
         $categories = $this->categories;
         $products = $this->products;
 
-        $data = compact('prev_url', 'next_url', 'tags', 'post', 'title', 'description', 'page', 'brands', 'categories', 'products');
+        $data = compact('prev_url', 'next_url', 'tags', 'post', 'title', 'description', 'page', 'brands', 'merchants', 'categories', 'products');
 
         return view('front.blog_post', $data);
     }
