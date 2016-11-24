@@ -70,17 +70,20 @@
 	    <div class="container">
 
 	        <div class="row">
-	            <div class="col-sm-3">
+	            <div class="col-sm-12">
+
+	            <div class="col-sm-2">
 	                <div class="left-sidebar">
 	                    @include('shared.sidebar')
 	                </div>
 	            </div>
 
-	            <div class="col-sm-9 padding-right">
-
+        
+	        <div class="col-sm-8 padding-right">
 
     		 <div class="features_items"><!--features_items-->
 	                    <h2 class="title text-center">Features Items</h2>
+	                    
 	                    @foreach ($products as $product)
 	                    <div class="col-sm-4">
 	                        <div class="product-image-wrapper">
@@ -122,12 +125,14 @@
 	                        </div>
 	                    </div>
 	                    @endforeach
+
 	                    <ul class="pagination">
 	                        <li class="active"><a href="">1</a></li>
 	                        <li><a href="">2</a></li>
 	                        <li><a href="">3</a></li>
 	                        <li><a href="">»</a></li>
 	                    </ul>
+
 	                </div><!--features_items-->
 
 			   <!--Top Selling items-->
@@ -136,8 +141,8 @@
 										
 						<div id="top-selling-item-carousel" class="carousel slide" data-ride="carousel">
 								
+							<!-- Wrapper for carousel items -->
 							<div class="carousel-inner">
-
 								<div class="item active">
 
 									@foreach ($products as $product)
@@ -155,30 +160,69 @@
 												</div>
 												<img src="images/home/sale.png" class="sale" alt="" />
 											</div>
+											<div class="choose">
+				                                <ul class="nav nav-pills nav-justified">
+				                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+				                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+				                                </ul>
+				                            </div>
+				                            
 										</div>
 									</div>
 									@endforeach
-
 								</div>
 
-							</div>
+									<div class="item">
+										@foreach ($products as $product)
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src="{{asset('images/home/top_selling1.jpg')}}" alt="" />
+														<h2>RM{{$product->price}}</h2>
+		                                    			<p>{{$product->name}}</p>
 
+		                                    			<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+		                                    			<a href='{{url("products/details/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
 
-							 <a class="left top-selling-item-control" href="#top-selling-item-carousel" data-slide="prev">
-								<i class="fa fa-angle-left"></i>
-							  </a>
-							  <a class="right top-selling-item-control" href="#top-selling-item-carousel" data-slide="next">
-								<i class="fa fa-angle-right"></i>
-							  </a>	
+													</div>
+													<img src="images/home/sale.png" class="sale" alt="" />
+												</div>
 
-						</div>
+												 <div class="choose">
+					                                <ul class="nav nav-pills nav-justified">
+					                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+					                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+					                                </ul>
+					                            </div>
 
+											</div>
+										</div>
+										@endforeach
+									</div>
+								</div>
+
+								<!-- Carousel Controls -->
+								<a class="left top-selling-item-control" href="#top-selling-item-carousel" data-slide="prev">
+									<i class="fa fa-angle-left"></i>
+								</a>
+								<a class="right top-selling-item-control" href="#top-selling-item-carousel" data-slide="next">
+									<i class="fa fa-angle-right"></i>
+								</a>
+						  </div>	
 					</div><!--/top-selling_items-->
 
 	            </div>
 	             
-	            </div>
+	             	<div class="col-sm-2">
+						<div class="right-sidebar">
+	            			@include('shared.right_sidebar')
+		           		</div>
+		           	</div>
+
+		           </div>
 	        </div>
+	    </div>
 	    </div>
 	</section>
 @endsection

@@ -307,6 +307,18 @@
     <!-- Zoom Product -->
    < <script src="{{asset('js/zoom_product.js')}}"></script>
    
+   <!-- Popover Click -->
+   <script type="text/javascript">
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover();   
+	});
+	</script>
+	<style type="text/css">
+		.popover-product{
+	        margin-bottom: 20px;
+	    }
+	</style>
+
    	@yield('js_content')
 
 
