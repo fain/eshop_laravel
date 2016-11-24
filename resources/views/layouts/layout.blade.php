@@ -330,25 +330,7 @@
 	    }
 	</style>
 
-	<!-- Sorting -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" />
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	      
-	<!-- jplist core -->
-	<script src="jplist.core.min.js"></script>	
-	<!-- jplist bootstrap sort dropdown control -->			
-	<script src="jplist.bootstrap-sort-dropdown.min.js"></script>
-	<script>
-	$('document').ready(function(){
-	   $('#demo').jplist({				
-	      itemsBox: '.list' 
-	      ,itemPath: '.list-item' 
-	      ,panelPath: '.jplist-panel'	
-	   });
-	   
-	});
-	</script>
+
 
 
    	@yield('js_content')
