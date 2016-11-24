@@ -138,18 +138,21 @@ img {
 
 .preview-thumbnail.nav-tabs {
       border: none;
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      border-right: 1px solid #ddd;
-      border-left: 1px solid #ddd;
+   
 
 
-  margin-top: 15px; }
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  height: 90px;
+  width: 290px;
+   }
   .preview-thumbnail.nav-tabs li {
-    width: 18%;
+    width: 20%;
     margin-right: 2.5%; }
     .preview-thumbnail.nav-tabs li img {
       max-width: 100%;
+      height: 90px;
       display: block; }
     .preview-thumbnail.nav-tabs li a {
       padding: 0;
@@ -172,6 +175,7 @@ img {
       border-bottom: 1px solid #ddd;
       border-right: 1px solid #ddd;
       border-left: 1px solid #ddd;
+      height: 380px;
 }
 
 @-webkit-keyframes opacity {
@@ -189,7 +193,7 @@ img {
 .content-product-information {
   border: 1px solid #F7F7F0;
   overflow: auto;
-  padding-bottom: 60px;
+  padding-bottom: 0px;
   padding-left: 60px;
   padding-top: 60px;
   position: relative;
@@ -242,8 +246,8 @@ img {
   margin-right: 5px;
 }
 
-
-.right-sidebar h2, .merchants_products h2 {
+/*Right Sidebar*/
+.right-sidebar h2, .merchantsinfo_products h2 {
   color: #2b0ffe;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
@@ -279,3 +283,87 @@ img {
   margin-left: -65px;
   right: 50%;
 }
+
+/*MerchantsInfo Products*/
+
+.merchants-name {
+  border: 1px solid #F7F7F0;
+  padding-bottom: 20px;
+  padding-top: 15px;
+}
+
+
+.merchants-name .nav-stacked li a {
+  background-color: #FFFFFF;
+  color: #696763;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  padding: 5px 25px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.merchants-name .nav-stacked li a:hover{
+  background-color: #fff;
+  color: #696763;
+}
+
+/*Top Selling Carousel*/
+.top_selling_items {
+  overflow: hidden;
+}
+
+#top-selling-item-carousel .carousel-inner .item {
+  padding-left: 0;
+}
+
+.top-selling-item-control {
+  position: absolute;
+  top: 41%;
+}
+
+.top-selling-item-control i {
+  background: none repeat scroll 0 0 #2b0ffe;
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 4px 10px;
+}
+
+.top-selling-item-control i:hover {
+  background: #ccccc6;
+}
+
+.top_selling_items  h2 {
+}
+
+/*Newest Carousel*/
+
+.newest_items{
+   overflow: hidden;
+}
+
+#newest-item-carousel .carousel-inner .item {
+  padding-left: 0;
+}
+
+.newest-item-control {
+  position: absolute;
+  top: 41%;
+}
+
+.newest-item-control i {
+  background: none repeat scroll 0 0 #2b0ffe;
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 4px 10px;
+}
+
+.newest-item-control i:hover {
+  background: #ccccc6;
+}
+
+.newest_items  h2 {
+}
+
+
+
