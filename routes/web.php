@@ -98,6 +98,7 @@ Route::post('/backend/prod_opt_mgmt_update_handler','Back@prod_opt_mgmt_update_h
 Route::get('/backend/delete_prod_grp/{id}', 'Back@delete_prod_grp');
 
 Route::post('/backend/prod_opt_handler','Back@prod_opt_handler');
+Route::get('/backend/delete_opt_from_grp/{g_id}/{id}', 'Back@delete_opt_from_grp');
 /*******************************prod opt mgmt end*********************************/
 // Auth::routes();
 

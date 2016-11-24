@@ -717,6 +717,37 @@ class Back extends Controller
         return redirect('/backend/prod_opt_mgmt/'.$request->grp_id);
 
     }
+
+    public function delete_opt_from_grp($g_id, $id){
+        $cur_datetime = Carbon::now();
+//        $prodoptgrp = new ProductOptionGroup();
+
+        $prod_opt_list = ProductOptionGroup::where('id', '=', $g_id)->first();
+
+        $arr_list = explode(',', $prod_opt_list->prod_opt);
+
+        foreach ($arr_list as $ar){
+            if($ar!=$id){
+                $arr_updtd[] = $ar;
+            }
+        }
+
+        if(isset($arr_updtd)){
+            $comma_separated = implode(",", $arr_updtd);
+        }else{
+            $comma_separated = "";
+        }
+
+        $prodoptgrp = array(
+            'prod_opt' => $comma_separated,
+            'updated_at' => $cur_datetime
+        );
+
+        $prod_opt_list->where('id', $g_id)->update($prodoptgrp);
+
+        Session::flash('success', 'Product Option Group list successfully updated!');
+        return redirect('/backend/prod_opt_mgmt/'.$g_id);
+    }
     /*******************************Product Option end*********************************/
 
     /*******************************Product Listing start*********************************/

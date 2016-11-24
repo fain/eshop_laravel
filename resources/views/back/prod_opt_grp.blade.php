@@ -90,7 +90,7 @@
                                                 {{ $lo->name }}
                                                 <input type="hidden" name="opt{{ $index+1 }}" id="opt{{ $index+1 }}" value="{{ $lo->id }}">
                                             </td>
-                                            <td><button type="button" class="btn-sm btn-warning"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                            <td><a href="/backend/delete_opt_from_grp/{{ $prod_group_detail->id }}/{{ $lo->id }}" type="button" class="btn-sm btn-warning"><i class="fa fa-minus" aria-hidden="true"></i></a></td>
                                         </tr>
                                         @endforeach
                                     @endif
