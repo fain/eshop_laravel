@@ -17,6 +17,11 @@
 	<link href="{{asset('css/custom.css')}}" rel="stylesheet">
 
 
+	<!-- BlueImp Gallery CSS-->
+	<link href="{{asset('http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css')}}" rel="stylesheet">
+	<link href="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/css/bootstrap-image-gallery.css')}}" rel="stylesheet">
+	<link href="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/css/demo.css')}}" rel="stylesheet">
+
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -304,9 +309,30 @@
     <script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
 
+    <!-- BlueImp Gallery JS -->
+	<script src="{{asset('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')}}"></script>
+	<script src="{{asset('http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js')}}"></script>
+	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/bootstrap-image-gallery.js')}}"></script>
+	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/demo.js')}}"></script>
+
     <!-- Zoom Product -->
    < <script src="{{asset('js/zoom_product.js')}}"></script>
    
+   <!-- Popover Click -->
+   <script type="text/javascript">
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover();   
+	});
+	</script>
+	<style type="text/css">
+		.popover-product{
+	        margin-bottom: 20px;
+	    }
+	</style>
+
+
+
+
    	@yield('js_content')
 
 

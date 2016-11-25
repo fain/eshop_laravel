@@ -1104,33 +1104,6 @@ img.new, img.sale {
 .recommended_items  h2 {
 }
 
-.top_selling_items {
-  overflow: hidden;
-}
-
-#top-selling-item-carousel .carousel-inner .item {
-  padding-left: 0;
-}
-
-.top-selling-item-control {
-  position: absolute;
-  top: 41%;
-}
-
-.top-selling-item-control i {
-  background: none repeat scroll 0 0 #2b0ffe;
-  color: #FFFFFF;
-  font-size: 20px;
-  padding: 4px 10px;
-}
-
-.top-selling-item-control i:hover {
-  background: #ccccc6;
-}
-
-.top_selling_items  h2 {
-}
-
 .our_partners{
   overflow:hidden;
 }
