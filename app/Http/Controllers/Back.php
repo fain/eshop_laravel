@@ -792,6 +792,27 @@ class Back extends Controller
         if(Auth::check()){
 
             $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+
+            $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
+
+            foreach($prod_opt_actv as $poa){
+                $arr[] = array($poa->id => $poa->name);
+            }
+
+            $prod_opt_group = ProductOptionGroup::where('status', '=', 'A')->get();
+//
+//            $prod_opt_in = $prod_group_detail->name;
+            $list_opt = "";
+
+//            if(isset($prod_opt_in) && $prod_opt_in!=""){
+//                $arr_opt = explode(",", $prod_opt_in);
+//
+//                $len = (count($arr_opt))-1;
+//
+//                for($i=0; $i<=$len; $i++){
+//                    $list_opt[] = ProductOption::where('id', '=', $arr_opt[$i])->select('id', 'name')->first();
+//                }
+//            }
 //            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
 
             return view('back.new_product',
@@ -802,6 +823,9 @@ class Back extends Controller
                     'currmenu' => '',
                     'mainmenu' => 'product',
                     'maincat' => $maincat,
+                    'dropdown' => $arr,
+                    'prod_opt_group' => $prod_opt_group
+
 //                    'subcat' => $subcat
                 ));
         }else{

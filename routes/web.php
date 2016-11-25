@@ -60,6 +60,7 @@ Route::post('/backend/register_seller','Back@register_seller');
 /*******************************ajax dropdown start*********************************/
 Route::get('/api/category-dropdown/{id}', 'ApiController@categoryDropDownData');
 Route::get('/api/brand-dropdown/{id}', 'ApiController@brandDropDownData');
+Route::get('/api/prod-opt-grp-table/{id}', 'ApiController@prodOptGrpTable');
 /*******************************ajax dropdown end*********************************/
 
 /*******************************categories start*********************************/
