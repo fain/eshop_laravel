@@ -717,6 +717,37 @@ class Back extends Controller
         return redirect('/backend/prod_opt_mgmt/'.$request->grp_id);
 
     }
+
+    public function delete_opt_from_grp($g_id, $id){
+        $cur_datetime = Carbon::now();
+//        $prodoptgrp = new ProductOptionGroup();
+
+        $prod_opt_list = ProductOptionGroup::where('id', '=', $g_id)->first();
+
+        $arr_list = explode(',', $prod_opt_list->prod_opt);
+
+        foreach ($arr_list as $ar){
+            if($ar!=$id){
+                $arr_updtd[] = $ar;
+            }
+        }
+
+        if(isset($arr_updtd)){
+            $comma_separated = implode(",", $arr_updtd);
+        }else{
+            $comma_separated = "";
+        }
+
+        $prodoptgrp = array(
+            'prod_opt' => $comma_separated,
+            'updated_at' => $cur_datetime
+        );
+
+        $prod_opt_list->where('id', $g_id)->update($prodoptgrp);
+
+        Session::flash('success', 'Product Option Group list successfully updated!');
+        return redirect('/backend/prod_opt_mgmt/'.$g_id);
+    }
     /*******************************Product Option end*********************************/
 
     /*******************************Product Listing start*********************************/
@@ -761,6 +792,27 @@ class Back extends Controller
         if(Auth::check()){
 
             $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+
+            $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
+
+            foreach($prod_opt_actv as $poa){
+                $arr[] = array($poa->id => $poa->name);
+            }
+
+            $prod_opt_group = ProductOptionGroup::where('status', '=', 'A')->get();
+//
+//            $prod_opt_in = $prod_group_detail->name;
+            $list_opt = "";
+
+//            if(isset($prod_opt_in) && $prod_opt_in!=""){
+//                $arr_opt = explode(",", $prod_opt_in);
+//
+//                $len = (count($arr_opt))-1;
+//
+//                for($i=0; $i<=$len; $i++){
+//                    $list_opt[] = ProductOption::where('id', '=', $arr_opt[$i])->select('id', 'name')->first();
+//                }
+//            }
 //            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
 
             return view('back.new_product',
@@ -771,6 +823,9 @@ class Back extends Controller
                     'currmenu' => '',
                     'mainmenu' => 'product',
                     'maincat' => $maincat,
+                    'dropdown' => $arr,
+                    'prod_opt_group' => $prod_opt_group
+
 //                    'subcat' => $subcat
                 ));
         }else{

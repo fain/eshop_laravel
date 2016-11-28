@@ -269,8 +269,48 @@
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Product Option </label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control">
+                <div class="col-md-3">
+                    <select class="form-control" name="prod_opt_sel" id="prod_opt_sel">
+                        <option value="">Select Product Options</option>
+                        <option value="grp">Product Options by Group</option>
+                        <option value="indv">Product Options by Individual</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="prod_opt_grp_sel" style="display: none" id="prod_opt_grp_sel">
+                        <option value="">Select Product Options Group</option>
+                        @foreach($prod_opt_group as $pog)
+                            <option value="{{ $pog->id }}">{{ $pog->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" id="prod_opt_box">
+                <div class="col-md-9 col-md-offset-2">
+                    <table class="table table-bordered table-striped" id="prod_opt_table_id" style="display: none">
+                        <thead>
+                            <tr>
+                                <th>Product Options</th>
+                                <th>Information</th>
+                                <th width="20%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="display: none">
+                                <td colspan="4" class="text-center">
+                                    <a class="btn-add" href="#" onclick="addField();" id="add_field_btn">
+                                        <i class="fa fa-plus-circle" aria-hidden="true" style=""></i>
+                                    </a>
+
+                                    <a class="btn-remove disabled" href="#" onclick="deleteField();" id="delete_field_btn">
+                                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr style="display: none" id="grouplistid">
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <hr>
@@ -415,7 +455,7 @@
                 </div>
             </div>
 
-            <div id="promo_box">
+            <div id="promo_box" style="display: none">
                 <input type="hidden" name="promo_set" id="promo_set" value="">
                 <h3>Promotions or Advertisement</h3>
                 <div class="form-group">
@@ -1185,11 +1225,177 @@
             }
         }
 
+        /**-----------------------------Part for Product options-------------------------------**/
+
+        //product option selection
+        $('#prod_opt_sel').on('change', function(e){
+            var opt_sel_val = e.target.value;
+
+            if(opt_sel_val=='grp'){
+                $('#prod_opt_table_id').hide();
+                $('#prod_opt_grp_sel').show();
+            }
+            else if(opt_sel_val=='indv'){
+                $('#prod_opt_table_id').show();
+                $('#prod_opt_grp_sel').hide();
+            }
+            else{
+                $('#prod_opt_table_id').hide();
+                $('#prod_opt_grp_sel').hide();
+            }
+        });
+
+        //product option group selection
+        $('#prod_opt_grp_sel').on('change', function(e){
+            var opt_grp_val = e.target.value;
+
+            if(opt_grp_val!=""){
+                $('#prod_opt_table_id').show();
+                $('#grouplistid').show();
+
+                $.get('../api/prod-opt-grp-table/' + opt_grp_val, function(data){
+                    //success data
+                    var myTable = document.getElementById("prod_opt_table_id");
+                    var currentIndex = myTable.rows.length;
+
+                    var curr_index = currentIndex-1;
+
+                    if(data==''){
+                        $('#grouplistid').hide();
+                    }else{
+
+                        if(curr_index>2){
+                            for(var j=(curr_index-1); j>=2; j--){
+                                var myTable = document.getElementById("prod_opt_table_id");
+                                var currentRow = myTable.deleteRow(j);
+                                alert(j + " "+ curr_index);
+                            }
+                        }
+
+//                        alert(curr_index)
+
+                        var len = data.length;
+
+                        $.each(data, function(index, brandObj){
+                            var all_val = Object.values(data[index]);
+
+                            var prod_opt_id = all_val[0];
+                            var prod_opt_val = all_val[1];
+
+                            //insert into table
+                            var currentRow = myTable.insertRow(1);
+
+                            var prod_opt = currentRow.insertCell(0);
+                            prod_opt.innerHTML = prod_opt_val;
+
+                            var infoBox = document.createElement("input");
+                            infoBox.setAttribute("name", "opt" + (index));
+                            infoBox.setAttribute("id", "opt" + (index));
+                            infoBox.setAttribute("class", "form-control");
+
+                            var hiddenIdBox = document.createElement("input");
+                            hiddenIdBox.setAttribute("name", "opt" + (index));
+                            hiddenIdBox.setAttribute("id", "opt" + (index));
+                            hiddenIdBox.setAttribute("class", "form-control");
+                            hiddenIdBox.setAttribute("type", "hidden");
+
+                            var info = currentRow.insertCell(1);
+                            info.appendChild(infoBox);
+                            info.appendChild(hiddenIdBox);
+
+                            var act_btn = currentRow.insertCell(2);
+                            act_btn.innerHTML = "";
+                        });
+                    }
+                });
+            }else{
+                $('#prod_opt_table_id').hide();
+                $('#grouplistid').hide();
+            }
+        });
+
+        $('#add_field_btn').click(function(e) {
+            e.preventDefault();
+            //do other stuff when a click happens
+        });
+
+        $('#delete_field_btn').click(function(e) {
+            e.preventDefault();
+            //do other stuff when a click happens
+        });
+
+        /**-----------------------------add into list button-------------------------------**/
+        function addField (argument) {
+            var myTable = document.getElementById("prod_opt_table_id");
+            var currentIndex = myTable.rows.length;
+
+            var nameBox = document.createElement("select");
+            nameBox.setAttribute("name", "opt" + (currentIndex-1));
+            nameBox.setAttribute("id", "opt" + (currentIndex-1));
+            nameBox.setAttribute("class", "form-control");
+
+            var chosen_item = false;
+
+            var sel_val = document.getElementById("opt" + (currentIndex-2));
+            if(sel_val!=null){
+            //                alert(sel_val.value);
+            }
+
+
+            var curr_indx = currentIndex-2;
+//            var sel_length = arr.length;
+
+            if(currentIndex==2){
+                var currentRow = myTable.insertRow(1);
+            }else{
+                var currentRow = myTable.insertRow(currentIndex-1);
+            }
+
+            var index = currentRow.insertCell(0);
+            index.innerHTML = currentIndex-1;
+
+            var name = currentRow.insertCell(1);
+            name.appendChild(nameBox);
+
+            var act_btn = currentRow.insertCell(2);
+            act_btn.innerHTML = "";
+
+//            $('#total_item').val(currentIndex-1);
+
+            if((curr_indx) >= (sel_length-1)){
+                $('#add_field_btn').addClass(' disabled');
+            }
+
+            $('#delete_field_btn').removeClass(' disabled');
+        }
+
+        /**-----------------------------delete from list button-------------------------------**/
+        function deleteField() {
+            var myTable = document.getElementById("prod_opt_table_id");
+            var currentIndex = myTable.rows.length;
+
+            if(currentIndex==2){
+                $('#delete_field_btn').addClass(' disabled');
+            }
+            else if(currentIndex>=2){
+                var currentRow = myTable.deleteRow(currentIndex-2);
+                if(currentIndex==3){
+                    $('#delete_field_btn').addClass(' disabled');
+                    //                    $('#savetogrp').addClass(' disabled');
+                    $('#savetogrp').prop('disabled', true);
+                }
+
+
+            }
+
+            $('#add_field_btn').removeClass(' disabled');
+        }
+
         // initialize with defaults
-        $("#input-id").fileinput();
+//        $("#input-id").fileinput();
 
         // with plugin options
-        $("#input-id").fileinput({'showUpload':false, 'previewFileType':'any'});
+//        $("#input-id").fileinput({'showUpload':false, 'previewFileType':'any'});
     </script>
 
     {{--file upload start--}}
@@ -1208,8 +1414,6 @@
          in a larger detailed modal dialog -->
     {{--file upload end--}}
 
-    <!-- The main application script -->
-    <script src="{{ asset('js/main1.js') }}"></script>
     <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
     <!--[if (gte IE 8)&(lt IE 10)]>
     <script src="{{ asset('js/cors/jquery.xdr-transport.js') }}"></script>

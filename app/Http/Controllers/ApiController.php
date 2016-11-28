@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Input;
 use Eshop\Category;
 use Eshop\Brand;
+use Eshop\ProductOption;
+use Eshop\ProductOptionGroup;
+
 
 class ApiController extends Controller
 {
@@ -37,5 +40,29 @@ class ApiController extends Controller
             ->get();
 
         return Response::json($brands);
+    }
+
+    public function prodOptGrpTable($id){
+        $group_id = $id;
+
+        $prod_opt_grp = ProductOptionGroup::where('id', $group_id)->first();
+
+        $prod_opt_in = $prod_opt_grp->prod_opt;
+        $list_opt = array();
+
+        if(isset($prod_opt_in) && $prod_opt_in!=""){
+            $arr_opt = explode(",", $prod_opt_in);
+
+            $len = (count($arr_opt))-1;
+
+            for($i=0; $i<=$len; $i++){
+                $list_opt[] = ProductOption::where('id', '=', $arr_opt[$i])->select('id', 'name')->first();
+            }
+        }
+
+//        print_r($list_opt);
+//        exit;
+
+        return Response::json($list_opt);
     }
 }
