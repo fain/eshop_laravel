@@ -292,11 +292,11 @@
                             <tr>
                                 <th>Product Options</th>
                                 <th>Information</th>
-                                <th width="20%">Action</th>
+                                <th width="20%" id="actioncolid" style="display: none" >Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="display: none">
+                            <tr style="display: none" id="manuallistid">
                                 <td colspan="4" class="text-center">
                                     <a class="btn-add" href="#" onclick="addField();" id="add_field_btn">
                                         <i class="fa fa-plus-circle" aria-hidden="true" style=""></i>
@@ -1227,6 +1227,18 @@
 
         /**-----------------------------Part for Product options-------------------------------**/
 
+        function deleteUnwantedRow(){
+            var myTable = document.getElementById("prod_opt_table_id");
+            var currentIndex = myTable.rows.length;
+            var curr_index = currentIndex-1;
+
+            if(curr_index>2){
+                for(var j=(curr_index-1); j>=2; j--){
+                    var currentRow = myTable.deleteRow(j-1);
+                }
+            }
+        }
+
         //product option selection
         $('#prod_opt_sel').on('change', function(e){
             var opt_sel_val = e.target.value;
@@ -1234,14 +1246,34 @@
             if(opt_sel_val=='grp'){
                 $('#prod_opt_table_id').hide();
                 $('#prod_opt_grp_sel').show();
+                $('#grouplistid').show();
+                $('#actioncolid').show();
+                $('#manuallistid').hide();
+
+                deleteUnwantedRow();
+
+                $('#delete_field_btn').addClass(' disabled');
+                $('#add_field_btn').removeClass(' disabled');
             }
             else if(opt_sel_val=='indv'){
                 $('#prod_opt_table_id').show();
+                $('#prod_opt_grp_sel').val("");
                 $('#prod_opt_grp_sel').hide();
+                $('#grouplistid').hide();
+                $('#actioncolid').hide();
+                $('#manuallistid').show();
+
+                deleteUnwantedRow();
             }
             else{
                 $('#prod_opt_table_id').hide();
+                $('#prod_opt_grp_sel').val("");
                 $('#prod_opt_grp_sel').hide();
+                $('#grouplistid').hide();
+                $('#actioncolid').hide();
+                $('#manuallistid').hide();
+
+                deleteUnwantedRow();
             }
         });
 
@@ -1252,27 +1284,26 @@
             if(opt_grp_val!=""){
                 $('#prod_opt_table_id').show();
                 $('#grouplistid').show();
+                $('#actioncolid').show();
 
                 $.get('../api/prod-opt-grp-table/' + opt_grp_val, function(data){
                     //success data
                     var myTable = document.getElementById("prod_opt_table_id");
                     var currentIndex = myTable.rows.length;
 
-                    var curr_index = currentIndex-1;
-
                     if(data==''){
                         $('#grouplistid').hide();
+                        $('#actioncolid').hide();
+
+                        deleteUnwantedRow();
+
+                        var currentRow = myTable.insertRow(1);
+                        var prod_opt = currentRow.insertCell(0);
+                        prod_opt.innerHTML = "No records!";
+                        prod_opt.colSpan  = 4;
+                        prod_opt.setAttribute( "class", "warning text-center" );
                     }else{
-
-                        if(curr_index>2){
-                            for(var j=(curr_index-1); j>=2; j--){
-                                var myTable = document.getElementById("prod_opt_table_id");
-                                var currentRow = myTable.deleteRow(j);
-                                alert(j + " "+ curr_index);
-                            }
-                        }
-
-//                        alert(curr_index)
+                        deleteUnwantedRow();
 
                         var len = data.length;
 
@@ -1311,6 +1342,7 @@
             }else{
                 $('#prod_opt_table_id').hide();
                 $('#grouplistid').hide();
+                $('#actioncolid').hide();
             }
         });
 
@@ -1329,40 +1361,56 @@
             var myTable = document.getElementById("prod_opt_table_id");
             var currentIndex = myTable.rows.length;
 
-            var nameBox = document.createElement("select");
-            nameBox.setAttribute("name", "opt" + (currentIndex-1));
-            nameBox.setAttribute("id", "opt" + (currentIndex-1));
-            nameBox.setAttribute("class", "form-control");
+            var curr_index = currentIndex-1;
 
             var chosen_item = false;
+
+            var nameBox = document.createElement("select");
+            nameBox.setAttribute("name", "opt" + (curr_index-1));
+            nameBox.setAttribute("id", "opt" + (curr_index-1));
+            nameBox.setAttribute("class", "form-control");
+
+            var infoBox = document.createElement("input");
+            infoBox.setAttribute("name", "info" + (curr_index-1));
+            infoBox.setAttribute("id", "info" + (curr_index-1));
+            infoBox.setAttribute("class", "form-control");
 
             var sel_val = document.getElementById("opt" + (currentIndex-2));
             if(sel_val!=null){
             //                alert(sel_val.value);
             }
 
-
-            var curr_indx = currentIndex-2;
-//            var sel_length = arr.length;
-
-            if(currentIndex==2){
+            if(curr_index==2){
                 var currentRow = myTable.insertRow(1);
             }else{
-                var currentRow = myTable.insertRow(currentIndex-1);
+                var currentRow = myTable.insertRow(curr_index-1);
             }
 
-            var index = currentRow.insertCell(0);
-            index.innerHTML = currentIndex-1;
-
-            var name = currentRow.insertCell(1);
+            var name = currentRow.insertCell(0);
             name.appendChild(nameBox);
 
-            var act_btn = currentRow.insertCell(2);
-            act_btn.innerHTML = "";
+            var info = currentRow.insertCell(1);
+            info.appendChild(infoBox);
 
-//            $('#total_item').val(currentIndex-1);
+            var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
+            var len = (arr.length)-1;
 
-            if((curr_indx) >= (sel_length-1)){
+            var arrj = [];
+
+            for(var i=0; i<=len; i++){
+                var option = document.createElement("option");
+
+                $.each(arr[i], function(key, value){
+                    option.value = key;
+                    option.text = value;
+                });
+
+                nameBox.add(option);
+            }
+
+            var sel_length = arr.length;
+
+            if((curr_index-1) >= (sel_length)){
                 $('#add_field_btn').addClass(' disabled');
             }
 
@@ -1373,16 +1421,15 @@
         function deleteField() {
             var myTable = document.getElementById("prod_opt_table_id");
             var currentIndex = myTable.rows.length;
+            var curr_index = currentIndex-1;
 
-            if(currentIndex==2){
+            if(curr_index==2){
                 $('#delete_field_btn').addClass(' disabled');
             }
-            else if(currentIndex>=2){
-                var currentRow = myTable.deleteRow(currentIndex-2);
-                if(currentIndex==3){
+            else if(curr_index>=2){
+                var currentRow = myTable.deleteRow(curr_index-2);
+                if(curr_index==3){
                     $('#delete_field_btn').addClass(' disabled');
-                    //                    $('#savetogrp').addClass(' disabled');
-                    $('#savetogrp').prop('disabled', true);
                 }
 
 
