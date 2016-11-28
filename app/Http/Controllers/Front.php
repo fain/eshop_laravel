@@ -83,6 +83,8 @@ class Front extends Controller {
             ));
     }
 
+    
+
     public function product_details($id) {
         $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
@@ -103,6 +105,24 @@ class Front extends Controller {
                 'categories' => $this->categories,    
                 'shipping_rate' => $this->shipping_rate,             
                 'products' => $this->products
+                ));
+    }
+
+    public function product_wishlist($id){
+        $product = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
+                                ->select('products.*', 'products_info.*', 'brands.*', 'shipping_rate.*')
+                                ->first();
+
+        return view('front.product_wishlist',
+            array('product'=> $product,
+                'title' => 'My Wishlist',
+                'page'=> 'product_wishlist',
+                'products' => $this->products
+
+
                 ));
     }
 
@@ -252,6 +272,8 @@ class Front extends Controller {
         $cart = Cart::content();
 
         return view('front.cart', array('cart' => $cart, 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More', 'description' => '', 'page' => 'home'));
+
+
     }
 
     public function checkout() {

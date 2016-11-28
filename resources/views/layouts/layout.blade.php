@@ -81,6 +81,7 @@
                             <ul class="nav navbar-nav">
                                 <!-- <li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Account'}}</a></li> -->
                                 <!-- <li><a href="{{url('checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
+                                <!-- <li><a href="{{url('products/wishlists/{id}')}}"><i class="fa fa-star"></i> Wishlists</a></li> -->
                                 <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
                                 <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li class="main-dropdown">
