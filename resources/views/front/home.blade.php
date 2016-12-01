@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('content') 
+		<div id='msg'></div>
 	<section id="slider"><!--slider-->
 		<div class="container">
 			<div class="row">
@@ -150,14 +151,103 @@
         
 	        <div class="col-sm-8 padding-right">
 
+                
+
+				<div class="features_items"><!--features_items-->
+					<h2 class="title text-center">Features Items</h2>
+					@foreach($products as $product)
+
+						<div class="col-sm-4">
+					            <div class="product-image-wrapper">
+
+					                <div class="single-products" id="products_container">
+
+										<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
+											
+												<button>
+													<div>+<div>
+												</button>
+
+											<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
+											<h2>RM{{$product->price}}</h2>
+		                                    <p>{{$product->prod_name}}</p>
+		                                    <p>{{$product->stock_quantity}}</p>
 
 
-				
+		                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
+		                             
+										</div>
 
-    		 <div class="features_items"><!--features_items-->
+											<div class="clearfix"></div>
+									</div>
+
+									<div class="choose">
+		                                <ul class="nav nav-pills nav-justified">
+		                                    <li>
+		                                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+													<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+												</a>
+
+                          					</li>
+		                                </ul>
+	                            	</div>
+
+								</div>
+						</div>
+					@endforeach
+				</div><!-- features_items -->
+
+
+
+					<!-- Compare Features Items -->
+					<a style="margin-top:0;" id="compare" href="#animatedModal" disabled class="compare-products">Compare Products</a>
+					<ul style="margin-bottom:0;" class="pagination pull-right">
+                        <li class="active"><a href="">1</a></li>
+                        <li><a href="">2</a></li>
+                        <li><a href="">3</a></li>
+                        <li><a href="">»</a></li>
+	                </ul> 
+		         
+			
+					<!--Modal-->
+					<div id="animatedModal">
+					    <!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+					    <div  id="btn-close-modal" class="close-animatedModal"> 
+					        CLOSE
+					    </div>
+					        
+					    <div class="modal-content-compare">
+					        <div class="modal-inner">
+					        	<div class="no-products">Select some products to compare first</div>  
+					        	<div class="modal-products"></div>     
+					        </div>
+					    </div>
+
+					</div> <!--modal-features-items-->
+
+
+ 					<div id='wish_list'>
+						<p class="wish_list_heading">
+							<span id='listitem'>0</span>
+							<span id='p_label'>Product</span>
+						</p>
+						<table id='wish_list_item' border='0'></table>
+					</div>
+
+
+<!-- test -->
+
+
+
+
+<!-- test -->
+ 			<div class="features_items"><!--features_items-->
 	                    <h2 class="title text-center">Features Items</h2>
 	                    
-	                    @foreach ($products as $product)
+					@foreach($products as $product)
+
+
 	                    <div class="col-sm-4">
 	                        <div class="product-image-wrapper">
 	                            <div class="single-products">
@@ -360,6 +450,8 @@
 								</a>
 						  </div>
 	                </div><!--newest_items-->
+
+    		
 
 	            </div>
 	             

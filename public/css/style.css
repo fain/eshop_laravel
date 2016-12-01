@@ -1,0 +1,72 @@
+
+
+.products_container{
+	width:70%;
+	background:white;
+	margin:0px auto;
+}
+.item-container{
+	width:100%;
+	overflow:hidden;
+	border-bottom:1px solid #e1e1e1;
+	padding: 6px 0px;
+}
+.col-s{
+	width:31%;
+	float:left;
+	margin:0px 4px;
+}
+
+#wish_list{
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	height: 30px;
+	width:360px;
+	background: white;
+	border:1px solid #e1e1e1;
+}
+#wish_list .wish_list_heading
+{
+    margin: 0px 0px;
+    color: white;
+    height: 30px;
+    background-color: #3498db;
+    overflow: hidden;
+    padding: 6px 3px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#wish_list_item{
+width:100%;
+text-align:center;
+  border-spacing: 0px;
+    border-collapse: separate;
+}
+#msg{
+position: fixed;
+    display: none;
+    padding: 10px 25px;
+    background: white;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    font-size: 15px;
+	width:30%;
+	text-align:center;
+}
+.wishlist-item{
+padding:10px 5px;
+background:#111;
+color:#f1f1f1;
+}
+.w-premove{
+font-size:23px;	
+cursor:pointer;
+}
+.w-pname,.w-price, .w-stock{
+font-size:13px;	
+}
+#myad{
+    margin: 0px auto;
+    text-align: center;	
+}
