@@ -109,7 +109,7 @@ list-style-type:none;
 
 /*Image Thumbnail*/
 img {
-  max-width: 100%; 
+  max-width: 40%; 
   overflow: auto;
 }
 
@@ -219,7 +219,7 @@ img {
 }
 
 .content-product-information span span {
-  color: #2b0ffe;
+  color: #1360b7 ;
   float: left;
   font-family: 'Roboto', sans-serif;
   font-size: 30px;
@@ -248,7 +248,7 @@ img {
 
 /*Right Sidebar*/
 .right-sidebar h2, .merchantsinfo_products h2 {
-  color: #2b0ffe;
+  color: #1360b7 ;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -323,7 +323,7 @@ img {
 }
 
 .top-selling-item-control i {
-  background: none repeat scroll 0 0 #2b0ffe;
+  background: none repeat scroll 0 0 #1360b7 ;
   color: #FFFFFF;
   font-size: 20px;
   padding: 4px 10px;
@@ -352,7 +352,7 @@ img {
 }
 
 .newest-item-control i {
-  background: none repeat scroll 0 0 #2b0ffe;
+  background: none repeat scroll 0 0 #1360b7 ;
   color: #FFFFFF;
   font-size: 20px;
   padding: 4px 10px;
@@ -370,4 +370,14 @@ img {
     overflow:hidden;
 }
 
-
+.modal-content-compare{
+  position:relative;
+  background-color:#3498DB;
+  border:1px solid #3498DB;
+  border:1px solid rgba(0,0,0,0.2);
+  border-radius:6px;
+  -webkit-box-shadow:0 3px 9px rgba(0,0,0,0.5);
+  box-shadow:0 3px 9px rgba(0,0,0,0.5);
+  -webkit-background-clip:padding-box;
+  background-clip:padding-box;outline:0
+}

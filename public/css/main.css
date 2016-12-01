@@ -52,7 +52,7 @@ a#scrollUp {
   bottom: 0px;
   right: 10px;
   padding: 5px 10px;
-  background: #2b0ffe;
+  background: #1360b7;
   color: #FFF;
   -webkit-animation: bounce 2s ease infinite;
   animation: bounce 2s ease infinite;
@@ -265,7 +265,7 @@ a#scrollUp i{
 }
 
 .mainmenu ul li a:hover{
-  background-color: #2b0ffe; 
+  background-color: #1360b7; 
   color: #FFFFFF;
 }
 
@@ -386,7 +386,7 @@ ul.sub-menu {
 }
 
 .companyinfo h2  span{
-  color:#2b0ffe;
+  color:#1360b7;
 }
 
 .companyinfo p {
@@ -520,7 +520,7 @@ ul.sub-menu {
 
 .single-widget ul li a:hover{
 	background:none;
-	color:#2b0ffe;
+	color:#1360b7;
 }
 
 
@@ -537,7 +537,7 @@ ul.sub-menu {
 
 
 .searchform button {
-  background: #2b0ffe;
+  background: #1360b7;
   border: medium none;
   border-radius: 0;
   margin-left: -5px;
@@ -552,7 +552,7 @@ ul.sub-menu {
 
 .searchform  button:hover, 
 .searchform  button:focus{
-	background-color:#2b0ffe;
+	background-color:#1360b7;
 }
 
 .searchform p {
@@ -576,7 +576,7 @@ ul.sub-menu {
 }
 
 .footer-bottom p span a {
-  color: #2b0ffe;
+  color: #1360b7;
   font-style: italic;
   text-decoration: underline;
 }
@@ -596,7 +596,7 @@ ul.sub-menu {
 }
 
 .carousel-indicators li.active {
-	  background: #2b0ffe;
+	  background: #1360b7;
 }
 
 .item {
@@ -622,7 +622,7 @@ ul.sub-menu {
 }
 
 .item h1 span {
-	color:#2b0ffe;
+	color:#1360b7;
 }
 
 .item h2 {
@@ -657,7 +657,7 @@ ul.sub-menu {
 }
 
 .item button:hover {
-  background: #2b0ffe;
+  background: #1360b7;
 }
 
 .control-carousel {
@@ -668,7 +668,7 @@ ul.sub-menu {
 }
 
 .control-carousel:hover{
-  color: #2b0ffe ;
+  color: #1360b7 ;
 }
 
 .right {
@@ -682,7 +682,7 @@ ul.sub-menu {
   padding-top: 15px;
 }
 .left-sidebar h2, .brands_products h2 {
-  color: #2b0ffe;
+  color: #1360b7;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -844,7 +844,7 @@ h2.title:before{
 
 
 .tooltip-inner {
-  background-color: #2b0ffe;
+  background-color: #1360b7;
   border-radius: 4px;
   color: #FFFFFF;
   max-width: 200px;
@@ -854,7 +854,7 @@ h2.title:before{
 }
 
 .tooltip.top .tooltip-arrow {
-  border-top-color: #2b0ffe;
+  border-top-color: #1360b7;
   border-width: 5px 5px 0;
   bottom: 0;
   left: 50%;
@@ -872,7 +872,7 @@ h2.title:before{
 
 
 h2.title {
-  color: #2b0ffe;
+  color: #1360b7;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -899,7 +899,7 @@ img.new, img.sale {
 }
 
 .productinfo h2{
-	color: #2b0ffe;
+	color: #1360b7;
 	font-family: 'Roboto', sans-serif;
 	font-size: 24px;
 	font-weight: 700;
@@ -928,7 +928,7 @@ img.new, img.sale {
 }
 
 .product-overlay {
-  background:#2b0ffe;
+  background:#1360b7;
   top: 0;
   display: none;
   height: 0;
@@ -957,7 +957,7 @@ img.new, img.sale {
   background:#fff;
   border: 0 none;
   border-radius: 0;
-  color: #2b0ffe;
+  color: #1360b7;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   margin-bottom: 25px;
@@ -965,7 +965,7 @@ img.new, img.sale {
 
 .product-overlay .add-to-cart:hover {
   background:#fff;
-  color: #2b0ffe;
+  color: #1360b7;
 }
 
 
@@ -989,7 +989,7 @@ img.new, img.sale {
 }
 
 .add-to-cart:hover {
-  background: #2b0ffe;
+  background: #1360b7;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;
@@ -1004,7 +1004,7 @@ img.new, img.sale {
 }
 
 .add-to-cart:hover {
-  background: #2b0ffe;
+  background: #1360b7;
   color: #FFFFFF;
 }
 
@@ -1026,7 +1026,7 @@ img.new, img.sale {
 
 .choose ul li a:hover{
 	background:none;
-	color:#2b0ffe;
+	color:#1360b7;
 }
 
 .category-tab {
@@ -1035,7 +1035,7 @@ img.new, img.sale {
 
 .category-tab ul {
   background: #40403E;
-  border-bottom: 1px solid #2b0ffe;
+  border-bottom: 1px solid #1360b7;
   list-style: none outside none;
   margin: 0 0 30px;
   padding: 0;
@@ -1053,7 +1053,7 @@ img.new, img.sale {
 }
 
 .category-tab ul  li  a:hover{
-	background:#2b0ffe;
+	background:#1360b7;
 	color:#fff;
 }
 
@@ -1062,7 +1062,7 @@ img.new, img.sale {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background-color: #2b0ffe;
+  background-color: #1360b7;
   border:0px;
   color: #FFFFFF;
   cursor: default;
@@ -1091,7 +1091,7 @@ img.new, img.sale {
 }
 
 .recommended-item-control i {
-  background: none repeat scroll 0 0 #2b0ffe;
+  background: none repeat scroll 0 0 #1360b7;
   color: #FFFFFF;
   font-size: 20px;
   padding: 4px 10px;
@@ -1136,7 +1136,9 @@ img.new, img.sale {
   margin-bottom: 25px;
   margin-top: 0;
   padding-left: 15px;
+  
 }
+
 
 .pagination  li:first-child  a, .pagination  li:first-child  span {
   border-bottom-left-radius: 0;
@@ -1150,8 +1152,8 @@ img.new, img.sale {
 }
 
 .pagination  .active  a, .pagination  .active  span, .pagination  .active  a:hover, .pagination  .active  span:hover, .pagination  .active  a:focus, .pagination  .active  span:focus {
-  background-color: #2b0ffe;
-  border-color: #2b0ffe;
+  background-color: #3498DB;
+  border-color: #3498DB;
   color: #FFFFFF;
   cursor: default;
   z-index: 2;
@@ -1171,7 +1173,7 @@ img.new, img.sale {
 }
 
 .pagination  li  a:hover{
-	background:#2b0ffe;
+	background:#1360b7;
 	color:#fff;
 }
 
@@ -1215,7 +1217,7 @@ img.new, img.sale {
 }
 
 .view-product h3 {
-  background: #2b0ffe;
+  background: #1360b7;
   bottom: 0;
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
@@ -1241,7 +1243,7 @@ img.new, img.sale {
   top: 35%;
 }
 .item-control i {
-  background: #2b0ffe;
+  background: #1360b7;
   color: #FFFFFF;
   font-size: 20px;
   padding: 5px 10px;
@@ -1286,7 +1288,7 @@ img.new, img.sale {
 }
 
 .product-information span span {
-  color: #2b0ffe;
+  color: #1360b7;
   float: left;
   font-family: 'Roboto', sans-serif;
   font-size: 30px;
@@ -1319,7 +1321,7 @@ img.new, img.sale {
 
 
 .cart {
-  background: #2b0ffe;
+  background: #1360b7;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;
@@ -1364,13 +1366,13 @@ img.new, img.sale {
 }
 
 #reviews ul li a i{
-	color:#2b0ffe;
+	color:#1360b7;
 	padding-right:8px;
 }
 
 #reviews ul li a:hover{
 	background:#fff;
-	color:#2b0ffe;
+	color:#1360b7;
 }
 
 #reviews p{
@@ -1410,7 +1412,7 @@ img.new, img.sale {
 }
 
 #reviews button {
-  background: #2b0ffe;
+  background: #1360b7;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;
@@ -1449,7 +1451,7 @@ img.new, img.sale {
 }
 
 .content-404 h2 a {
-  background: #2b0ffe;
+  background: #1360b7;
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   font-size: 44px;
@@ -1600,7 +1602,7 @@ img.new, img.sale {
 }
 
 .breadcrumbs .breadcrumb li a {
-  background:#2b0ffe;
+  background:#1360b7;
   color: #FFFFFF;
   padding: 3px 7px;
 }
@@ -1611,7 +1613,7 @@ img.new, img.sale {
   width: auto;
   border-width: 8px;
   border-style: solid;
-  border-color:transparent transparent transparent #2b0ffe;
+  border-color:transparent transparent transparent #1360b7;
   position: absolute;
   top: 11px;
   left:48px;
@@ -1629,7 +1631,7 @@ img.new, img.sale {
 
 
 #cart_items .cart_info .cart_menu {
-  background: #2b0ffe;
+  background: #1360b7;
   color: #fff;
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
@@ -1684,7 +1686,7 @@ img.new, img.sale {
 
 
 #cart_items .cart_info .cart_total_price {
-  color: #2b0ffe;
+  color: #1360b7;
   font-size: 24px;
 }
 
@@ -1731,7 +1733,7 @@ img.new, img.sale {
 }
 
 .cart_delete a:hover {
-  background:#2b0ffe
+  background:#1360b7
 }
 
 
@@ -1836,7 +1838,7 @@ img.new, img.sale {
 }
 
 .update, .check_out {
-  background: #2b0ffe;
+  background: #1360b7;
   border-radius: 0;
   color: #FFFFFF;
   margin-top: 18px;
@@ -1903,7 +1905,7 @@ img.new, img.sale {
 }
 
 .checkout-options .nav li a {
-  color: #2b0ffe;
+  color: #1360b7;
   font-size: 18px;
   font-weight: normal;
   padding: 0
@@ -1917,7 +1919,7 @@ img.new, img.sale {
   margin-right: 10px;
   border-radius: 50%;
   padding: 5px;
-  background: #2b0ffe;
+  background: #1360b7;
   color:#fff;
   font-size: 14px;
   padding: 2px 3px;
@@ -1948,7 +1950,7 @@ img.new, img.sale {
 
 
 .shopper-info .btn-primary {
-  background: #2b0ffe;
+  background: #1360b7;
   border: 0 none;
   border-radius: 0;
   margin-right: 15px;

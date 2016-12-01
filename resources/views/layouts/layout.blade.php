@@ -38,6 +38,17 @@
     {{--<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">--}}
 
 
+	<!-- Compare Product CSS -->
+	<link href="{{asset('https://fonts.googleapis.com/css?family=Lato:400,700')}}" rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{{asset('css/normalize.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/animate.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/comparison.css')}}">
+
+	<!-- Wishlist Product CSS -->
+	<!-- <link rel="stylesheet" id="open-sans-css" href="{{asset('https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&amp;subset=latin%2Clatin-ext&amp;ver=4.4.2')}}" type="text/css" media="all"> -->
+	<link rel="stylesheet" id="style-css" href="{{asset('css/style.css')}}" type="text/css" media="all">
+
+
 </head><!--/head-->
 
 <body>
@@ -81,7 +92,7 @@
                             <ul class="nav navbar-nav">
                                 <!-- <li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Account'}}</a></li> -->
                                 <!-- <li><a href="{{url('checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
-                                <li><a href="{{url('products/wishlists/{id}')}}"><i class="fa fa-star"></i> Wishlists</a></li> -->
+                                <li><a href="{{url('products/wishlists/{id}')}}"><i class="fa fa-star"></i> Wishlists</a></li>
                                 <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
                                 <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li class="main-dropdown">
@@ -331,8 +342,35 @@
 	    }
 	</style>
 
+	<!-- Compare Product JS -->
+	<script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('js/jquery.comparison.js')}}"></script>
+	<script type="text/javascript" src="{{asset('js/animatedModal.min.js')}}"></script>
+
+	<script>
+	
+		$("#compare").animatedModal({
+		
+		    animatedIn:'lightSpeedIn',
+		    animatedOut:'bounceOutDown',
+		    color:'#3498db',
+		
+		});
+		
+		$(document).ready(function() {
+		
+		   $('.product').compare({			
+				compareButton: '.compare-products'
+			});
 
 
+		
+		});
+	
+	</script>
+	
+	<!-- Wishlist Product JS -->
+	<script type='text/javascript' src="{{asset('js/script.js')}}"></script>	 
 
    	@yield('js_content')
 

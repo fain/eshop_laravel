@@ -18,6 +18,8 @@ use Eshop\Category;
 use Eshop\Product;
 use Eshop\ProductInfo;
 use Eshop\ShippingRate;
+use Eshop\ProductImage;
+
 use Eshop\Http\Controllers\Controller;
 
 //use Illuminate\Support\Facades\Request;
@@ -43,6 +45,7 @@ class Front extends Controller {
     var $categories;
     var $products;
     var $productinfo;
+    var $products_image;
     var $title;
     var $description;
 
@@ -50,25 +53,43 @@ class Front extends Controller {
         $this->brands = Brand::all(array('name'));
         $this->merchantsinfo = MerchantsInfo::all(array('id', 'store_name'));
         $this->categories = Category::all(array('name'));
-        $this->products = Product::all(array('id','name','price'));
+        $this->products = Product::all(array('id','category_id','brand_id', 'merchants_id'));
         $this->shipping_rate = ShippingRate::all(array('id'));
+        $this->products_image = ProductImage::all(array('id'));
+
 
     }
 
-    public function index() {
+        public function index() {
+        $product = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->get();
+
+
+                               
+
+
         return view('front.home',
-            array(
+            array('$product' => $product,
                 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
                 'description' => '',
                 'page' => 'home',
                 'brands' => $this->brands,
                 'merchantsinfo' => $this->merchantsinfo,
                 'categories' => $this->categories,
-                'shipping_rate' => $this->shipping_rate,
-                'products' => $this->products
+                // 'shipping_rate' => $this->shipping_rate,
+                'products' => $product,
+                'products_image' => $this->products_image
+
             )
         );
     }
+
+
 
     public function products() {
         return view('front.products',
