@@ -171,8 +171,6 @@
 											<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
 											<h2>RM{{$product->price}}</h2>
 		                                    <p>{{$product->prod_name}}</p>
-		                                    <p>{{$product->stock_quantity}}</p>
-
 
 		                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
