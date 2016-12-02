@@ -27,6 +27,7 @@
 				product = $('.product[data-id="'+itemsarray[i]+'"]');
 
 					$('.modal-products').append('<div class="productinner"><img src="'+$(product).find('img').attr('src')+'"/><ul><li><span>'+$(product).data('name')+'</span></li><li><span>RM'+$(product).data('price')+'</span></li><li><span>'+$(product).data('code')+'</span></li><li><span>'+$(product).data('brand')+'</span></li><li><span>'+$(product).data('shortdetails')+'</span></li></ul></div>');
+						// '<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>'+'</span></li></ul></div>');
 
 				}
 

@@ -69,12 +69,46 @@ class Front extends Controller {
                                 ->where('product_image.primary_img', '=', 'Y')
                                 ->get();
 
+       $product_top_sale = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'New')
+                                ->get();
 
-                               
+       $product_new = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'New')
+                                ->get();                                
+
+       $product_used = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'Used')
+                                ->get();                                
+
+       $product_pre_order = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'Pre-Order')
+                                ->get();                    
+
 
 
         return view('front.home',
-            array('$product' => $product,
+            array(
                 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
                 'description' => '',
                 'page' => 'home',
@@ -83,6 +117,10 @@ class Front extends Controller {
                 'categories' => $this->categories,
                 // 'shipping_rate' => $this->shipping_rate,
                 'products' => $product,
+                'products_top_sale' => $product_top_sale,
+                'products_new' => $product_new,
+                'products_used' => $product_used,
+                'products_pre_order' => $product_pre_order,
                 'products_image' => $this->products_image
 
             )
@@ -92,15 +130,64 @@ class Front extends Controller {
 
 
     public function products() {
+          $product = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->get();
+
+       $product_top_sale = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'New')
+                                ->get();
+
+       $product_new = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'New')
+                                ->get();                                
+
+       $product_used = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'Used')
+                                ->get();                                
+
+       $product_pre_order = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->where('product_image.primary_img', '=', 'Y')
+                                ->where('products_info.type', '=', 'Pre-Order')
+                                ->get();                    
+
+
         return view('front.products',
             array('title' => 'Products Listing',
-                'description' => '',
-                'page' => 'products', 
-                'brands' => $this->brands, 
+             'description' => '',
+                'page' => 'home',
+                'brands' => $this->brands,
                 'merchantsinfo' => $this->merchantsinfo,
-                'categories' => $this->categories, 
-                'shipping_rate' => $this->shipping_rate,
-                'products' => $this->products
+                'categories' => $this->categories,
+                'products' => $product,
+                'products_top_sale' => $product_top_sale,
+                'products_new' => $product_new,
+                'products_used' => $product_used,
+                'products_pre_order' => $product_pre_order,
+                'products_image' => $this->products_image
             ));
     }
 
@@ -129,7 +216,25 @@ class Front extends Controller {
                 ));
     }
 
-    public function product_wishlist($id){
+    // public function product_wishlist($id){
+    //     $product = DB::table('products')
+    //                             ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+    //                             ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+    //                             ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
+    //                             ->select('products.*', 'products_info.*', 'brands.*', 'shipping_rate.*')
+    //                             ->first();
+
+    //     return view('front.product_wishlist',
+    //         array('product'=> $product,
+    //             'title' => 'My Wishlist',
+    //             'page'=> 'product_wishlist',
+    //             'products' => $this->products
+
+
+    //             ));
+    // }
+
+     public function product_wishlist(){
         $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
@@ -138,11 +243,10 @@ class Front extends Controller {
                                 ->first();
 
         return view('front.product_wishlist',
-            array('product'=> $product,
+            array('product' => $product,
                 'title' => 'My Wishlist',
                 'page'=> 'product_wishlist',
                 'products' => $this->products
-
 
                 ));
     }
@@ -188,7 +292,7 @@ class Front extends Controller {
 
         return view('front.blog_post', $data);
     }
-
+    
     public function contact_us() {
         return view('front.contact_us', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'contact_us'));
     }

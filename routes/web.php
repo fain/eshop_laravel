@@ -33,7 +33,7 @@ Route::get('/products','Front@products');
 Route::get('/products/details/{id}','Front@product_details');
 Route::get('/products/categories','Front@product_categories');
 Route::get('/products/brands','Front@product_brands');
-Route::get('/products/wishlists/{id}','Front@product_wishlist');
+Route::get('/wishlists','Front@product_wishlist');
 Route::get('/blog','Front@blog');
 Route::get('/blog/post/{id}','Front@blog_post');
 Route::get('/contact-us','Front@contact_us');
