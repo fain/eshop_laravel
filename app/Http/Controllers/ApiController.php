@@ -14,6 +14,12 @@ use Eshop\Brand;
 use Eshop\ProductOption;
 use Eshop\ProductOptionGroup;
 
+use Eshop\MerchantShipping;
+use Illuminate\Support\Facades\Auth;
+
+//for timestamp
+use Carbon\Carbon;
+
 
 class ApiController extends Controller
 {
@@ -65,4 +71,86 @@ class ApiController extends Controller
 
         return Response::json($list_opt);
     }
+
+    /*******************************Merchant Shipping Ajax start*********************************/
+    public function new_shipping(Request $request){
+        $userid = Auth::user()->id;
+        $cur_datetime = Carbon::now();
+
+        if($request->ship_id==""){
+            $merch_ship = new MerchantShipping();
+
+            $merch_ship->user_id = $userid;
+            $merch_ship->title = $request->ship_title;
+            $merch_ship->set_default = $request->ship_default;
+            $merch_ship->name = $request->ship_name;
+            $merch_ship->address = $request->ship_address;
+            $merch_ship->state = $request->ship_state;
+            $merch_ship->city = $request->ship_city;
+            $merch_ship->postcode = $request->ship_pcode;
+            $merch_ship->phone = $request->ship_phone;
+            $merch_ship->updated_at = $cur_datetime;
+            $merch_ship->created_at = $cur_datetime;
+//
+            $merch_ship->save();
+
+            $merch_ship_id = $merch_ship->id;
+            $msg = 'New Shipping address had been successfully Inserted!';
+        }else{
+            $merch_ship = MerchantShipping::find($request->ship_id);
+            $merch_ship_arr = array(
+                'title' => $request->ship_title,
+                'set_default' => $request->ship_default,
+                'name' => $request->ship_name,
+                'address' => $request->ship_address,
+                'state' => $request->ship_state,
+                'city' => $request->ship_city,
+                'postcode' => $request->ship_pcode,
+                'phone' => $request->ship_phone,
+                'updated_at' => $cur_datetime
+            );
+
+            $merch_ship->where('id', $request->ship_id)->update($merch_ship_arr);
+
+            $merch_ship_id = $request->ship_id;
+            $msg = 'New Shipping address had been successfully Updated!';
+        }
+
+//        if($request->ship_default=="Y"){
+//            $merch_ship = MerchantShipping::find($request->ship_id);
+//            $merch_ship_arr = array(
+//                'set_default' => 'N',
+//                'updated_at' => $cur_datetime
+//            );
+//
+//            $merch_ship->where('id', '!=', $request->ship_id)->update($merch_ship_arr);
+//        }
+
+        $data = [
+            'message'=> $msg,
+            'title' => $request->ship_title,
+            'def' => $request->ship_default,
+            'name' => $request->ship_name,
+            'address' => $request->ship_address,
+            'state' => $request->ship_state,
+            'full_state' => $request->full_state,
+            'city' => $request->ship_city,
+            'pcode' => $request->ship_pcode,
+            'phone' => $request->ship_phone,
+            'id' => $merch_ship_id
+        ];
+
+        return Response::json($data);
+    }
+
+    public function merchant_shipping($id) {
+        $merchant_shipping = DB::table('merchant_shipping')
+            ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
+            ->select('merchant_shipping.*', 'state.name as state_name')
+            ->where('merchant_shipping.id', '=', $id)
+            ->first();
+
+        return Response::json($merchant_shipping);
+    }
+    /*******************************Merchant Shipping Ajax end*********************************/
 }

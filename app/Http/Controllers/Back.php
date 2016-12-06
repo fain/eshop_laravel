@@ -7,6 +7,7 @@ use Eshop\ProductOptionBridge;
 use Illuminate\Http\Request;
 
 use Eshop\Http\Requests;
+use Illuminate\Support\Facades\Response;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -33,6 +34,7 @@ use Eshop\ProductImage;
 use Eshop\Promotion;
 use Eshop\ShippingRate;
 use Eshop\MerchantShipping;
+use Eshop\MerchantReturn;
 use Eshop\ProductOption;
 use Eshop\ProductOptionGroup;
 
@@ -114,6 +116,8 @@ class Back extends Controller
             $user_info = new UserInfo;
             $merchants_info = new MerchantsInfo;
             $merchants_bus_details = new MerchantsBusDetails;
+            $merchants_shipping = new MerchantShipping;
+            $merchants_return = new MerchantReturn;
 
             $user->name = $request->name;
             $user->email = $request->email;
@@ -148,18 +152,38 @@ class Back extends Controller
             $merchants_bus_details->name = $request->pic_name;
             $merchants_bus_details->email = $request->pic_email;
             $merchants_bus_details->phone = $request->pic_phone;
-            $merchants_bus_details->ship_add = $request->ship_add;
-            $merchants_bus_details->ship_state = $request->ship_state;
-            $merchants_bus_details->ship_city = $request->ship_city;
-            $merchants_bus_details->ship_pcode = $request->ship_pcode;
-            $merchants_bus_details->rtn_add = $request->rtn_add;
-            $merchants_bus_details->rtn_state = $request->rtn_state;
-            $merchants_bus_details->rtn_city = $request->rtn_city;
-            $merchants_bus_details->rtn_pcode = $request->rtn_pcode;
             $merchants_bus_details->updated_at = $cur_datetime;
             $merchants_bus_details->created_at = $cur_datetime;
 
             $merchants_bus_details->save();
+
+            $merchants_shipping->user_id = $user_id;
+            $merchants_shipping->title = "Default";
+            $merchants_shipping->set_default = "Y";
+            $merchants_shipping->name = $request->pic_name;
+            $merchants_shipping->address = $request->ship_add;
+            $merchants_shipping->state = $request->ship_state;
+            $merchants_shipping->city = $request->ship_city;
+            $merchants_shipping->postcode = $request->ship_pcode;
+            $merchants_shipping->phone = $request->pic_phone;
+            $merchants_shipping->updated_at = $cur_datetime;
+            $merchants_shipping->created_at = $cur_datetime;
+
+            $merchants_shipping->save();
+
+            $merchants_return->user_id = $user_id;
+            $merchants_return->title = "Default";
+            $merchants_return->set_default = "Y";
+            $merchants_return->name = $request->pic_name;
+            $merchants_return->address = $request->rtn_add;
+            $merchants_return->state = $request->rtn_state;
+            $merchants_return->city = $request->rtn_city;
+            $merchants_return->postcode = $request->rtn_pcode;
+            $merchants_return->phone = $request->pic_phone;
+            $merchants_return->updated_at = $cur_datetime;
+            $merchants_return->created_at = $cur_datetime;
+
+            $merchants_return->save();
 
             $request->session()->flash('success', 'You had been successfully Registered. Please wait for approval from Us!');
             return redirect('/backend/login');
@@ -793,6 +817,12 @@ class Back extends Controller
 
             $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
 
+            $states = State::get();
+            $merchant_shipping = DB::table('merchant_shipping')
+                ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
+                ->select('merchant_shipping.*', 'state.name as state_name')
+                ->get();
+
             $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
 
             foreach($prod_opt_actv as $poa){
@@ -800,20 +830,6 @@ class Back extends Controller
             }
 
             $prod_opt_group = ProductOptionGroup::where('status', '=', 'A')->get();
-//
-//            $prod_opt_in = $prod_group_detail->name;
-            $list_opt = "";
-
-//            if(isset($prod_opt_in) && $prod_opt_in!=""){
-//                $arr_opt = explode(",", $prod_opt_in);
-//
-//                $len = (count($arr_opt))-1;
-//
-//                for($i=0; $i<=$len; $i++){
-//                    $list_opt[] = ProductOption::where('id', '=', $arr_opt[$i])->select('id', 'name')->first();
-//                }
-//            }
-//            $subcat = Category::where('main_category_id', '!=', 0)->where('status', 'A')->where('menu_type', 'sub')->get();
 
             return view('back.new_product',
                 array(
@@ -824,12 +840,11 @@ class Back extends Controller
                     'mainmenu' => 'product',
                     'maincat' => $maincat,
                     'dropdown' => $arr,
-                    'prod_opt_group' => $prod_opt_group
-
-//                    'subcat' => $subcat
+                    'prod_opt_group' => $prod_opt_group,
+                    'ship_states' => $states,
+                    'merch_ship' => $merchant_shipping
                 ));
         }else{
-//            $request->session()->flush();
             Auth::logout();
             Session::flash('warning', 'You have been logged out!');
             return redirect('/backend/login');
@@ -1059,6 +1074,7 @@ class Back extends Controller
 
         $product_info->created_at = $request->$cur_datetime;
         $product_info->updated_at = $request->$cur_datetime;
+        /*******************************product info end*********************************/
 
         $product_info->save();
 

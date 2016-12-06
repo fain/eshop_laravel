@@ -315,14 +315,6 @@
             </div>
             <hr>
             <div class="form-group">
-                <label class="col-md-2 control-label">List of Shipping Template </label>
-                <div class="col-md-8">
-                    <select class="form-control">
-                        <option value="">Select shipping template</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="col-md-2 control-label">Address <span class="req">*</span> </label>
                 <div class="col-md-2">
                     <p class="form-control-static">Ship-From Address</p>
@@ -331,7 +323,7 @@
                     <input type="text" class="form-control" name="shipping_add">
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#shippingModal" onclick="shippingMerchant();">Edit</button>
                 </div>
             </div>
             <div class="form-group">
@@ -342,9 +334,10 @@
                     <input type="text" class="form-control" name="return_add">
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-info" type="button">Edit</button>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-md-2 control-label">Shipping Method <span class="req">*</span> </label>
                 <div class="col-md-4">
@@ -653,6 +646,161 @@
             </div>
         </form>
     </div>
+
+
+    <!---------------------------------product option modal start------------------------------>
+    <div class="modal fade" id="shippingModal" tabindex="-1" role="dialog" aria-labelledby="shippingModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="shippingModalContent">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="shippingModalLabel">Label</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-hover" id="merch_ship_dtl">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Title</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                        </tr>
+                        </thead>
+                        <tbody id="prodlist_body">
+                        @foreach($merch_ship as $index=>$ms)
+                            <tr id="prodlist_{{ $ms->id }}" class="prod_class">
+                                <td>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="setdefault" id="setdefault{{ $index+1 }}" value="Y">
+                                            {{ $index+1 }}
+                                        </label>
+                                    </div>
+                                    <input type="hidden" id="ship_id_{{ $index+1 }}" value="{{ $ms->id }}">
+                                    <input type="hidden" id="ship_address_{{ $index+1 }}" value="{{ $ms->address }}">
+                                    <input type="hidden" id="ship_city_{{ $index+1 }}" value="{{ $ms->city }}">
+                                    <input type="hidden" id="ship_postcode_{{ $index+1 }}" value="{{ $ms->postcode }}">
+                                    <input type="hidden" id="ship_state_{{ $index+1 }}" value="{{ $ms->state }}">
+                                    <input type="hidden" id="ship_def_{{ $index+1 }}" value="{{ $ms->set_default }}">
+                                </td>
+                                <td>{{ $ms->title }}</td>
+                                <td>{{ $ms->name }}</td>
+                                <td>
+                                    {{ $ms->address }}, <br>
+                                    {{ $ms->postcode }}, {{ $ms->city }}, <br>
+                                    {{ $ms->state_name }}
+                                </td>
+                                <td>{{ $ms->phone }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <div id="ajaxResponse"></div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="post" action="" id="shipping_form" >
+                                {{ csrf_field() }}
+                                <input type="hidden" class="form-control" name="ship_id" id="ship_id">
+                                <div class="form-group " id="ship_title_box">
+                                    <label class="control-label col-md-2">Title <span class="req">*</span></label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="ship_title" id="ship_title">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="ship_default" value="Y" id="ship_default"> Default Address
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-2" id="ship_title_error" style="display: none">
+                                        <span class="help-block"><strong>Title field is required</strong></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group " id="ship_name_box">
+                                    <label class="control-label col-md-2">Name <span class="req">*</span></label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" name="ship_name" id="ship_name">
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-2" id="ship_name_error" style="display: none">
+                                        <span class="help-block"><strong>Name field is required</strong></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group " id="ship_address_box">
+                                    <label class="control-label col-md-2">Address <span class="req">*</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="ship_address" id="ship_address">
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-2" id="ship_address_error" style="display: none">
+                                        <span class="help-block"><strong>Address field is required</strong></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group " id="ship_state_box">
+                                    <label class="control-label col-md-2">State <span class="req">*</span></label>
+                                    <div class="col-md-5">
+                                        <select id="ship_state" class="form-control" name="ship_state" id="ship_state" value="" >
+                                            <option value="">Select State</option>
+                                            @foreach($ship_states as $ship_state)
+                                                <option value="{{ $ship_state->id }}" @if(old('ship_state') == $ship_state->id) selected="selected" @endif>{{ $ship_state->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-2" id="ship_state_error" style="display: none">
+                                        <span class="help-block"><strong>State field is required</strong></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group " id="ship_city_box">
+                                    <label class="control-label col-md-2">City <span class="req">*</span></label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="ship_city" id="ship_city">
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-2" id="ship_city_error" style="display: none">
+                                        <span class="help-block"><strong>City field is required</strong></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group " id="ship_pcode_box">
+                                    <label class="control-label col-md-2">Postcode <span class="req">*</span></label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="ship_pcode" id="ship_pcode">
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-2" id="ship_pcode_error" style="display: none">
+                                        <span class="help-block"><strong>Postcode field is required</strong></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group " id="ship_phone_box">
+                                    <label class="control-label col-md-2">Phone <span class="req">*</span></label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="ship_phone" id="ship_phone">
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-2" id="ship_phone_error" style="display: none">
+                                        <span class="help-block"><strong>Phone field is required</strong></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" onclick="addReset();">Add</button>
+
+                    <button type="button" class="btn btn-info" id="">Apply</button>
+                    <button type="button" class="btn btn-success" id="saveButton">Save</button>
+                    <button type="button" class="btn btn-danger" id="">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addReset();">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---------------------------------product option modal end------------------------------>
 @endsection
 
 @section('js_section')
@@ -1436,6 +1584,156 @@
             }
 
             $('#add_field_btn').removeClass(' disabled');
+        }
+
+        /**-----------------------------Edit Shipping-------------------------------**/
+
+        /**-----------------------------add new item to table-------------------------------**/
+        $('#shippingModal').on('shown.bs.modal', function () {
+            $("#saveButton").click(function (e) {
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var def = "N";
+
+                if($('#ship_default').is(':checked')){
+                    def="Y";
+                }
+
+                var ship_id = $('#ship_id').val();
+
+                var formData = {
+                    'ship_id': ship_id,
+                    'ship_title': $('#ship_title').val(),
+                    'ship_name': $('#ship_name').val(),
+                    'ship_address': $('#ship_address').val(),
+                    'ship_state': $('#ship_state').val(),
+                    'full_state': $('#ship_state  option:selected').text(),
+                    'ship_city': $('#ship_city').val(),
+                    'ship_pcode': $('#ship_pcode').val(),
+                    'ship_phone': $('#ship_phone').val(),
+                    'ship_default': def
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/new_shipping',
+                    data: formData,
+                    dataType: 'json',
+                    success: function( data ) {
+                        $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
+
+                        var myTable = document.getElementById("merch_ship_dtl");
+                        var currentIndex = myTable.rows.length;
+
+                        if(ship_id!=""){
+                            currentIndex = currentIndex-1;
+                        }
+
+                        var product = '<tr id="prodlist_' + data.id + '"' +
+                                ' class="prod_class"' +
+                                ' onclick="viewDetailsShipping(\''+
+                                data.id + '\', \'' + data.title + '\', \'' + data.name + '\', \'' + data.address + '\', \'' +
+                                data.city + '\', \'' + data.pcode + '\', \'' + data.state + '\', \'' + data.phone + '\', \'' +
+                                data.def + '\', \'' + currentIndex +'\')">';
+                        product += '<td><div class="radio">' +
+                                '<label><input type="radio" name="setdefault" id="setdefault'+currentIndex+'" value="Y">' +
+                                currentIndex + '</label></div>' +
+                                '<input type="hidden" id="ship_id_'+ currentIndex +'" value="' + data.id + '">' +
+                                '<input type="hidden" id="ship_address_'+ currentIndex +'" value="' + data.address + '">' +
+                                '<input type="hidden" id="ship_city_' + currentIndex + '" value="' + data.city + '">' +
+                                '<input type="hidden" id="ship_postcode_' + currentIndex + '" value="' + data.pcode + '">' +
+                                '<input type="hidden" id="ship_state_' + currentIndex + '" value="' + data.state + '">' +
+                                '<input type="hidden" id="ship_def_' + currentIndex + '" value="' + data.def + '">' +
+                                '</td>';
+                        product += '<td>' + data.title + '</td><td>' + data.name + '</td>';
+                        product += '<td>' + data.address + ', <br>' +
+                                data.pcode + ', ' + data.city + ', <br>' +
+                                data.full_state + '</td><td>' + data.phone + '</td>';
+                        product += '</tr>';
+
+                        if(ship_id==""){
+                            $('#prodlist_body').append(product);
+                        }else{
+                            $("#prodlist_" + data.id).replaceWith( product );
+                        }
+
+                        return true;
+                    },
+                    fail: function(){
+                        alert('fail');
+                    }
+                });
+            });
+        });
+
+        function shippingMerchant(){
+            $("#shippingModalLabel").text('Ship-From Address');
+//            $('#shipping_form').attr('action', '/api/new_shipping');
+//
+//            $("#opt_grp_name").val('');
+//            $("#opt_grp_status").val('A');
+//            $("#submiGrptBtn").text('Submit');
+//
+//            $("#grp_name_group").removeClass('has-error');
+//            $("#grp_name_group_error").hide();
+        }
+
+        function addReset(){
+            $('#shipping_form')[0].reset();
+            $('#ship_id').val("");
+            $('#ship_title').attr("disabled", false);
+        }
+
+        //onclick table row
+        $('#merch_ship_dtl tbody tr').click(function() {
+            var row_num = ($(this).index()+1);
+            var id_cell = this.cells[0];
+            var title_cell = this.cells[1];
+            var name_cell = this.cells[2];
+
+            var phone_cell = this.cells[4];
+
+            var title = title_cell.innerHTML;
+            var name = name_cell.innerHTML;
+            var phone = phone_cell.innerHTML;
+
+            var id = $('#ship_id_'+row_num).val();
+            var address = $('#ship_address_'+row_num).val();
+            var city = $('#ship_city_'+row_num).val();
+            var pcode = $('#ship_postcode_'+row_num).val();
+            var state = $('#ship_state_'+row_num).val();
+            var def = $('#ship_def_'+row_num).val();
+
+            viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_num);
+        });
+
+        function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_num){
+            $('#setdefault'+row_num).prop('checked', true);
+            $('#ship_id').val(id);
+
+            $('#ship_title').val(title);
+            if(title=='Default'){
+                $('#ship_title').attr("disabled", true);
+            }else{
+                $('#ship_title').attr("disabled", false);
+            }
+
+            $('#ship_name').val(name);
+            $('#ship_address').val(address);
+            $('#ship_state').val(state);
+            $('#ship_city').val(city);
+            $('#ship_pcode').val(pcode);
+            $('#ship_phone').val(phone);
+            if(def=='Y'){
+                $('#ship_default').prop('checked', true);
+            }else{
+                $('#ship_default').prop('checked', false);
+            }
         }
 
         // initialize with defaults
