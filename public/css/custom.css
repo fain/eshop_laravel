@@ -308,6 +308,35 @@ img {
   color: #696763;
 }
 
+/*Features Carousel*/
+
+.features_items{
+   overflow: hidden;
+}
+
+#features-item-carousel .carousel-inner .item {
+  padding-left: 0;
+}
+
+.features-item-control {
+  position: absolute;
+  top: 41%;
+}
+
+.features-item-control i {
+  background: none repeat scroll 0 0 #1360b7 ;
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 4px 10px;
+}
+
+.features-item-control i:hover {
+  background: #ccccc6;
+}
+
+.features_items  h2 {
+}
+
 /*Top Selling Carousel*/
 .top_selling_items {
   overflow: hidden;
@@ -366,6 +395,64 @@ img {
 }
 
 
+/*Used Carousel*/
+
+.used_items{
+   overflow: hidden;
+}
+
+#used-item-carousel .carousel-inner .item {
+  padding-left: 0;
+}
+
+.used-item-control {
+  position: absolute;
+  top: 41%;
+}
+
+.used-item-control i {
+  background: none repeat scroll 0 0 #1360b7 ;
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 4px 10px;
+}
+
+.used-item-control i:hover {
+  background: #ccccc6;
+}
+
+.used_items  h2 {
+}
+
+/*Pre-Order Carousel*/
+
+.pre-order_items{
+   overflow: hidden;
+}
+
+#pre-order-item-carousel .carousel-inner .item {
+  padding-left: 0;
+}
+
+.pre-order-item-control {
+  position: absolute;
+  top: 41%;
+}
+
+.pre-order-item-control i {
+  background: none repeat scroll 0 0 #1360b7 ;
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 4px 10px;
+}
+
+.pre-order-item-control i:hover {
+  background: #ccccc6;
+}
+
+.pre-order_items  h2 {
+}
+
 .wishlist_items{
     overflow:hidden;
 }
@@ -381,3 +468,33 @@ img {
   -webkit-background-clip:padding-box;
   background-clip:padding-box;outline:0
 }
+
+
+.table.table-striped-wishlist th {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    width:200px;
+    background-color: #f9f9f9;
+    font-style: normal;
+
+}
+.table.table-striped-wishlist td {
+  border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding-right: 140px;
+    background-color: #ffffff;
+
+}
+
+.table.table-striped-wishlist tr {
+  border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding-right: 140px;
+}
+
