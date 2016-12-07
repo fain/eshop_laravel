@@ -683,8 +683,13 @@
                                     <input type="hidden" id="ship_postcode_{{ $index+1 }}" value="{{ $ms->postcode }}">
                                     <input type="hidden" id="ship_state_{{ $index+1 }}" value="{{ $ms->state }}">
                                     <input type="hidden" id="ship_def_{{ $index+1 }}" value="{{ $ms->set_default }}">
+                                    <input type="hidden" id="ship_title_{{ $index+1 }}" value="{{ $ms->title }}">
                                 </td>
-                                <td>{{ $ms->title }}</td>
+                                <td>{{ $ms->title }}
+                                    <div id="default_{{ $index+1 }}">
+                                        <span>@if($ms->set_default=="Y") (Default) @endif</span>
+                                    </div>
+                                </td>
                                 <td>{{ $ms->name }}</td>
                                 <td>
                                     {{ $ms->address }}, <br>
@@ -704,6 +709,7 @@
                             <form class="form-horizontal" method="post" action="" id="shipping_form" >
                                 {{ csrf_field() }}
                                 <input type="hidden" class="form-control" name="ship_id" id="ship_id">
+                                <input type="hidden" class="form-control" name="ship_row" id="ship_row">
                                 <div class="form-group " id="ship_title_box">
                                     <label class="control-label col-md-2">Title <span class="req">*</span></label>
                                     <div class="col-md-6">
@@ -1627,12 +1633,7 @@
                     success: function( data ) {
                         $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
 
-                        var myTable = document.getElementById("merch_ship_dtl");
-                        var currentIndex = myTable.rows.length;
-
-                        if(ship_id!=""){
-                            currentIndex = currentIndex-1;
-                        }
+                        var currentIndex = $('#ship_row').val();
 
                         var product = '<tr id="prodlist_' + data.id + '"' +
                                 ' class="prod_class"' +
@@ -1650,7 +1651,9 @@
                                 '<input type="hidden" id="ship_state_' + currentIndex + '" value="' + data.state + '">' +
                                 '<input type="hidden" id="ship_def_' + currentIndex + '" value="' + data.def + '">' +
                                 '</td>';
-                        product += '<td>' + data.title + '</td><td>' + data.name + '</td>';
+                        product += '<td>' + data.title +
+                                '<div id="default_'+currentIndex+'"><span></span></div>' +
+                                '</td><td>' + data.name + '</td>';
                         product += '<td>' + data.address + ', <br>' +
                                 data.pcode + ', ' + data.city + ', <br>' +
                                 data.full_state + '</td><td>' + data.phone + '</td>';
@@ -1660,6 +1663,22 @@
                             $('#prodlist_body').append(product);
                         }else{
                             $("#prodlist_" + data.id).replaceWith( product );
+                        }
+
+                        $('#setdefault'+currentIndex).prop('checked', true);
+
+                        if(data.def=="Y"){
+                            var myTable = document.getElementById("merch_ship_dtl");
+                            var count = myTable.rows.length;
+
+                            for(var i=1; i<count; i++){
+                                if(currentIndex!=i){
+                                    $('#ship_def_'+i).val("N");
+                                    $('#default_'+i).text("");
+                                }else{
+                                    $('div#default_'+i).append('<span>(Default)</span>');
+                                }
+                            }
                         }
 
                         return true;
@@ -1708,8 +1727,9 @@
             var pcode = $('#ship_postcode_'+row_num).val();
             var state = $('#ship_state_'+row_num).val();
             var def = $('#ship_def_'+row_num).val();
+            var title_in = $('#ship_title_'+row_num).val();
 
-            viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_num);
+            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_num);
         });
 
         function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_num){
@@ -1729,6 +1749,8 @@
             $('#ship_city').val(city);
             $('#ship_pcode').val(pcode);
             $('#ship_phone').val(phone);
+            $('#ship_row').val(row_num);
+
             if(def=='Y'){
                 $('#ship_default').prop('checked', true);
             }else{

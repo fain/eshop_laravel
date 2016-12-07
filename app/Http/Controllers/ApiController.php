@@ -113,18 +113,12 @@ class ApiController extends Controller
             $merch_ship->where('id', $request->ship_id)->update($merch_ship_arr);
 
             $merch_ship_id = $request->ship_id;
-            $msg = 'New Shipping address had been successfully Updated!';
+            $msg = 'Shipping address had been successfully Updated!';
         }
 
-//        if($request->ship_default=="Y"){
-//            $merch_ship = MerchantShipping::find($request->ship_id);
-//            $merch_ship_arr = array(
-//                'set_default' => 'N',
-//                'updated_at' => $cur_datetime
-//            );
-//
-//            $merch_ship->where('id', '!=', $request->ship_id)->update($merch_ship_arr);
-//        }
+        if($request->ship_default=="Y"){
+            MerchantShipping::where('id', '!=', $request->ship_id)->update(['set_default' => 'N', 'updated_at' => $cur_datetime]);
+        }
 
         $data = [
             'message'=> $msg,
