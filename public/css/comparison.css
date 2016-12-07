@@ -285,7 +285,7 @@
 	.product img{
    		display: block;
     	margin: 0 auto;
-    	  width: 100%;
+    	 max-width: 40%;
 
     	-webkit-transition: -webkit-transform .2s ease-in-out;
   		transition: transform .2s ease-in-out;

@@ -31,6 +31,7 @@ use Eshop\Post;
 use Validator;
 use Session;
 
+
 //for timestamp
 use Carbon\Carbon;
 
@@ -216,40 +217,14 @@ class Front extends Controller {
                 ));
     }
 
-    // public function product_wishlist($id){
-    //     $product = DB::table('products')
-    //                             ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-    //                             ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-    //                             ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
-    //                             ->select('products.*', 'products_info.*', 'brands.*', 'shipping_rate.*')
-    //                             ->first();
+  
 
-    //     return view('front.product_wishlist',
-    //         array('product'=> $product,
-    //             'title' => 'My Wishlist',
-    //             'page'=> 'product_wishlist',
-    //             'products' => $this->products
+    public function product_wishlist(){
+     
+        return view('front.product_wishlist', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'merchants' => $this->merchants, 'categories' => $this->categories, 'products' => $this->products));
 
-
-    //             ));
-    // }
-
-     public function product_wishlist(){
-        $product = DB::table('products')
-                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-                                ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
-                                ->select('products.*', 'products_info.*', 'brands.*', 'shipping_rate.*')
-                                ->first();
-
-        return view('front.product_wishlist',
-            array('product' => $product,
-                'title' => 'My Wishlist',
-                'page'=> 'product_wishlist',
-                'products' => $this->products
-
-                ));
     }
+
 
     public function product_merchants($id) {
         $merchantinfo = DB::table('merchantsinfo')

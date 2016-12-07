@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content') 
-		<div id='msg'></div>
+	<div id='msg'></div>
 	<section id="slider"><!--slider-->
 		<div class="container">
 			<div class="row">
@@ -177,13 +177,15 @@
     									
 
 		                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+		                                    <a href='{{url("products/details/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 		                             
 										</div>
+										<img src="images/home/features.png" class="features" alt="" />
 
 											<div class="clearfix"></div>
 									</div>
-										<div class="choose">
+									
+									<div class="choose">
 		                                <ul class="nav nav-pills nav-justified">
 		                                    <li>
 		                                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
@@ -231,13 +233,13 @@
 					</div> <!--modal-features-items-->
 
 
- 					<div id='wish_list'>
+ 					<!-- <div id='wish_list'>
 						<p class="wish_list_heading">
 							<span id='listitem'>0</span>
 							<span id='p_label'>Product</span>
 						</p>
 						<table id='wish_list_item' border='0'></table>
-					</div>
+					</div> -->
 
 
 <!-- test -->
@@ -278,6 +280,7 @@
 		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 		         
 										</div>
+										<img src="images/home/top-seller.png" class="top-seller" alt="" />
 
 											<div class="clearfix"></div>
 									</div>
@@ -340,6 +343,7 @@
 		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
 		                             
 										</div>
+										<img src="images/home/new.png" class="new" alt="" />
 
 											<div class="clearfix"></div>
 									</div>
@@ -400,6 +404,7 @@
 		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 		 
 										</div>
+										<img src="images/home/pre-loved.png" class="pre-loved" alt="" />
 
 											<div class="clearfix"></div>
 									</div>
@@ -459,6 +464,7 @@
 		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 		     
 										</div>
+										<img src="images/home/pre-order.png" class="pre-order" alt="" />
 
 											<div class="clearfix"></div>
 									</div>

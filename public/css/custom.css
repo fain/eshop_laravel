@@ -108,10 +108,6 @@ list-style-type:none;
 }
 
 /*Image Thumbnail*/
-img {
-  max-width: 40%; 
-  overflow: auto;
-}
 
 .preview {
   display: -webkit-box;

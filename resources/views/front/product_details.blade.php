@@ -24,7 +24,7 @@
 					<div class="col-sm-6">
 						<div class="content-product-information"><!--/content-product-information-->
 							<img src="{{asset('images/product-details/new.jpg')}}" class="newarrival" alt="" />
-							<h2>{{$product->description}}</h2>
+							<h2>{{$product->short_details}}</h2>
 							<p>Product ID: {{$product->prod_code}}</p>
 							<img src="{{asset('images/product-details/rating.png')}}" alt="" />
 							<span>

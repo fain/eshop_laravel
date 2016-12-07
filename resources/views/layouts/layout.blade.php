@@ -92,20 +92,12 @@
                             <ul class="nav navbar-nav">
                                 <!-- <li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Account'}}</a></li> -->
                                 <!-- <li><a href="{{url('checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
-	                            <!-- <li class="main-dropdown">
-									<a href="{{Auth::check() ? '#' : url('front/product_wishlist')}}"><i class="fa fa-heart" aria-hidden="true"></i> {{Auth::check() ? 'Wishlists' : 'Login'}}</a>
-									@if(Auth::check())
-									<ul class="dropdown-menu dropdown-user">
-										<li>
-											<a href="{{url('wishlists/')}}"><i class="fa fa-list"></i> Your wishlists</a>
-										</li>
-									</ul>
-									@endif
-								</li> -->
+	                           
 
-								 <li>
-									<a href="{{url('wishlists/')}}"><i class="fa fa-heart" aria-hidden="true"></i> {{Auth::check() ? 'Wishlists' : 'Login'}}</a>
-								</li>
+								  <li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>
+
+
+
                                 <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
                                 <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li class="main-dropdown">
@@ -150,9 +142,7 @@
                                 <li><a href="{{url('products')}}" {{$page == 'products' ? 'class=active' : ''}}>Products</a></li>
                                 <li><a href="{{url('blog')}}" {{$page == 'blog' ? 'class=active' : ''}}>Blog</a></li>
 
-					<!-- <a style="margin-top:0;" id="compare" href="#animatedModal" disabled class="compare-products">Compare Products</a> -->
                                 <li><a id="compare" href="#animatedModal" disabled class="compare-products">Comparison List</a></li>
-                               <!-- href="{{url('comparison-list')}}" {{$page == 'comparison-list' ? 'class=active' : ''}} -->
 
                                 <li><a href="{{url('contact-us')}}" {{$page == 'contact_us' ? 'class=active' : ''}}>Contact Us</a></li>
                             </ul>
@@ -346,7 +336,7 @@
 	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/demo.js')}}"></script>
 
     <!-- Zoom Product -->
-   < <script src="{{asset('js/zoom_product.js')}}"></script>
+   <script src="{{asset('js/zoom_product.js')}}"></script>
    
    <!-- Popover Click -->
    <script type="text/javascript">
