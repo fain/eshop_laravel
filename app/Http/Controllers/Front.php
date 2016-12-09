@@ -124,11 +124,14 @@ class Front extends Controller {
                 'products_pre_order' => $product_pre_order,
                 'products_image' => $this->products_image
 
+
             )
         );
+
     }
 
 
+   
 
     public function products() {
           $product = DB::table('products')
@@ -200,23 +203,21 @@ class Front extends Controller {
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
                                 ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
                                 ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name', 'shipping_rate.*')
+                                ->where('products_info.products_id', '=', $id)
                                 ->first();
- 
 
-        $brand= Brand::find($id);
-
+      
         return view('front.product_details', 
-            array('product' => $product, 
+            array( 
                 'title' => $product->p_name,'description' => '',
                 'page' => 'products',
-                'brands' => $this->brands,
-                'merchants' => $this->merchants,
-                'categories' => $this->categories,    
-                'shipping_rate' => $this->shipping_rate,             
-                'products' => $this->products
+                'product' => $product
+
+                
                 ));
     }
 
+ 
   
 
     public function product_wishlist(){
@@ -273,7 +274,27 @@ class Front extends Controller {
     }
 
     public function login() {
-        return view('front.login', array('title' => 'Log in or Sign Up','description' => '','page' => ''));
+        $product = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->first();
+
+         
+        return view('front.login',
+         array('title' => 'Log in or Sign Up',
+            'description' => '',
+            'page' => '',
+            'brands' => $this->brands,
+            'merchantsinfo' => $this->merchantsinfo,
+            'categories' => $this->categories,
+            // 'shipping_rate' => $this->shipping_rate,
+            // 'products' => $product,
+            
+
+            )
+         );
     }
 
     public function login_handler(Request $request) {

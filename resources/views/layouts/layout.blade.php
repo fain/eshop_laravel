@@ -16,6 +16,9 @@
 	<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
 	<link href="{{asset('css/custom.css')}}" rel="stylesheet">
 
+	<!-- Mega menu -->
+	<link href="{{asset('css/mega-menu.css')}}" rel="stylesheet">
+
 
 	<!-- BlueImp Gallery CSS-->
 	<link href="{{asset('http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css')}}" rel="stylesheet">
@@ -53,19 +56,34 @@
 
 <body>
 	<header id="header"><!--header-->
-        <!-- <div class="header_top">--><!--header_top-->
-            <!-- <div class="container">
+         
+         <!--header_top-->
+         <div class="header_top">
+             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="contactinfo">
-                            <ul class="nav nav-pills">
-                                <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
-                            </ul>
+                        <div class="shop-menu pull-left">
+                            <ul class="nav navbar-nav">
+								<li class="main-dropdown">
+										<a href="{{Auth::check() ? '#' : url('backend/login')}}"> <i class="fa fa-user-secret" aria-hidden="true"></i>{{Auth::check() ? 'Seller Account' : 'Seller'}} 
+											<!-- <i class="fa fa-chevron-down fa-1x fa-border" style="font-size:10px; padding-top:2px" aria-hidden="true"></i> -->
+										</a>
+										@if(Auth::check()) 
+										<ul class="dropdown-menu dropdown-user">
+											<li>
+												<a href="{{Auth::check() ? '#' : url('backend/login')}}"> <i class="fa fa-user"></i>{{Auth::check() ? 'Profile' : 'Seller Office'}} </a>
+											</li>
+											<!-- <li>
+												<a href="{{Auth::check() ? '#' : url('backend/login')}}"> <i class="fa fa-sign-out"></i>{{Auth::check() ? 'Logout' : 'Seller Office'}} </a>
+											</li> -->
+										</ul>
+										@endif
+								</li>
+							</ul>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="social-icons pull-right">
+                        <!-- <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -73,11 +91,42 @@
                                 <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                                 <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                             </ul>
+                        </div> -->
+  
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                           	  <li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>
+
+
+
+                                <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
+                                <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                <li class="main-dropdown">
+									<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
+									@if(Auth::check()) 
+									<ul class="dropdown-menu dropdown-user">
+										<li>
+											<a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
+										</li>
+										<li>
+											<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+										</li>
+										<!-- <li class="divider"></li> -->
+										<li>
+											<a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+										</li>
+									</ul>
+									@endif
+								</li>
+                            </ul>
                         </div>
+                        
+
                     </div>
                 </div>
             </div>
-        </div> --><!--/header_top-->
+        </div> 
+        <!--/header_top-->
 
         <div class="header-middle"><!--header-middle-->
             <div class="container">
@@ -87,18 +136,22 @@
                             <a href="{{url('')}}"><img src="{{asset('images/home/logo-eshop-angkasa.png')}}" alt="" height="40px;"/></a>
                         </div>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="shop-menu pull-right">
-                            <ul class="nav navbar-nav">
+					<div class="col-sm-3">
+ 						<div class="search_box_home pull-right">
+                            <input type="text" placeholder="Search for products, brands, shops"/>
+                        </div>
+				    </div>
+                    
+                    <!-- old right menu -->
+                    <!-- <div class="col-sm-8">
+                       <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">  -->
                                 <!-- <li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Account'}}</a></li> -->
                                 <!-- <li><a href="{{url('checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
 	                           
+								<!--<li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>-->
 
-								  <li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>
-
-
-
-                                <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
+                            <!--     <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
                                 <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li class="main-dropdown">
 									<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
@@ -118,13 +171,16 @@
 									@endif
 								</li>
                             </ul>
-                        </div>
-                    </div>
+                        </div>  
+                    </div>-->
+                    <!-- old right menu -->
+
                 </div>
             </div>
         </div><!--/header-middle-->
-
-        <div class="header-bottom"><!--header-bottom-->
+		
+		<!--header-bottom-->
+        <!-- <div class="header-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-9">
@@ -155,7 +211,11 @@
                     </div>
                 </div>
             </div>
-        </div><!--/header-bottom-->
+        </div>-->
+
+  
+ <!--/header-bottom-->
+
     </header><!--/header-->
 		<!-- {{url('products')}} -->
 
@@ -312,8 +372,8 @@
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-					<p class="pull-left">Copyright © 2016 Angkasa E-Shop. All rights reserved.</p>
-					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.multibase.com.my">Multibase</a></span></p>
+					<p class="pull-right">© Angkasa E-Shop 2016</p>
+					<!-- <p class="pull-right">Designed by <span><a target="_blank" href="http://www.multibase.com.my">Multibase</a></span></p> -->
 				</div>
 			</div>
 		</div>
@@ -329,16 +389,14 @@
     <script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
 
+
     <!-- BlueImp Gallery JS -->
 	<script src="{{asset('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')}}"></script>
 	<script src="{{asset('http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js')}}"></script>
 	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/bootstrap-image-gallery.js')}}"></script>
 	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/demo.js')}}"></script>
 
-    <!-- Zoom Product -->
-   <script src="{{asset('js/zoom_product.js')}}"></script>
-   
-   <!-- Popover Click -->
+   	<!-- Popover Click -->
    <script type="text/javascript">
 	$(document).ready(function(){
 	    $('[data-toggle="popover"]').popover();   
@@ -349,6 +407,11 @@
 	        margin-bottom: 20px;
 	    }
 	</style>
+
+    <!-- Zoom Product -->
+   <script src="{{asset('js/zoom_product.js')}}"></script>
+   
+ 
 
 	<!-- Compare Product JS -->
 	<script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')}}"></script>
@@ -376,10 +439,31 @@
 		});
 	
 	</script>
+
+
 	
 
 	<!-- Wishlist Product JS -->
 	<script type='text/javascript' src="{{asset('js/script.js')}}"></script>	 
+
+
+<!-- Mega menu -->
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true,true).slideDown("400");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true,true).slideUp("400");
+            $(this).toggleClass('open');       
+        }
+    );
+});
+</script>
 
    	@yield('js_content')
 
