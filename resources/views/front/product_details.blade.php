@@ -1,9 +1,20 @@
 @extends('layouts.layout')
 @section('content')
 <section>
-	<div class="container">
-		<div class="row">
+	<div class="container"><!-- container -->
+
+
+		<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="{{url('')}}">Home</a></li>
+  				  <li class="active">{{$product->prod_name}}</li>
+				</ol>
+		</div><!--/breadcrumbs-->
+		
+		
+<div class="row">
 			<div class="col-sm-12"><!-- Border image & details -->
+
 				<div class="product-details"><!--product-details-->
 
 					<div class="col-sm-3">
@@ -24,8 +35,12 @@
 					<div class="col-sm-6">
 						<div class="content-product-information"><!--/content-product-information-->
 							<img src="{{asset('images/product-details/new.jpg')}}" class="newarrival" alt="" />
-							<h2>{{$product->short_details}}</h2>
-							<p>Product ID: {{$product->prod_code}}</p>
+
+                            <h2>{{$product->prod_name}}</h2>
+
+							<p>{{$product->short_details}}</p>
+							<br>
+							<p><b>Product ID:</b> {{$product->prod_code}}</p>
 							<img src="{{asset('images/product-details/rating.png')}}" alt="" />
 							<span>
 								<span>RM{{$product->price}}<h5>(GST Included)</h5></span>
@@ -69,11 +84,13 @@
 												<p>RM 11.00 for each additional 1 kg">
 											</i>
 									    </div>
-							            <td class="">W.Malaysia RM {{$product->wm_rm}}</td>  
-								            hello<span class="price">RM {{$product->wm_rm}}</span>
-								        <td class="">Sabah RM {{$product->sbh_rm}}</td>          
-							            <td class="">Sarawak RM {{$product->srk_rm}}</td>          
+							            <td class="">{{$product->ship_rate}}</td>  
 										
+							      	</tr>
+							      	<tr>
+										<th scope class="">
+								        	<td class="">{{$product->shipping_method}}</td>          
+							      		</th>
 							      	</tr>
 							    </tbody>
 							</table>
@@ -81,8 +98,8 @@
 						</div><!--/content-product-information-->
 					</div><!--Column 6-->
 
-<p
-					<div class="row"><!--category-tab-->
+			<p
+						<div class="row"><!--category-tab-->
 
 						<div class="col-sm-9">
 					        <div class="panel with-nav-tabs panel-default">
@@ -432,13 +449,29 @@
 					                </div>
 					            </div>
 					        </div>
+		
 					    </div>
 					</div>
 					</div><!--category tab-->
 
-				</div><!--product-details-->				
+   	  <!-- Popover Click -->
+   <script type="text/javascript">
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover();   
+	});
+	</script>
+	<style type="text/css">
+		.popover-product{
+	        margin-bottom: 20px;
+	    }
+	</style>
+
+				</div><!--product-details-->	
+
 			</div><!-- Border image & details -->
+
 		</div>
-	</div>
+
+	</div><!-- container -->
 </section>
 @endsection
