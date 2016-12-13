@@ -823,6 +823,12 @@ class Back extends Controller
                 ->select('merchant_shipping.*', 'state.name as state_name')
                 ->get();
 
+            $def_ship_add = DB::table('merchant_shipping')
+                ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
+                ->where('set_default', '=', 'Y')
+                ->select('merchant_shipping.*', 'state.name as state_name')
+                ->first();
+
             $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
 
             foreach($prod_opt_actv as $poa){
@@ -842,7 +848,8 @@ class Back extends Controller
                     'dropdown' => $arr,
                     'prod_opt_group' => $prod_opt_group,
                     'ship_states' => $states,
-                    'merch_ship' => $merchant_shipping
+                    'merch_ship' => $merchant_shipping,
+                    'def_ship_add' => $def_ship_add
                 ));
         }else{
             Auth::logout();

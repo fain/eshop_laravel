@@ -320,7 +320,8 @@
                     <p class="form-control-static">Ship-From Address</p>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" name="shipping_add">
+                    <textarea class="form-control" name="shipping_add" id="shipping_add">{{ $def_ship_add->address }}, {{ $def_ship_add->postcode }}, {{ $def_ship_add->city }}, {{ $def_ship_add->state_name }}</textarea>
+                    <input type="hidden" name="shipping_add_id" id="shipping_add_id">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info" type="button" data-toggle="modal" data-target="#shippingModal" onclick="shippingMerchant();">Edit</button>
@@ -334,7 +335,7 @@
                     <input type="text" class="form-control" name="return_add">
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-info" type="button">Edit</button>
+                    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#shippingModal" onclick="returnMerchant();">Edit</button>
                 </div>
             </div>
 
@@ -653,7 +654,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" id="shippingModalContent">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="addReset();"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="shippingModalLabel">Label</h4>
                 </div>
                 <div class="modal-body">
@@ -798,7 +799,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary pull-left" onclick="addReset();">Add</button>
 
-                    <button type="button" class="btn btn-info" id="">Apply</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal" id="applyButton">Apply</button>
                     <button type="button" class="btn btn-success" id="saveButton">Save</button>
                     <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addReset();">Close</button>
@@ -1592,13 +1593,7 @@
             $('#add_field_btn').removeClass(' disabled');
         }
 
-        /**-----------------------------Edit Shipping-------------------------------**/
-
-        /**-----------------------------add new item to table-------------------------------**/
-        function changing_val(id, title, name, address, city, pcode, state, full_state, phone, def, ci){
-            alert(id, title, name, address, city, pcode, state, full_state, phone, def, ci)
-        }
-
+        /**-----------------------------Edit Shipping Start-------------------------------**/
         $('#shippingModal').on('shown.bs.modal', function () {
             $("#saveButton").click(function (e) {
 
@@ -1753,18 +1748,21 @@
                     }
                 }
             });
+
+            $("#applyButton").click(function (e) {
+                var ship_id = $('#ship_id').val();
+                var ship_address = $('#ship_address').val();
+                var full_state = $('#ship_state  option:selected').text();
+                var ship_city = $('#ship_city').val();
+                var ship_pcode = $('#ship_pcode').val();
+
+                $('#shipping_add_id').val(ship_id);
+                $('#shipping_add').val(ship_address+", "+ship_pcode+", "+ship_city+", "+full_state);
+            });
         });
 
         function shippingMerchant(){
             $("#shippingModalLabel").text('Ship-From Address');
-//            $('#shipping_form').attr('action', '/api/new_shipping');
-//
-//            $("#opt_grp_name").val('');
-//            $("#opt_grp_status").val('A');
-//            $("#submiGrptBtn").text('Submit');
-//
-//            $("#grp_name_group").removeClass('has-error');
-//            $("#grp_name_group_error").hide();
         }
 
         function addReset(){
@@ -1801,34 +1799,6 @@
             viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count);
         });
 
-        //onclick table row
-//        $('#merch_ship_dtl tbody tr').click(function() {
-//            var row_id = this.id;
-//            var result = row_id.split('prodlist_');
-//
-//            var row_num = result[1];
-//            var row_count = ($(this).index()+1);
-//            var id_cell = this.cells[0];
-//            var title_cell = this.cells[1];
-//            var name_cell = this.cells[2];
-//
-//            var phone_cell = this.cells[4];
-//
-//            var title = title_cell.innerHTML;
-//            var name = name_cell.innerHTML;
-//            var phone = phone_cell.innerHTML;
-//
-//            var id = $('#ship_id_'+row_num).val();
-//            var address = $('#ship_address_'+row_num).val();
-//            var city = $('#ship_city_'+row_num).val();
-//            var pcode = $('#ship_postcode_'+row_num).val();
-//            var state = $('#ship_state_'+row_num).val();
-//            var def = $('#ship_def_'+row_num).val();
-//            var title_in = $('#ship_title_'+row_num).val();
-//
-//            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count);
-//        });
-
         function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_count){
             $('#setdefault'+id).prop('checked', true);
             $('#ship_id').val(id);
@@ -1854,6 +1824,7 @@
                 $('#ship_default').prop('checked', false);
             }
         }
+        /**-----------------------------Edit Shipping Ends-------------------------------**/
 
         // initialize with defaults
 //        $("#input-id").fileinput();
