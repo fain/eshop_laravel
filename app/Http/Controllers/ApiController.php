@@ -117,7 +117,7 @@ class ApiController extends Controller
         }
 
         if($request->ship_default=="Y"){
-            MerchantShipping::where('id', '!=', $request->ship_id)->update(['set_default' => 'N', 'updated_at' => $cur_datetime]);
+            MerchantShipping::where('id', '!=', $merch_ship_id)->update(['set_default' => 'N', 'updated_at' => $cur_datetime]);
         }
 
         $data = [
@@ -137,14 +137,16 @@ class ApiController extends Controller
         return Response::json($data);
     }
 
-    public function merchant_shipping($id) {
-        $merchant_shipping = DB::table('merchant_shipping')
-            ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
-            ->select('merchant_shipping.*', 'state.name as state_name')
-            ->where('merchant_shipping.id', '=', $id)
-            ->first();
+    public function delete_merch_ship($id){
+        $merch_ship = new MerchantShipping();
+        $merch_ship->destroy($id);
 
-        return Response::json($merchant_shipping);
+        $msg = 'Shipping address had been successfully Deleted!';
+
+        $data = [
+            'message'=> $msg
+        ];
+        return Response::json($data);
     }
     /*******************************Merchant Shipping Ajax end*********************************/
 }

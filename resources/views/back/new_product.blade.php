@@ -673,20 +673,20 @@
                                 <td>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="setdefault" id="setdefault{{ $index+1 }}" value="Y">
+                                            <input type="radio" name="setdefault" class="setDef" id="setdefault{{ $ms->id }}" value="Y">
                                             {{ $index+1 }}
                                         </label>
                                     </div>
-                                    <input type="hidden" id="ship_id_{{ $index+1 }}" value="{{ $ms->id }}">
-                                    <input type="hidden" id="ship_address_{{ $index+1 }}" value="{{ $ms->address }}">
-                                    <input type="hidden" id="ship_city_{{ $index+1 }}" value="{{ $ms->city }}">
-                                    <input type="hidden" id="ship_postcode_{{ $index+1 }}" value="{{ $ms->postcode }}">
-                                    <input type="hidden" id="ship_state_{{ $index+1 }}" value="{{ $ms->state }}">
-                                    <input type="hidden" id="ship_def_{{ $index+1 }}" value="{{ $ms->set_default }}">
-                                    <input type="hidden" id="ship_title_{{ $index+1 }}" value="{{ $ms->title }}">
+                                    <input type="hidden" id="ship_id_{{ $ms->id }}" value="{{ $ms->id }}">
+                                    <input type="hidden" id="ship_address_{{ $ms->id }}" value="{{ $ms->address }}">
+                                    <input type="hidden" id="ship_city_{{ $ms->id }}" value="{{ $ms->city }}">
+                                    <input type="hidden" id="ship_postcode_{{ $ms->id }}" value="{{ $ms->postcode }}">
+                                    <input type="hidden" id="ship_state_{{ $ms->id }}" value="{{ $ms->state }}">
+                                    <input type="hidden" id="ship_def_{{ $ms->id }}" value="{{ $ms->set_default }}">
+                                    <input type="hidden" id="ship_title_{{ $ms->id }}" value="{{ $ms->title }}">
                                 </td>
                                 <td>{{ $ms->title }}
-                                    <div id="default_{{ $index+1 }}">
+                                    <div id="default_{{ $ms->id }}">
                                         <span>@if($ms->set_default=="Y") (Default) @endif</span>
                                     </div>
                                 </td>
@@ -800,7 +800,7 @@
 
                     <button type="button" class="btn btn-info" id="">Apply</button>
                     <button type="button" class="btn btn-success" id="saveButton">Save</button>
-                    <button type="button" class="btn btn-danger" id="">Delete</button>
+                    <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addReset();">Close</button>
                 </div>
             </div>
@@ -1595,6 +1595,10 @@
         /**-----------------------------Edit Shipping-------------------------------**/
 
         /**-----------------------------add new item to table-------------------------------**/
+        function changing_val(id, title, name, address, city, pcode, state, full_state, phone, def, ci){
+            alert(id, title, name, address, city, pcode, state, full_state, phone, def, ci)
+        }
+
         $('#shippingModal').on('shown.bs.modal', function () {
             $("#saveButton").click(function (e) {
 
@@ -1634,25 +1638,26 @@
                         $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
 
                         var currentIndex = $('#ship_row').val();
+                        if(currentIndex==""){
+                            var myTable = document.getElementById("merch_ship_dtl");
+                            var currentIndex = myTable.rows.length;
+                        }
 
                         var product = '<tr id="prodlist_' + data.id + '"' +
-                                ' class="prod_class"' +
-                                ' onclick="viewDetailsShipping(\''+
-                                data.id + '\', \'' + data.title + '\', \'' + data.name + '\', \'' + data.address + '\', \'' +
-                                data.city + '\', \'' + data.pcode + '\', \'' + data.state + '\', \'' + data.phone + '\', \'' +
-                                data.def + '\', \'' + currentIndex +'\')">';
+                                ' class="prod_class">';
                         product += '<td><div class="radio">' +
-                                '<label><input type="radio" name="setdefault" id="setdefault'+currentIndex+'" value="Y">' +
+                                '<label><input type="radio" name="setdefault" class="setDef" id="setdefault'+ data.id +'" value="Y">' +
                                 currentIndex + '</label></div>' +
-                                '<input type="hidden" id="ship_id_'+ currentIndex +'" value="' + data.id + '">' +
-                                '<input type="hidden" id="ship_address_'+ currentIndex +'" value="' + data.address + '">' +
-                                '<input type="hidden" id="ship_city_' + currentIndex + '" value="' + data.city + '">' +
-                                '<input type="hidden" id="ship_postcode_' + currentIndex + '" value="' + data.pcode + '">' +
-                                '<input type="hidden" id="ship_state_' + currentIndex + '" value="' + data.state + '">' +
-                                '<input type="hidden" id="ship_def_' + currentIndex + '" value="' + data.def + '">' +
+                                '<input type="hidden" class="ship_id_class" id="ship_id_'+ data.id +'" value="' + data.id + '">' +
+                                '<input type="hidden" class="ship_address_class" id="ship_address_'+ data.id +'" value="' + data.address + '">' +
+                                '<input type="hidden" class="ship_city_class" id="ship_city_' + data.id + '" value="' + data.city + '">' +
+                                '<input type="hidden" class="ship_postcode_class" id="ship_postcode_' + data.id + '" value="' + data.pcode + '">' +
+                                '<input type="hidden" class="ship_state_class" id="ship_state_' + data.id + '" value="' + data.state + '">' +
+                                '<input type="hidden" class="ship_def_class" id="ship_def_' + data.id + '" value="' + data.def + '">' +
+                                '<input type="hidden" class="ship_title_class" id="ship_title_' + data.id + '" value="' + data.title + '">' +
                                 '</td>';
                         product += '<td>' + data.title +
-                                '<div id="default_'+currentIndex+'"><span></span></div>' +
+                                '<div id="default_'+data.id+'"><span></span></div>' +
                                 '</td><td>' + data.name + '</td>';
                         product += '<td>' + data.address + ', <br>' +
                                 data.pcode + ', ' + data.city + ', <br>' +
@@ -1661,24 +1666,28 @@
 
                         if(ship_id==""){
                             $('#prodlist_body').append(product);
+                            $('#ship_id').val(data.id);
+                            $('#ship_row').val(currentIndex);
                         }else{
                             $("#prodlist_" + data.id).replaceWith( product );
                         }
 
-                        $('#setdefault'+currentIndex).prop('checked', true);
+                        $('#setdefault'+data.id).prop('checked', true);
 
                         if(data.def=="Y"){
-                            var myTable = document.getElementById("merch_ship_dtl");
-                            var count = myTable.rows.length;
+                            $('#merch_ship_dtl tbody tr').each(function (i) {
+                                var row_id = this.id;
+                                var result = row_id.split('prodlist_');
 
-                            for(var i=1; i<count; i++){
-                                if(currentIndex!=i){
-                                    $('#ship_def_'+i).val("N");
-                                    $('#default_'+i).text("");
+                                var currentIndex = result[1];
+
+                                if(currentIndex!=data.id){
+                                    $('#ship_def_'+currentIndex).val("N");
+                                    $('#default_'+currentIndex).text("");
                                 }else{
-                                    $('div#default_'+i).append('<span>(Default)</span>');
+                                    $('div#default_'+data.id).append('<span>(Default)</span>');
                                 }
-                            }
+                            });
                         }
 
                         return true;
@@ -1687,6 +1696,62 @@
                         alert('fail');
                     }
                 });
+            });
+
+            $("#deleteButton").click(function (e) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var def = "N";
+
+                if($('#ship_default').is(':checked')){
+                    def="Y";
+                }
+
+                var ship_id = $('#ship_id').val();
+
+                if(def=="Y"){
+                    alert('Default address cannot be Deleted!');
+                }else{
+                    if(confirm('Are you sure you want to Delete this Address?')){
+                        $.ajax({
+                            type: "GET",
+                            url: '/api/delete_merch_ship/'+ship_id,
+                            success: function( data ) {
+                                $("#ajaxResponse").empty().append('<div class="alert alert-warning">'+data.message+'</div>');
+
+                                $("#prodlist_" + ship_id).remove();
+
+                                $('#shipping_form')[0].reset();
+                                $('#ship_id').val("");
+                                $('#ship_title').attr("disabled", false);
+                                $('#ship_row').val("");
+
+                                var myTable = document.getElementById("merch_ship_dtl");
+                                var count = myTable.rows.length;
+
+                                $('#merch_ship_dtl tbody tr').each(function (i) {
+                                    i = i+1;
+
+                                    var row_id = this.id;
+                                    var result = row_id.split('prodlist_');
+
+                                    var currentIndex = result[1];
+
+                                    $(this).find('div.radio').empty().append('<label><input type="radio" name="setdefault" id="setdefault'+currentIndex+'" value="Y">'+i+'</label>');
+                                });
+
+                                return true;
+                            },
+                            fail: function(){
+                                alert('fail');
+                            }
+                        });
+                    }
+                }
             });
         });
 
@@ -1706,11 +1771,15 @@
             $('#shipping_form')[0].reset();
             $('#ship_id').val("");
             $('#ship_title').attr("disabled", false);
+            $('#ship_row').val("");
         }
 
-        //onclick table row
-        $('#merch_ship_dtl tbody tr').click(function() {
-            var row_num = ($(this).index()+1);
+        $(document).on('click', '.prod_class', function(){
+            var row_id = this.id;
+            var result = row_id.split('prodlist_');
+
+            var row_num = result[1];
+            var row_count = ($(this).index()+1);
             var id_cell = this.cells[0];
             var title_cell = this.cells[1];
             var name_cell = this.cells[2];
@@ -1729,11 +1798,39 @@
             var def = $('#ship_def_'+row_num).val();
             var title_in = $('#ship_title_'+row_num).val();
 
-            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_num);
+            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count);
         });
 
-        function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_num){
-            $('#setdefault'+row_num).prop('checked', true);
+        //onclick table row
+//        $('#merch_ship_dtl tbody tr').click(function() {
+//            var row_id = this.id;
+//            var result = row_id.split('prodlist_');
+//
+//            var row_num = result[1];
+//            var row_count = ($(this).index()+1);
+//            var id_cell = this.cells[0];
+//            var title_cell = this.cells[1];
+//            var name_cell = this.cells[2];
+//
+//            var phone_cell = this.cells[4];
+//
+//            var title = title_cell.innerHTML;
+//            var name = name_cell.innerHTML;
+//            var phone = phone_cell.innerHTML;
+//
+//            var id = $('#ship_id_'+row_num).val();
+//            var address = $('#ship_address_'+row_num).val();
+//            var city = $('#ship_city_'+row_num).val();
+//            var pcode = $('#ship_postcode_'+row_num).val();
+//            var state = $('#ship_state_'+row_num).val();
+//            var def = $('#ship_def_'+row_num).val();
+//            var title_in = $('#ship_title_'+row_num).val();
+//
+//            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count);
+//        });
+
+        function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_count){
+            $('#setdefault'+id).prop('checked', true);
             $('#ship_id').val(id);
 
             $('#ship_title').val(title);
@@ -1749,7 +1846,7 @@
             $('#ship_city').val(city);
             $('#ship_pcode').val(pcode);
             $('#ship_phone').val(phone);
-            $('#ship_row').val(row_num);
+            $('#ship_row').val(row_count);
 
             if(def=='Y'){
                 $('#ship_default').prop('checked', true);

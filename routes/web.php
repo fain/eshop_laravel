@@ -67,7 +67,8 @@ Route::get('/api/prod-opt-grp-table/{id}', 'ApiController@prodOptGrpTable');
 
 //ajax submit
 Route::post('/api/new_shipping', 'ApiController@new_shipping');
-Route::post('/api/merchant_shipping/{$id}', 'ApiController@merchant_shipping');
+//ajax delete
+Route::get('/api/delete_merch_ship/{id}', 'ApiController@delete_merch_ship');
 /*******************************ajax dropdown end*********************************/
 
 /*******************************categories start*********************************/
