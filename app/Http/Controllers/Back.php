@@ -818,15 +818,27 @@ class Back extends Controller
             $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
 
             $states = State::get();
+
             $merchant_shipping = DB::table('merchant_shipping')
                 ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
                 ->select('merchant_shipping.*', 'state.name as state_name')
+                ->get();
+
+            $merchant_return = DB::table('merchant_return')
+                ->leftjoin('state', 'state.id', '=', 'merchant_return.state')
+                ->select('merchant_return.*', 'state.name as state_name')
                 ->get();
 
             $def_ship_add = DB::table('merchant_shipping')
                 ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
                 ->where('set_default', '=', 'Y')
                 ->select('merchant_shipping.*', 'state.name as state_name')
+                ->first();
+
+            $def_rtn_add = DB::table('merchant_return')
+                ->leftjoin('state', 'state.id', '=', 'merchant_return.state')
+                ->where('set_default', '=', 'Y')
+                ->select('merchant_return.*', 'state.name as state_name')
                 ->first();
 
             $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
@@ -849,7 +861,9 @@ class Back extends Controller
                     'prod_opt_group' => $prod_opt_group,
                     'ship_states' => $states,
                     'merch_ship' => $merchant_shipping,
-                    'def_ship_add' => $def_ship_add
+                    'merch_rtn' => $merchant_return,
+                    'def_ship_add' => $def_ship_add,
+                    'def_rtn_add' => $def_rtn_add
                 ));
         }else{
             Auth::logout();

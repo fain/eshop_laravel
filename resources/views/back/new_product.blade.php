@@ -321,7 +321,7 @@
                 </div>
                 <div class="col-md-6">
                     <textarea class="form-control" name="shipping_add" id="shipping_add">{{ $def_ship_add->address }}, {{ $def_ship_add->postcode }}, {{ $def_ship_add->city }}, {{ $def_ship_add->state_name }}</textarea>
-                    <input type="hidden" name="shipping_add_id" id="shipping_add_id">
+                    <input type="hidden" name="shipping_add_id" id="shipping_add_id" value="{{ $def_ship_add->id }}">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info" type="button" data-toggle="modal" data-target="#shippingModal" onclick="shippingMerchant();">Edit</button>
@@ -332,7 +332,8 @@
                     <p class="form-control-static">Return/Exchange Address</p>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" name="return_add">
+                    <textarea class="form-control" name="return_add" id="return_add">{{ $def_rtn_add->address }}, {{ $def_rtn_add->postcode }}, {{ $def_rtn_add->city }}, {{ $def_rtn_add->state_name }}</textarea>
+                    <input type="hidden" name="return_add_id" id="return_add_id" value="{{ $def_rtn_add->id }}">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info" type="button" data-toggle="modal" data-target="#shippingModal" onclick="returnMerchant();">Edit</button>
@@ -654,10 +655,11 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" id="shippingModalContent">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="addReset();"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="shippingModalLabel">Label</h4>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" name="ship_rtn_stat" id="ship_rtn_stat">
                     <table class="table table-bordered table-hover" id="merch_ship_dtl">
                         <thead>
                         <tr>
@@ -668,9 +670,10 @@
                             <th>Phone</th>
                         </tr>
                         </thead>
-                        <tbody id="prodlist_body">
+
+                        <tbody id="ship_list_body" style="display:none">
                         @foreach($merch_ship as $index=>$ms)
-                            <tr id="prodlist_{{ $ms->id }}" class="prod_class">
+                            <tr id="ship_list_{{ $ms->id }}" class="ship_list_class">
                                 <td>
                                     <div class="radio">
                                         <label>
@@ -698,6 +701,40 @@
                                     {{ $ms->state_name }}
                                 </td>
                                 <td>{{ $ms->phone }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+
+                        <tbody id="rtn_list_body" style="display:none">
+                        @foreach($merch_rtn as $index=>$mr)
+                            <tr id="rtn_list_{{ $mr->id }}" class="rtn_list_class">
+                                <td>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="setdefault" class="setDef" id="setdefault_rtn{{ $mr->id }}" value="Y">
+                                            {{ $index+1 }}
+                                        </label>
+                                    </div>
+                                    <input type="hidden" id="rtn_id_{{ $mr->id }}" value="{{ $mr->id }}">
+                                    <input type="hidden" id="rtn_address_{{ $mr->id }}" value="{{ $mr->address }}">
+                                    <input type="hidden" id="rtn_city_{{ $mr->id }}" value="{{ $mr->city }}">
+                                    <input type="hidden" id="rtn_postcode_{{ $mr->id }}" value="{{ $mr->postcode }}">
+                                    <input type="hidden" id="rtn_state_{{ $mr->id }}" value="{{ $mr->state }}">
+                                    <input type="hidden" id="rtn_def_{{ $mr->id }}" value="{{ $mr->set_default }}">
+                                    <input type="hidden" id="rtn_title_{{ $mr->id }}" value="{{ $mr->title }}">
+                                </td>
+                                <td>{{ $mr->title }}
+                                    <div id="default_rtn_{{ $mr->id }}">
+                                        <span>@if($mr->set_default=="Y") (Default) @endif</span>
+                                    </div>
+                                </td>
+                                <td>{{ $mr->name }}</td>
+                                <td>
+                                    {{ $mr->address }}, <br>
+                                    {{ $mr->postcode }}, {{ $mr->city }}, <br>
+                                    {{ $mr->state_name }}
+                                </td>
+                                <td>{{ $mr->phone }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -802,7 +839,7 @@
                     <button type="button" class="btn btn-info" data-dismiss="modal" id="applyButton">Apply</button>
                     <button type="button" class="btn btn-success" id="saveButton">Save</button>
                     <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addReset();">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -1595,174 +1632,230 @@
 
         /**-----------------------------Edit Shipping Start-------------------------------**/
         $('#shippingModal').on('shown.bs.modal', function () {
-            $("#saveButton").click(function (e) {
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+        });
 
-                var def = "N";
+        $("#saveButton").click(function (e) {
 
-                if($('#ship_default').is(':checked')){
-                    def="Y";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-
-                var ship_id = $('#ship_id').val();
-
-                var formData = {
-                    'ship_id': ship_id,
-                    'ship_title': $('#ship_title').val(),
-                    'ship_name': $('#ship_name').val(),
-                    'ship_address': $('#ship_address').val(),
-                    'ship_state': $('#ship_state').val(),
-                    'full_state': $('#ship_state  option:selected').text(),
-                    'ship_city': $('#ship_city').val(),
-                    'ship_pcode': $('#ship_pcode').val(),
-                    'ship_phone': $('#ship_phone').val(),
-                    'ship_default': def
-                };
-
-                $.ajax({
-                    type: "POST",
-                    url: '/api/new_shipping',
-                    data: formData,
-                    dataType: 'json',
-                    success: function( data ) {
-                        $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
-
-                        var currentIndex = $('#ship_row').val();
-                        if(currentIndex==""){
-                            var myTable = document.getElementById("merch_ship_dtl");
-                            var currentIndex = myTable.rows.length;
-                        }
-
-                        var product = '<tr id="prodlist_' + data.id + '"' +
-                                ' class="prod_class">';
-                        product += '<td><div class="radio">' +
-                                '<label><input type="radio" name="setdefault" class="setDef" id="setdefault'+ data.id +'" value="Y">' +
-                                currentIndex + '</label></div>' +
-                                '<input type="hidden" class="ship_id_class" id="ship_id_'+ data.id +'" value="' + data.id + '">' +
-                                '<input type="hidden" class="ship_address_class" id="ship_address_'+ data.id +'" value="' + data.address + '">' +
-                                '<input type="hidden" class="ship_city_class" id="ship_city_' + data.id + '" value="' + data.city + '">' +
-                                '<input type="hidden" class="ship_postcode_class" id="ship_postcode_' + data.id + '" value="' + data.pcode + '">' +
-                                '<input type="hidden" class="ship_state_class" id="ship_state_' + data.id + '" value="' + data.state + '">' +
-                                '<input type="hidden" class="ship_def_class" id="ship_def_' + data.id + '" value="' + data.def + '">' +
-                                '<input type="hidden" class="ship_title_class" id="ship_title_' + data.id + '" value="' + data.title + '">' +
-                                '</td>';
-                        product += '<td>' + data.title +
-                                '<div id="default_'+data.id+'"><span></span></div>' +
-                                '</td><td>' + data.name + '</td>';
-                        product += '<td>' + data.address + ', <br>' +
-                                data.pcode + ', ' + data.city + ', <br>' +
-                                data.full_state + '</td><td>' + data.phone + '</td>';
-                        product += '</tr>';
-
-                        if(ship_id==""){
-                            $('#prodlist_body').append(product);
-                            $('#ship_id').val(data.id);
-                            $('#ship_row').val(currentIndex);
-                        }else{
-                            $("#prodlist_" + data.id).replaceWith( product );
-                        }
-
-                        $('#setdefault'+data.id).prop('checked', true);
-
-                        if(data.def=="Y"){
-                            $('#merch_ship_dtl tbody tr').each(function (i) {
-                                var row_id = this.id;
-                                var result = row_id.split('prodlist_');
-
-                                var currentIndex = result[1];
-
-                                if(currentIndex!=data.id){
-                                    $('#ship_def_'+currentIndex).val("N");
-                                    $('#default_'+currentIndex).text("");
-                                }else{
-                                    $('div#default_'+data.id).append('<span>(Default)</span>');
-                                }
-                            });
-                        }
-
-                        return true;
-                    },
-                    fail: function(){
-                        alert('fail');
-                    }
-                });
             });
 
-            $("#deleteButton").click(function (e) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            var def = "N";
+
+            if($('#ship_default').is(':checked')){
+                def="Y";
+            }
+
+            var ship_id = $('#ship_id').val();
+
+            var formData = {
+                'ship_id': ship_id,
+                'ship_title': $('#ship_title').val(),
+                'ship_name': $('#ship_name').val(),
+                'ship_address': $('#ship_address').val(),
+                'ship_state': $('#ship_state').val(),
+                'full_state': $('#ship_state  option:selected').text(),
+                'ship_city': $('#ship_city').val(),
+                'ship_pcode': $('#ship_pcode').val(),
+                'ship_phone': $('#ship_phone').val(),
+                'ship_default': def
+            };
+
+            var ship_rtn = $("#ship_rtn_stat").val();
+            var url = "";
+            var rs_def = "";
+            var sr = "";
+            var row_list = "";
+            var def_sr = "";
+
+            if(ship_rtn=="S"){
+                url = '/api/new_shipping';
+                rs_def = "";
+                sr = "ship";
+                row_list = ".ship_list_class";
+                def_sr = "";
+            }else{
+                url = '/api/new_return';
+                rs_def = '_rtn';
+                sr = "rtn";
+                row_list = ".rtn_list_class";
+                def_sr = "rtn_";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: formData,
+                dataType: 'json',
+                success: function( data ) {
+                    $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
+
+                    var currentIndex = $('#ship_row').val();
+                    if(currentIndex==""){
+//                            var myTable = document.getElementById("merch_ship_dtl");
+                        var currentIndex = ($('#merch_ship_dtl tbody tr'+row_list).length)+1;
                     }
-                });
 
-                var def = "N";
+                    var product = '<tr id="' + sr + '_list_' + data.id + '"' +
+                            ' class="' + sr + '_list_class">';
+                    product += '<td><div class="radio">' +
+                            '<label><input type="radio" name="setdefault" class="setDef" id="setdefault'+ rs_def + data.id +'" value="Y">' +
+                            currentIndex + '</label></div>' +
+                            '<input type="hidden" id="' + sr + '_id_'+ data.id +'" value="' + data.id + '">' +
+                            '<input type="hidden" id="' + sr + '_address_'+ data.id +'" value="' + data.address + '">' +
+                            '<input type="hidden" id="' + sr + '_city_' + data.id + '" value="' + data.city + '">' +
+                            '<input type="hidden" id="' + sr + '_postcode_' + data.id + '" value="' + data.pcode + '">' +
+                            '<input type="hidden" id="' + sr + '_state_' + data.id + '" value="' + data.state + '">' +
+                            '<input type="hidden" id="' + sr + '_def_' + data.id + '" value="' + data.def + '">' +
+                            '<input type="hidden" id="' + sr + '_title_' + data.id + '" value="' + data.title + '">' +
+                            '</td>';
+                    product += '<td>' + data.title +
+                            '<div id="default_'+def_sr+data.id+'"><span></span></div>' +
+                            '</td><td>' + data.name + '</td>';
+                    product += '<td>' + data.address + ', <br>' +
+                            data.pcode + ', ' + data.city + ', <br>' +
+                            data.full_state + '</td><td>' + data.phone + '</td>';
+                    product += '</tr>';
 
-                if($('#ship_default').is(':checked')){
-                    def="Y";
-                }
+                    if(ship_id==""){
+                        $('#'+sr+'_list_body').append(product);
+                        $('#ship_id').val(data.id);
+                        $('#ship_row').val(currentIndex);
+                    }else{
+                        $("#"+sr+"_list_" + data.id).replaceWith( product );
+                    }
 
-                var ship_id = $('#ship_id').val();
+                    $('#setdefault'+ rs_def +data.id).prop('checked', true);
 
-                if(def=="Y"){
-                    alert('Default address cannot be Deleted!');
-                }else{
-                    if(confirm('Are you sure you want to Delete this Address?')){
-                        $.ajax({
-                            type: "GET",
-                            url: '/api/delete_merch_ship/'+ship_id,
-                            success: function( data ) {
-                                $("#ajaxResponse").empty().append('<div class="alert alert-warning">'+data.message+'</div>');
+                    if(data.def=="Y"){
+                        $('#merch_ship_dtl tbody tr'+row_list).each(function (i) {
+                            var row_id = this.id;
+                            var result = row_id.split(sr + '_list_');
 
-                                $("#prodlist_" + ship_id).remove();
+                            var currentIndex = result[1];
 
-                                $('#shipping_form')[0].reset();
-                                $('#ship_id').val("");
-                                $('#ship_title').attr("disabled", false);
-                                $('#ship_row').val("");
-
-                                var myTable = document.getElementById("merch_ship_dtl");
-                                var count = myTable.rows.length;
-
-                                $('#merch_ship_dtl tbody tr').each(function (i) {
-                                    i = i+1;
-
-                                    var row_id = this.id;
-                                    var result = row_id.split('prodlist_');
-
-                                    var currentIndex = result[1];
-
-                                    $(this).find('div.radio').empty().append('<label><input type="radio" name="setdefault" id="setdefault'+currentIndex+'" value="Y">'+i+'</label>');
-                                });
-
-                                return true;
-                            },
-                            fail: function(){
-                                alert('fail');
+                            if(currentIndex!=data.id){
+                                $('#'+ sr +'_def_'+currentIndex).val("N");
+                                $('#default_'+def_sr+currentIndex).text("");
+                            }else{
+                                $('div#default_'+def_sr+data.id).append('<span>(Default)</span>');
                             }
                         });
                     }
+
+                    return true;
+                },
+                fail: function(){
+                    alert('fail');
+                }
+            });
+        });
+
+        $("#deleteButton").click(function (e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            $("#applyButton").click(function (e) {
-                var ship_id = $('#ship_id').val();
-                var ship_address = $('#ship_address').val();
-                var full_state = $('#ship_state  option:selected').text();
-                var ship_city = $('#ship_city').val();
-                var ship_pcode = $('#ship_pcode').val();
+            var def = "N";
 
+            if($('#ship_default').is(':checked')){
+                def="Y";
+            }
+
+            var ship_id = $('#ship_id').val();
+
+            var ship_rtn = $("#ship_rtn_stat").val();
+            var url = "";
+            var rs_def = "";
+            var sr = "";
+            var row_list = "";
+
+            if(ship_rtn=="S"){
+                url = '/api/delete_merch_ship/';
+                rs_def = "";
+                sr = "ship";
+                row_list = ".ship_list_class";
+            }else{
+                url = '/api/delete_merch_rtn/';
+                rs_def = '_rtn';
+                sr = "rtn";
+                row_list = ".rtn_list_class";
+            }
+
+            if(def=="Y"){
+                alert('Default address cannot be Deleted!');
+            }else{
+                if(confirm('Are you sure you want to Delete this Address?')){
+                    $.ajax({
+                        type: "GET",
+                        url: url+ship_id,
+                        success: function( data ) {
+                            $("#ajaxResponse").empty().append('<div class="alert alert-warning">'+data.message+'</div>');
+
+                            $("#"+ sr +"_list_" + ship_id).remove();
+
+                            $('#shipping_form')[0].reset();
+                            $('#ship_id').val("");
+                            $('#ship_title').attr("disabled", false);
+                            $('#ship_row').val("");
+
+//                                var myTable = document.getElementById("merch_ship_dtl");
+//                                var count = $('#merch_ship_dtl tbody tr'+row_list).length;
+
+                            $('#merch_ship_dtl tbody tr'+row_list).each(function (i) {
+                                i = i+1;
+
+                                var row_id = this.id;
+                                var result = row_id.split(sr + '_list_');
+
+                                var currentIndex = result[1];
+
+                                $(this).find('div.radio').empty().append('<label><input type="radio" name="setdefault" id="setdefault'+rs_def+currentIndex+'" value="Y">'+i+'</label>');
+                            });
+
+                            return true;
+                        },
+                        fail: function(){
+                            alert('fail');
+                        }
+                    });
+                }
+            }
+        });
+
+        $("#applyButton").click(function (e) {
+            var ship_id = $('#ship_id').val();
+            var ship_address = $('#ship_address').val();
+            var full_state = $('#ship_state  option:selected').text();
+            var ship_city = $('#ship_city').val();
+            var ship_pcode = $('#ship_pcode').val();
+
+            var ship_rtn = $("#ship_rtn_stat").val();
+
+            if(ship_rtn=="S"){
                 $('#shipping_add_id').val(ship_id);
                 $('#shipping_add').val(ship_address+", "+ship_pcode+", "+ship_city+", "+full_state);
-            });
+            }else{
+                $('#return_add_id').val(ship_id);
+                $('#return_add').val(ship_address+", "+ship_pcode+", "+ship_city+", "+full_state);
+            }
+        });
+
+        $('#shippingModal').on('hidden.bs.modal', function (e) {
+            addReset();
         });
 
         function shippingMerchant(){
             $("#shippingModalLabel").text('Ship-From Address');
+            $("#ship_list_body").show();
+            $("#rtn_list_body").hide();
+            $("#ship_rtn_stat").val("S");
+            $("#ajaxResponse").empty();
         }
 
         function addReset(){
@@ -1772,9 +1865,9 @@
             $('#ship_row').val("");
         }
 
-        $(document).on('click', '.prod_class', function(){
+        $(document).on('click', '.ship_list_class', function(){
             var row_id = this.id;
-            var result = row_id.split('prodlist_');
+            var result = row_id.split('ship_list_');
 
             var row_num = result[1];
             var row_count = ($(this).index()+1);
@@ -1796,11 +1889,26 @@
             var def = $('#ship_def_'+row_num).val();
             var title_in = $('#ship_title_'+row_num).val();
 
-            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count);
+            var ship_rtn = $("#ship_rtn_stat").val();
+
+            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count, ship_rtn);
         });
 
-        function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_count){
-            $('#setdefault'+id).prop('checked', true);
+        function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_count, ship_rtn){
+
+            var url = "";
+            var rs_def = "";
+            var sr = "";
+
+            if(ship_rtn=="S"){
+                rs_def = "";
+                sr = "ship";
+            }else{
+                rs_def = '_rtn';
+                sr = "rtn";
+            }
+
+            $('#setdefault'+rs_def+id).prop('checked', true);
             $('#ship_id').val(id);
 
             $('#ship_title').val(title);
@@ -1825,6 +1933,43 @@
             }
         }
         /**-----------------------------Edit Shipping Ends-------------------------------**/
+
+        /**-----------------------------Edit Return Start-------------------------------**/
+        function returnMerchant(){
+            $("#shippingModalLabel").text('Return / Exchange Address');
+            $("#ship_list_body").hide();
+            $("#rtn_list_body").show();
+            $("#ship_rtn_stat").val("R");
+            $("#ajaxResponse").empty();
+        }
+
+        $(document).on('click', '.rtn_list_class', function(){
+            var row_id = this.id;
+            var result = row_id.split('rtn_list_');
+
+            var row_num = result[1];
+            var row_count = ($(this).index()+1);
+            var id_cell = this.cells[0];
+            var title_cell = this.cells[1];
+            var name_cell = this.cells[2];
+
+            var phone_cell = this.cells[4];
+
+            var title = title_cell.innerHTML;
+            var name = name_cell.innerHTML;
+            var phone = phone_cell.innerHTML;
+
+            var id = $('#rtn_id_'+row_num).val();
+            var address = $('#rtn_address_'+row_num).val();
+            var city = $('#rtn_city_'+row_num).val();
+            var pcode = $('#rtn_postcode_'+row_num).val();
+            var state = $('#rtn_state_'+row_num).val();
+            var def = $('#rtn_def_'+row_num).val();
+            var title_in = $('#rtn_title_'+row_num).val();
+
+            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count);
+        });
+        /**-----------------------------Edit Return Ends-------------------------------**/
 
         // initialize with defaults
 //        $("#input-id").fileinput();
