@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -15,6 +19,16 @@
 	<link href="{{asset('css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
 	<link href="{{asset('css/custom.css')}}" rel="stylesheet">
+
+	<!-- Carousel Home -->
+	<link href="{{asset('css/carousel_home.css')}}" rel="stylesheet">
+
+
+	<!-- Vertical tab -->
+	<link href="{{asset('css/vertical_tab.css')}}" rel="stylesheet">
+
+	<!-- Discount Label -->
+	<link href="{{asset('css/discount_label.css')}}" rel="stylesheet">
 
 	<!-- Mega menu -->
 	<link href="{{asset('css/mega-menu.css')}}" rel="stylesheet">
@@ -443,13 +457,11 @@
 
 	
 
-	<!-- Wishlist Product JS -->
-	<script type='text/javascript' src="{{asset('js/script.js')}}"></script>	 
+<!-- Wishlist Product JS -->
+<script type='text/javascript' src="{{asset('js/script.js')}}"></script>	 
 
 
 <!-- Mega menu -->
-
-
 <script type="text/javascript">
 $(document).ready(function(){
     $(".dropdown").hover(            
@@ -464,6 +476,48 @@ $(document).ready(function(){
     );
 });
 </script>
+
+<!-- Vertical tab home -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $("div.bhoechie-tab-menu>div.list-group>a").hover(function(e) {
+        e.preventDefault();
+        $(this).siblings('a.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+});
+
+</script>
+
+<!-- Features carousel -->
+<script type="text/javascript">
+$(document).ready(function(){
+    // Activate Carousel
+    $("#features-item-control").carousel();
+
+    // Enable Carousel Indicators
+    $(".item active").click(function(){
+        $("#features-item-control").carousel(0);
+    });
+
+	// Enable Carousel Controls
+	$('.left').click(function() {
+	  $('#features-item-carousel').carousel('prevf');
+	});
+
+	$('.right').click(function() {
+	  $('#features-item-carousel').carousel('nextf');
+	});
+});
+</script>
+
+<!-- carousel home -->
+	<script type="text/javascript" src="{{asset('js/carousel_home.js')}}"></script>
+
+
 
    	@yield('js_content')
 

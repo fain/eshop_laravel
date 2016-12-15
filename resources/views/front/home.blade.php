@@ -1,3 +1,4 @@
+
 @extends('layouts.layout')
 
 @section('content') 
@@ -5,8 +6,271 @@
 	
 	@include('shared.topbar')
 
-	
-	
+<section id="slider"><!--slider-->
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-sm-12">
+
+					<!-- VERTICAL TAB -->
+					<div class="col-sm-4 bhoechie-tab-container">
+						<div class="col-sm-2 bhoechie-tab-menu">
+				              <div class="list-group">
+				                <a href="#" class="list-group-item active text-left">
+				                  <i class="fa fa-tv fa-12x" aria-hidden="true"></i> Electronics
+				                </a>
+				                <a href="#" class="list-group-item text-left">
+				                 <i class="fa fa-black-tie fa-12x" aria-hidden="true"></i> Men
+				                </a>
+				                <a href="#" class="list-group-item text-left">
+				                  <i class="fa fa-female fa-12x" aria-hidden="true"></i> Woman
+				                </a>
+				                <a href="#" class="list-group-item text-left">
+				                   <i class="fa fa-mobile-phone fa-15x" aria-hidden="true"></i> Mobiles 
+				                </a>
+				                <a href="#" class="list-group-item text-left">
+				                   <i class="fa fa-desktop fa-12x" aria-hidden="true"></i> Computers
+				                </a>
+				              </div>
+				            </div>
+
+				            <div class="col-sm-1 bhoechie-tab">
+				                
+				                <div class="bhoechie-tab-content active">
+							          <a href="#">
+							          		<img src="images/home/sale_electronics.png">
+							          </a>
+				                </div>
+				                <div class="bhoechie-tab-content">
+				                    <a href="#"><img src="images/home/sale_men.jpg"></a>
+				                </div>
+				    
+				                <div class="bhoechie-tab-content">
+				                    <a href="#"><img src="images/home/sale_woman.jpg"></a>
+				                </div>
+				                <div class="bhoechie-tab-content">
+				                    <a href="#"><img src="images/home/sale_mobiles.jpg"></a>
+				                </div>
+				                <div class="bhoechie-tab-content">
+				                    <a href="#"><img src="images/home/sale_computers.jpg"></a>
+				                </div>
+
+				            </div>
+				     	</div>
+   						<!-- VERTICAL TAB -->
+
+
+					<!-- BlueImp Gallery -->
+					<div class="container">
+					    <!-- The container for the list of example images -->
+					    
+						    <div id="links">
+
+						    	<div class="col-md-4">
+							        <a data-gallery="" title="Baby Fair End of Year 2016" href="images/home/discount1_big.jpg">
+							            <img src="images/home/discount1_small.png">
+							        </a>
+							    </div>
+
+						        <div class="col-md-4">
+							        <a data-gallery="" title="Free Shipping End of Year 2016" href="images/home/discount3_big.png">
+							            <img src="images/home/discount2_small.png">
+							        </a>
+							       
+							    </div>
+						      
+						    </div>
+					    <br>
+					</div>
+
+
+
+
+					
+					<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+					
+					<div id="blueimp-gallery" class="blueimp-gallery">
+					    <!-- The container for the modal slides -->
+					    <div class="slides"></div>
+					    <!-- Controls for the borderless lightbox -->
+					    <h3 class="title"></h3>
+					    <a class="prev">‹</a>
+					    <a class="next">›</a>
+					    <a class="close">×</a>
+					    <a class="play-pause"></a>
+					    <ol class="indicator"></ol>
+					    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+					    <div class="modal fade">
+					        <div class="modal-dialog">
+					            <div class="modal-content">
+					                <div class="modal-header">
+					                    <button type="button" class="close" aria-hidden="true">×</button>
+					                    <h4 class="modal-title"></h4>
+					                </div>
+					                <div class="modal-body next"></div>
+					                <div class="modal-footer">
+					                    <button type="button" class="btn btn-default pull-left prev">
+					                        <i class="glyphicon glyphicon-chevron-left"></i>
+					                        Previous
+					                    </button>
+					                    <button type="button" class="btn btn-primary next">
+					                        Next
+					                        <i class="glyphicon glyphicon-chevron-right"></i>
+					                    </button>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+					<!-- Blueimp gallery -->
+
+				</div>
+
+			</div>
+		</div>
+	</section><!--/slider-->
+
+			  
+	<section id="labels">
+  <div class="container">
+	<div class="row">
+
+        <div class="col-sm-6 col-md-3">
+          <div class="dl">
+            <div class="brand">
+                <h2>
+                    {{$twentypercent_off->name}}
+                </h2>
+            </div>
+            <div class="discount alizarin">
+                20%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+                    Shop 20% off and snag hot styles for less!*. 
+                </strong> 
+				Shop the latest DRESSES, SHOES, and more from name brands and emerging designers at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                    * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-1" class="open-code">Get a code</a>
+                <div id="code-1" class="collapse code">
+                    LV5MAY14
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-6 col-md-3">
+          <div  class="dl">
+            <div class="brand">
+                <h2>
+                    {{$thirtypercent_off->name}}
+                </h2>
+            </div>
+            <div class="discount emerald">
+                30%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+				Shop 30% off and snag hot styles for less!*.
+                </strong> 
+				Shop the latest DRESSES, SHOES, and more from name brands and emerging designers at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                   * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-2" class="open-code">Get a code</a>
+                <div id="code-2" class="collapse in code">
+                    MNO123ST
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div  class="dl">
+            <div class="brand">
+                <h2>
+                    {{$fiftypercent_off->name}}
+                </h2>
+            </div>
+            <div class="discount peter-river">
+            50%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+				Shop 50% off and snag hot styles for less!*.
+                </strong> 
+				Shop the latest DRESSES, SHOES, and more from name brands and emerging designers at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                   * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-3" class="open-code">Get a code</a>
+                <div id="code-3" class="collapse code">
+                    OLV4SY3R
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div  class="dl">
+            <div class="brand">
+                <h2>
+                    adidas
+                </h2>
+            </div>
+            <div class="discount amethyst">
+                70%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+				Shop 70% off and snag hot styles for less!*.
+                </strong> 
+				Shop the latest DRESSES, SHOES, and more from name brands and emerging designers at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                   * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-4" class="open-code">Get a code</a>
+                <div id="code-4" class="collapse code">
+                    ZUY4OPLQ
+                </div>
+            </div>
+          </div>
+        </div>
+	</div>
+  </div>
+</section>
+
+
 
 	<section>
 	    <div class="container">
@@ -14,22 +278,77 @@
 	        <div class="row">
 	            <div class="col-sm-12">
 
-	            <div class="col-sm-2">
-	                <div class="left-sidebar">
-	                    @include('shared.sidebar')
-	                </div>
-	            </div>
+	      
 
-        
+
+
+        <!-- left sidebar -->
+
+        	<br/>
+        	<br/>
+
+<!-- Slider -->
+<section id="slider"><!--slider-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+							<li data-target="#slider-carousel" data-slide-to="1"></li>
+							<li data-target="#slider-carousel" data-slide-to="2"></li>
+						
+
+ 				
+						</ol>
+						
+							<div class="carousel-inner" role="listbox">
+								
+								  @foreach($products->chunk(2) as $count => $items)
+	        
+
+	                             <div class="item {!! $count == 0 ? 'active' : '' !!}'">
+	                                
+	                                @foreach($items as $product)
+
+	                                
+	                                @endforeach 
+	                            
+	                            </div>
+
+	                        	@endforeach
+							</div>
+
+						</div>
+						
+						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						</a>
+						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						</a>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section><!--/slider-->
+
+
+
+		
 	        <div class="col-sm-8 padding-right">
 
             	<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">Features Items</h2>
 										
-						<div id="features-item-carousel" class="carousel slide" data-ride="carousel">
+						<div id="features-item-carousel" class="carousel slide" data-ride="carousel" data-type="multi" data-interval="3000">
 								
 							<!-- Wrapper for carousel items -->
 							<div class="carousel-inner">
+
+
+
 
 								<div class="item active">
 
@@ -78,7 +397,7 @@
 								</div>
 
 								<!-- Carousel Controls -->
-								<a class="left features-item-control" href="#features-item-carousel" data-slide="prev">
+								<a class="left features-item-control" href="#features-item-carousel" data-slide="prevf">
 									<i class="fa fa-angle-left"></i>
 								</a>
 								<a class="right features-item-control" href="#features-item-carousel" data-slide="next">
@@ -372,11 +691,8 @@
 	                </div><!--pre_order_items-->
 	            </div>
 	             
-	             	<div class="col-sm-2">
-						<div class="right-sidebar">
-	            			@include('shared.right_sidebar')
-		           		</div>
-		           	</div>
+	             	
+	             <!-- right sidebar -->
 
 		           </div>
 	        </div>

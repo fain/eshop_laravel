@@ -104,7 +104,35 @@ class Front extends Controller {
                                 ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
                                 ->where('product_image.primary_img', '=', 'Y')
                                 ->where('products_info.type', '=', 'Pre-Order')
-                                ->get();                    
+                                ->get();   
+
+
+       $twenty_off = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->select('products.*', 'brands.*', 'products_info.*')
+                                ->where('products_info.discount_sel', '=', '20%')
+                                ->first();  
+
+       $thirty_off = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->select('products.*', 'brands.*', 'products_info.*')
+                                ->where('products_info.discount_sel', '=', '30%')
+                                ->first();  
+
+        $fifty_off = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->select('products.*', 'brands.*', 'products_info.*')
+                                ->where('products_info.discount_sel', '=', '50%')
+                                ->first();  
+
+        
+        
+      
+
+
 
 
 
@@ -113,7 +141,7 @@ class Front extends Controller {
                 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
                 'description' => '',
                 'page' => 'home',
-                'brands' => $this->brands,
+                'brands' => $this->brands, 
                 'merchantsinfo' => $this->merchantsinfo,
                 'categories' => $this->categories,
                 // 'shipping_rate' => $this->shipping_rate,
@@ -122,7 +150,12 @@ class Front extends Controller {
                 'products_new' => $product_new,
                 'products_used' => $product_used,
                 'products_pre_order' => $product_pre_order,
-                'products_image' => $this->products_image
+                'products_image' => $this->products_image,
+                'twentypercent_off' => $twenty_off,
+                'thirtypercent_off' => $thirty_off,
+                'fiftypercent_off' => $fifty_off
+                
+
 
 
             )
@@ -183,7 +216,7 @@ class Front extends Controller {
             array('title' => 'Products Listing',
              'description' => '',
                 'page' => 'home',
-                'brands' => $this->brands,
+                'brands' => $product->p_name,
                 'merchantsinfo' => $this->merchantsinfo,
                 'categories' => $this->categories,
                 'products' => $product,
