@@ -612,8 +612,10 @@ ul.sub-menu {
   top: 52%;
 }
 
-.girl {
-  margin-left: 0;
+.offer_homepage {
+  width:480px;
+    height:360px;
+
 }
 
 .item h1 {

@@ -34,6 +34,8 @@
 	<link href="{{asset('css/mega-menu.css')}}" rel="stylesheet">
 
 
+
+
 	<!-- BlueImp Gallery CSS-->
 	<link href="{{asset('http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css')}}" rel="stylesheet">
 	<link href="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/css/bootstrap-image-gallery.css')}}" rel="stylesheet">
@@ -409,6 +411,13 @@
 	<script src="{{asset('http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js')}}"></script>
 	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/bootstrap-image-gallery.js')}}"></script>
 	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/demo.js')}}"></script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+    $('.carousel').carousel({interval: 200});
+  });
+</script>
+
 
    	<!-- Popover Click -->
    <script type="text/javascript">
