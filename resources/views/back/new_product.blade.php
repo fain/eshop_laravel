@@ -358,12 +358,13 @@
                     <label class="radio-inline">
                         <input type="radio" name="ship_rate" id="ship_rate2" value="Bundle"> Bundle Shipping Rate
                     </label>
+                    <button type="button" data-toggle="modal" class="btn-sm btn-info" id="bundle_btn" data-target="#shippingModal" onclick="shippingMerchant();" style="display:none">Edit</button>
                     <label class="radio-inline">
                         <input type="radio" name="ship_rate" id="ship_rate3" value="ByProd"> Shipping Rate by Product
                     </label>
                 </div>
             </div>
-            <div id="shipping-method-cont">
+            <div id="shipping-method-cont" style="display:none">
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <table class="table table-bordered table-striped">
@@ -682,12 +683,6 @@
                                         </label>
                                     </div>
                                     <input type="hidden" id="ship_id_{{ $ms->id }}" value="{{ $ms->id }}">
-                                    <input type="hidden" id="ship_address_{{ $ms->id }}" value="{{ $ms->address }}">
-                                    <input type="hidden" id="ship_city_{{ $ms->id }}" value="{{ $ms->city }}">
-                                    <input type="hidden" id="ship_postcode_{{ $ms->id }}" value="{{ $ms->postcode }}">
-                                    <input type="hidden" id="ship_state_{{ $ms->id }}" value="{{ $ms->state }}">
-                                    <input type="hidden" id="ship_def_{{ $ms->id }}" value="{{ $ms->set_default }}">
-                                    <input type="hidden" id="ship_title_{{ $ms->id }}" value="{{ $ms->title }}">
                                 </td>
                                 <td>{{ $ms->title }}
                                     <div id="default_{{ $ms->id }}">
@@ -830,6 +825,126 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default" id="bundle_box" style="display: none">
+                        <div class="panel-heading">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="bundle_set" value="Y" id="bundle_set"> Bundle Shipping Rates
+                                    <input type="hidden" name="ship_rate_id" id="ship_rate_id">
+                                </label>
+                            </div>
+                            <p>Bundle shipping rates are applied based on the combined weights for multiple purchases with the same shipping condition. <br>
+                                (Same shipping condition : same ship-from address + same shipping method + bundle shipping rates) <br>
+                                Set the shipping rates in the way that it can benefit buyers making multiple purchases from you.</p>
+                        </div>
+
+                        <div id="bulk-shipping" class="panel-body" style="display:none">
+                            <div class="form-group">
+                                <div class="">
+                                    <table class="table table-bordered table-striped">
+                                        <tr>
+                                            <td rowspan="2" width="15%">West Malaysia</td>
+                                            <td width="15%">Up to</td>
+                                            <td width="25%"><div class="ship-kg"><input type="text" class="form-control" name="wm_kg" id="wm_kg_s_id"></div>Kg</td>
+                                            <td width="25%">RM<div class="ship-rm"><input type="text" class="form-control" name="wm_rm" id="wm_rm_s_id"></div></td>
+                                            <td rowspan="2" width="20%">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="same-all-region_b" value="Y" name="same_all_reg_b"> Same for all region
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>For additional</td>
+                                            <td><div class="ship-kg"><input type="text" class="form-control" name="add_wm_kg" id="add_wm_kg_s_id"></div>Kg</td>
+                                            <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_wm_rm" id="add_wm_rm_s_id"></div> added</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td rowspan="2">Sabah</td>
+                                            <td>Up to</td>
+                                            <td><div class="ship-kg"><input type="text" class="form-control" name="sbh_kg" id="sbh_kg_s_id"></div>Kg</td>
+                                            <td>RM<div class="ship-rm"><input type="text" class="form-control" name="sbh_rm" id="sbh_rm_s_id"></div></td>
+                                            <td rowspan="2">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>For additional</td>
+                                            <td><div class="ship-kg"><input type="text" class="form-control" name="add_sbh_kg" id="add_sbh_kg_s_id"></div>Kg</td>
+                                            <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_sbh_rm" id="add_sbh_rm_s_id"></div> added</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td rowspan="2">Sarawak</td>
+                                            <td>Up to</td>
+                                            <td><div class="ship-kg"><input type="text" class="form-control" name="srk_kg" id="srk_kg_s_id"></div>Kg</td>
+                                            <td>RM<div class="ship-rm"><input type="text" class="form-control" name="srk_rm" id="srk_rm_s_id"></div></td>
+                                            <td rowspan="2">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>For additional</td>
+                                            <td><div class="ship-kg"><input type="text" class="form-control" name="add_srk_kg" id="add_srk_kg_s_id"></div>Kg</td>
+                                            <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_srk_rm" id="add_srk_rm_s_id"></div> added</td>
+                                        </tr>
+                                    </table>
+
+                                    <hr>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="cond_ship" name="cond_ship">
+                                                <option value="X">Not Use</option>
+                                                <option value="D">Conditional Discount</option>
+                                                <option value="F">Conditional Free</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" id="cond_disc" style="display:none;">
+                                        <div class="col-md-12">
+                                            <div class="in-block">
+                                                Discounts of up to
+                                            </div>
+                                            <div class="in-block">
+                                                <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_id" name="cond_disc"></div>
+                                            </div>
+                                            <div class="in-block">
+                                                on shipping fees for purchase of
+                                            </div>
+                                            <div class="in-block">
+                                                <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_for_purch_id" name="cond_disc_for_purch"></div>
+                                            </div>
+                                            <div class="in-block">
+                                                or above.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" id="cond_free" style="display:none;">
+                                        <div class="col-md-12">
+                                            <div class="in-block">
+                                                Free shipping for purchase of
+                                            </div>
+                                            <div class="in-block">
+                                                <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_free_id" name="cond_free"></div>
+                                            </div>
+                                            <div class="in-block">
+                                                or above.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <p class="req">* Please note that conditional shipping fee discount or free shipping is offered based on selling prices before product discount is applied.</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1227,20 +1342,21 @@
 
     <script>
         $(document).ready(function() {
-            $('#shipping-method-cont').hide();
-
             $('#ship_rate1').click(function(){
                 $('#shipping-method-cont').hide();
+                $('#bundle_btn').hide();
             });
 
             $('#ship_rate2').click(function(){
                 $('#shipping-method-cont').hide();
+                $('#bundle_btn').show();
             });
 
             $('#ship_rate3').click(function(){
                  if ($(this).is(':checked')){
                      $('#shipping-method-cont').show();
                  }
+                $('#bundle_btn').hide();
             });
         });
     </script>
@@ -1664,6 +1780,42 @@
                 'ship_default': def
             };
 
+            /*******************************bundle for shipping only start*********************************/
+            var bundle_set = "";
+
+            if($('#bundle_set').is(':checked')){
+                bundle_set="Y";
+                var bs = {
+                    'bundle_rate' : bundle_set,
+                    'ship_rate_id' : $('#ship_rate_id').val(),
+//                    'bundle_of'
+                    'wm_kg' : $('#wm_kg_s_id').val(),
+                    'wm_rm' : $('#wm_rm_s_id').val(),
+                    'add_wm_kg' : $('#add_wm_kg_s_id').val(),
+                    'add_wm_rm' : $('#add_wm_rm_s_id').val(),
+                    'sbh_kg' : $('#sbh_kg_s_id').val(),
+                    'sbh_rm' : $('#sbh_rm_s_id').val(),
+                    'add_sbh_kg' : $('#add_sbh_kg_s_id').val(),
+                    'add_sbh_rm' : $('#add_sbh_rm_s_id').val(),
+                    'srk_kg' : $('#srk_kg_s_id').val(),
+                    'srk_rm' : $('#srk_rm_s_id').val(),
+                    'add_srk_kg' : $('#add_srk_kg_s_id').val(),
+                    'add_srk_rm' : $('#add_srk_rm_s_id').val(),
+                    'cond_ship' : $('#cond_ship').val(),
+                    'cond_disc' : $('#cond_disc_id').val(),
+                    'cond_disc_for_purch' : $('#cond_disc_for_purch_id').val(),
+                    'cond_free' : $('#cond_free_id').val()
+                };
+
+                var data = jQuery.extend(true, bs, formData);
+            }else{
+                var bs = {
+                    'bundle_rate' : "N"
+                };
+                var data = jQuery.extend(true, bs, formData);
+            }
+            /*******************************bundle for shipping end*********************************/
+
             var ship_rtn = $("#ship_rtn_stat").val();
             var url = "";
             var rs_def = "";
@@ -1677,6 +1829,8 @@
                 sr = "ship";
                 row_list = ".ship_list_class";
                 def_sr = "";
+
+
             }else{
                 url = '/api/new_return';
                 rs_def = '_rtn';
@@ -1688,7 +1842,7 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: formData,
+                data: data,
                 dataType: 'json',
                 success: function( data ) {
                     $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
@@ -1705,12 +1859,6 @@
                             '<label><input type="radio" name="setdefault" class="setDef" id="setdefault'+ rs_def + data.id +'" value="Y">' +
                             currentIndex + '</label></div>' +
                             '<input type="hidden" id="' + sr + '_id_'+ data.id +'" value="' + data.id + '">' +
-                            '<input type="hidden" id="' + sr + '_address_'+ data.id +'" value="' + data.address + '">' +
-                            '<input type="hidden" id="' + sr + '_city_' + data.id + '" value="' + data.city + '">' +
-                            '<input type="hidden" id="' + sr + '_postcode_' + data.id + '" value="' + data.pcode + '">' +
-                            '<input type="hidden" id="' + sr + '_state_' + data.id + '" value="' + data.state + '">' +
-                            '<input type="hidden" id="' + sr + '_def_' + data.id + '" value="' + data.def + '">' +
-                            '<input type="hidden" id="' + sr + '_title_' + data.id + '" value="' + data.title + '">' +
                             '</td>';
                     product += '<td>' + data.title +
                             '<div id="default_'+def_sr+data.id+'"><span></span></div>' +
@@ -1848,6 +1996,36 @@
 
         $('#shippingModal').on('hidden.bs.modal', function (e) {
             addReset();
+
+            $('#bundle_set').prop('checked', false);
+
+            $('#ship_rate_id').val("");
+
+            $('#wm_kg_s_id').val("");
+            $('#wm_rm_s_id').val("");
+            $('#add_wm_kg_s_id').val("");
+            $('#add_wm_rm_s_id').val("");
+            $('#sbh_kg_s_id').val("");
+            $('#sbh_rm_s_id').val("");
+            $('#add_sbh_kg_s_id').val("");
+            $('#add_sbh_rm_s_id').val("");
+            $('#srk_kg_s_id').val("");
+            $('#srk_rm_s_id').val("");
+            $('#add_srk_kg_s_id').val("");
+            $('#add_srk_rm_s_id').val("");
+
+            $('#cond_ship').val("X");
+            $('#cond_disc_id').val("");
+            $('#cond_disc_for_purch_id').val("");
+            $('#cond_free_id').val("");
+
+            $('#cond_disc').hide();
+            $('#cond_free').hide();
+
+            $('#same-all-region_b').prop('checked', false);
+
+            $("#bundle_box").hide();
+            $('#bulk-shipping').hide();
         });
 
         function shippingMerchant(){
@@ -1856,6 +2034,7 @@
             $("#rtn_list_body").hide();
             $("#ship_rtn_stat").val("S");
             $("#ajaxResponse").empty();
+            $("#bundle_box").show();
         }
 
         function addReset(){
@@ -1871,28 +2050,111 @@
 
             var row_num = result[1];
             var row_count = ($(this).index()+1);
-            var id_cell = this.cells[0];
-            var title_cell = this.cells[1];
-            var name_cell = this.cells[2];
-
-            var phone_cell = this.cells[4];
-
-            var title = title_cell.innerHTML;
-            var name = name_cell.innerHTML;
-            var phone = phone_cell.innerHTML;
 
             var id = $('#ship_id_'+row_num).val();
-            var address = $('#ship_address_'+row_num).val();
-            var city = $('#ship_city_'+row_num).val();
-            var pcode = $('#ship_postcode_'+row_num).val();
-            var state = $('#ship_state_'+row_num).val();
-            var def = $('#ship_def_'+row_num).val();
-            var title_in = $('#ship_title_'+row_num).val();
 
             var ship_rtn = $("#ship_rtn_stat").val();
+            var url_ship = "shipping_details";
 
-            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count, ship_rtn);
+            if(ship_rtn=="R"){
+                url_ship = "return_details";
+            }
+
+            $.get('../api/'+ url_ship +'/' + id, function(data){
+                //success data
+                var title_in = data.details.title;
+                var name = data.details.name;
+                var phone = data.details.phone;
+                var address = data.details.address;
+                var city = data.details.city;
+                var pcode = data.details.postcode;
+                var state = data.details.state;
+                var def = data.details.set_default;
+
+                var bundle_check = data.details.bundle_rate;
+
+                if(bundle_check=='Y'){
+                    $('#bundle_set').prop('checked', true);
+                    $('#bulk-shipping').show();
+
+                    var rate_id = data.rates.id;
+                    var wm_kg = data.rates.wm_kg;
+                    var wm_rm = data.rates.wm_rm;
+                    var add_wm_kg = data.rates.add_wm_kg;
+                    var add_wm_rm = data.rates.add_wm_rm;
+                    var sbh_kg = data.rates.sbh_kg;
+                    var sbh_rm = data.rates.sbh_rm;
+                    var add_sbh_kg = data.rates.add_sbh_kg;
+                    var add_sbh_rm = data.rates.add_sbh_rm;
+                    var srk_kg = data.rates.srk_kg;
+                    var srk_rm = data.rates.srk_rm;
+                    var add_srk_kg = data.rates.add_srk_kg;
+                    var add_srk_rm = data.rates.add_srk_rm;
+
+                    var cond_ship = data.rates.cond_ship;
+                    var cond_disc = data.rates.cond_disc;
+                    var cond_disc_for_purch = data.rates.cond_disc_for_purch;
+                    var cond_free = data.rates.cond_free;
+
+                    viewDetailsRate(rate_id, wm_kg, wm_rm, add_wm_kg, add_wm_rm, sbh_kg, sbh_rm, add_sbh_kg,
+                            add_sbh_rm, srk_kg, srk_rm, add_srk_kg, add_srk_rm, cond_ship, cond_disc,
+                            cond_disc_for_purch, cond_free);
+
+                }else{
+                    $('#bundle_set').prop('checked', false);
+                    $('#bulk-shipping').hide();
+
+                    viewDetailsRate("", "", "", "", "", "", "", "", "", "", "", "", "", "X", "", "", "");
+                }
+
+                viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count, ship_rtn);
+            });
         });
+
+        function viewDetailsRate(id, wm_kg, wm_rm, add_wm_kg, add_wm_rm, sbh_kg, sbh_rm, add_sbh_kg,
+                                 add_sbh_rm, srk_kg, srk_rm, add_srk_kg, add_srk_rm, cond_ship, cond_disc,
+                                 cond_disc_for_purch, cond_free){
+
+            $('#ship_rate_id').val(id);
+
+            $('#wm_kg_s_id').val(wm_kg);
+            $('#wm_rm_s_id').val(wm_rm);
+            $('#add_wm_kg_s_id').val(add_wm_kg);
+            $('#add_wm_rm_s_id').val(add_wm_rm);
+            $('#sbh_kg_s_id').val(sbh_kg);
+            $('#sbh_rm_s_id').val(sbh_rm);
+            $('#add_sbh_kg_s_id').val(add_sbh_kg);
+            $('#add_sbh_rm_s_id').val(add_sbh_rm);
+            $('#srk_kg_s_id').val(srk_kg);
+            $('#srk_rm_s_id').val(srk_rm);
+            $('#add_srk_kg_s_id').val(add_srk_kg);
+            $('#add_srk_rm_s_id').val(add_srk_rm);
+
+            $('#cond_ship').val(cond_ship);
+
+            if(cond_ship=='D'){
+                $('#cond_disc').show();
+                $('#cond_free').hide();
+                $('#cond_free_id').val("");
+            }
+            else if(cond_ship=='F'){
+                $('#cond_disc').hide();
+                $('#cond_free').show();
+                $('#cond_disc_id').val("");
+                $('#cond_disc_for_purch_id').val("");
+            }
+            else{
+                $('#cond_disc').hide();
+                $('#cond_free').hide();
+                $('#cond_disc_id').val("");
+                $('#cond_disc_for_purch_id').val("");
+                $('#cond_free_id').val("");
+            }
+
+            $('#cond_disc_id').val(cond_disc);
+            $('#cond_disc_for_purch_id').val(cond_disc_for_purch);
+            $('#cond_free_id').val(cond_free);
+        }
 
         function viewDetailsShipping(id, title, name, address, city, pcode, state, phone, def, row_count, ship_rtn){
 
@@ -1941,6 +2203,7 @@
             $("#rtn_list_body").show();
             $("#ship_rtn_stat").val("R");
             $("#ajaxResponse").empty();
+            $("#bundle_box").hide();
         }
 
         $(document).on('click', '.rtn_list_class', function(){
@@ -1949,27 +2212,100 @@
 
             var row_num = result[1];
             var row_count = ($(this).index()+1);
-            var id_cell = this.cells[0];
-            var title_cell = this.cells[1];
-            var name_cell = this.cells[2];
-
-            var phone_cell = this.cells[4];
-
-            var title = title_cell.innerHTML;
-            var name = name_cell.innerHTML;
-            var phone = phone_cell.innerHTML;
 
             var id = $('#rtn_id_'+row_num).val();
-            var address = $('#rtn_address_'+row_num).val();
-            var city = $('#rtn_city_'+row_num).val();
-            var pcode = $('#rtn_postcode_'+row_num).val();
-            var state = $('#rtn_state_'+row_num).val();
-            var def = $('#rtn_def_'+row_num).val();
-            var title_in = $('#rtn_title_'+row_num).val();
 
-            viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count);
+            var ship_rtn = $("#ship_rtn_stat").val();
+            var url_ship = "shipping_details";
+
+            if(ship_rtn=="R"){
+                url_ship = "return_details";
+            }
+
+            $.get('../api/'+ url_ship +'/' + id, function(data){
+                //success data
+                var title_in = data.title;
+                var name = data.name;
+                var phone = data.phone;
+                var address = data.address;
+                var city = data.city;
+                var pcode = data.postcode;
+                var state = data.state;
+                var def = data.set_default;
+
+                viewDetailsShipping(id, title_in, name, address, city, pcode, state, phone, def, row_count, ship_rtn);
+            });
         });
         /**-----------------------------Edit Return Ends-------------------------------**/
+
+        /**-----------------------------Edit Bundle Start-------------------------------**/
+        $("#bundle_set").change(function() {
+            if (this.checked) {
+                $('#bulk-shipping').show();
+            }else{
+                $('#bulk-shipping').hide();
+            }
+        });
+
+        //product option selection
+        $('#cond_ship').on('change', function(e){
+            var opt_sel_val = e.target.value;
+
+            if(opt_sel_val=='D'){
+                $('#cond_disc').show();
+                $('#cond_free').hide();
+                $('#cond_free_id').val("");
+            }
+            else if(opt_sel_val=='F'){
+                $('#cond_disc').hide();
+                $('#cond_free').show();
+                $('#cond_disc_id').val("");
+                $('#cond_disc_for_purch_id').val("");
+            }
+            else{
+                $('#cond_disc').hide();
+                $('#cond_free').hide();
+                $('#cond_disc_id').val("");
+                $('#cond_disc_for_purch_id').val("");
+                $('#cond_free_id').val("");
+            }
+        });
+
+        /*******************************same all region start*********************************/
+        $("#same-all-region_b").change(function() {
+            if (this.checked) {
+                var wm_kg = $('#wm_kg_s_id').val();
+                var wm_rm = $('#wm_rm_s_id').val();
+                var add_wm_kg = $('#add_wm_kg_s_id').val();
+                var add_wm_rm = $('#add_wm_rm_s_id').val();
+
+                $('#sbh_kg_s_id').val(wm_kg);
+                $('#sbh_rm_s_id').val(wm_rm);
+
+                $('#add_sbh_kg_s_id').val(add_wm_kg);
+                $('#add_sbh_rm_s_id').val(add_wm_rm);
+
+                $('#srk_kg_s_id').val(wm_kg);
+                $('#srk_rm_s_id').val(wm_rm);
+
+                $('#add_srk_kg_s_id').val(add_wm_kg);
+                $('#add_srk_rm_s_id').val(add_wm_rm);
+            }else{
+                $('#sbh_kg_s_id').val("");
+                $('#sbh_rm_s_id').val("");
+
+                $('#add_sbh_kg_s_id').val("");
+                $('#add_sbh_rm_s_id').val("");
+
+                $('#srk_kg_s_id').val("");
+                $('#srk_rm_s_id').val("");
+
+                $('#add_srk_kg_s_id').val("");
+                $('#add_srk_rm_s_id').val("");
+            }
+        });
+        /*******************************same all region end*********************************/
+        /**-----------------------------Edit Bundle Ends-------------------------------**/
 
         // initialize with defaults
 //        $("#input-id").fileinput();

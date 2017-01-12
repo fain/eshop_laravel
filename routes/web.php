@@ -65,6 +65,9 @@ Route::get('/api/category-dropdown/{id}', 'ApiController@categoryDropDownData');
 Route::get('/api/brand-dropdown/{id}', 'ApiController@brandDropDownData');
 Route::get('/api/prod-opt-grp-table/{id}', 'ApiController@prodOptGrpTable');
 
+Route::get('/api/shipping_details/{id}', 'ApiController@shipping_details');
+Route::get('/api/return_details/{id}', 'ApiController@return_details');
+
 //ajax submit
 Route::post('/api/new_shipping', 'ApiController@new_shipping');
 Route::post('/api/new_return', 'ApiController@new_return');
