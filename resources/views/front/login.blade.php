@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
-@section('content')       
+@section('content')  
+     
        <section id="form"><!--form-->
             <div class="container">
                 <div class="row">
