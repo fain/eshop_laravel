@@ -152,31 +152,48 @@
             });
         })
 
+        function addProductGroup(){
+            $("#addProdOptGrpLabel").text('Add New Product Option Group');
+
+            $("#opt_grp_name").val('');
+            $("#opt_grp_status").val('A');
+            $("#submiGrptBtn").text('Submit');
+
+            $("#grp_name_group").removeClass('has-error');
+            $("#grp_name_group_error").hide();
+        }
+
         $(function() {
             /**-----------------------------disable add into list-------------------------------**/
             var myTable = document.getElementById("prod_opt_table");
-            var currentIndex = myTable.rows.length;
+            if(myTable) {
+                var currentIndex = myTable.rows.length;
 
-            //total in list added
-            var list_opt = <?php if(isset($list_opt)) echo json_encode($list_opt); ?>;
-            var len = (list_opt.length)+2;
+                //total in list added
+                    <?php if(isset($list_opt)){ ?>
+                        var list_opt = <?php echo json_encode($list_opt); ?>;
+                        var len = (list_opt.length) + 2;
 
-            var orilen = (list_opt.length);
+                        var orilen = (list_opt.length);
 
-            //dropdown total
-            var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
-            var sel_length = arr.length;
+                        //dropdown total
+                                <?php if(isset($dropdown)){ ?>
+                        var arr = <?php echo json_encode($dropdown); ?>;
+                        var sel_length = arr.length;
 
 
-            if(orilen==(sel_length)){
-                $('#add_field_btn').addClass(' disabled');
-            }
-            else if(orilen>=(sel_length)){
-                if(list_opt!=""){
-                    if(currentIndex>=len){
-                        $('#add_field_btn').addClass(' disabled');
-                    }
-                }
+                        if (orilen == (sel_length)) {
+                            $('#add_field_btn').addClass(' disabled');
+                        }
+                        else if (orilen >= (sel_length)) {
+                            if (list_opt != "") {
+                                if (currentIndex >= len) {
+                                    $('#add_field_btn').addClass(' disabled');
+                                }
+                            }
+                        }
+                    <?php } ?>
+                <?php } ?>
             }
 //            else{
 //
@@ -188,17 +205,6 @@
 //                }
 //            }
         });
-
-        function addProductGroup(){
-            $("#addProdOptGrpLabel").text('Add New Product Option Group');
-
-            $("#opt_grp_name").val('');
-            $("#opt_grp_status").val('A');
-            $("#submiGrptBtn").text('Submit');
-
-            $("#grp_name_group").removeClass('has-error');
-            $("#grp_name_group_error").hide();
-        }
 
         function validateFormGrp() {
             var x = $("#opt_grp_name").val();
@@ -249,58 +255,59 @@
 //                alert(sel_val.value);
             }
 
-            var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
-            var len = (arr.length)-1;
+            <?php if(isset($dropdown)){ ?>
+                var arr = <?php echo json_encode($dropdown); ?>;
+                var len = (arr.length)-1;
 
-            var arrj = [];
+                var arrj = [];
 
-            for(var i=0; i<=len; i++){
-                var option = document.createElement("option");
+                for(var i=0; i<=len; i++){
+                    var option = document.createElement("option");
 
-                $.each(arr[i], function(key, value){
-                    option.value = key;
-                    option.text = value;
-                });
+                    $.each(arr[i], function(key, value){
+                        option.value = key;
+                        option.text = value;
+                    });
 
-//                var opt = parseInt($('#opt'+(i+1)).val());
-//
-//                for(var j=0; j<=len; j++){
-//                    var ok = Object.keys(arr[j]);
-//                    arrj[j] = parseInt(ok);
-//                }
-//
-//
-//                var keys = [];
-//                for(var k in arr) keys.push(k);
-//
-//                var obj = parseInt(Object.keys(arr[i]));
-//
-////                if(obj!==opt){
-////                    alert(obj+ " "+opt);
-////                }
-//
-//
-//                if(i<=0){
-//                    arrj.forEach(function(element) {
-//                        var eint = parseInt(element);
-//
-//                        if(eint!=opt){
-//                            var option = document.createElement("option");
-//
-//                            alert(Object.keys(arr[i]));
-////
-//                            option.value = Object.keys(arr[i]);
-//                            option.text = Object.values(arr[i]);
-//
-//                            nameBox.add(option);
-//                        }
-//                    });
-//                }
+    //                var opt = parseInt($('#opt'+(i+1)).val());
+    //
+    //                for(var j=0; j<=len; j++){
+    //                    var ok = Object.keys(arr[j]);
+    //                    arrj[j] = parseInt(ok);
+    //                }
+    //
+    //
+    //                var keys = [];
+    //                for(var k in arr) keys.push(k);
+    //
+    //                var obj = parseInt(Object.keys(arr[i]));
+    //
+    ////                if(obj!==opt){
+    ////                    alert(obj+ " "+opt);
+    ////                }
+    //
+    //
+    //                if(i<=0){
+    //                    arrj.forEach(function(element) {
+    //                        var eint = parseInt(element);
+    //
+    //                        if(eint!=opt){
+    //                            var option = document.createElement("option");
+    //
+    //                            alert(Object.keys(arr[i]));
+    ////
+    //                            option.value = Object.keys(arr[i]);
+    //                            option.text = Object.values(arr[i]);
+    //
+    //                            nameBox.add(option);
+    //                        }
+    //                    });
+    //                }
 
-                nameBox.add(option);
+                    nameBox.add(option);
 
 
-            }
+                }
 
 //            var addRowBox = document.createElement("input");
 //            addRowBox.setAttribute("type", "button");
@@ -308,34 +315,35 @@
 ////            addRowBox.setAttribute("onclick", "addField();");
 //            addRowBox.setAttribute("class", "btn-sm btn-danger disabled");
 
-            var curr_indx = currentIndex-2;
-            var sel_length = arr.length;
+                var curr_indx = currentIndex-2;
+                var sel_length = arr.length;
 
-            if(currentIndex==2){
-                var currentRow = myTable.insertRow(1);
-            }else{
-                var currentRow = myTable.insertRow(currentIndex-1);
-            }
+                if(currentIndex==2){
+                    var currentRow = myTable.insertRow(1);
+                }else{
+                    var currentRow = myTable.insertRow(currentIndex-1);
+                }
 
-            var index = currentRow.insertCell(0);
-            index.innerHTML = currentIndex-1;
+                var index = currentRow.insertCell(0);
+                index.innerHTML = currentIndex-1;
 
-            var name = currentRow.insertCell(1);
-            name.appendChild(nameBox);
+                var name = currentRow.insertCell(1);
+                name.appendChild(nameBox);
 
-            var act_btn = currentRow.insertCell(2);
-//            act_btn.appendChild(addRowBox);
-            act_btn.innerHTML = "";
+                var act_btn = currentRow.insertCell(2);
+    //            act_btn.appendChild(addRowBox);
+                act_btn.innerHTML = "";
 
-            $('#total_item').val(currentIndex-1);
+                $('#total_item').val(currentIndex-1);
 
-            if((curr_indx) >= (sel_length-1)){
-                $('#add_field_btn').addClass(' disabled');
-            }
+                if((curr_indx) >= (sel_length-1)){
+                    $('#add_field_btn').addClass(' disabled');
+                }
 
-            $('#delete_field_btn').removeClass(' disabled');
-//            $('#savetogrp').removeClass(' disabled');
-            $('#savetogrp').prop('disabled', false);
+                $('#delete_field_btn').removeClass(' disabled');
+    //            $('#savetogrp').removeClass(' disabled');
+                $('#savetogrp').prop('disabled', false);
+            <?php } ?>
         }
 
         /**-----------------------------delete from list button-------------------------------**/
@@ -359,14 +367,16 @@
                     $('#savetogrp').prop('disabled', true);
                 }
 
-                var list_opt = <?php if(isset($list_opt)) echo json_encode($list_opt); ?>;
-                var len = (list_opt.length)+3;
-                if(currentIndex<=len){
-                    $('#delete_field_btn').addClass(' disabled');
-                    $('#savetogrp').prop('disabled', true);
-                }
+                <?php if(isset($list_opt)){ ?>
+                    var list_opt = <?php if(isset($list_opt)) echo json_encode($list_opt); ?>;
+                    var len = (list_opt.length)+3;
+                    if(currentIndex<=len){
+                        $('#delete_field_btn').addClass(' disabled');
+                        $('#savetogrp').prop('disabled', true);
+                    }
 
-                $('#total_item').val(currentIndex-3);
+                    $('#total_item').val(currentIndex-3);
+                <?php } ?>
             }
 
             $('#add_field_btn').removeClass(' disabled');

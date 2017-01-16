@@ -1061,8 +1061,35 @@ class Back extends Controller
         $product_info->weight = $request->weight;
         $product_info->stock_quantity = $request->stock_quantity;
 
-        //product option belum ada
-        $product_info->option_id = NULL;
+        //product option done
+
+        $arr_opt_id_g = $request->opt_id_g;
+        $arr_opt_info_g = $request->opt_info;
+
+        $arr_opt_id_m = $request->opt;
+        $arr_opt_info_m = $request->info;
+
+        $opt_g = count($arr_opt_id_g);
+        $opt_m = count($arr_opt_id_m);
+
+        if($opt_g>0){
+            for($i=0; $i<=$opt_g-1; $i++){
+                $newObj[] = '{"typeid": "'.$arr_opt_id_g[$i].'", "info": "'.$arr_opt_info_g[$i].'"}';
+            }
+
+            $product_info->option_id = json_encode($newObj);
+        }
+        elseif ($opt_m>0){
+            for($i=0; $i<=$opt_m-1; $i++){
+                $newObj[] = '{"typeid": "'.$arr_opt_id_m[$i].'", "info": "'.$arr_opt_info_m[$i].'"}';
+            }
+
+            $product_info->option_id = json_encode($newObj);
+        }
+        else{
+            $product_info->option_id = NULL;
+        }
+
 
         //merchant shipping belum ada
         $product_info->merchant_shipping_id = NULL;

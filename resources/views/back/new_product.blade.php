@@ -1628,14 +1628,15 @@
                             prod_opt.innerHTML = prod_opt_val;
 
                             var infoBox = document.createElement("input");
-                            infoBox.setAttribute("name", "opt" + (index));
-                            infoBox.setAttribute("id", "opt" + (index));
+                            infoBox.setAttribute("name", "opt_info[]" + (index));
+                            infoBox.setAttribute("id", "opt_info" + (index));
                             infoBox.setAttribute("class", "form-control");
 
                             var hiddenIdBox = document.createElement("input");
-                            hiddenIdBox.setAttribute("name", "opt" + (index));
-                            hiddenIdBox.setAttribute("id", "opt" + (index));
+                            hiddenIdBox.setAttribute("name", "opt_id_g[]" + (index));
+                            hiddenIdBox.setAttribute("id", "opt_id_" + (index));
                             hiddenIdBox.setAttribute("class", "form-control");
+                            hiddenIdBox.setAttribute("value", prod_opt_id);
                             hiddenIdBox.setAttribute("type", "hidden");
 
                             var info = currentRow.insertCell(1);
@@ -1674,12 +1675,18 @@
             var chosen_item = false;
 
             var nameBox = document.createElement("select");
-            nameBox.setAttribute("name", "opt" + (curr_index-1));
+            nameBox.setAttribute("name", "opt[]" + (curr_index-1));
             nameBox.setAttribute("id", "opt" + (curr_index-1));
             nameBox.setAttribute("class", "form-control");
 
+            var idBox = document.createElement("input");
+            idBox.setAttribute("type", "hidden");
+            idBox.setAttribute("name", "opt_id_m[]" + (curr_index-1));
+            idBox.setAttribute("id", "opt_id_" + (curr_index-1));
+            idBox.setAttribute("class", "form-control");
+
             var infoBox = document.createElement("input");
-            infoBox.setAttribute("name", "info" + (curr_index-1));
+            infoBox.setAttribute("name", "info[]" + (curr_index-1));
             infoBox.setAttribute("id", "info" + (curr_index-1));
             infoBox.setAttribute("class", "form-control");
 
@@ -1696,6 +1703,7 @@
 
             var name = currentRow.insertCell(0);
             name.appendChild(nameBox);
+            name.appendChild(idBox);
 
             var info = currentRow.insertCell(1);
             info.appendChild(infoBox);
