@@ -142,7 +142,7 @@ a#scrollUp i{
 }
 
 .header-middle .container .row {
-  border-bottom: 1px solid #ffffff;
+  border-bottom: #1360b7;
   margin-left: 0;
   margin-right: 0;
   padding-bottom: 20px;
@@ -590,19 +590,20 @@ ul.sub-menu {
 
 
 #slider {
-  padding-bottom: 45px;
+  padding-bottom: 0px;
 }
 
-.carousel-indicators li {
+.carousel-indicatorshome li {
   background: #C4C4BE;
 }
 
-.carousel-indicators li.active {
+.carousel-indicatorshome li.active {
 	  background: #1360b7;
 }
 
 .item {
-  padding-left: 100px;
+  padding-left: 0px;
+
 }
 
 
@@ -614,7 +615,7 @@ ul.sub-menu {
 
 .offer_homepage {
   width:480px;
-    height:360px;
+  height:358px;
 
 }
 
@@ -1083,6 +1084,7 @@ img.new, img.sale, img.top-seller, img.pre-order, img.features, img.pre-loved {
   border-radius: 4px 4px 0 0;
   line-height: 1.42857;
   margin-right:0;
+  color:#777;
 }
 
 .recommended_items {

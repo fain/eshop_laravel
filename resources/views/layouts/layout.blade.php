@@ -6,6 +6,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -20,8 +22,7 @@
 	<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
 	<link href="{{asset('css/custom.css')}}" rel="stylesheet">
 
-	<!-- Carousel Home -->
-	<link href="{{asset('css/carousel_home.css')}}" rel="stylesheet">
+	<link href="{{asset('css/menu_lightbox.css')}}" rel="stylesheet">
 
 
 	<!-- Vertical tab -->
@@ -33,14 +34,9 @@
 	<!-- Mega menu -->
 	<link href="{{asset('css/mega-menu.css')}}" rel="stylesheet">
 
+	
 
-
-
-	<!-- BlueImp Gallery CSS-->
-	<link href="{{asset('http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css')}}" rel="stylesheet">
-	<link href="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/css/bootstrap-image-gallery.css')}}" rel="stylesheet">
-	<link href="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/css/demo.css')}}" rel="stylesheet">
-
+	
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -406,17 +402,6 @@
     <script src="{{asset('js/main.js')}}"></script>
 
 
-    <!-- BlueImp Gallery JS -->
-	<script src="{{asset('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')}}"></script>
-	<script src="{{asset('http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js')}}"></script>
-	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/bootstrap-image-gallery.js')}}"></script>
-	<script src="{{asset('https://raw.github.com/blueimp/Bootstrap-Image-Gallery/master/js/demo.js')}}"></script>
-
-<script type="text/javascript">
- $(document).ready(function() {
-    $('.carousel').carousel({interval: 200});
-  });
-</script>
 
 
    	<!-- Popover Click -->
@@ -501,30 +486,6 @@ $(document).ready(function() {
 
 </script>
 
-<!-- Features carousel -->
-<script type="text/javascript">
-$(document).ready(function(){
-    // Activate Carousel
-    $("#features-item-control").carousel();
-
-    // Enable Carousel Indicators
-    $(".item active").click(function(){
-        $("#features-item-control").carousel(0);
-    });
-
-	// Enable Carousel Controls
-	$('.left').click(function() {
-	  $('#features-item-carousel').carousel('prevf');
-	});
-
-	$('.right').click(function() {
-	  $('#features-item-carousel').carousel('nextf');
-	});
-});
-</script>
-
-<!-- carousel home -->
-	<script type="text/javascript" src="{{asset('js/carousel_home.js')}}"></script>
 
 
 

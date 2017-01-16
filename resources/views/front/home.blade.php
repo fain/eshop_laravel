@@ -60,69 +60,76 @@
    						<!-- VERTICAL TAB -->
 
 						<!-- MAIN OFFER BY MONTH -->
-   						<div class="col-sm-4">
+   						<div class="col-sm-5">
 									<img src="images/home/offer_jan.png" class="offer_homepage" alt="" />
    						</div>
 
 
+   						<!-- OFFER ADS -->
+						<section id="slider"><!--slider-->
+							<div class="container">
+								<div class="row">
+									<div class="col-sm-3">
+										<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+											<ol class="carousel-indicators">
+												<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+												<li data-target="#slider-carousel" data-slide-to="1"></li>
+												<li data-target="#slider-carousel" data-slide-to="2"></li>
+												<li data-target="#slider-carousel" data-slide-to="3"></li>
+												<li data-target="#slider-carousel" data-slide-to="4"></li>
 
-	<section id="slider"><!--slider-->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4">
-					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#slider-carousel" data-slide-to="1"></li>
-							<li data-target="#slider-carousel" data-slide-to="2"></li>
-							<li data-target="#slider-carousel" data-slide-to="3"></li>
 
 
-						</ol>
-						
-						<div class="carousel-inner">
-							<div class="item active">
-									<img src="images/home/discount1_small.jpg" class="offer_homepage" alt="" />
+											</ol>
+											
+											<div class="carousel-inner">
+												<div class="item">
+														<img src="images/home/discount2_small.jpg"  alt="" />
+												</div>
+
+												<div class="item active">
+														<img src="images/home/discount1_small.jpg"  alt="" />
+												</div>
+												
+												<div class="item">
+														<img src="images/home/discount3_small.jpg"  alt="" />
+												</div>
+
+												<div class="item">
+														<img src="images/home/discount4_small.jpg"  alt="" />
+												</div>
+
+												<div class="item">
+														<img src="images/home/discount5_small.jpg"  alt="" />
+												</div>
+												
+											</div>
+											
+											<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+												<i class="fa fa-angle-left"></i>
+											</a>
+											<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+												<i class="fa fa-angle-right"></i>
+											</a>
+										</div>
+										
+
+
+									</div>
+								</div>
 							</div>
-							
-							<div class="item">
-									<img src="images/home/discount2_small.jpg" class="offer_homepage" alt="" />
-							</div>
-
-							<div class="item">
-									<img src="images/home/discount3_small.jpg" class="offer_homepage" alt="" />
-							</div>
-
-							<div class="item">
-									<img src="images/home/discount5_small.jpg" class="offer_homepage" alt="" />
-							</div>
-							
-						</div>
-						
-						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-							<i class="fa fa-angle-left"></i>
-						</a>
-						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</div>
-					
-
+						</section><!--/slider-->
 
 				</div>
-			</div>
-		</div>
-	</section><!--/slider-->
-
-				     	 
-
-				</div>
 
 			</div>
 		</div>
 
+<!-- PRODUCT MENU -->
+
+<!-- PRODUCT MENU -->
 			  
-<section id="labels">
+	<section id="labels">
   <div class="container">
 	<div class="row">
 
