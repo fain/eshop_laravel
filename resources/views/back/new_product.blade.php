@@ -322,6 +322,7 @@
                 <div class="col-md-6">
                     <textarea class="form-control" name="shipping_add" id="shipping_add">{{ $def_ship_add->address }}, {{ $def_ship_add->postcode }}, {{ $def_ship_add->city }}, {{ $def_ship_add->state_name }}</textarea>
                     <input type="hidden" name="shipping_add_id" id="shipping_add_id" value="{{ $def_ship_add->id }}">
+                    <input type="hidden" name="bundle_shipping" id="bundle_shipping" value="{{ $def_ship_add->bundle_rate }}">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info" type="button" data-toggle="modal" data-target="#shippingModal" onclick="shippingMerchant();">Edit</button>
@@ -371,8 +372,8 @@
                             <tr>
                                 <td rowspan="2" width="15%">West Malaysia</td>
                                 <td width="15%">Up to</td>
-                                <td width="25%"><div class="ship-kg"><input type="text" class="form-control" name="wm_kg"></div>Kg</td>
-                                <td width="25%">RM<div class="ship-rm"><input type="text" class="form-control" name="wm_rm"></div></td>
+                                <td width="25%"><div class="ship-kg"><input type="text" class="form-control" name="wm_kg" id="wm_kg"></div>Kg</td>
+                                <td width="25%">RM<div class="ship-rm"><input type="text" class="form-control" name="wm_rm" id="wm_rm"></div></td>
                                 <td rowspan="2" width="20%">
                                     <label class="checkbox-inline">
                                         <input type="checkbox" id="same-all-region" value="Y" name="same_all_reg"> Same for all region
@@ -381,36 +382,36 @@
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_wm_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_wm_rm"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_wm_kg" id="add_wm_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_wm_rm" id="add_wm_rm"></div> added</td>
                             </tr>
 
                             <tr>
                                 <td rowspan="2">Sabah</td>
                                 <td>Up to</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="sbh_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="sbh_rm"></div></td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="sbh_kg" id="sbh_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="sbh_rm" id="sbh_rm"></div></td>
                                 <td rowspan="2">
                                 </td>
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_sbh_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_sbh_rm"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_sbh_kg" id="add_sbh_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_sbh_rm" id="add_sbh_rm"></div> added</td>
                             </tr>
 
                             <tr>
                                 <td rowspan="2">Sarawak</td>
                                 <td>Up to</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="srk_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="srk_rm"></div></td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="srk_kg" id="srk_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="srk_rm" id="srk_rm"></div></td>
                                 <td rowspan="2">
                                 </td>
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_srk_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_srk_rm"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_srk_kg" id="add_srk_kg"></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_srk_rm" id="add_srk_rm"></div> added</td>
                             </tr>
                         </table>
 
@@ -418,6 +419,58 @@
                             <li>Input shipping rate based on weight of the product.</li>
                             <li>Please input conversed weight for shipping rate in case of applying shipping rate by volume.</li>
                         </ul>
+
+                        <hr>
+
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <select class="form-control" id="cond_ship_b" name="cond_ship_b">
+                                    <option value="X">Not Use</option>
+                                    <option value="D">Conditional Discount</option>
+                                    <option value="F">Conditional Free</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row form-group" id="cond_disc_b" style="display:none;">
+                            <div class="col-md-12">
+                                <div class="in-block">
+                                    Discounts of up to
+                                </div>
+                                <div class="in-block">
+                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_b_id" name="cond_disc"></div>
+                                </div>
+                                <div class="in-block">
+                                    on shipping fees for purchase of
+                                </div>
+                                <div class="in-block">
+                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_b_for_purch_id" name="cond_disc_for_purch"></div>
+                                </div>
+                                <div class="in-block">
+                                    or above.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group" id="cond_free_b" style="display:none;">
+                            <div class="col-md-12">
+                                <div class="in-block">
+                                    Free shipping for purchase of
+                                </div>
+                                <div class="in-block">
+                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_free_b_id" name="cond_free"></div>
+                                </div>
+                                <div class="in-block">
+                                    or above.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <p class="req">* Please note that conditional shipping fee discount or free shipping is offered based on selling prices before product discount is applied.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1350,15 +1403,105 @@
             $('#ship_rate2').click(function(){
                 $('#shipping-method-cont').hide();
                 $('#bundle_btn').show();
+
+                var bundle_shipping = $('#bundle_shipping').val();
+
+                if(bundle_shipping=="Y") {
+                    var shipping_add_id = $('#shipping_add_id').val();
+                    if(shipping_add_id !="") {
+                        viewDetailsRateB(shipping_add_id);
+                    }
+                }
             });
 
             $('#ship_rate3').click(function(){
                  if ($(this).is(':checked')){
                      $('#shipping-method-cont').show();
+                     setRateField("", "", "", "", "", "", "", "", "", "", "", "", "", "X", "", "", "");
                  }
                 $('#bundle_btn').hide();
             });
         });
+
+        function viewDetailsRateB(shipping_add_id){
+
+            if(shipping_add_id!=""){
+                $.get('../api/shipping_details/' + shipping_add_id, function(data){
+                    //success data
+                    var rate_id = data.rates.id;
+                    var wm_kg = data.rates.wm_kg;
+                    var wm_rm = data.rates.wm_rm;
+                    var add_wm_kg = data.rates.add_wm_kg;
+                    var add_wm_rm = data.rates.add_wm_rm;
+                    var sbh_kg = data.rates.sbh_kg;
+                    var sbh_rm = data.rates.sbh_rm;
+                    var add_sbh_kg = data.rates.add_sbh_kg;
+                    var add_sbh_rm = data.rates.add_sbh_rm;
+                    var srk_kg = data.rates.srk_kg;
+                    var srk_rm = data.rates.srk_rm;
+                    var add_srk_kg = data.rates.add_srk_kg;
+                    var add_srk_rm = data.rates.add_srk_rm;
+
+                    var cond_ship = data.rates.cond_ship;
+                    var cond_disc = data.rates.cond_disc;
+                    var cond_disc_for_purch = data.rates.cond_disc_for_purch;
+                    var cond_free = data.rates.cond_free;
+
+                    setRateField(rate_id, wm_kg, wm_rm, add_wm_kg, add_wm_rm, sbh_kg, sbh_rm, add_sbh_kg,
+                            add_sbh_rm, srk_kg, srk_rm, add_srk_kg, add_srk_rm, cond_ship, cond_disc,
+                            cond_disc_for_purch, cond_free);
+
+                    $('#shipping-method-cont').show();
+                });
+            }else{
+                setRateField("", "", "", "", "", "", "", "", "", "", "", "", "", "X", "", "", "");
+                $('#shipping-method-cont').hide();
+            }
+        }
+
+        function setRateField(rate_id, wm_kg, wm_rm, add_wm_kg, add_wm_rm, sbh_kg, sbh_rm, add_sbh_kg,
+                              add_sbh_rm, srk_kg, srk_rm, add_srk_kg, add_srk_rm, cond_ship, cond_disc,
+                              cond_disc_for_purch, cond_free){
+            $('#ship_rate_id').val(rate_id);
+
+            $('#wm_kg').val(wm_kg);
+            $('#wm_rm').val(wm_rm);
+            $('#add_wm_kg').val(add_wm_kg);
+            $('#add_wm_rm').val(add_wm_rm);
+            $('#sbh_kg').val(sbh_kg);
+            $('#sbh_rm').val(sbh_rm);
+            $('#add_sbh_kg').val(add_sbh_kg);
+            $('#add_sbh_rm').val(add_sbh_rm);
+            $('#srk_kg').val(srk_kg);
+            $('#srk_rm').val(srk_rm);
+            $('#add_srk_kg').val(add_srk_kg);
+            $('#add_srk_rm').val(add_srk_rm);
+
+            $('#cond_ship_b').val(cond_ship);
+
+            if(cond_ship=='D'){
+                $('#cond_disc_b').show();
+                $('#cond_free_b').hide();
+                $('#cond_free__bid').val("");
+            }
+            else if(cond_ship=='F'){
+                $('#cond_disc_b').hide();
+                $('#cond_free_b').show();
+                $('#cond_disc_b_id').val("");
+                $('#cond_disc_b_for_purch_id').val("");
+            }
+            else{
+                $('#cond_disc_b').hide();
+                $('#cond_free_b').hide();
+                $('#cond_disc_b_id').val("");
+                $('#cond_disc_b_for_purch_id').val("");
+                $('#cond_free_b_id').val("");
+            }
+
+            $('#cond_disc_b_id').val(cond_disc);
+            $('#cond_disc_b_for_purch_id').val(cond_disc_for_purch);
+            $('#cond_free_b_id').val(cond_free);
+        }
     </script>
 
 
@@ -1996,6 +2139,17 @@
             if(ship_rtn=="S"){
                 $('#shipping_add_id').val(ship_id);
                 $('#shipping_add').val(ship_address+", "+ship_pcode+", "+ship_city+", "+full_state);
+
+                var bundle_set = $('#bundle_set').val();
+                $('#bundle_shipping').val(bundle_set);
+
+                if($('#bundle_set').is(':checked')) {
+                    var shipping_id = $('#shipping_add_id').val();
+                    viewDetailsRateB(shipping_id);
+                }else{
+                    setRateField("", "", "", "", "", "", "", "", "", "", "", "", "", "X", "", "", "");
+                    $('#shipping-method-cont').hide();
+                }
             }else{
                 $('#return_add_id').val(ship_id);
                 $('#return_add').val(ship_address+", "+ship_pcode+", "+ship_city+", "+full_state);
@@ -2276,6 +2430,29 @@
                 $('#cond_disc_id').val("");
                 $('#cond_disc_for_purch_id').val("");
                 $('#cond_free_id').val("");
+            }
+        });
+
+        $('#cond_ship_b').on('change', function(e){
+            var opt_sel_val = e.target.value;
+
+            if(opt_sel_val=='D'){
+                $('#cond_disc_b').show();
+                $('#cond_free_b').hide();
+                $('#cond_free_b_id').val("");
+            }
+            else if(opt_sel_val=='F'){
+                $('#cond_disc_b').hide();
+                $('#cond_free_b').show();
+                $('#cond_disc_b_id').val("");
+                $('#cond_disc_b_for_purch_id').val("");
+            }
+            else{
+                $('#cond_disc_b').hide();
+                $('#cond_free_b').hide();
+                $('#cond_disc_b_id').val("");
+                $('#cond_disc_b_for_purch_id').val("");
+                $('#cond_free_b_id').val("");
             }
         });
 
