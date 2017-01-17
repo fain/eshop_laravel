@@ -22,6 +22,7 @@
 	<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
 	<link href="{{asset('css/custom.css')}}" rel="stylesheet">
 
+	<!-- Lightbox home -->
 	<link href="{{asset('css/menu_lightbox.css')}}" rel="stylesheet">
 
 
@@ -34,7 +35,8 @@
 	<!-- Mega menu -->
 	<link href="{{asset('css/mega-menu.css')}}" rel="stylesheet">
 
-	
+
+
 
 	
 	<!-- CSRF Token -->
@@ -419,15 +421,16 @@
     <!-- Zoom Product -->
    <script src="{{asset('js/zoom_product.js')}}"></script>
    
- 
+ <script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js')}}"></script>
 
 	<!-- Compare Product JS -->
 	<script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('js/jquery.comparison.js')}}"></script>
 	<script type="text/javascript" src="{{asset('js/animatedModal.min.js')}}"></script>
 
+
+
 	<script>
-	
 		$("#compare").animatedModal({
 		
 		    animatedIn:'lightSpeedIn',
@@ -448,8 +451,20 @@
 	
 	</script>
 
+<!-- Slide Offer -->
 
-	
+<script type="text/javascript">
+$("#slideshow_offer > div:gt(0)").hide();
+
+setInterval(function() {
+  $('#slideshow_offer > div:first')
+    .fadeOut(1000)
+    .next()
+    .fadeIn(1000)
+    .end()
+    .appendTo('#slideshow_offer');
+}, 3000);
+</script>
 
 <!-- Wishlist Product JS -->
 <script type='text/javascript' src="{{asset('js/script.js')}}"></script>	 
@@ -483,10 +498,7 @@ $(document).ready(function() {
         $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
     });
 });
-
 </script>
-
-
 
 
    	@yield('js_content')

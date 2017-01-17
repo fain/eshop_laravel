@@ -524,4 +524,13 @@ ul.sub-menu{
 	float: none;
 }
 
+#slider-carousel-main .item{
+	padding-left: 30px;
+}
+
+#slider-carousel-main .item{
+	padding-left: 0;
+}
+
+
 }
