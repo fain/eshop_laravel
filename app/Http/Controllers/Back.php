@@ -1091,16 +1091,66 @@ class Back extends Controller
         }
 
 
-        //merchant shipping belum ada
-        $product_info->merchant_shipping_id = NULL;
-        $product_info->merchant_return_id = NULL;
-
+        //merchant shipping done
+        $product_info->merchant_shipping_id = $request->shipping_add_id;
+        $product_info->merchant_return_id = $request->return_add_id;
 
         $product_info->shipping_method = $request->shipping_method;
-        $product_info->ship_rate = $request->ship_rate;
 
-        //shipping rate belum buat
-        $product_info->ship_rate_id = NULL;
+        $ship_rate = $request->ship_rate;
+        if($ship_rate=="ByProd"){
+            $product_info->ship_rate = $ship_rate;
+
+            $ship_rate = new ShippingRate();
+            $ship_rate->products_id = $product_id;
+            $ship_rate->wm_kg = $request->wm_kg;
+            $ship_rate->wm_rm = $request->wm_rm;
+            $ship_rate->add_wm_kg = $request->add_wm_kg;
+            $ship_rate->add_wm_rm = $request->add_wm_rm;
+            $ship_rate->sbh_kg = $request->sbh_kg;
+            $ship_rate->sbh_rm = $request->sbh_rm;
+            $ship_rate->add_sbh_kg = $request->add_sbh_kg;
+            $ship_rate->add_sbh_rm = $request->add_sbh_rm;
+            $ship_rate->srk_kg = $request->srk_kg;
+            $ship_rate->srk_rm = $request->srk_rm;
+            $ship_rate->add_srk_kg = $request->add_srk_kg;
+            $ship_rate->add_srk_rm = $request->add_srk_rm;
+
+            $ship_rate->cond_ship = $request->cond_ship;
+
+            $cond_ship = $request->cond_ship;
+            $cond_disc = $request->cond_disc;
+            $cond_disc_for_purch = $request->cond_disc_for_purch;
+            $cond_free = $request->cond_free;
+
+            if($cond_ship=="D"){
+                $ship_rate->cond_disc = $cond_disc;
+                $ship_rate->cond_disc_for_purch = $cond_disc_for_purch;
+
+                $ship_rate->cond_free = NULL;
+            }else if($cond_ship=="F"){
+                $ship_rate->cond_disc = NULL;
+                $ship_rate->cond_disc_for_purch = NULL;
+
+                $ship_rate->cond_free = $cond_free;
+            }else{
+                $ship_rate->cond_disc = NULL;
+                $ship_rate->cond_disc_for_purch = NULL;
+                $ship_rate->cond_free = NULL;
+            }
+
+            $ship_rate->updated_at = $cur_datetime;
+            $ship_rate->created_at = $cur_datetime;
+
+            $ship_rate->save();
+
+            $ship_rate_id = $ship_rate->id;
+            //shipping rate done
+
+            $product_info->ship_rate_id = $ship_rate_id;
+        }else{
+            $product_info->ship_rate = $ship_rate;
+        }
 
         $after_sale_serv = $request->after_sale_serv;
         if($after_sale_serv==""){
@@ -1114,6 +1164,8 @@ class Back extends Controller
         if($promo_set==""){
             $promo_set='N';
         }
+        
+        if($promo_set)
 
         $product_info->promo_set = $promo_set;
 
