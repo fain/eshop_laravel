@@ -204,12 +204,12 @@
 	.product{
 		font-family: Lato;
 		width:95%;
-		height:285px;
+		height:265px;
 		background-color:#fff;
 		border:3px solid #fff;
 		float:left;
 		margin:5px;
-		padding:7px 7px 30px 7px;
+		padding:30px 20px 80px 15px;
 		position: relative;
 		border-radius:10px;
 		-webkit-border-radius:10px;
@@ -253,13 +253,14 @@
 	    display:none;
 	}
 	div.product a.add-to-cart {
-		left: 13%; 
+		left: 5%; 
 		bottom: 0%; 
-
+		top:76%;
 	}
 	div.product a.view-details {
-		right:13%; 
+		right:5%; 
 		bottom: 9%; 
+		top:76%;
 
 	}
 

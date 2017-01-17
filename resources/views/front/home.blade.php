@@ -53,7 +53,7 @@
     </div> 
 	<!-- VERTICAL TAB -->
 
-	<!--slider-->
+	<!--slideshow-->
 	<div class="col-sm-5-home">
 		<div id="slideshow_offer">
 		   <div>
@@ -71,12 +71,9 @@
 		   <div>
 		     <img src="images/home/slides/5.png"  alt="" />
 		   </div>
-		   <div>
-		     <img src="images/home/slides/6.png"  alt="" />
-		   </div>
 		</div>
 	</div>
-	<!-- slider -->
+	<!-- slideshow -->
 
 	<!-- MAIN OFFER BY MONTH -->
 	 <div class="col-sm-3-home">
@@ -86,117 +83,68 @@
 
 
 <!--main slider product-->
-	<div class="col-sm-5-home">
+<div class="row">
+	<div class="col-sm-12">
+		<br>
 		<br>
 		<h2 class="title text-center">Features Items</h2>
+		<ul class="bxslider">
+			 @foreach ($products as $product)
+			<div class="col-xs-12 col-sm-6 col-md-2">
+				<div class="product-image-wrapper">
+					<div class="single-products" id="products_container">
 
-		<div id="slider-carousel" class="carousel slide" data-ride="carousel">
-	
-			
-			<div class="carousel-inner">
-
-				<div class="item active">
-						@foreach ($products as $product)
-						<div class="col-xs-12 col-sm-6 col-md-2">
-							<div class="product-image-wrapper">
-								<div class="single-products" id="products_container">
-
-									<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-									
-										<button>
-											<div>+<div>
-										</button>
-
-										<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-										<h2>RM{{$product->price}}</h2>
-		                                <p>{{$product->prod_name}}</p>
-									
-
-		                                <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-		                                <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
-
-
-									</div>
-									<img src="images/home/features.png" class="features" alt="" />
-
-									<div class="clearfix"></div>
-								</div>
+						<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
 						
-								<div class="choose">
-		                            <ul class="nav nav-pills nav-justified">
-		                                <li>
-		                                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-												<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
-											</a>
+							<button>
+								<div>+<div>
+							</button>
 
-		              					</li>
-		                            </ul>
-		                    	</div>
+							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
+							<h2>RM{{$product->price}}</h2>
+                            <p>{{$product->prod_name}}</p>
+						
 
-							</div>
+                            <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
+                            <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+
 						</div>
-						@endforeach
+						<img src="images/home/features.png" class="features" alt="" />
+
+						<div class="clearfix"></div>
+					</div>
+			
+					<div class="choose">
+                        <ul class="nav nav-pills nav-justified">
+                            <li>
+                            	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+									<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+								</a>
+
+          					</li>
+                        </ul>
+                	</div>
+
 				</div>
-
-
-			          <div class="item">
-
-           				@foreach ($products as $product)
-						<div class="col-xs-12 col-sm-6 col-md-2">
-							<div class="product-image-wrapper">
-								<div class="single-products" id="products_container">
-
-									<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-									
-										<button>
-											<div>+<div>
-										</button>
-
-										<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-										<h2>RM{{$product->price}}</h2>
-		                                <p>{{$product->prod_name}}</p>
-									
-
-		                                <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-		                                <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
-
-
-									</div>
-									<img src="images/home/features.png" class="features" alt="" />
-
-									<div class="clearfix"></div>
-								</div>
-						
-								<div class="choose">
-		                            <ul class="nav nav-pills nav-justified">
-		                                <li>
-		                                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-												<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
-											</a>
-
-		              					</li>
-		                            </ul>
-		                    	</div>
-
-							</div>
-						</div>
-						@endforeach
-
-			          </div>
-				
-				
 			</div>
-			
-			<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-				<i class="fa fa-angle-left"></i>
-			</a>
-			<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-				<i class="fa fa-angle-right"></i>
-			</a>
-		</div>
-	</div>
-<!--/main slider product-->
+			@endforeach
 
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$('.bxslider').bxSlider({
+				  minSlides: 6,
+				  maxSlides: 2,
+				  slideWidth: 915,
+				  slideHeight: 358,
+				  slideMargin: 10
+				});
+			});
+			</script>
+		</ul>
+	</div>
+</div>
+<!--/main slider product-->
 
 	<section>
 	    <div class="container">

@@ -421,14 +421,11 @@
     <!-- Zoom Product -->
    <script src="{{asset('js/zoom_product.js')}}"></script>
    
- <script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js')}}"></script>
 
 	<!-- Compare Product JS -->
 	<script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('js/jquery.comparison.js')}}"></script>
 	<script type="text/javascript" src="{{asset('js/animatedModal.min.js')}}"></script>
-
-
 
 	<script>
 		$("#compare").animatedModal({
@@ -450,6 +447,15 @@
 		});
 	
 	</script>
+
+<!-- Carousel Home Products -->
+<!-- bxSlider Javascript file -->
+<script type="text/javascript" src="{{asset('js/jquery.bxslider.min.js')}}"></script>
+
+<!-- bxSlider CSS file -->
+<link href="{{asset('css/jquery.bxslider.css')}}" rel="stylesheet">
+<!-- Carousel Home Products -->
+
 
 <!-- Slide Offer -->
 
