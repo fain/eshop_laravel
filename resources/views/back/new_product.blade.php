@@ -232,7 +232,7 @@
             <div class="form-group">
                 <div class="col-md-2 col-md-offset-2">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="discount_period_set" name="discount_period_set" value="set"> Set Period
+                        <input type="checkbox" id="discount_period_set" name="discount_period_set" value="Y"> Set Period
                     </label>
                 </div>
                 <div id="discount-period-cont">
@@ -505,7 +505,7 @@
             </div>
 
             <div id="promo_box" style="display: none">
-                <input type="hidden" name="promo_set" id="promo_set" value="">
+                <input type="hidden" name="promo_set_val" id="promo_set_val" value="">
                 <h3>Promotions or Advertisement</h3>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Promotional Text</label>
@@ -530,7 +530,7 @@
                         {{--</label>--}}
                     {{--</div>--}}
                     <div class="col-md-4">
-                        <input type="text" name="country_origin" id="promo_text"  class="form-control">
+                        <input type="text" name="country_origin" id="country_origin"  class="form-control">
                     </div>
                 </div>
                 {{--<div class="form-group">--}}
@@ -572,7 +572,7 @@
                     <label class="col-md-2 control-label">Multiple Purchase Discount </label>
                     <div class="col-md-1">
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="mul_pur_disc_set" value="Y"> Set
+                            <input type="checkbox" id="mul_pur_disc_set" name="mul_pur_disc_set" value="Y"> Set
                         </label>
                     </div>
                     <div class="col-md-2">
@@ -602,7 +602,7 @@
                 <div class="form-group">
                     <div class="col-md-2 col-md-offset-3">
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="mul_pur_disc_period_set" value="Y"> Set Period
+                            <input type="checkbox" id="mul_pur_disc_period_set" name="mul_pur_disc_period_set" value="Y"> Set Period
                         </label>
                     </div>
                     <div id="disc_set_period_cont">
@@ -632,7 +632,7 @@
                         </label>
                     </div>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" id="min_pur_val">
+                        <input type="text" class="form-control" id="min_pur_val" name="min_pur_val">
                     </div>
                     <div class="col-md-4">
                         <p class="form-control-static">Set minimum quantity for one time purchase</p>
@@ -652,7 +652,7 @@
                         </label>
                     </div>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" id="max_per_ord">
+                        <input type="text" class="form-control" id="max_per_ord" name="max_per_ord">
                     </div>
                     <div class="col-md-4">
                         <p class="form-control-static">Set maximum quantity for one time purchase</p>
@@ -665,7 +665,7 @@
                         </label>
                     </div>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" id="max_per_pers">
+                        <input type="text" class="form-control" id="max_per_pers" name="max_per_pers">
                     </div>
                     <div class="col-md-5">
                         <p class="form-control-static">Set maximum quantity for one time purchase. The setting is applied for 30 days upon purchase.</p>
@@ -674,7 +674,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Listing Ad Setting</label>
                     <div class="col-md-2">
-                        <select class="form-control" id="ad_sel">
+                        <select class="form-control" id="ad_sel" name="ad_sel">
                             <option value="">Ad Type</option>
                             <option value="top">Top</option>
                         </select>
@@ -1668,11 +1668,11 @@
             var div = document.getElementById('promo_box');
             if (div.style.display !== 'none') {
                 div.style.display = 'none';
-                $('#promo_set').val("N");
+                $('#promo_set_val').val("N");
             }
             else {
                 div.style.display = 'block';
-                $('#promo_set').val("Y");
+                $('#promo_set_val').val("Y");
             }
         }
 

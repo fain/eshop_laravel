@@ -1160,17 +1160,43 @@ class Back extends Controller
         $product_info->after_sale_serv = $after_sale_serv;
         $product_info->return_policy = $request->return_policy;
 
-        $promo_set = $request->promo_set;
+        $promo_set = $request->promo_set_val;
         if($promo_set==""){
             $promo_set='N';
+            $product_info->promo_id = NULL;
         }
         
-        if($promo_set)
+        if($promo_set=="Y"){
+            $promo = new Promotion();
+            $promo->products_id = $product_id;
+            $promo->promo_text = $request->promo_text;
+            $promo->country_origin = $request->country_origin;
+            $promo->mul_pur_disc_set = $request->mul_pur_disc_set;
+            $promo->mul_pur_disc_item = $request->mul_pur_disc_item;
+            $promo->mul_pur_disc_sel = $request->mul_pur_disc_sel;
+            $promo->mul_pur_disc = $request->mul_pur_disc;
+            $promo->mul_pur_disc_period_set = $request->mul_pur_disc_period_set;
+            $promo->mul_pur_period_start = date("Y-m-d", strtotime($request->mul_pur_period_start));
+            $promo->mul_pur_period_end = date("Y-m-d", strtotime($request->mul_pur_period_end));
+            $promo->min_pur = $request->min_pur;
+            $promo->min_pur_val = $request->min_pur_val;
+            $promo->max_pur = $request->max_pur;
+            $promo->max_per_ord = $request->max_per_ord;
+            $promo->max_per_pers = $request->max_per_pers;
+            $promo->ad_sel = $request->ad_sel;
+            $promo->ad_start = date("Y-m-d", strtotime($request->ad_start));
+            $promo->ad_end = date("Y-m-d", strtotime($request->ad_end));
+            $promo->created_at = $cur_datetime;
+            $promo->updated_at = $cur_datetime;
+
+            $promo->save();
+
+            $promo_id = $promo->id;
+            //promotion done
+            $product_info->promo_id = $promo_id;
+        }
 
         $product_info->promo_set = $promo_set;
-
-        //promotion belum ada
-        $product_info->promo_id = NULL;
 
         $product_info->created_at = $request->$cur_datetime;
         $product_info->updated_at = $request->$cur_datetime;
