@@ -448,17 +448,45 @@
 	
 	</script>
 
-<!-- Carousel Home Products -->
+<!-- Slide Top Selling -->
+<link href="{{asset('css/styles_top_selling.css')}}" rel="stylesheet">
+<link href="{{asset('css/slide_top_selling.css')}}" rel="stylesheet">
+
+<!-- FlexSlider -->
+<script type="text/javascript" src="{{asset('js/jquery.flexslider-min.js')}}"></script>
+
+<script type="text/javascript" >
+    var $ = jQuery.noConflict();
+    $(window).load(function() {
+    $('.flexslider').flexslider({
+          animation: "fade"
+    });
+	
+	$(function() {
+		$('.show_menu').click(function(){
+				$('.menu').fadeIn();
+				$('.show_menu').fadeOut();
+				$('.hide_menu').fadeIn();
+		});
+		$('.hide_menu').click(function(){
+				$('.menu').fadeOut();
+				$('.show_menu').fadeIn();
+				$('.hide_menu').fadeOut();
+		});
+	});
+  });
+</script>
+
+<!-- Featured Products -->
 <!-- bxSlider Javascript file -->
 <script type="text/javascript" src="{{asset('js/jquery.bxslider.min.js')}}"></script>
 
 <!-- bxSlider CSS file -->
 <link href="{{asset('css/jquery.bxslider.css')}}" rel="stylesheet">
-<!-- Carousel Home Products -->
+<!-- Featured Products -->
 
 
 <!-- Slide Offer -->
-
 <script type="text/javascript">
 $("#slideshow_offer > div:gt(0)").hide();
 
@@ -491,6 +519,9 @@ $(document).ready(function(){
     );
 });
 </script>
+
+
+
 
 <!-- Vertical tab home -->
 <script type="text/javascript">
