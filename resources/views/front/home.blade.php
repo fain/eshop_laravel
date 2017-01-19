@@ -298,7 +298,7 @@
 	</div>
 
 	<div class="col-xs-2 col-sm-6 col-md-2">
-		<img src="images/home/slides_featured/1.png" class="offer_features" alt="" />
+		<img src="images/home/slides_newest/1.png" class="offer_features" alt="" />
 	</div>
 </div>
 <!--Newest->
