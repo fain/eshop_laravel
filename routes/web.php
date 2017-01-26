@@ -68,6 +68,8 @@ Route::get('/api/prod-opt-grp-table/{id}', 'ApiController@prodOptGrpTable');
 Route::get('/api/shipping_details/{id}', 'ApiController@shipping_details');
 Route::get('/api/return_details/{id}', 'ApiController@return_details');
 
+Route::get('/api/prod_opt_type/{id}', 'ApiController@prod_opt_type');
+
 //ajax submit
 Route::post('/api/new_shipping', 'ApiController@new_shipping');
 Route::post('/api/new_return', 'ApiController@new_return');
@@ -98,6 +100,8 @@ Route::get('/backend/delete_brand/{id}', 'Back@delete_brand');
 Route::get('/backend/product_listing','Back@product_listing');
 Route::get('/backend/new_product','Back@new_product');
 Route::post('/backend/product_listing_handler','Back@product_listing_handler');
+Route::get('/backend/edit_product/{product}','Back@edit_product');
+Route::get('/backend/delete_product/{id}', 'Back@delete_product');
 /*******************************prod listing end*********************************/
 
 /*******************************prod opt mgmt start*********************************/

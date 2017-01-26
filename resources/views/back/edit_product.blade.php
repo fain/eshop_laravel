@@ -40,7 +40,7 @@
 @endsection
 
 @section('breadcrumb')
-    <i class="fa fa-cube" aria-hidden="true"></i> Product Management / <i class="fa fa-list-alt" aria-hidden="true"></i> Product Listing / <i class="fa fa-plus" aria-hidden="true"></i> Add New Product
+    <i class="fa fa-cube" aria-hidden="true"></i> Product Management / <i class="fa fa-list-alt" aria-hidden="true"></i> Product Listing / <i class="fa fa-plus" aria-hidden="true"></i> Edit Product
 @endsection
 
 @section('content')
@@ -50,29 +50,43 @@
                 <i class="fa fa-reply" aria-hidden="true"></i> Back to Product Listing
             </a>
         </div>
-        <form class="form-horizontal" enctype="multipart/form-data" id="fileupload" method="post" action="/backend/product_listing_handler">
+        <form class="form-horizontal" enctype="multipart/form-data" id="fileupload" method="post" action="/backend/product_listing_handler_update">
             {{ csrf_field() }}
             <div class="form-group">
                 <label class="col-md-2 control-label">Sales Type <span class="req">*</span> </label>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type1" value="New" checked="checked"> New
+                        <input type="radio" name="sales_type" id="sales_type1" value="New" @if($product_by_id->type == "New") checked="checked" @endif > New
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type2" value="Pre-Order"> Pre-Order
+                        <input type="radio" name="sales_type" id="sales_type2" value="Pre-Order" @if($product_by_id->type == "Pre-Order") checked="checked" @endif > Pre-Order
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sales_type" id="sales_type3" value="Used"> Used
+                        <input type="radio" name="sales_type" id="sales_type3" value="Used" @if($product_by_id->type == "Used") checked="checked" @endif > Used
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Category <span class="req">*</span> </label>
                 <div class="col-md-3">
+
+                    <input type="hidden" name="cat_id" value="{{ $bdetails->catid }}" id="catid">
+                    <input type="hidden" name="b_id" @if(isset($bdetails->brand_id)) value="{{ $bdetails->brand_id }}" @endif id="bid">
+
+                    <?php
+                    $sel = "";
+                    if($bdetails->cat_menutype=='main'){
+                        $sel = $bdetails->catid;
+                    }
+                    elseif($bdetails->cat_menutype=='sub'){
+                        $sel = $bdetails->cat_maincatid;
+                    }
+                    ?>
+
                     <select class="form-control" name="main_category" id="main_category">
                         <option value="">Select Main Category</option>
                         @foreach($maincat as $mc)
-                            <option value="{{ $mc->id }}">{{ ucfirst(strtolower($mc->name)) }}</option>
+                            <option value="{{ $mc->id }}" @if($sel==$mc->id) selected="selected" @endif>{{ ucfirst(strtolower($mc->name)) }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -88,7 +102,7 @@
                     <div class="col-md-3">
                         <select class="form-control" name="brand_sel" id="brand_sel">
                             <option value="">Select Brand</option>
-                            <option value="others">Others</option>
+                            <option value="0">Others</option>
                             {{--@foreach($maincat as $mc)--}}
                             {{--<option value="{{ $mc->id }}">{{ ucfirst(strtolower($mc->name)) }}</option>--}}
                             {{--@endforeach--}}
@@ -99,7 +113,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Product Name <span class="req">*</span> </label>
                 <div class="col-md-8">
-                    <input type="text" name="name" id="prod_name" placeholder="Product name to be displayed" class="form-control">
+                    <input type="text" name="name" id="prod_name" placeholder="Product name to be displayed" class="form-control" value="{{ $product_by_id->prod_name }}">
                 </div>
                 <div class="col-md-1">
                     <p class="form-control-static"><span id="prod_name_count">0</span>/100</p>
@@ -108,64 +122,60 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Seller Product Code</label>
                 <div class="col-md-8">
-                    <input type="text" name="prod_code" id="prod_code"  class="form-control">
+                    <input type="text" name="prod_code" id="prod_code"  class="form-control" value="{{ $product_by_id->prod_code }}">
                 </div>
                 <div class="col-md-1">
                     <p class="form-control-static"><span id="prod_code_count">0</span>/40</p>
                 </div>
             </div>
-            {{--<div class="form-group">--}}
-                {{--<label class="col-md-2 control-label">Image</label>--}}
-                {{--<div class="col-md-8">--}}
-                    {{--<input id="input-id" type="file" class="file" data-preview-file-type="text" name="images[]" multiple data-show-upload="false">--}}
-                {{--</div>--}}
-            {{--</div>--}}
+
             <div class="form-group">
                 <label class="col-md-2 control-label">Image</label>
                 {{--<div class="col-md-8">--}}
-                {{--<input id="input-id" type="file" class="file" data-preview-file-type="text" name="images[]" multiple data-show-upload="false">--}}
+                    {{--<input id="input-id" type="file" class="file" data-preview-file-type="text" name="images[]" multiple data-show-upload="false">--}}
                 {{--</div>--}}
                 <div class="col-md-4">
-                    <input id="input-1" type="file" class="file" name="images[]">
+                    <input id="input-1" type="file" class="file" name="images[]" @if(isset($images[0])) value="{{ $images[0]->name }}" @endif>
                 </div>
                 <div class="col-md-4">
-                    <input id="input-2" type="file" class="file" name="images[]">
+                    <input id="input-2" type="file" class="file" name="images[]" @if(isset($images[1])) value="{{ $images[1]->name }}" @endif>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-4">
-                    <input id="input-3" type="file" class="file" name="images[]">
+                    <input id="input-3" type="file" class="file" name="images[]" @if(isset($images[2])) value="{{ $images[2]->name }}" @endif>
                 </div>
                 <div class="col-md-4">
-                    <input id="input-4" type="file" class="file" name="images[]">
+                    <input id="input-4" type="file" class="file" name="images[]" @if(isset($images[3])) value="{{ $images[3]->name }}" @endif>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-md-2 control-label">Short Description <span class="req">*</span> </label>
                 <div class="col-md-9">
-                    <textarea id="mytextarea2" name="short_details"></textarea>
+                    <textarea id="mytextarea2" name="short_details">{{ $product_by_id->short_details }}</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Detailed Description <span class="req">*</span> </label>
                 <div class="col-md-9">
-                    <textarea id="mytextarea" name="details"></textarea>
+                    <textarea id="mytextarea" name="details">{{ $product_by_id->details }}</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">GST Applicable <span class="req">*</span> </label>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="gst_type" id="gst_type1" value="Standard"> Standard Rate
+                        <input type="radio" name="gst_type" id="gst_type1" value="Standard" @if($product_by_id->gst_type=="Standard") checked="checked" @endif > Standard Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="gst_type" id="gst_type2" value="Exempted" checked="checked"> Exempted Rate
+                        <input type="radio" name="gst_type" id="gst_type2" value="Exempted" @if($product_by_id->gst_type=="Exempted") checked="checked" @endif > Exempted Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="gst_type" id="gst_type3" value="Zero"> Zero Rate
+                        <input type="radio" name="gst_type" id="gst_type3" value="Zero" @if($product_by_id->gst_type=="Zero") checked="checked" @endif > Zero Rate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="gst_type" id="gst_type3" value="Flat"> Flat Rate
+                        <input type="radio" name="gst_type" id="gst_type3" value="Flat" @if($product_by_id->gst_type=="Flat") checked="checked" @endif > Flat Rate
                     </label>
                 </div>
             </div>
@@ -174,32 +184,32 @@
                 <label class="col-md-2 control-label">Selling Period</label>
                 <div class="col-md-1">
                     <label class="checkbox-inline">
-                        <input type="checkbox" name="selling_period_set" id="selling_period_set" value="Y" checked="checked"> Set
+                        <input type="checkbox" name="selling_period_set" id="selling_period_set" value="Y" @if($product_by_id->selling_period_set=="Y") checked="checked" @endif> Set
                     </label>
                 </div>
                 <div id="selling_period_cont">
                     <div class="col-md-2">
                         <select class="form-control" name="selling_period_day" id="selling_period_day">
-                            <option value="3">3 Days</option>
-                            <option value="5">5 Days</option>
-                            <option value="7">7 Days</option>
-                            <option value="15">15 Days</option>
-                            <option value="30">30 Days</option>
-                            <option value="60">60 Days</option>
-                            <option value="90">90 Days</option>
-                            <option value="120">120 Days</option>
-                            <option value="180">180 Days</option>
-                            <option value="direct">Direct Input</option>
+                            <option value="3" @if($product_by_id->selling_period_day=="3") selected @endif>3 Days</option>
+                            <option value="5" @if($product_by_id->selling_period_day=="5") selected @endif>5 Days</option>
+                            <option value="7" @if($product_by_id->selling_period_day=="7") selected @endif>7 Days</option>
+                            <option value="15" @if($product_by_id->selling_period_day=="15") selected @endif>15 Days</option>
+                            <option value="30" @if($product_by_id->selling_period_day=="30") selected @endif>30 Days</option>
+                            <option value="60" @if($product_by_id->selling_period_day=="60") selected @endif>60 Days</option>
+                            <option value="90" @if($product_by_id->selling_period_day=="90") selected @endif>90 Days</option>
+                            <option value="120" @if($product_by_id->selling_period_day=="120") selected @endif>120 Days</option>
+                            <option value="180" @if($product_by_id->selling_period_day=="180") selected @endif>180 Days</option>
+                            <option value="direct" @if($product_by_id->selling_period_day=="direct") selected @endif>Direct Input</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-append date" id="" data-date="{{ date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="selling_period_start" name="selling_period_start" value="{{ date('d-m-Y') }}">
+                                <input type="text" class="form-control" id="selling_period_start" name="selling_period_start" value="{{ date('d-m-Y', strtotime($product_by_id->selling_period_start)) }}">
                             </div>
                             <div class="input-group-addon">to</div>
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="selling_period_end" name="selling_period_end" readonly disabled="disabled">
+                                <input type="text" class="form-control" id="selling_period_end" name="selling_period_end" readonly disabled="disabled" value="{{ date('d-m-Y', strtotime($product_by_id->selling_period_end)) }}">
                             </div>
                         </div>
                     </div>
@@ -209,17 +219,17 @@
                 <label class="col-md-2 control-label">Selling Price <span class="req">*</span> </label>
                 <label class="col-md-1 control-label"><span class="req">RM</span> </label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" name="price">
+                    <input type="text" class="form-control" name="price" value="{{ $product_by_id->price }}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Tier Price <span class="req"></span> </label>
                 <div class="col-md-3">
                     <select class="form-control" name="tier_price">
-                        <option value="">Select Plan</option>
-                        <option value="12">12 Months</option>
-                        <option value="24">24 Months</option>
-                        <option value="36">36 Months</option>
+                        <option value="" @if($product_by_id->tier_price=="") selected @endif>Select Plan</option>
+                        <option value="12" @if($product_by_id->tier_price=="12") selected @endif>12 Months</option>
+                        <option value="24" @if($product_by_id->tier_price=="24") selected @endif>24 Months</option>
+                        <option value="36" @if($product_by_id->tier_price=="36") selected @endif>36 Months</option>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -229,41 +239,41 @@
                     <p class="form-control-static text-right">RM</p>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="inst_price">
+                    <input type="text" class="form-control" name="inst_price" value="{{ $product_by_id->inst_price }}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Discount by Seller </label>
                 <div class="col-md-2">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="discount_set" name="discount_set" value="Y"> Set
+                        <input type="checkbox" id="discount_set" name="discount_set" value="Y" @if($product_by_id->discount_set=="Y") checked="checked" @endif> Set
                     </label>
                 </div>
                 <div class="col-md-2">
                     <select class="form-control" name="discount_sel">
-                        <option value="RM">RM</option>
-                        <option value="%">%</option>
+                        <option value="RM" @if($product_by_id->discount_sel=="RM") selected @endif>RM</option>
+                        <option value="%" @if($product_by_id->discount_sel=="%") selected @endif>%</option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" name="discount_val">
+                    <input type="text" class="form-control" name="discount_val" value="{{ $product_by_id->discount_val }}">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-2 col-md-offset-2">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="discount_period_set" name="discount_period_set" value="Y"> Set Period
+                        <input type="checkbox" id="discount_period_set" name="discount_period_set" value="Y" @if($product_by_id->discount_period_set=="Y") checked="checked" @endif> Set Period
                     </label>
                 </div>
                 <div id="discount-period-cont">
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="discount_period_start" name="discount_period_start">
+                                <input type="text" class="form-control" id="discount_period_start" name="discount_period_start" value="{{ date('d-m-Y', strtotime($product_by_id->discount_period_start)) }}">
                             </div>
                             <div class="input-group-addon">to</div>
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="discount_period_end" name="discount_period_end">
+                                <input type="text" class="form-control" id="discount_period_end" name="discount_period_end" value="{{ date('d-m-Y', strtotime($product_by_id->discount_period_end)) }}">
                             </div>
                         </div>
                     </div>
@@ -272,7 +282,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Product Weight <span class="req">*</span> </label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="weight">
+                    <input type="text" class="form-control" name="weight" value="{{ $product_by_id->weight }}">
                 </div>
                 <div class="col-md-2">
                     <p class="form-control-static">Kg</p>
@@ -281,7 +291,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Stock Quantity <span class="req">*</span> </label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="stock_quantity">
+                    <input type="text" class="form-control" name="stock_quantity" value="{{ $product_by_id->stock_quantity }}">
                 </div>
                 <div class="col-md-2">
                     <p class="form-control-static">Units</p>
@@ -304,9 +314,14 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <button class="btn btn-default pull-right" type="button" onclick="revertProdOpt()"><i class="fa fa-reply" aria-hidden="true"></i> Revert Product Option</button>
+                </div>
             </div>
+
             <div class="form-group" id="prod_opt_box">
                 <div class="col-md-9 col-md-offset-2">
+                    <input type="hidden" name="option_id_val" id="option_id_val" value="{{ $product_by_id->option_id }}">
                     <table class="table table-bordered table-striped" id="prod_opt_table_id" style="display: none">
                         <thead>
                             <tr>
@@ -316,6 +331,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr style="display: none" id="optionslistid">
+
+                            </tr>
+                            <tr style="display: none" id="addlistid">
+                                <td colspan="4" class="text-center">
+                                    <a class="btn-add" href="#" onclick="addField1();" id="add_field_btn_1">
+                                        <i class="fa fa-plus-circle" aria-hidden="true" style=""></i>
+                                    </a>
+                                    <input type="hidden" name="countfield" id="countfield" value="0">
+                                    <a class="btn-remove disabled" href="#" onclick="deleteField1();" id="delete_field_btn_1">
+                                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
                             <tr style="display: none" id="manuallistid">
                                 <td colspan="4" class="text-center">
                                     <a class="btn-add" href="#" onclick="addField();" id="add_field_btn">
@@ -341,7 +370,7 @@
                 </div>
                 <div class="col-md-6">
                     <textarea class="form-control" name="shipping_add" id="shipping_add">{{ $def_ship_add->address }}, {{ $def_ship_add->postcode }}, {{ $def_ship_add->city }}, {{ $def_ship_add->state_name }}</textarea>
-                    <input type="hidden" name="shipping_add_id" id="shipping_add_id" value="{{ $def_ship_add->id }}">
+                    <input type="hidden" name="shipping_add_id" id="shipping_add_id" value="{{ $product_by_id->merchant_shipping_id }}">
                     <input type="hidden" name="bundle_shipping" id="bundle_shipping" value="{{ $def_ship_add->bundle_rate }}">
                 </div>
                 <div class="col-md-2">
@@ -354,7 +383,7 @@
                 </div>
                 <div class="col-md-6">
                     <textarea class="form-control" name="return_add" id="return_add">{{ $def_rtn_add->address }}, {{ $def_rtn_add->postcode }}, {{ $def_rtn_add->city }}, {{ $def_rtn_add->state_name }}</textarea>
-                    <input type="hidden" name="return_add_id" id="return_add_id" value="{{ $def_rtn_add->id }}">
+                    <input type="hidden" name="return_add_id" id="return_add_id" value="{{ $product_by_id->merchant_return_id }}">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-info" type="button" data-toggle="modal" data-target="#shippingModal" onclick="returnMerchant();">Edit</button>
@@ -365,8 +394,8 @@
                 <label class="col-md-2 control-label">Shipping Method <span class="req">*</span> </label>
                 <div class="col-md-4">
                     <select class="form-control" name="shipping_method">
-                        <option value="courier">Courier Service</option>
-                        <option value="direct">Direct Shipping</option>
+                        <option value="courier" @if($product_by_id->shipping_method=="courier") selected @endif>Courier Service</option>
+                        <option value="direct" @if($product_by_id->shipping_method=="direct") selected @endif>Direct Shipping</option>
                     </select>
                 </div>
             </div>
@@ -374,14 +403,15 @@
                 <label class="col-md-2 control-label">Shipping rate <span class="req">*</span> </label>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="ship_rate" id="ship_rate1" value="Free" checked="checked"> Free
+                        <input type="radio" name="ship_rate" id="ship_rate1" value="Free" @if($product_by_id->ship_rate=="Free") checked="checked" @endif> Free
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="ship_rate" id="ship_rate2" value="Bundle"> Bundle Shipping Rate
+                        <input type="radio" name="ship_rate" id="ship_rate2" value="Bundle" @if($product_by_id->ship_rate=="Bundle") checked="checked" @endif> Bundle Shipping Rate
                     </label>
                     <button type="button" data-toggle="modal" class="btn-sm btn-info" id="bundle_btn" data-target="#shippingModal" onclick="shippingMerchant();" style="display:none">Edit</button>
                     <label class="radio-inline">
-                        <input type="radio" name="ship_rate" id="ship_rate3" value="ByProd"> Shipping Rate by Product
+                        <input type="radio" name="ship_rate" id="ship_rate3" value="ByProd" @if($product_by_id->ship_rate=="ByProd") checked="checked" @endif> Shipping Rate by Product
+                        <input type="hidden" name="ship_rate_id_val" id="ship_rate_id_val" value="{{ $product_by_id->ship_rate_id }}">
                     </label>
                 </div>
             </div>
@@ -392,8 +422,8 @@
                             <tr>
                                 <td rowspan="2" width="15%">West Malaysia</td>
                                 <td width="15%">Up to</td>
-                                <td width="25%"><div class="ship-kg"><input type="text" class="form-control" name="wm_kg" id="wm_kg"></div>Kg</td>
-                                <td width="25%">RM<div class="ship-rm"><input type="text" class="form-control" name="wm_rm" id="wm_rm"></div></td>
+                                <td width="25%"><div class="ship-kg"><input type="text" class="form-control" name="wm_kg" id="wm_kg" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->wm_kg }}" @endif></div>Kg</td>
+                                <td width="25%">RM<div class="ship-rm"><input type="text" class="form-control" name="wm_rm" id="wm_rm" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->wm_rm }}" @endif></div></td>
                                 <td rowspan="2" width="20%">
                                     <label class="checkbox-inline">
                                         <input type="checkbox" id="same-all-region" value="Y" name="same_all_reg"> Same for all region
@@ -402,36 +432,36 @@
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_wm_kg" id="add_wm_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_wm_rm" id="add_wm_rm"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_wm_kg" id="add_wm_kg" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->add_wm_kg }}" @endif></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_wm_rm" id="add_wm_rm" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->add_wm_rm }}" @endif></div> added</td>
                             </tr>
 
                             <tr>
                                 <td rowspan="2">Sabah</td>
                                 <td>Up to</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="sbh_kg" id="sbh_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="sbh_rm" id="sbh_rm"></div></td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="sbh_kg" id="sbh_kg" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->sbh_kg }}" @endif></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="sbh_rm" id="sbh_rm" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->sbh_rm }}" @endif></div></td>
                                 <td rowspan="2">
                                 </td>
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_sbh_kg" id="add_sbh_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_sbh_rm" id="add_sbh_rm"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_sbh_kg" id="add_sbh_kg" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->add_sbh_kg }}" @endif></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_sbh_rm" id="add_sbh_rm" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->add_sbh_rm }}" @endif></div> added</td>
                             </tr>
 
                             <tr>
                                 <td rowspan="2">Sarawak</td>
                                 <td>Up to</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="srk_kg" id="srk_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="srk_rm" id="srk_rm"></div></td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="srk_kg" id="srk_kg" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->srk_kg }}" @endif></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="srk_rm" id="srk_rm" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->srk_rm }}" @endif></div></td>
                                 <td rowspan="2">
                                 </td>
                             </tr>
                             <tr>
                                 <td>For additional</td>
-                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_srk_kg" id="add_srk_kg"></div>Kg</td>
-                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_srk_rm" id="add_srk_rm"></div> added</td>
+                                <td><div class="ship-kg"><input type="text" class="form-control" name="add_srk_kg" id="add_srk_kg" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->add_srk_kg }}" @endif></div>Kg</td>
+                                <td>RM<div class="ship-rm"><input type="text" class="form-control" name="add_srk_rm" id="add_srk_rm" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->add_srk_rm }}" @endif></div> added</td>
                             </tr>
                         </table>
 
@@ -445,9 +475,9 @@
                         <div class="row form-group">
                             <div class="col-md-3">
                                 <select class="form-control" id="cond_ship_b" name="cond_ship_b">
-                                    <option value="X">Not Use</option>
-                                    <option value="D">Conditional Discount</option>
-                                    <option value="F">Conditional Free</option>
+                                    <option value="X" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") @if($ship_rate_byprod->cond_ship == "X") selected @endif @endif>Not Use</option>
+                                    <option value="D" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") @if($ship_rate_byprod->cond_ship == "D") selected @endif @endif>Conditional Discount</option>
+                                    <option value="F" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") @if($ship_rate_byprod->cond_ship == "F") selected @endif @endif>Conditional Free</option>
                                 </select>
                             </div>
                         </div>
@@ -458,13 +488,13 @@
                                     Discounts of up to
                                 </div>
                                 <div class="in-block">
-                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_b_id" name="cond_disc"></div>
+                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_b_id" name="cond_disc" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->cond_disc }}" @endif></div>
                                 </div>
                                 <div class="in-block">
                                     on shipping fees for purchase of
                                 </div>
                                 <div class="in-block">
-                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_b_for_purch_id" name="cond_disc_for_purch"></div>
+                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_disc_b_for_purch_id" name="cond_disc_for_purch" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->cond_disc_for_purch }}" @endif></div>
                                 </div>
                                 <div class="in-block">
                                     or above.
@@ -478,7 +508,7 @@
                                     Free shipping for purchase of
                                 </div>
                                 <div class="in-block">
-                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_free_b_id" name="cond_free"></div>
+                                    <strong>RM </strong><div class="rm_disc"><input type="text" class="form-control" id="cond_free_b_id" name="cond_free" @if(isset($ship_rate_byprod) && $ship_rate_byprod!="") value="{{ $ship_rate_byprod->cond_free }}" @endif></div>
                                 </div>
                                 <div class="in-block">
                                     or above.
@@ -504,13 +534,13 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">After Sale Service </label>
                 <div class="col-md-9">
-                    <textarea class="form-control" name="after_sale_serv"></textarea>
+                    <textarea class="form-control" name="after_sale_serv">{{ $product_by_id->after_sale_serv }}</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Return Policy <span class="req">*</span> </label>
                 <div class="col-md-9">
-                    <textarea class="form-control" name="return_policy"></textarea>
+                    <textarea class="form-control" name="return_policy">{{ $product_by_id->return_policy }}</textarea>
                 </div>
             </div>
             <hr>
@@ -525,12 +555,12 @@
             </div>
 
             <div id="promo_box" style="display: none">
-                <input type="hidden" name="promo_set_val" id="promo_set_val" value="">
+                <input type="hidden" name="promo_set_val" id="promo_set_val" value="{{ $product_by_id->promo_set }}">
                 <h3>Promotions or Advertisement</h3>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Promotional Text</label>
                     <div class="col-md-8">
-                        <input type="text" name="promo_text" id="promo_text"  class="form-control">
+                        <input type="text" name="promo_text" id="promo_text"  class="form-control" @if(isset($promo) && $promo!="") value="{{ $promo->promo_text }}" @endif>
                     </div>
                     <div class="col-md-1">
                         <p class="form-control-static"><span id="promo_text_count">0</span>/40</p>
@@ -550,7 +580,7 @@
                         {{--</label>--}}
                     {{--</div>--}}
                     <div class="col-md-4">
-                        <input type="text" name="country_origin" id="country_origin"  class="form-control">
+                        <input type="text" name="country_origin" id="country_origin"  class="form-control" @if(isset($promo) && $promo!="") value="{{ $promo->country_origin }}" @endif>
                     </div>
                 </div>
                 {{--<div class="form-group">--}}
@@ -592,14 +622,14 @@
                     <label class="col-md-2 control-label">Multiple Purchase Discount </label>
                     <div class="col-md-1">
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="mul_pur_disc_set" name="mul_pur_disc_set" value="Y"> Set
+                            <input type="checkbox" id="mul_pur_disc_set" name="mul_pur_disc_set" value="Y" @if(isset($promo) && $promo!="") @if($promo->mul_pur_disc_set=="Y") checked="checked" @endif @endif> Set
                         </label>
                     </div>
                     <div class="col-md-2">
                         <p class="form-control-static">For purchases of</p>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="mul_pur_disc_item" id="mul_pur_disc_item">
+                        <input type="text" class="form-control" name="mul_pur_disc_item" id="mul_pur_disc_item" @if(isset($promo) && $promo!="") value="{{ $promo->mul_pur_disc_item }}" @endif>
                     </div>
                     <div class="col-md-2">
                         <p class="form-control-static">or more</p>
@@ -608,12 +638,12 @@
                 <div class="form-group">
                     <div class="col-md-2 col-md-offset-3">
                         <select class="form-control" id="mul_pur_disc_sel" name="mul_pur_disc_sel">
-                            <option value="RM">RM</option>
-                            <option value="%">%</option>
+                            <option value="RM" @if(isset($promo) && $promo!="") @if($promo->mul_pur_disc_sel=="RM") selected @endif @endif>RM</option>
+                            <option value="%" @if(isset($promo) && $promo!="") @if($promo->mul_pur_disc_sel=="%") selected @endif @endif>%</option>
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="mul_pur_disc" name="mul_pur_disc">
+                        <input type="text" class="form-control" id="mul_pur_disc" name="mul_pur_disc" @if(isset($promo) && $promo!="") value="{{ $promo->mul_pur_disc }}" @endif>
                     </div>
                     <div class="col-md-2">
                         <p class="form-control-static">Discount (for per item)</p>
@@ -622,18 +652,18 @@
                 <div class="form-group">
                     <div class="col-md-2 col-md-offset-3">
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="mul_pur_disc_period_set" name="mul_pur_disc_period_set" value="Y"> Set Period
+                            <input type="checkbox" id="mul_pur_disc_period_set" name="mul_pur_disc_period_set" value="Y" @if(isset($promo) && $promo!="") @if($promo->mul_pur_disc_period_set=="Y") checked="checked" @endif @endif> Set Period
                         </label>
                     </div>
                     <div id="disc_set_period_cont">
                         <div class="col-md-4">
                             <div class="input-group">
                                 <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                    <input type="text" class="form-control" id="mul_pur_period_start" name="mul_pur_period_start">
+                                    <input type="text" class="form-control" id="mul_pur_period_start" name="mul_pur_period_start" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->mul_pur_period_start)) }}" @endif>
                                 </div>
                                 <div class="input-group-addon">to</div>
                                 <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                    <input type="text" class="form-control" id="mul_pur_period_end" name="mul_pur_period_end">
+                                    <input type="text" class="form-control" id="mul_pur_period_end" name="mul_pur_period_end" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->mul_pur_period_end)) }}" @endif>
                                 </div>
                             </div>
                         </div>
@@ -643,16 +673,16 @@
                     <label class="col-md-2 control-label">Minimum Purchase Qty</label>
                     <div class="col-md-2">
                         <label class="radio-inline">
-                            <input type="radio" name="min_pur" id="min_pur1" value="no_limit" checked="checked"> No Limit
+                            <input type="radio" name="min_pur" id="min_pur1" value="no_limit" @if(isset($promo) && $promo!="") @if($promo->min_pur=="no_limit") checked="checked" @endif @endif> No Limit
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="radio-inline">
-                            <input type="radio" name="min_pur" id="min_pur2" value="minimum"> Minimum
+                            <input type="radio" name="min_pur" id="min_pur2" value="minimum" @if(isset($promo) && $promo!="") @if($promo->min_pur=="minimum") checked="checked" @endif @endif> Minimum
                         </label>
                     </div>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" id="min_pur_val" name="min_pur_val">
+                        <input type="text" class="form-control" id="min_pur_val" name="min_pur_val" @if(isset($promo) && $promo!="") value="{{ $promo->min_pur_val }}" @endif>
                     </div>
                     <div class="col-md-4">
                         <p class="form-control-static">Set minimum quantity for one time purchase</p>
@@ -663,16 +693,16 @@
                     <label class="col-md-2 control-label">Maximum Purchase Qty</label>
                     <div class="col-md-2">
                         <label class="radio-inline">
-                            <input type="radio" name="max_pur" id="max_pur1" value="no_limit" checked="checked"> No Limit
+                            <input type="radio" name="max_pur" id="max_pur1" value="no_limit" @if(isset($promo) && $promo!="") @if($promo->max_pur=="no_limit") checked="checked" @endif @endif> No Limit
                         </label>
                     </div>
                     <div class="col-md-2">
                         <label class="radio-inline">
-                            <input type="radio" name="max_pur" id="max_pur2" value="per_ord"> Per Order
+                            <input type="radio" name="max_pur" id="max_pur2" value="per_ord" @if(isset($promo) && $promo!="") @if($promo->max_pur=="per_ord") checked="checked" @endif @endif> Per Order
                         </label>
                     </div>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" id="max_per_ord" name="max_per_ord">
+                        <input type="text" class="form-control" id="max_per_ord" name="max_per_ord" @if(isset($promo) && $promo!="") value="{{ $promo->max_per_ord }}" @endif>
                     </div>
                     <div class="col-md-4">
                         <p class="form-control-static">Set maximum quantity for one time purchase</p>
@@ -681,11 +711,11 @@
                 <div class="form-group">
                     <div class="col-md-2 col-md-offset-4">
                         <label class="radio-inline">
-                            <input type="radio" name="max_pur" id="max_pur3" value="per_pers"> Per Person (ID)
+                            <input type="radio" name="max_pur" id="max_pur3" value="per_pers" @if(isset($promo) && $promo!="") @if($promo->max_pur=="per_pers") checked="checked" @endif @endif> Per Person (ID)
                         </label>
                     </div>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" id="max_per_pers" name="max_per_pers">
+                        <input type="text" class="form-control" id="max_per_pers" name="max_per_pers" @if(isset($promo) && $promo!="") value="{{ $promo->max_per_pers }}" @endif>
                     </div>
                     <div class="col-md-5">
                         <p class="form-control-static">Set maximum quantity for one time purchase. The setting is applied for 30 days upon purchase.</p>
@@ -695,18 +725,18 @@
                     <label class="col-md-2 control-label">Listing Ad Setting</label>
                     <div class="col-md-2">
                         <select class="form-control" id="ad_sel" name="ad_sel">
-                            <option value="">Ad Type</option>
-                            <option value="top">Top</option>
+                            <option value="" @if(isset($promo) && $promo!="") @if($promo->ad_sel=="") selected @endif @endif>Ad Type</option>
+                            <option value="top" @if(isset($promo) && $promo!="") @if($promo->ad_sel=="top") selected @endif @endif>Top</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="ad_start" name="ad_start">
+                                <input type="text" class="form-control" id="ad_start" name="ad_start" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->ad_start)) }}" @endif>
                             </div>
                             <div class="input-group-addon">to</div>
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="ad_end" name="ad_end">
+                                <input type="text" class="form-control" id="ad_end" name="ad_end" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->ad_end)) }}" @endif>
                             </div>
                         </div>
                     </div>
@@ -1443,10 +1473,34 @@
             });
         });
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function() {
+            if($('#ship_rate2').is(':checked')){
+                $('#shipping-method-cont').hide();
+                $('#bundle_btn').show();
+
+                var bundle_shipping = $('#bundle_shipping').val();
+
+                if(bundle_shipping=="Y") {
+                    var shipping_add_id = $('#shipping_add_id').val();
+                    if(shipping_add_id !="") {
+                        viewDetailsRateB(shipping_add_id);
+                    }
+                }
+            }
+
+            if($('#ship_rate3').is(':checked')){
+                $('#shipping-method-cont').show();
+//                setRateField("", "", "", "", "", "", "", "", "", "", "", "", "", "X", "", "", "");
+                $('#bundle_btn').hide();
+            }
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
         function viewDetailsRateB(shipping_add_id){
 
             if(shipping_add_id!=""){
-                $.get('../api/shipping_details/' + shipping_add_id, function(data){
+                $.get('/api/shipping_details/' + shipping_add_id, function(data){
                     //success data
                     var rate_id = data.rates.id;
                     var wm_kg = data.rates.wm_kg;
@@ -1568,12 +1622,92 @@
          * This is for sub cat dropdown
          * **/
 
+        var main_category =  $('#main_category').val();
+        var sub_category =  $('#sub_category').val();
+
+        $.ucfirst = function(str) {
+            var text = str;
+
+            var parts = text.split(' '),
+                    len = parts.length,
+                    i, words = [];
+            for (i = 0; i < len; i++) {
+                var part = parts[i];
+                var first = part[0].toUpperCase();
+                var rest = part.substring(1, part.length);
+                var word = first + rest;
+                words.push(word);
+
+            }
+            return words.join(' ');
+        };
+
+        //ajax
+        $.get('/api/category-dropdown/' + main_category, function(data){
+            //success data
+            $('#sub_category').empty();
+
+            $('#sub_category').append('<option value="">Select Sub Category</option>');
+
+            if(data==''){
+                $('#sub_category').hide();
+            }else{
+                $('#sub_category').show();
+            }
+
+            $.each(data, function(index, subcatObj){
+
+                var id = subcatObj.id;
+                var name = subcatObj.name;
+
+                var sel_id = $('#catid').val();
+
+                var selected = "";
+
+                if( sel_id== id){
+                    selected = 'selected="selected"';
+                }
+
+                $('#sub_category').append('<option value="'+ id +'" '+ selected +'>'
+                        + $.ucfirst(name) + '</option>');
+            });
+        });
+
+        var sel_id = $('#catid').val();
+
+        $.get('/api/brand-dropdown/' + sel_id, function(data){
+            //success data
+            $('#brand_sel').empty();
+
+            $('#brand_sel').append('<option value="">Select Brand</option>');
+
+            if(data==''){
+                $('#brand_box').hide();
+            }else{
+                $('#brand_box').show();
+            }
+
+            $.each(data, function(index, brandObj){
+                var id = brandObj.id;
+                var name = brandObj.name;
+
+                var sel_id = $('#bid').val();
+
+                var selected = "";
+
+                if( sel_id== id){
+                    selected = 'selected="selected"';
+                }
+
+                $('#brand_sel').append('<option value="'+ id +'" '+ selected +'>'
+                        + $.ucfirst(name) + '</option>');
+            });
+        });
+
         $('#main_category').on('change', function(e){
 
             $.ucfirst = function(str) {
-
                 var text = str;
-
 
                 var parts = text.split(' '),
                         len = parts.length,
@@ -1584,14 +1718,14 @@
                     var rest = part.substring(1, part.length);
                     var word = first + rest;
                     words.push(word);
-
                 }
                 return words.join(' ');
             };
 
             var main_category = e.target.value;
+
             //ajax
-            $.get('../api/category-dropdown/' + main_category, function(data){
+            $.get('/api/category-dropdown/' + main_category, function(data){
                 //success data
                 $('#sub_category').empty();
 
@@ -1613,7 +1747,7 @@
             });
 
 
-            $.get('../api/brand-dropdown/' + main_category, function(data){
+            $.get('/api/brand-dropdown/' + main_category, function(data){
                 //success data
                 $('#brand_sel').empty();
 
@@ -1662,7 +1796,7 @@
                 sub_category = $('#main_category').val();
             }
 
-            $.get('../api/brand-dropdown/' + sub_category, function(data){
+            $.get('/api/brand-dropdown/' + sub_category, function(data){
                 //success data
                 $('#brand_sel').empty();
 
@@ -1696,6 +1830,20 @@
             }
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function() {
+            var promo_set_val = $('#promo_set_val').val();
+            var div = document.getElementById('promo_box');
+
+            if(promo_set_val=="Y"){
+                div.style.display = 'block';
+            }else{
+                div.style.display = 'none';
+                $('#promo_set_val').val("N");
+            }
+        });
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
         /**-----------------------------Part for Product options-------------------------------**/
 
         function deleteUnwantedRow(){
@@ -1704,7 +1852,7 @@
             var curr_index = currentIndex-1;
 
             if(curr_index>2){
-                for(var j=(curr_index-1); j>=2; j--){
+                for(var j=(curr_index-3); j>=2; j--){
                     var currentRow = myTable.deleteRow(j-1);
                 }
             }
@@ -1720,6 +1868,8 @@
                 $('#grouplistid').show();
                 $('#actioncolid').show();
                 $('#manuallistid').hide();
+                $('#optionslistid').hide();
+                $('#addlistid').hide();
 
                 deleteUnwantedRow();
 
@@ -1733,6 +1883,8 @@
                 $('#grouplistid').hide();
                 $('#actioncolid').hide();
                 $('#manuallistid').show();
+                $('#optionslistid').hide();
+                $('#addlistid').hide();
 
                 deleteUnwantedRow();
             }
@@ -1743,6 +1895,8 @@
                 $('#grouplistid').hide();
                 $('#actioncolid').hide();
                 $('#manuallistid').hide();
+                $('#optionslistid').hide();
+                $('#addlistid').hide();
 
                 deleteUnwantedRow();
             }
@@ -1757,7 +1911,7 @@
                 $('#grouplistid').show();
                 $('#actioncolid').show();
 
-                $.get('../api/prod-opt-grp-table/' + opt_grp_val, function(data){
+                $.get('/api/prod-opt-grp-table/' + opt_grp_val, function(data){
                     //success data
                     var myTable = document.getElementById("prod_opt_table_id");
                     var currentIndex = myTable.rows.length;
@@ -1824,6 +1978,16 @@
         });
 
         $('#delete_field_btn').click(function(e) {
+            e.preventDefault();
+            //do other stuff when a click happens
+        });
+
+        $('#add_field_btn_1').click(function(e) {
+            e.preventDefault();
+            //do other stuff when a click happens
+        });
+
+        $('#delete_field_btn_1').click(function(e) {
             e.preventDefault();
             //do other stuff when a click happens
         });
@@ -1910,11 +2074,201 @@
                 if(curr_index==3){
                     $('#delete_field_btn').addClass(' disabled');
                 }
-
-
             }
 
             $('#add_field_btn').removeClass(' disabled');
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////
+        /**-----------------------------add into list button-------------------------------**/
+        function addField1(argument) {
+            var myTable = document.getElementById("prod_opt_table_id");
+            var currentIndex = myTable.rows.length;
+
+            var curr_index = currentIndex-3;
+
+            var chosen_item = false;
+
+            var nameBox = document.createElement("select");
+            nameBox.setAttribute("name", "opt[]" + (curr_index-1));
+            nameBox.setAttribute("id", "opt" + (curr_index-1));
+            nameBox.setAttribute("class", "form-control");
+
+            var idBox = document.createElement("input");
+            idBox.setAttribute("type", "hidden");
+            idBox.setAttribute("name", "opt_id_m[]" + (curr_index-1));
+            idBox.setAttribute("id", "opt_id_" + (curr_index-1));
+            idBox.setAttribute("class", "form-control");
+
+            var infoBox = document.createElement("input");
+            infoBox.setAttribute("name", "info[]" + (curr_index-1));
+            infoBox.setAttribute("id", "info" + (curr_index-1));
+            infoBox.setAttribute("class", "form-control");
+
+            var sel_val = document.getElementById("opt" + (currentIndex-2));
+            if(sel_val!=null){
+                //                alert(sel_val.value);
+            }
+
+            if(curr_index==2){
+                var currentRow = myTable.insertRow(1);
+            }else{
+                var currentRow = myTable.insertRow(curr_index-1);
+            }
+
+            var name = currentRow.insertCell(0);
+            name.appendChild(nameBox);
+            name.appendChild(idBox);
+
+            var info = currentRow.insertCell(1);
+            info.appendChild(infoBox);
+
+            var countfield = parseInt($('#countfield').val());
+            $('#countfield').val(countfield+1);
+
+            var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
+            var len = (arr.length)-1;
+
+            var arrj = [];
+
+            for(var i=0; i<=len; i++){
+                var option = document.createElement("option");
+
+                $.each(arr[i], function(key, value){
+                    option.value = key;
+                    option.text = value;
+                });
+
+                nameBox.add(option);
+            }
+
+            var sel_length = arr.length;
+
+            if((curr_index-1) >= (sel_length)){
+                $('#add_field_btn_1').addClass(' disabled');
+            }
+
+            $('#delete_field_btn_1').removeClass(' disabled');
+        }
+
+        /**-----------------------------delete from list button-------------------------------**/
+        function deleteField1() {
+            var myTable = document.getElementById("prod_opt_table_id");
+            var currentIndex = myTable.rows.length;
+            var curr_index = currentIndex-3;
+
+            var countfield = parseInt($('#countfield').val());
+            $('#countfield').val(countfield-1);
+
+            var countfieldupt = parseInt($('#countfield').val());
+
+            if(curr_index==2){
+                $('#delete_field_btn_1').addClass(' disabled');
+            }
+            else if(curr_index>=2){
+                var currentRow = myTable.deleteRow(curr_index-2);
+                if(curr_index==3){
+                    $('#delete_field_btn_1').addClass(' disabled');
+                }
+
+                if(countfieldupt==0){
+                    $('#delete_field_btn_1').addClass(' disabled');
+                }
+            }
+
+            $('#add_field_btn_1').removeClass(' disabled');
+        }
+
+        function deleteField1Row(row) {
+            var idx = row.parentNode.parentNode.rowIndex;
+
+            var myTable = document.getElementById("prod_opt_table_id");
+            var currentIndex = myTable.rows.length;
+            var curr_index = currentIndex-3;
+
+            var currentRow = myTable.deleteRow(idx);
+        }
+
+        function revertProdOpt(){
+            var optval = $('#option_id_val').val();
+
+            if(optval != ""){
+                $('#prod_opt_table_id').show();
+                $('#prod_opt_sel').val("");
+                $('#prod_opt_grp_sel').val("");
+                $('#prod_opt_grp_sel').hide();
+                $('#grouplistid').hide();
+                $('#manuallistid').hide();
+
+                $('#optionslistid').show();
+                $('#addlistid').show();
+
+                prodOptLoad(optval);
+            }
+        }
+
+        function prodOptLoad(optvalue){
+            var parse = JSON.parse(optvalue);
+
+            var myTable = document.getElementById("prod_opt_table_id");
+            var currentIndex = myTable.rows.length;
+
+            $.each(parse, function(index, obj) {
+                var parseobj = JSON.parse(obj);
+
+                var typeid = parseobj.typeid;
+                var info = parseobj.info;
+
+                //insert into table
+                var currentRow = myTable.insertRow(1);
+
+                var prod_opt = currentRow.insertCell(0);
+
+                $.get('/api/prod_opt_type/' + typeid, function(data){
+                    //success data
+                    prod_opt.innerHTML = data.name;
+                });
+
+                var infoBox = document.createElement("input");
+                infoBox.setAttribute("name", "info_opt[]" + (index));
+                infoBox.setAttribute("id", "info_opt" + (index));
+                infoBox.setAttribute("class", "form-control");
+                infoBox.setAttribute("value", info);
+
+                var hiddenIdBox = document.createElement("input");
+                hiddenIdBox.setAttribute("name", "type_opt[]" + (index));
+                hiddenIdBox.setAttribute("id", "type_opt" + (index));
+                hiddenIdBox.setAttribute("class", "form-control");
+                hiddenIdBox.setAttribute("value", typeid);
+                hiddenIdBox.setAttribute("type", "hidden");
+
+                var info = currentRow.insertCell(1);
+                info.appendChild(infoBox);
+                info.appendChild(hiddenIdBox);
+
+                var delBtn = document.createElement("button");
+                delBtn.setAttribute("class", "btn btn-warning");
+                delBtn.setAttribute("type", "button");
+                delBtn.setAttribute("id", "/api/del_prod_opt/" + (index));
+                delBtn.setAttribute("onclick", "deleteField1Row(this)");
+                delBtn.innerHTML  = "Delete";
+
+                var act_btn = currentRow.insertCell(2);
+                act_btn.appendChild(delBtn);
+            });
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////
+
+        var optval = $('#option_id_val').val();
+
+        if(optval != ""){
+            $('#prod_opt_table_id').show();
+            $('#optionslistid').show();
+            $('#actioncolid').show();
+            $('#manuallistid').hide();
+            $('#addlistid').show();
+
+            prodOptLoad(optval);
         }
 
         /**-----------------------------Edit Shipping Start-------------------------------**/
@@ -2242,7 +2596,7 @@
                 url_ship = "return_details";
             }
 
-            $.get('../api/'+ url_ship +'/' + id, function(data){
+            $.get('/api/'+ url_ship +'/' + id, function(data){
                 //success data
                 var title_in = data.details.title;
                 var name = data.details.name;
@@ -2404,7 +2758,7 @@
                 url_ship = "return_details";
             }
 
-            $.get('../api/'+ url_ship +'/' + id, function(data){
+            $.get('/api/'+ url_ship +'/' + id, function(data){
                 //success data
                 var title_in = data.title;
                 var name = data.name;
@@ -2534,6 +2888,84 @@
     <!-- bootstrap.js below is needed if you wish to zoom and view file content
          in a larger detailed modal dialog -->
     {{--file upload end--}}
+
+    <script>
+        @if(isset($images[0]))
+            $("#input-1").fileinput({
+                uploadUrl: "/uploads/" + <?php echo $product_by_id->pid ?>,
+                uploadAsync: false,
+                overwriteInitial: true,
+                showUpload: false,
+                showRemove: false,
+                initialPreview: [
+                    // IMAGE DATA
+                    <?php echo "'/uploads/".$product_by_id->pid."/".$images[0]->name."'" ?>,
+                ],
+                initialPreviewConfig: [
+                    {showDelete: false, showDrag: false}
+                ],
+                initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+                initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+            });
+        @endif
+
+        @if(isset($images[1]))
+            $("#input-2").fileinput({
+                uploadUrl: "/uploads/" + <?php echo $product_by_id->pid ?>,
+                uploadAsync: false,
+                overwriteInitial: true,
+                showUpload: false,
+                showRemove: false,
+                initialPreview: [
+                    // IMAGE DATA
+                    <?php echo "'/uploads/".$product_by_id->pid."/".$images[1]->name."'" ?>,
+                ],
+                initialPreviewConfig: [
+                    {showDelete: false, showDrag: false}
+                ],
+                initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+                initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+            });
+        @endif
+
+        @if(isset($images[2]))
+            $("#input-3").fileinput({
+                uploadUrl: "/uploads/" + <?php echo $product_by_id->pid ?>,
+                uploadAsync: false,
+                overwriteInitial: true,
+                showUpload: false,
+                showRemove: false,
+                initialPreview: [
+                    // IMAGE DATA
+                    <?php echo "'/uploads/".$product_by_id->pid."/".$images[2]->name."'" ?>,
+                ],
+                initialPreviewConfig: [
+                    {showDelete: false, showDrag: false}
+                ],
+                initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+                initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+            });
+        @endif
+
+        @if(isset($images[3]))
+            $("#input-4").fileinput({
+                uploadUrl: "/uploads/" + <?php echo $product_by_id->pid ?>,
+                uploadAsync: false,
+                overwriteInitial: true,
+                showUpload: false,
+                showRemove: false,
+                initialPreview: [
+                    // IMAGE DATA
+                    <?php echo "'/uploads/".$product_by_id->pid."/".$images[3]->name."'" ?>,
+                ],
+                initialPreviewConfig: [
+                    {showDelete: false, showDrag: false}
+                ],
+                initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+                initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+            });
+        @endif
+    </script>
 
     <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
     <!--[if (gte IE 8)&(lt IE 10)]>

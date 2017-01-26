@@ -851,8 +851,8 @@ class Back extends Controller
 
             return view('back.new_product',
                 array(
-                    'title' => 'Product Listing',
-                    'page' => 'product_listing',
+                    'title' => 'Add New Product',
+                    'page' => 'add_new_product',
                     'basecat_url' => '/backend/product_listing/',
                     'currmenu' => '',
                     'mainmenu' => 'product',
@@ -881,9 +881,9 @@ class Back extends Controller
 
         $products = new Product();
         $product_info = new ProductInfo();
-        $promotions = new Promotion();
-        $shipping_rate = new ShippingRate();
-        $merchant_shipping = new MerchantShipping();
+//        $promotions = new Promotion();
+//        $shipping_rate = new ShippingRate();
+//        $merchant_shipping = new MerchantShipping();
 
         if($request->sub_category!=""){
             $cat_id = $request->sub_category;
@@ -1208,4 +1208,139 @@ class Back extends Controller
         return redirect('/backend/product_listing/');
     }
     /*******************************Product Listing ends*********************************/
+
+    /*******************************Edit Product start*********************************/
+    public function edit_product($product){
+        if(Auth::check()){
+
+            $maincat = Category::where('main_category_id', 0)->where('status', 'A')->where('menu_type', 'main')->get();
+
+            $states = State::get();
+
+            $merchant_shipping = DB::table('merchant_shipping')
+                ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
+                ->select('merchant_shipping.*', 'state.name as state_name')
+                ->get();
+
+            $merchant_return = DB::table('merchant_return')
+                ->leftjoin('state', 'state.id', '=', 'merchant_return.state')
+                ->select('merchant_return.*', 'state.name as state_name')
+                ->get();
+
+            $prod_opt_actv = ProductOption::where('status', '=', 'A')->get();
+
+            foreach($prod_opt_actv as $poa){
+                $arr[] = array($poa->id => $poa->name);
+            }
+
+            $prod_opt_group = ProductOptionGroup::where('status', '=', 'A')->get();
+
+            /*******************************Get all product info start*********************************/
+            $product_by_id = DB::table('products')
+                ->leftjoin('products_info', 'products.id', '=', 'products_info.products_id')
+                ->where('products.id', '=', $product)
+                ->select('products.*', 'products_info.*', 'products.id as pid')
+                ->first();
+
+            if($product_by_id->brand_id!=="" || $product_by_id->brand_id!=0){
+                $bdetails = DB::table('brands')
+                    ->leftjoin('categories', 'brands.category_id', '=', 'categories.id')
+                    ->select('brands.id as brand_id', 'categories.name as catname','categories.id as catid',
+                        'categories.main_category_id as cat_maincatid', 'categories.menu_type as cat_menutype')
+                    ->where('brands.id', $product_by_id->brand_id)
+                    ->first();
+            }else{
+                $bdetails = DB::table('categories')
+                    ->select('name as catname','id as catid',
+                        'main_category_id as cat_maincatid', 'menu_type as cat_menutype')
+                    ->where('id', $product_by_id->category_id)
+                    ->first();
+            }
+
+            $images = ProductImage::where("products_id", "=", $product)->get();
+
+            $def_ship_add = DB::table('merchant_shipping')
+                ->leftjoin('state', 'state.id', '=', 'merchant_shipping.state')
+                ->where('merchant_shipping.id', '=', $product_by_id->merchant_shipping_id)
+                ->select('merchant_shipping.*', 'state.name as state_name')
+                ->first();
+
+            $def_rtn_add = DB::table('merchant_return')
+                ->leftjoin('state', 'state.id', '=', 'merchant_return.state')
+                ->where('merchant_return.id', '=', $product_by_id->merchant_return_id)
+                ->select('merchant_return.*', 'state.name as state_name')
+                ->first();
+
+            $ship_rate_byprod = "";
+
+            if($product_by_id->ship_rate=="ByProd"){
+                $ship_rate_byprod = ShippingRate::where("id", "=", $product_by_id->ship_rate_id)->first();
+            }
+
+            $promo = "";
+
+            if($product_by_id->promo_set=="Y"){
+                $promo = Promotion::where("id", "=", $product_by_id->promo_id)->first();
+            }
+
+
+            /*******************************Get all product info end*********************************/
+
+            return view('back.edit_product',
+                array(
+                    'title' => 'Edit Product',
+                    'page' => 'edit_product',
+                    'basecat_url' => '/backend/product_listing/',
+                    'currmenu' => '',
+                    'mainmenu' => 'product',
+                    'maincat' => $maincat,
+                    'dropdown' => $arr,
+                    'prod_opt_group' => $prod_opt_group,
+                    'ship_states' => $states,
+                    'merch_ship' => $merchant_shipping,
+                    'merch_rtn' => $merchant_return,
+                    'def_ship_add' => $def_ship_add,
+                    'def_rtn_add' => $def_rtn_add,
+
+                    'product_by_id' => $product_by_id,
+                    'bdetails' => $bdetails,
+                    'images' => $images,
+                    'ship_rate_byprod' => $ship_rate_byprod,
+                    'promo' => $promo
+                ));
+        }else{
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+    }
+    /*******************************Edit Product end*********************************/
+
+    public function delete_product($pid){
+        $prod = new Product();
+        $prod->destroy($pid);
+
+        $prod_info = ProductInfo::where("products_id", "=", $pid)->first();
+        if(isset($prod_info)){
+            $prod_info->delete();
+        }
+
+        $prod_image = ProductImage::where("products_id", "=", $pid)->first();
+        if(isset($prod_image)){
+            $prod_image->delete();
+        }
+
+        $promo = Promotion::where("products_id", "=", $pid)->first();
+        if(isset($promo)){
+            $promo->delete();
+        }
+
+        $ship_rate_by_prod = ShippingRate::where("products_id", "=", $pid)->first();
+        if(isset($ship_rate_by_prod)){
+            $ship_rate_by_prod->delete();
+        }
+
+        Session::flash('warning', 'Product had been successfully deleted!');
+        return redirect('/backend/product_listing/');
+    }
 }

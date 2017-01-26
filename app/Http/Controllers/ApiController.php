@@ -375,4 +375,14 @@ class ApiController extends Controller
         return Response::json($details);
     }
     /*******************************Merchant Return Details Ajax End*********************************/
+
+    /*******************************Merchant Return Details Ajax Start*********************************/
+    public function prod_opt_type($id){
+        $prod_id = $id;
+
+        $details = ProductOption::where('id', '=', $prod_id)->first();
+
+        return Response::json($details);
+    }
+    /*******************************Merchant Return Details Ajax End*********************************/
 }

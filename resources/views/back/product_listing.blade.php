@@ -87,8 +87,8 @@
                         <td>{{ $pl->quantity }}</td>
                         <td>{{ $pl->prod_status }}</td>
                         <td>
-                            <a href="#" class="btn-sm btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a href="#" class="btn-sm btn-danger" title="delete" onclick="return confirm('Are you sure to delete this Product?')"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <a href="{{ url("/backend/edit_product/".$pl->p_id) }}" class="btn-sm btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="{{ url("/backend/delete_product/".$pl->p_id) }}" class="btn-sm btn-danger" title="delete" onclick="return confirm('Are you sure to delete this Product?')"><i class="fa fa-times" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                     @endforeach
