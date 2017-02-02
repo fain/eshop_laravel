@@ -83,7 +83,7 @@
 
 <!--Featured product-->
 <div class="row">
-	<h2 class="title text-center">Features Items</h2>
+	<h2 class="title text-center">Featured Items</h2>
 
 	<div class="col-sm-10">
 	
@@ -303,8 +303,361 @@
 </div>
 <!--Newest->
 
+<!--Star Brands-->
+<h2 class="title text-center">Star Brands</h2>
+	
+<section id="labels">
+  <div class="row">
+	<div class="col-sm-12">
+
+        <div class="col-sm-6 col-md-3">
+          <div class="dl">
+            <div class="brand">
+                <h3>
+					<img src="images/home/brands/apple.png" class="brands_circle" alt="" />
+                    <br>
+				   {{$twentypercent_off->name}}
+                </h3>
+            </div>
+            <div class="discount alizarin">
+                20%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+                    Shop 20% off and snag hot styles for less!*. 
+                </strong> 
+				Shop the latest HANDBAGS at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                    * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-1" class="open-code">Get a code</a>
+                <div id="code-1" class="collapse code">
+                    LV5MAY14
+                </div>
+            </div>
+          </div>
+        </div>
 
 
+        <div class="col-sm-6 col-md-3">
+          <div  class="dl">
+            <div class="brand">
+                <h3>
+        			<img src="images/home/brands/xiaomi.png" class="brands_square" alt="" />
+                                        <br>
+					{{$thirtypercent_off->name}}
+                </h3>
+            </div>
+            <div class="discount emerald">
+                30%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+				Shop 30% off and snag hot styles for less!*.
+                </strong> 
+				Shop the latest SNEAKERS at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                   * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-2" class="open-code">Get a code</a>
+                <div id="code-2" class="collapse code">
+                    MNO123ST
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div  class="dl">
+            <div class="brand">
+                <h3>
+        	        <img src="images/home/brands/oppo.png" class="brands_bar" alt="" />
+                    <br>
+                    {{$fiftypercent_off->name}}
+                </h3>
+            </div>
+            <div class="discount peter-river">
+            50%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+				Shop 50% off and snag hot styles for less!*.
+                </strong> 
+				Shop the latest DRESSES at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                   * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-3" class="open-code">Get a code</a>
+                <div id="code-3" class="collapse code">
+                    OLV4SY3R
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div  class="dl">
+            <div class="brand">
+                <h3>
+       	        	<img src="images/home/brands/samsung.png" class="brands_oval" alt="" />
+                    <br>
+                    {{$seventypercent_off->name}}
+                </h3>
+            </div>
+            <div class="discount amethyst">
+                70%
+                <div class="type">
+                    off
+                </div>
+            </div>
+            <div class="descr">
+                <strong>
+				Shop 70% off and snag hot styles for less!*.
+                </strong> 
+				Shop the latest ELECTRONICS EQUIPMENTS at LOW PRICES! 
+            </div>
+            <div class="ends">
+                <small>
+                   * Conditions and restrictions apply.
+                </small>
+            </div>
+            <div class="coupon midnight-blue">
+                <a data-toggle="collapse" href="#code-4" class="open-code">Get a code</a>
+                <div id="code-4" class="collapse code">
+                    ZUY4OPLQ
+                </div>
+            </div>
+          </div>
+        </div>
+	</div>
+  </div>
+</section>  
+<!--Star Brands-->
+
+<!-- Preloved Items -->
+ 	<style>
+	.jssora08l, .jssora08r {
+	    display: block;
+	    position: absolute;
+	    /* size of arrow element */
+	    width: 10px;
+	    height: 10px;
+	    cursor: pointer;
+	    background: url('../images/home/slides_preloved/prev_next.png') no-repeat;
+	    overflow: hidden;
+	    opacity: .4;
+	    margin: 10px 10px 20px 20px;
+	    filter: alpha(opacity=40);
+	}
+	.jssora08l { background-position: -5px -35px; }
+	.jssora08r { background-position: -65px -35px; }
+	.jssora08l:hover { background-position: -5px -35px; opacity: .8; filter:alpha(opacity=80); }
+	.jssora08r:hover { background-position: -65px -35px; opacity: .8; filter:alpha(opacity=80); }
+	.jssora08l.jssora08ldn { background-position: -5px -35px; opacity: .3; filter:alpha(opacity=30); }
+	.jssora08r.jssora08rdn { background-position: -65px -35px; opacity: .3; filter:alpha(opacity=30); }
+	.jssora08l.jssora08lds { background-position: -5px -35px; opacity: .3; pointer-events: none; }
+	.jssora08r.jssora08rds { background-position: -65px -35px; opacity: .3; pointer-events: none; }
+	</style>
+
+<div class="row">
+	<div class="col-sm-12">
+		<br>
+	<h2 class="title text-center">Pre-Loved Items</h2>
+	<br>
+
+		<div id="jssor_1" style="pull-right;margin:0 auto;top:0px;left:0px;width:600px;height:265px;overflow:hidden;visibility:hidden;">
+	    
+		    <!-- Loading Screen -->
+		    <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+		        <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+		        <div style="position:absolute;display:block;background:url('images/home/slides_preloved/loading_prev_next.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+		    </div>
+
+	    	<div data-u="slides" style="cursor:default;position:relative;top:40px;left:19px;width:250px;height:330px;overflow:hidden;">
+        		<!-- used_items -->
+        		@foreach ($products as $product)
+				<div class="col-sm-2">
+					<div class="product-image-wrapper">
+						<div class="single-products" id="products_container">
+
+							<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
+							
+								<button>
+									<div>+<div>
+								</button>
+
+								<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
+								<h2>RM{{$product->price}}</h2>
+				                <p>{{$product->prod_name}}</p>
+							
+
+				                <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
+				                <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+
+							</div>
+							<img src="images/home/pre-loved.png" class="new" alt="" />
+
+							<div class="clearfix"></div>
+						</div>
+
+						<div class="choose">
+				            <ul class="nav nav-pills nav-justified">
+				                <li>
+				                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+									</a> 
+								</li>
+				            </ul>
+				    	</div>
+					</div>
+				</div>
+				@endforeach
+			</div>
+
+		    <!-- Arrow Navigator -->
+		    <span data-u="arrowleft" class="jssora08l" style="top:30px; left:100px; width:45px; height:45px;"></span>
+		    <span data-u="arrowright" class="jssora08r" style="top: 260px; bottom:0px; right:420px; width:45px; left; 85px; height:45px;"></span>
+			
+		
+			<div>
+		     <img src="images/home/slides_preloved/1.jpg" class="discount_preloved" alt="" />
+		   </div><br>
+		</div>
+	</div>
+</div>
+<!-- Preloved Items -->
+ 
+<!-- Preorder Items -->
+<div class="row">
+<br><!-- <h2 class="title text-center">Pre-Order Items</h2> -->
+<div class="col-sm-12" style="border: 2px solid #F7F7F5; width: 1290px; height:380px; right: 0px; left:15px;">
+	
+<div id="wrapper">
+<header>
+	<h2 class="title text-center">PRE-ORDER ITEMS</h2>
+</header>
+<figure>
+    <div class="mis-stage">
+        <!-- The element to select and apply miSlider to - the class is optional -->
+        <ol class="mis-slider">
+            <!-- The slider element - the class is optional - Set width of slide using CSS on this element -->
+  
+            @foreach ($products as $product)
+            <li class="mis-slide">
+             <a class="mis-container">
+
+             	<figure>
+					<div class="product-image-wrapper">
+						<div class="single-products" id="products_container">
+
+							<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
+							
+								<button>
+									<a>+</a>
+								</button>
+
+                    		<!-- Slide content - whatever you want -->
+							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
+							<h2>RM{{$product->price}}</h2>
+				       		 <br>
+				       		 <br><figcaption>{{$product->prod_name}}</figcaption>
+
+				       		 	<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
+				                <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+
+							</div>
+							<img src="images/home/pre-order.png" class="pre-order" alt="" />
+
+							<div class="clearfix"></div>
+						</div>
+
+						<div class="choose">
+				            <ul class="nav nav-pills nav-justified">
+				                <li>
+				                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+									</a> 
+								</li>
+				            </ul>
+				    	</div>
+					</div>
+
+                    </figure>
+                </a>
+            </li>
+            @endforeach
+
+        </ol>
+    </div>
+</figure>
+</div>
+
+	</div>
+</div> 
+<!-- Preorder Items -->
+
+<!-- Bank Partner -->
+<!-- <div class="row">
+<br><h2 class="title text-center">Bank Partner</h2>
+<div class="col-sm-12" style="border: 1px solid #F7F7F5; width: 530px; right: 0px; left:5px;">
+	
+				<div id="mi-slider" class="mi-slider">
+					<ul>
+						<li><a href="#"><img src="images/1.jpg" alt="img01"><h4>A</h4></a></li>
+						<li><a href="#"><img src="images/2.jpg" alt="img02"><h4>Oxfords</h4></a></li>
+						<li><a href="#"><img src="images/3.jpg" alt="img03"><h4>Loafers</h4></a></li>
+						<li><a href="#"><img src="images/4.jpg" alt="img04"><h4>Sneakers</h4></a></li>
+					</ul>
+					<ul>
+						<li><a href="#"><img src="images/1.jpg" alt="img01"><h4>B</h4></a></li>
+						<li><a href="#"><img src="images/2.jpg" alt="img02"><h4>Oxfords</h4></a></li>
+						<li><a href="#"><img src="images/3.jpg" alt="img03"><h4>Loafers</h4></a></li>
+						<li><a href="#"><img src="images/4.jpg" alt="img04"><h4>Sneakers</h4></a></li>
+					</ul>
+					<ul>
+						<li><a href="#"><img src="images/1.jpg" alt="img01"><h4>C</h4></a></li>
+						<li><a href="#"><img src="images/2.jpg" alt="img02"><h4>Oxfords</h4></a></li>
+						<li><a href="#"><img src="images/3.jpg" alt="img03"><h4>Loafers</h4></a></li>
+						<li><a href="#"><img src="images/4.jpg" alt="img04"><h4>Sneakers</h4></a></li>
+					</ul>
+
+					<nav style="border-top: 5px solid #333; width: 430px; right: 0px; left:5px;">        		
+						<a href="#">Credit/Debit Cards</a>
+						<a href="#">Bank Transfer</a>
+						<a href="#">Online Banking</a>
+					</nav>
+				</div>
+
+	</div>
+</div>  -->
+<!-- Bank Partner -->
+
+<h2 class="title text-center">Star Brands</h2>
+<div class="row">
+	            <div class="col-sm-12">
+	</div>
+</div>
 
 	<section>
 	    <div class="container">
@@ -312,9 +665,6 @@
 
 	        <div class="row">
 	            <div class="col-sm-12">
-
-	      
-
 
 
         <!-- left sidebar -->
@@ -327,216 +677,8 @@
 
 		
 	        <div class="col-sm-8 padding-right">
-
-            
-
-
-				
-		         
 			
-					<!-- Compare Features Items -->
-					<div id="animatedModal">
-					    <!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
-					    <div  id="btn-close-modal" class="close-animatedModal"> 
-					        CLOSE
-					    </div>
-					        
-					    <div class="modal-content-compare">
-					        <div class="modal-inner">
-					        	<div class="no-products">Select some products to compare first</div>  
-					        	<div class="modal-products"></div>     
-					        </div>
-					    </div>
-
-					</div> <!--modal-features-items-->
-
-
- 			
-
-			   
-
-					<div class="newest_items"><!-- newest_items -->
-						<h2 class="title text-center">Newest Items</h2>
-										
-						<div id="newest-item-carousel" class="carousel slide" data-ride="carousel">
-								
-							<!-- Wrapper for carousel items -->
-							<div class="carousel-inner">
-								<div class="item active">
-
-									@foreach ($products_new as $product)
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products" id="products_container">
-
-										<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-											
-												<button>
-													<div>+<div>
-												</button>
-
-											<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-											<h2>RM{{$product->price}}</h2>
-		                                    <p>{{$product->prod_name}}</p>
-
-		                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default add-to-cart"><i class="fa fa-info"></i>View Details</a>
-		                             
-										</div>
-										<img src="images/home/new.png" class="new" alt="" />
-
-											<div class="clearfix"></div>
-									</div>
-										<div class="choose">
-		                                <ul class="nav nav-pills nav-justified">
-		                                    <li>
-		                                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-													<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
-												</a>
-
-                          					</li>
-		                                </ul>
-	                            	</div>
-
-										</div>
-									</div>
-									@endforeach
-									</div>
-								</div>
-
-								<!-- Carousel Controls -->
-								<a class="left newest-item-control" href="#newest-item-carousel" data-slide="prev">
-									<i class="fa fa-angle-left"></i>
-								</a>
-								<a class="right newest-item-control" href="#newest-item-carousel" data-slide="next">
-									<i class="fa fa-angle-right"></i>
-								</a>
-						  </div>
-	                </div><!--newest_items-->
-
-					<div class="used_items"><!--used_items -->
-						<h2 class="title text-center">Used Items</h2>
-										
-						<div id="used-item-carousel" class="carousel slide" data-ride="carousel">
-								
-							<!-- Wrapper for carousel items -->
-							<div class="carousel-inner">
-								<div class="item active">
-
-									@foreach ($products_used as $product)
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products" id="products_container">
-
-										<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-											
-												<button>
-													<div>+<div>
-												</button>
-
-											<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-											<h2>RM{{$product->price}}</h2>
-		                                    
-		                                    <p>{{$product->prod_name}}</p>
-
-		                               
-		                             
-		                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
-		 
-										</div>
-										<img src="images/home/pre-loved.png" class="pre-loved" alt="" />
-
-											<div class="clearfix"></div>
-									</div>
-										<div class="choose">
-		                                <ul class="nav nav-pills nav-justified">
-		                                    <li>
-		                                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-													<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
-												</a>
-
-                          					</li>
-		                                </ul>
-	                            	</div>
-
-										</div>
-									</div>
-									@endforeach
-									</div>
-								</div>
-
-								<!-- Carousel Controls -->
-								<a class="left used-item-control" href="#used-item-carousel" data-slide="prev">
-									<i class="fa fa-angle-left"></i>
-								</a>
-								<a class="right used-item-control" href="#used-item-carousel" data-slide="next">
-									<i class="fa fa-angle-right"></i>
-								</a>
-						  </div>
-	                </div><!--used_items-->
-    		
-				<div class="pre-order_items"><!-- pre_order_items -->
-						<h2 class="title text-center">Pre-Order Items</h2>
-										
-						<div id="pre-order-item-carousel" class="carousel slide" data-ride="carousel">
-								
-							<!-- Wrapper for carousel items -->
-							<div class="carousel-inner">
-								<div class="item active">
-
-									@foreach ($products_pre_order as $product)
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products" id="products_container">
-
-										<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-											
-												<button>
-													<div>+<div>
-												</button>
-
-											<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-											<h2>RM{{$product->price}}</h2>
-		                                    <p>{{$product->prod_name}}</p>
-
-		                            
-		                                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-		                                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
-		     
-										</div>
-										<img src="images/home/pre-order.png" class="pre-order" alt="" />
-
-											<div class="clearfix"></div>
-									</div>
-										<div class="choose">
-		                                <ul class="nav nav-pills nav-justified">
-		                                    <li>
-		                                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-													<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
-												</a>
-
-                          					</li>
-		                                </ul>
-	                            	</div>
-
-										</div>
-									</div>
-									@endforeach
-									</div>
-								</div>
-
-								<!-- Carousel Controls -->
-								<a class="left pre-order-item-control" href="#pre_order-item-carousel" data-slide="prev">
-									<i class="fa fa-angle-left"></i>
-								</a>
-								<a class="right pre-order-item-control" href="#pre_order-item-carousel" data-slide="next">
-									<i class="fa fa-angle-right"></i>
-								</a>
-						  </div>
-	                </div><!--pre_order_items-->
-	            </div>
-	             
+					
 	             	
 	             <!-- right sidebar -->
 
@@ -544,7 +686,22 @@
 	        </div>
 
 	    </div>
-<!-- 	    </div>
- -->	    <!-- container -->
+
+
+		<!-- Compare Features Items -->
+		<div id="animatedModal">
+		<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+		<div  id="btn-close-modal" class="close-animatedModal"> 
+		    CLOSE
+		</div>
+		    
+		<div class="modal-content-compare">
+		    <div class="modal-inner">
+		    	<div class="no-products">Select some products to compare first</div>  
+		    	<div class="modal-products"></div>     
+		    </div>
+		</div>
+
+		</div> <!--modal-features-items-->
 	</section>
 @endsection

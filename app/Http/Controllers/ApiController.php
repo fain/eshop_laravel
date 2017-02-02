@@ -24,8 +24,7 @@ use Carbon\Carbon;
 
 
 class ApiController extends Controller
-{
-    //
+{   
     public function categoryDropDownData($id){
         $main_category = $id;
 

@@ -25,7 +25,7 @@ section {
 
 .dl {
     background: #f0f0f0;
-    padding: 30px 0;
+    padding: 5px 0px 0px 0px;
     border-radius: 20px;
     position: relative;
 }
@@ -45,21 +45,21 @@ section {
 .dl .brand {
     text-transform: uppercase;
     letter-spacing: 3px;
-    padding: 10px 15px;
+    padding: 15px 0px 0px 5px;
     margin-top: 10px;
     text-align: center;
     min-height: 100px; 
 }
 
 .dl .discount {
-    min-height: 50px;
+    min-height: 30px;
     position: relative;
-    font-size: 80px;
-    line-height: 80px;
+    font-size: 30px;
+    line-height: 50px;
     text-align: center;
     font-weight: bold;
 
-    padding: 20px 15px 0;
+    padding: 0px 15px 0px 10px;
     color: #f1c40f;
 }
 
@@ -93,13 +93,13 @@ section {
     font-size: 20px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-top: -30px;
+    margin-top: -25px;
 }
 
 .dl .descr {
     color: #999;
     margin-top: 10px;
-    padding: 20px 15px; 
+    padding: 7px 15px; 
 }
  
 .dl .ends {
@@ -115,11 +115,12 @@ section {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 18px;
-    padding: 20px 15px;
+    padding: 10px 15px;
 }
 
 .dl .coupon a.open-code {
     color: white;
+    font-size: 15px;
 }
 
 .dl .coupon .code {
@@ -129,5 +130,6 @@ section {
     padding: 10px 15px;
     color: #f1c40f;
     background: #f0f0f0;
+    font-size: 14px;
 }
     
