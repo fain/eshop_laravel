@@ -102,6 +102,7 @@ Route::get('/backend/new_product','Back@new_product');
 Route::post('/backend/product_listing_handler','Back@product_listing_handler');
 Route::get('/backend/edit_product/{product}','Back@edit_product');
 Route::get('/backend/delete_product/{id}', 'Back@delete_product');
+Route::post('/backend/product_listing_handler_update','Back@product_listing_handler_update');
 /*******************************prod listing end*********************************/
 
 /*******************************prod opt mgmt start*********************************/

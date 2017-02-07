@@ -52,6 +52,7 @@
         </div>
         <form class="form-horizontal" enctype="multipart/form-data" id="fileupload" method="post" action="/backend/product_listing_handler_update">
             {{ csrf_field() }}
+            <input type="hidden" name="product_id" id="product_id" value="{{ $product_by_id->pid }}">
             <div class="form-group">
                 <label class="col-md-2 control-label">Sales Type <span class="req">*</span> </label>
                 <div class="col-md-6">
@@ -113,6 +114,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Product Name <span class="req">*</span> </label>
                 <div class="col-md-8">
+                    <input type="hidden" name="product_info_id" id="product_info_id" value="{{ $product_by_id->pinfoid }}">
                     <input type="text" name="name" id="prod_name" placeholder="Product name to be displayed" class="form-control" value="{{ $product_by_id->prod_name }}">
                 </div>
                 <div class="col-md-1">
@@ -135,18 +137,22 @@
                     {{--<input id="input-id" type="file" class="file" data-preview-file-type="text" name="images[]" multiple data-show-upload="false">--}}
                 {{--</div>--}}
                 <div class="col-md-4">
-                    <input id="input-1" type="file" class="file" name="images[]" @if(isset($images[0])) value="{{ $images[0]->name }}" @endif>
+                    <input id="input-1" type="file" class="file" name="images[]">
+                    <input type="hidden" name="image_1" id="image_1" @if(isset($images[0])) value="{{ $images[0]->id }}" @endif>
                 </div>
                 <div class="col-md-4">
-                    <input id="input-2" type="file" class="file" name="images[]" @if(isset($images[1])) value="{{ $images[1]->name }}" @endif>
+                    <input id="input-2" type="file" class="file" name="images[]">
+                    <input type="hidden" name="image_2" id="image_2" @if(isset($images[1])) value="{{ $images[1]->id }}" @endif>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-4">
-                    <input id="input-3" type="file" class="file" name="images[]" @if(isset($images[2])) value="{{ $images[2]->name }}" @endif>
+                    <input id="input-3" type="file" class="file" name="images[]">
+                    <input type="hidden" name="image_3" id="image_3" @if(isset($images[2])) value="{{ $images[2]->id }}" @endif>
                 </div>
                 <div class="col-md-4">
-                    <input id="input-4" type="file" class="file" name="images[]" @if(isset($images[3])) value="{{ $images[3]->name }}" @endif>
+                    <input id="input-4" type="file" class="file" name="images[]">
+                    <input type="hidden" name="image_4" id="image_4" @if(isset($images[3])) value="{{ $images[3]->id }}" @endif>
                 </div>
             </div>
 
@@ -205,11 +211,11 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-append date" id="" data-date="{{ date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="selling_period_start" name="selling_period_start" value="{{ date('d-m-Y', strtotime($product_by_id->selling_period_start)) }}">
+                                <input type="text" class="form-control" id="selling_period_start" name="selling_period_start" @if(isset($product_by_id->selling_period_start) && $product_by_id->selling_period_start != "") value="{{ date('d-m-Y', strtotime($product_by_id->selling_period_start)) }}" @endif>
                             </div>
                             <div class="input-group-addon">to</div>
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="selling_period_end" name="selling_period_end" readonly disabled="disabled" value="{{ date('d-m-Y', strtotime($product_by_id->selling_period_end)) }}">
+                                <input type="text" class="form-control" id="selling_period_end" name="selling_period_end" readonly disabled="disabled" @if(isset($product_by_id->selling_period_end) && $product_by_id->selling_period_end != "") value="{{ date('d-m-Y', strtotime($product_by_id->selling_period_end)) }}" @endif>
                             </div>
                         </div>
                     </div>
@@ -269,11 +275,11 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="discount_period_start" name="discount_period_start" value="{{ date('d-m-Y', strtotime($product_by_id->discount_period_start)) }}">
+                                <input type="text" class="form-control" id="discount_period_start" name="discount_period_start" @if(isset($product_by_id->discount_period_start) && $product_by_id->discount_period_start != "") value="{{ date('d-m-Y', strtotime($product_by_id->discount_period_start)) }}" @endif>
                             </div>
                             <div class="input-group-addon">to</div>
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="discount_period_end" name="discount_period_end" value="{{ date('d-m-Y', strtotime($product_by_id->discount_period_end)) }}">
+                                <input type="text" class="form-control" id="discount_period_end" name="discount_period_end" @if(isset($product_by_id->discount_period_end) && $product_by_id->discount_period_end != "") value="{{ date('d-m-Y', strtotime($product_by_id->discount_period_end)) }}" @endif>
                             </div>
                         </div>
                     </div>
@@ -560,6 +566,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Promotional Text</label>
                     <div class="col-md-8">
+                        <input type="hidden" name="promo_id_val" id="promo_id_val" @if(isset($promo) && $promo!="") value="{{ $promo->id }}" @endif>
                         <input type="text" name="promo_text" id="promo_text"  class="form-control" @if(isset($promo) && $promo!="") value="{{ $promo->promo_text }}" @endif>
                     </div>
                     <div class="col-md-1">
@@ -659,11 +666,11 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                    <input type="text" class="form-control" id="mul_pur_period_start" name="mul_pur_period_start" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->mul_pur_period_start)) }}" @endif>
+                                    <input type="text" class="form-control" id="mul_pur_period_start" name="mul_pur_period_start" @if(isset($promo) && $promo!="") @if($promo->mul_pur_period_start!="") value="{{ date('d-m-Y', strtotime($promo->mul_pur_period_start)) }}" @endif @endif>
                                 </div>
                                 <div class="input-group-addon">to</div>
                                 <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                    <input type="text" class="form-control" id="mul_pur_period_end" name="mul_pur_period_end" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->mul_pur_period_end)) }}" @endif>
+                                    <input type="text" class="form-control" id="mul_pur_period_end" name="mul_pur_period_end" @if(isset($promo) && $promo!="") @if($promo->mul_pur_period_end!="") value="{{ date('d-m-Y', strtotime($promo->mul_pur_period_end)) }}" @endif @endif>
                                 </div>
                             </div>
                         </div>
@@ -732,11 +739,11 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="ad_start" name="ad_start" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->ad_start)) }}" @endif>
+                                <input type="text" class="form-control" id="ad_start" name="ad_start" @if(isset($promo) && $promo!="") @if($promo->ad_start!="") value="{{ date('d-m-Y', strtotime($promo->ad_start)) }}" @endif @endif>
                             </div>
                             <div class="input-group-addon">to</div>
                             <div class="input-append date" id="" data-date="" data-date-format="dd-mm-yyyy">
-                                <input type="text" class="form-control" id="ad_end" name="ad_end" @if(isset($promo) && $promo!="") value="{{ date('d-m-Y', strtotime($promo->ad_end)) }}" @endif>
+                                <input type="text" class="form-control" id="ad_end" name="ad_end" @if(isset($promo) && $promo!="") @if($promo->ad_end!="") value="{{ date('d-m-Y', strtotime($promo->ad_end)) }}" @endif @endif>
                             </div>
                         </div>
                     </div>
@@ -747,7 +754,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-12 text-center">
-                    <button class="btn btn-primary">Product Listing</button>
+                    <button class="btn btn-primary">Update Product Listing</button>
                 </div>
             </div>
         </form>
@@ -2035,6 +2042,8 @@
             var info = currentRow.insertCell(1);
             info.appendChild(infoBox);
 
+            <?php if(isset($dropdown)){ ?>
+
             var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
             var len = (arr.length)-1;
 
@@ -2058,6 +2067,8 @@
             }
 
             $('#delete_field_btn').removeClass(' disabled');
+
+            <?php } ?>
         }
 
         /**-----------------------------delete from list button-------------------------------**/
@@ -2126,6 +2137,8 @@
             var countfield = parseInt($('#countfield').val());
             $('#countfield').val(countfield+1);
 
+            <?php if(isset($dropdown)){ ?>
+
             var arr = <?php if(isset($dropdown)) echo json_encode($dropdown); ?>;
             var len = (arr.length)-1;
 
@@ -2149,6 +2162,8 @@
             }
 
             $('#delete_field_btn_1').removeClass(' disabled');
+
+            <?php } ?>
         }
 
         /**-----------------------------delete from list button-------------------------------**/
@@ -2258,18 +2273,19 @@
             });
         }
         /////////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function() {
+            var optval = $('#option_id_val').val();
 
-        var optval = $('#option_id_val').val();
+            if(optval != ""){
+                $('#prod_opt_table_id').show();
+                $('#optionslistid').show();
+                $('#actioncolid').show();
+                $('#manuallistid').hide();
+                $('#addlistid').show();
 
-        if(optval != ""){
-            $('#prod_opt_table_id').show();
-            $('#optionslistid').show();
-            $('#actioncolid').show();
-            $('#manuallistid').hide();
-            $('#addlistid').show();
-
-            prodOptLoad(optval);
-        }
+                prodOptLoad(optval);
+            }
+        });
 
         /**-----------------------------Edit Shipping Start-------------------------------**/
         $('#shippingModal').on('shown.bs.modal', function () {
