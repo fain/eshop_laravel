@@ -29,6 +29,7 @@ Route::post('auth/register_handler', 'Front@register_handler');
 Route::post('/register', 'Front@register');
 
 Route::get('/','Front@index');
+
 Route::get('/products','Front@products');
 Route::get('/products/details/{id}','Front@product_details');
 Route::get('/products/categories','Front@product_categories');
@@ -119,6 +120,8 @@ Route::get('/backend/delete_prod_grp/{id}', 'Back@delete_prod_grp');
 Route::post('/backend/prod_opt_handler','Back@prod_opt_handler');
 Route::get('/backend/delete_opt_from_grp/{g_id}/{id}', 'Back@delete_opt_from_grp');
 /*******************************prod opt mgmt end*********************************/
+
+
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index');

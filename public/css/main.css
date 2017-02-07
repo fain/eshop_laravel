@@ -901,10 +901,16 @@ h2.title {
 
 
 
-img.new, img.sale, img.top-seller, img.pre-order, img.features, img.pre-loved {
+img.new, img.sale, img.top-seller, img.features, img.pre-loved {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+img.pre-order {
+  position: absolute;
+  top: 0;
+  left: 0; 
 }
 
 .productinfo h2{

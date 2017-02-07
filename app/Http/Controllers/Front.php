@@ -61,6 +61,7 @@ class Front extends Controller {
 
     }
 
+
         public function index() {
         $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
@@ -100,12 +101,12 @@ class Front extends Controller {
        $product_pre_order = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
                                 ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
-                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                                ->select('products.*', 'brands.*', 'categories.*', 'products_info.*', 'product_image.*', 'categories.name as main_cat',  'brands.name as p_brand')
                                 ->where('product_image.primary_img', '=', 'Y')
                                 ->where('products_info.type', '=', 'Pre-Order')
                                 ->get();   
-
 
        $twenty_off = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
@@ -129,8 +130,25 @@ class Front extends Controller {
                                 ->first();  
 
         
-        
-      
+        $seventy_off = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->select('products.*', 'brands.*', 'products_info.*')
+                                ->where('products_info.discount_sel', '=', '70%')
+                                ->first();  
+
+        $treecats = Category::where('main_category_id', 0)
+                                ->where('menu_type', 'main')
+                                ->with('subcat')
+                                ->get();
+
+
+        // $product_subcategories = DB::table('products')
+        //                          ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+        //                          ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+        //                         ->select('products.*', 'categories.*', 'products_info.*', 
+        //                          DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+        //                         ->get(); 
 
 
 
@@ -144,7 +162,6 @@ class Front extends Controller {
                 'brands' => $this->brands, 
                 'merchantsinfo' => $this->merchantsinfo,
                 'categories' => $this->categories,
-                // 'shipping_rate' => $this->shipping_rate,
                 'products' => $product,
                 'products_top_sale' => $product_top_sale,
                 'products_new' => $product_new,
@@ -153,7 +170,11 @@ class Front extends Controller {
                 'products_image' => $this->products_image,
                 'twentypercent_off' => $twenty_off,
                 'thirtypercent_off' => $thirty_off,
-                'fiftypercent_off' => $fifty_off
+                'fiftypercent_off' => $fifty_off,
+                'seventypercent_off' => $seventy_off,
+                'treecat' => $treecats
+                // 'product_subcategory' => $product_subcategories
+
                 
 
 
@@ -321,9 +342,7 @@ class Front extends Controller {
             'page' => '',
             'brands' => $this->brands,
             'merchantsinfo' => $this->merchantsinfo,
-            'categories' => $this->categories,
-            // 'shipping_rate' => $this->shipping_rate,
-            // 'products' => $product,
+            'categories' => $this->categories
             
 
             )

@@ -448,34 +448,7 @@
 	
 	</script>
 
-<!-- Slide Top Selling -->
-<link href="{{asset('css/styles_top_selling.css')}}" rel="stylesheet">
-<link href="{{asset('css/slide_top_selling.css')}}" rel="stylesheet">
 
-<!-- FlexSlider -->
-<script type="text/javascript" src="{{asset('js/jquery.flexslider-min.js')}}"></script>
-
-<script type="text/javascript" >
-    var $ = jQuery.noConflict();
-    $(window).load(function() {
-    $('.flexslider').flexslider({
-          animation: "fade"
-    });
-	
-	$(function() {
-		$('.show_menu').click(function(){
-				$('.menu').fadeIn();
-				$('.show_menu').fadeOut();
-				$('.hide_menu').fadeIn();
-		});
-		$('.hide_menu').click(function(){
-				$('.menu').fadeOut();
-				$('.show_menu').fadeIn();
-				$('.hide_menu').fadeOut();
-		});
-	});
-  });
-</script>
 
 <!-- Featured Products -->
 <!-- bxSlider Javascript file -->
@@ -537,6 +510,99 @@ $(document).ready(function() {
 });
 </script>
 
+
+<!-- vertical preloved -->
+<script type="text/javascript" src="{{asset('js/jssor.slider-22.1.6.min.js')}}"></script>
+<script type="text/javascript">
+        jssor_1_slider_init = function() {
+
+            var jssor_1_options = {
+              $AutoPlay: true,
+              $DragOrientation: 2,
+              $PlayOrientation: 2,
+              $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+              }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+            /*responsive code begin*/
+            /*you can remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 600);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*responsive code end*/
+        };
+    </script>
+<script type="text/javascript">jssor_1_slider_init();</script>
+
+<!-- Bank Partner Slider -->
+<script type="text/javascript" src="{{asset('js/jquery.catslider.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/modernizr.custom.63321.js')}}"></script>
+
+<link href="{{asset('css/multi_item_style.css')}}" rel="stylesheet">
+
+<script>
+	$(function() {
+
+		$( '#mi-slider' ).catslider();
+
+	});
+</script>
+
+<!-- PreOrder Items-->
+ <!-- Load modernizr or html5shiv -->
+    <script type="text/javascript" src="{{asset('//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js')}}"></script>
+ 	<script>window.modernizr || document.write('<script src="../lib/modernizr/modernizr-custom.js"><\/script>')</script>
+
+    <script>window.jQuery || document.write('<script src="../lib/jquery/jquery.js"><\/script>')</script>
+
+    <!-- Load miSlider -->
+    <link href="{{asset('css/mislider.css')}}" rel="stylesheet">
+	<link href="{{asset('css/mislider-skin-cameo.css')}}" rel="stylesheet">
+    <script type="text/javascript" src="{{asset('js/mislider.js')}}"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var slider = $('.mis-stage').miSlider({
+                //  The height of the stage in px. Options: false or positive integer. false = height is calculated using maximum slide heights. Default: false
+                //stageHeight: 380,
+                //  Number of slides visible at one time. Options: false or positive integer. false = Fit as many as possible.  Default: 1
+                slidesOnStage: false,
+                //  The location of the current slide on the stage. Options: 'left', 'right', 'center'. Defualt: 'left'
+                slidePosition: 'center',
+                //  The slide to start on. Options: 'beg', 'mid', 'end' or slide number starting at 1 - '1','2','3', etc. Defualt: 'beg'
+                slideStart: 'mid',
+                //  The relative percentage scaling factor of the current slide - other slides are scaled down. Options: positive number 100 or higher. 100 = No scaling. Defualt: 100
+                slideScaling: 150,
+                //  The vertical offset of the slide center as a percentage of slide height. Options:  positive or negative number. Neg value = up. Pos value = down. 0 = No offset. Default: 0
+                offsetV: -5,
+                //  Center slide contents vertically - Boolean. Default: false
+                centerV: true,
+                //  Opacity of the prev and next button navigation when not transitioning. Options: Number between 0 and 1. 0 (transparent) - 1 (opaque). Default: .5
+                navButtonsOpacity: 1
+            });
+        });
+    </script>
+
+    <!-- Apply other styles -->
+    <link href="{{asset('css/styles_mislider.css')}}" rel="stylesheet">
+
+    <!-- google-code-prettify -->
+	<script type="text/javascript" src="{{asset('https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js')}}"></script>
+	<script type="text/javascript">$(function() { $('pre').addClass('prettyprint');})</script>
+<!-- PreOrder Items-->
 
    	@yield('js_content')
 
