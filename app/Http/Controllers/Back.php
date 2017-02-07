@@ -1542,8 +1542,12 @@ class Back extends Controller
         $arr_opt_id_m = $request->opt;
         $arr_opt_info_m = $request->info;
 
+        $arr_opt_id_o = $request->type_opt;
+        $arr_opt_id_info_o = $request->info_opt;
+
         $opt_g = count($arr_opt_id_g);
         $opt_m = count($arr_opt_id_m);
+        $opt_o = count($arr_opt_id_o);
 
         $opt_id = NULL;
 
@@ -1557,6 +1561,12 @@ class Back extends Controller
         elseif ($opt_m>0){
             for($i=0; $i<=$opt_m-1; $i++){
                 $newObj[] = '{"typeid": "'.$arr_opt_id_m[$i].'", "info": "'.$arr_opt_info_m[$i].'"}';
+            }
+
+            $opt_id = json_encode($newObj);
+        }elseif ($opt_o>0){
+            for($i=0; $i<=$opt_o-1; $i++){
+                $newObj[] = '{"typeid": "'.$arr_opt_id_o[$i].'", "info": "'.$arr_opt_id_info_o[$i].'"}';
             }
 
             $opt_id = json_encode($newObj);
