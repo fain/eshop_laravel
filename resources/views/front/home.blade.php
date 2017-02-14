@@ -620,8 +620,8 @@
 <br>
 <h2 class="title text-center">Brands by Category</h2>
 <div class="row">
-	<div class="col-sm-12" style="border: 2px solid #F7F7F5; width: 1290px; height:270px; right: 0px; left:15px; top:5px">
-		<div id="mi-slider" class="mi-slider">
+	<div class="col-sm-12" style="border: 2px solid #F7F7F5; width: 1290px; height:210px; right: 0px; left:15px; top:5px">
+			<div id="mi-slider" class="mi-slider">
 					<ul>
 						@foreach($brands_by_electronics as $brand_by_electronic)
 						<li>
@@ -651,49 +651,20 @@
 </div>
 <!-- Brands by Category -->
 
-	<section>
-	    <div class="container">
-
-
-	        <div class="row">
-	            <div class="col-sm-12">
-
-
-        <!-- left sidebar -->
-
-        	<br/>
-        	<br/>
-
-
-
-
-		
-	        <div class="col-sm-8 padding-right">
-			
-					
-	             	
-	             <!-- right sidebar -->
-
-		           </div>
-	        </div>
-
+	<!-- Compare Features Items -->
+	<div id="animatedModal">
+	<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+	<div  id="btn-close-modal" class="close-animatedModal"> 
+	    CLOSE
+	</div>
+    
+	<div class="modal-content-compare">
+	    <div class="modal-inner">
+	    	<div class="no-products">Select some products to compare first</div>  
+	    	<div class="modal-products"></div>     
 	    </div>
+	</div>
 
-
-		<!-- Compare Features Items -->
-		<div id="animatedModal">
-		<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
-		<div  id="btn-close-modal" class="close-animatedModal"> 
-		    CLOSE
-		</div>
-		    
-		<div class="modal-content-compare">
-		    <div class="modal-inner">
-		    	<div class="no-products">Select some products to compare first</div>  
-		    	<div class="modal-products"></div>     
-		    </div>
-		</div>
-
-		</div> <!--modal-features-items-->
-	</section>
+	</div> <!--modal-features-items-->
+</section>
 @endsection

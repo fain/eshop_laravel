@@ -2,8 +2,8 @@
 
 .mi-slider {
 	position: relative;
-	margin-top: 20px;
-	height: 260px;
+	margin-top: 25px;
+	height: 200px;
 }
 
 .mi-slider ul {
@@ -76,7 +76,7 @@
 
 .mi-slider nav {
 	position: relative;
-	top: 160px;
+	top: 90px;
 	text-align: center;
 	/*max-width: 800px;*/
 	width: 1250px;
