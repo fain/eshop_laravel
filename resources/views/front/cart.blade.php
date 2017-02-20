@@ -1,138 +1,134 @@
 @extends('layouts.layout')
 
-@section('content')       
-<section id="cart_items">
+@section('content')
+
     <div class="container">
-        <div class="breadcrumbs">
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li class="active">Shopping Cart</li>
-            </ol>
-        </div>
-        <div class="table-responsive cart_info">
-            @if(count($cart))
-            <table class="table table-condensed">
+        <p><a href="{{ url('') }}">Home</a> / Cart</p>
+        <h1>Your Cart</h1>
+
+        <hr>
+
+        @if (session()->has('success_message'))
+            <div class="alert alert-success">
+                {{ session()->get('success_message') }}
+            </div>
+        @endif
+
+        @if (session()->has('error_message'))
+            <div class="alert alert-danger">
+                {{ session()->get('error_message') }}
+            </div>
+        @endif
+
+        {{ $prod_name }}
+
+        @if (sizeof(Cart::content()) > 0)
+
+            <table class="table">
                 <thead>
-                    <tr class="cart_menu">
-                        <td class="image">Item</td>
-                        <td class="description"></td>
-                        <td class="price">Price</td>
-                        <td class="quantity">Quantity</td>
-                        <td class="total">Total</td>
-                        <td></td>
+                    <tr>
+                        <th class="table-image"></th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th class="column-spacer"></th>
+                        <th></th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    @foreach($cart as $item)
+                    
+                    @foreach (Cart::content() as $products)
                     <tr>
-                        <td class="cart_product">
-                            <a href=""><img src="images/cart/one.png" alt=""></a>
+                        <td class="table-image"><a href="{{ url('', [$products->product->prod_name]) }}"><img src="../{{$products->product->path}}{{$products->product->name}}" alt="product" class="img-responsive cart-image"></a></td>
+                        <td><a href="">{{$products->prod_name}}</a></td>
+                        <td>
+                            <select class="quantity" data-id="{{ $products->rowid }}">
+                                <option {{ $products->qty == 1 ? 'selected' : '' }}>1</option>
+                                <option {{ $products->qty == 2 ? 'selected' : '' }}>2</option>
+                                <option {{ $products->qty == 3 ? 'selected' : '' }}>3</option>
+                                <option {{ $products->qty == 4 ? 'selected' : '' }}>4</option>
+                                <option {{ $products->qty == 5 ? 'selected' : '' }}>5</option>
+                            </select>
                         </td>
-                        <td class="cart_description">
-                            <h4><a href="">{{$item->name}}</a></h4>
-                            <p>Web ID: {{$item->id}}</p>
-                        </td>
-                        <td class="cart_price">
-                            <p>${{$item->price}}</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href='{{url("cart?product_id=$item->id&increment=1")}}'> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="{{$item->qty}}" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href='{{url("cart?product_id=$item->id&decrease=1")}}'> - </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">${{$item->subtotal}}</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                        <td>RM{{$products->subtotal }}   </td>
+                        <td class=""></td>
+                        <td>
+                            <form action="" method="POST" class="side-by-side">
+                                {!! csrf_field() !!}
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="submit" class="btn btn-danger btn-sm" value="Remove">
+                            </form>
+
+                            <form action="" method="POST" class="side-by-side">
+                                {!! csrf_field() !!}
+                                <input type="submit" class="btn btn-success btn-sm" value="To Wishlist">
+                            </form>
                         </td>
                     </tr>
                     @endforeach
-                    @else
-                <p>You have no items in the shopping cart</p>
-                @endif
+
+                    <tr class="border-bottom">
+                        <td class="table-image"></td>
+                        <td style="padding: 40px;"></td>
+                        <td class="small-caps table-bg" style="text-align: right">Your Total</td>
+                        <td class="table-bg">RM{{ Cart::total() }}</td>
+                        <td class="column-spacer"></td>
+                        <td></td>
+                    </tr>
+
                 </tbody>
             </table>
-        </div>
-    </div>
-</section> <!--/#cart_items-->
 
-<section id="do_action">
-    <div class="container">
-        <div class="heading">
-            <h3>What would you like to do next?</h3>
-            <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="chose_area">
-                    <ul class="user_option">
-                        <li>
-                            <input type="checkbox">
-                            <label>Use Coupon Code</label>
-                        </li>
-                        <li>
-                            <input type="checkbox">
-                            <label>Use Gift Voucher</label>
-                        </li>
-                        <li>
-                            <input type="checkbox">
-                            <label>Estimate Shipping & Taxes</label>
-                        </li>
-                    </ul>
-                    <ul class="user_info">
-                        <li class="single_field">
-                            <label>Country:</label>
-                            <select>
-                                <option>United States</option>
-                                <option>Bangladesh</option>
-                                <option>UK</option>
-                                <option>India</option>
-                                <option>Pakistan</option>
-                                <option>Ucrane</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
+            <a href="{{ url('') }}" class="btn btn-primary btn-lg">Continue Shopping</a> &nbsp;
+            <a href="#" class="btn btn-success btn-lg">Proceed to Checkout</a>
 
-                        </li>
-                        <li class="single_field">
-                            <label>Region / State:</label>
-                            <select>
-                                <option>Select</option>
-                                <option>Dhaka</option>
-                                <option>London</option>
-                                <option>Dillih</option>
-                                <option>Lahore</option>
-                                <option>Alaska</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-
-                        </li>
-                        <li class="single_field zip-field">
-                            <label>Zip Code:</label>
-                            <input type="text">
-                        </li>
-                    </ul>
-                    <a class="btn btn-default update" href="">Get Quotes</a>
-                    <a class="btn btn-default check_out" href="">Continue</a>
-                </div>
+            <div style="float:right">
+                <form action="/emptyCart" method="POST">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" class="btn btn-danger btn-lg" value="Empty Cart">
+                </form>
             </div>
-            <div class="col-sm-6">
-                <div class="total_area">
-                    <ul>
-                        <li>Cart Sub Total <span>$59</span></li>
-                        <li>Eco Tax <span>$2</span></li>
-                        <li>Shipping Cost <span>Free</span></li>
-                        <li>Total <span>${{Cart::total()}}</span></li>
-                    </ul>
-                    <a class="btn btn-default update" href="{{url('clear-cart')}}">Clear Cart</a>
-                    <a class="btn btn-default check_out" href="{{url('checkout')}}">Check Out</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--/#do_action-->
+
+        @else
+
+            <h3>You have no items in your shopping cart</h3>
+            <a href="{{ url('') }}" class="btn btn-primary btn-lg">Continue Shopping</a>
+
+        @endif
+        <div class="spacer"></div>
+
+    </div> 
+
+@endsection
+
+@section('extra-js')
+    <script>
+        (function(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.quantity').on('change', function() {
+                var products_id = $(this).attr('data-id')
+                $.ajax({
+                  type: "PATCH",
+                  url: '/cart/' + products_id,
+                  data: {
+                    'quantity': this.value,
+                  },
+                  success: function(data) {
+                    window.location.href = '/cart';
+                  }
+                });
+
+            });
+
+        })();
+
+    </script>
 @endsection

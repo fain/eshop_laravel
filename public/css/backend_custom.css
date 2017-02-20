@@ -282,3 +282,7 @@ a.btn-add:hover, a.btn-remove:hover, a.btn-add:focus, a.btn-remove:focus{
 .in-block{
     display: inline-block;
 }
+
+.mar-right-10{
+    margin-right: 10px;
+}

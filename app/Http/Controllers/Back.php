@@ -40,6 +40,9 @@ use Eshop\ProductOptionGroup;
 
 use Illuminate\Support\Facades\DB;
 
+use PHPExcel;
+use PHPExcel_IOFactory;
+
 class Back extends Controller
 {
     /*******************************Auth start*********************************/
@@ -1011,6 +1014,7 @@ class Back extends Controller
         }
 
         $product_info->selling_period_end = $period_end;
+
         $product_info->price = $request->price;
 
         $tier_price = $request->tier_price;
@@ -1864,4 +1868,325 @@ class Back extends Controller
         $request->session()->flash('success', 'Product successfully updated!');
         return redirect('/backend/edit_product/'.$product_id);
     }
+
+    /*******************************Product Bulk List start*********************************/
+    public function product_bulk_list() {
+        if(Auth::check()){
+
+            return view('back.prod_bulk_list',
+                array(
+                    'title' => 'Product Bulk Listing',
+                    'description' => '',
+                    'page' => 'product_bulk_listing',
+                    'mainmenu' => 'product_bulk_listing'
+                ));
+        }else{
+//            $request->session()->flush();
+            Auth::logout();
+            Session::flash('warning', 'You have been logged out!');
+            return redirect('/backend/login');
+        }
+
+    }
+
+    public function product_bulk_list_upload(Request $request){
+        $cur_datetime = Carbon::now();
+
+        $excel_file = $request->file('excel_file');
+
+        $ext = explode(".", $excel_file->getClientOriginalName());
+        $extension = end($ext);
+
+        $allowed_extension = array("xls", "xlsx", "csv");
+
+        if(in_array($extension, $allowed_extension)){ //check selected file extension is present in allowed extension array
+
+            $inserted = "";
+
+            $objPHPExcel = PHPExcel_IOFactory::load($excel_file);
+            foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){
+
+                $highestRow = $worksheet->getHighestRow();
+                for($row=3; $row<=$highestRow; $row++){
+                    $version = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                    $cat_num = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                    $prod_name = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $seller_code = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $promo_text = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                    $gst_type = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+
+                    $main_img = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                    $add_img_1 = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                    $add_img_2 = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                    $add_img_3 = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+
+                    $details = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+                    $short_details = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+
+                    $price = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+                    $disc = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+                    $weight = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+
+                    $opt_id = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+                    $opt_val = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+
+                    $quantity = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+
+                    $ship_mthd = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
+                    $ship_rate = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+                    $ship_rate_wm = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
+                    $ship_rate_sbh = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
+                    $ship_rate_srk = $worksheet->getCellByColumnAndRow(23, $row)->getValue();
+
+                    $ship_promo = $worksheet->getCellByColumnAndRow(24, $row)->getValue();
+                    $ship_promo_disc = $worksheet->getCellByColumnAndRow(25, $row)->getValue();
+
+                    $after_sale = $worksheet->getCellByColumnAndRow(26, $row)->getValue();
+                    $rtn_policy = $worksheet->getCellByColumnAndRow(27, $row)->getValue();
+
+                    $err_msg = $worksheet->getCellByColumnAndRow(28, $row)->getValue();
+
+                    //this will insert all the data gathered into database
+                    //get user id
+                    $userid = Auth::user()->id;
+
+                    $products = new Product();
+
+                    $products->category_id = $cat_num;
+                    $products->brand_id = "0";
+                    $products->merchants_id = $userid;
+                    $products->created_at = $cur_datetime;
+                    $products->updated_at = $cur_datetime;
+                    $products->created_at_ip = $request->ip;
+                    $products->updated_at_ip = $request->ip;
+
+                    $products->save();
+
+                    //last insert id in products
+                    $product_id = $products->id;
+
+                    $product_info = new ProductInfo();
+
+                    $product_info->products_id = $product_id;
+
+                    //required field start
+                    $product_info->type = "New";
+                    $product_info->selling_period_set = "Y";
+                    $product_info->selling_period_day = "120";
+
+                    $today = date("Y-m-d");
+
+                    $product_info->selling_period_start = $today;
+                    $product_info->selling_period_end = date("Y-m-d", strtotime($today.' + 120 days'));
+
+                    $ship_id = MerchantShipping::where('set_default', '=', 'Y')->select('id')->first();
+                    $rtn_id = MerchantReturn::where('set_default', '=', 'Y')->select('id')->first();
+
+                    $product_info->merchant_shipping_id = $ship_id->id;
+                    $product_info->merchant_return_id = $rtn_id->id;
+                    //required field end
+
+                    $product_info->prod_name = $prod_name;
+                    $product_info->prod_code = $seller_code;
+
+                    $promo = new Promotion();
+
+                    $promo->products_id = $product_id;
+                    $promo->promo_text = $promo_text;
+
+                    $promo->save();
+
+                    $product_info->gst_type = $gst_type;
+
+                    //kena buat upload image nanti
+
+                    $main_img_save = "";
+                    $add_img_1_save = "";
+                    $add_img_2_save = "";
+                    $add_img_3_save = "";
+
+                    if($main_img!=""){
+                        $product_image = new ProductImage();
+
+                        $product_image->products_id = $product_id;
+                        $product_image->name = $main_img;
+                        $product_image->primary_img = "Y";
+                        $product_image->path = "uploads/".$product_id."/";
+                        $product_image->created_at = $cur_datetime;
+                        $product_image->updated_at = $cur_datetime;
+
+                        $product_image->save();
+
+                        $main_img_save = $product_image->id;
+                    }
+
+                    if($add_img_1!=""){
+                        $product_image = new ProductImage();
+
+                        $product_image->products_id = $product_id;
+                        $product_image->name = $add_img_1;
+                        $product_image->primary_img = NULL;
+                        $product_image->path = "uploads/".$product_id."/";
+                        $product_image->created_at = $cur_datetime;
+                        $product_image->updated_at = $cur_datetime;
+
+                        $product_image->save();
+
+                        $add_img_1_save = $product_image->id;
+                    }
+
+                    if($add_img_2!=""){
+                        $product_image = new ProductImage();
+
+                        $product_image->products_id = $product_id;
+                        $product_image->name = $add_img_2;
+                        $product_image->primary_img = NULL;
+                        $product_image->path = "uploads/".$product_id."/";
+                        $product_image->created_at = $cur_datetime;
+                        $product_image->updated_at = $cur_datetime;
+
+                        $product_image->save();
+
+                        $add_img_2_save = $product_image->id;
+                    }
+
+                    if($add_img_3!=""){
+                        $product_image = new ProductImage();
+
+                        $product_image->products_id = $product_id;
+                        $product_image->name = $add_img_3;
+                        $product_image->primary_img = NULL;
+                        $product_image->path = "uploads/".$product_id."/";
+                        $product_image->created_at = $cur_datetime;
+                        $product_image->updated_at = $cur_datetime;
+
+                        $product_image->save();
+
+                        $add_img_3_save = $product_image->id;
+                    }
+
+                    $product_info->details = $details;
+                    $product_info->short_details = $short_details;
+
+                    $product_info->price = $price;
+
+                    if($disc!=""){
+                        $disc_arr = explode("-", $disc);
+                        $product_info->discount_sel = $disc_arr[0];
+                        $product_info->discount_val = $disc_arr[1];
+                    }else{
+                        $product_info->discount_sel = "RM";
+                    }
+
+                    $product_info->weight = $weight;
+                    $product_info->weight = $weight;
+
+                    if($opt_id != ""){
+                        $opt_id_arr = explode(",", $opt_id);
+                        $opt_val_arr = explode(",", $opt_val);
+                        $tot_opt_id = (count($opt_id_arr))-1;
+
+                        $opt_arr = '[';
+
+                        for($i=0; $i<=$tot_opt_id; $i++){
+                            $opt_arr .= '"{\"typeid\": \"'.$opt_id_arr[$i].'\", \"info\": \"'.$opt_val_arr[$i].'\"}"';
+
+                            $tot_min_one = $tot_opt_id-1;
+                            if($i<=$tot_min_one){
+                                $opt_arr .= ',';
+                            }
+                        }
+
+                        $opt_arr .= ']';
+                        $product_info->option_id = $opt_arr;
+                    }
+
+                    $product_info->stock_quantity = $quantity;
+                    $product_info->shipping_method = $ship_mthd;
+                    $product_info->ship_rate = $ship_rate;
+
+                    if($ship_rate=="ByProd"){
+                        $shiping_rate = new ShippingRate();
+
+                        $shiping_rate->products_id = $product_id;
+
+                        $ship_rate_wm_arr = explode("|", $ship_rate_wm);
+                        $shiping_rate->wm_kg = $ship_rate_wm_arr[0];
+                        $shiping_rate->wm_rm = $ship_rate_wm_arr[1];
+                        $shiping_rate->add_wm_kg = $ship_rate_wm_arr[2];
+                        $shiping_rate->add_wm_rm = $ship_rate_wm_arr[3];
+
+                        $ship_rate_sbh_arr = explode("|", $ship_rate_sbh);
+                        $shiping_rate->sbh_kg = $ship_rate_sbh_arr[0];
+                        $shiping_rate->sbh_rm = $ship_rate_sbh_arr[1];
+                        $shiping_rate->add_sbh_kg = $ship_rate_sbh_arr[2];
+                        $shiping_rate->add_sbh_rm = $ship_rate_sbh_arr[3];
+
+                        $ship_rate_srk_arr = explode("|", $ship_rate_srk);
+                        $shiping_rate->srk_kg = $ship_rate_srk_arr[0];
+                        $shiping_rate->srk_rm = $ship_rate_srk_arr[1];
+                        $shiping_rate->add_srk_kg = $ship_rate_srk_arr[2];
+                        $shiping_rate->add_srk_rm = $ship_rate_srk_arr[3];
+
+                        $shiping_rate->cond_ship = $ship_promo;
+
+                        if($ship_promo=="D"){
+                            $ship_promo_disc_arr = explode("|", $ship_promo_disc);
+                            $shiping_rate->cond_disc = $ship_promo_disc_arr[0];
+                            $shiping_rate->cond_disc_for_purch = $ship_promo_disc_arr[1];
+                            $shiping_rate->cond_free = NULL;
+                        }else if($ship_promo=="F"){
+                            $ship_promo_disc_arr = explode("|", $ship_promo_disc);
+                            $shiping_rate->cond_disc = NULL;
+                            $shiping_rate->cond_disc_for_purch = NULL;
+                            $shiping_rate->cond_free = $ship_promo_disc_arr[0];
+                        }else{
+                            $shiping_rate->cond_disc = NULL;
+                            $shiping_rate->cond_disc_for_purch = NULL;
+                            $shiping_rate->cond_free = NULL;
+                        }
+
+                        $shiping_rate->save();
+
+                        $ship_rate_id = $shiping_rate->id;
+                        $product_info->ship_rate_id = $ship_rate_id;
+                    }
+
+                    $product_info->after_sale_serv = $after_sale;
+                    $product_info->return_policy = $rtn_policy;
+
+                    $product_info->updated_at = $cur_datetime;
+                    $product_info->created_at = $cur_datetime;
+
+                    $product_info_save = $product_info->save();
+
+                    if(!$product_info_save){
+                        Product::destroy($products->id);
+
+                        if($main_img_save != ""){
+                            ProductImage::destroy($main_img_save);
+                        }
+                        if($add_img_1_save != ""){
+                            ProductImage::destroy($add_img_1_save);
+                        }
+                        if($add_img_2_save != ""){
+                            ProductImage::destroy($add_img_2_save);
+                        }
+                        if($add_img_3_save != ""){
+                            ProductImage::destroy($add_img_3_save);
+                        }
+
+                        Promotion::destroy($promo->id);
+                    }
+                }
+
+                
+            }
+
+        }
+
+        $request->session()->flash('success', 'Bulk Product List successfully inserted!');
+        return redirect('/backend/prod_bulk_list');
+    }
+    /*******************************Product Bulk List ends*********************************/
 }

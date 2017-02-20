@@ -126,6 +126,9 @@ Route::post('/backend/prod_opt_handler','Back@prod_opt_handler');
 Route::get('/backend/delete_opt_from_grp/{g_id}/{id}', 'Back@delete_opt_from_grp');
 /*******************************prod opt mgmt end*********************************/
 
+Route::get('/backend/product_bulk_list','Back@product_bulk_list');
+Route::post('/backend/product_bulk_list_upload','Back@product_bulk_list_upload');
+
 
 // Auth::routes();
 
