@@ -4,14 +4,35 @@ jQuery(function(){
 		$data = "";
 		$product_id = jQuery(this).attr("product_id");
 		$product_name = jQuery(this).attr("product_name");
-		$product_price = jQuery(this).attr("product_price");
-		$product_stock = jQuery(this).attr("product_stock");
-
+		$prduct_price = jQuery(this).attr("product_price");
 		if(jQuery.inArray($product_id,wish_list)==-1){
-		    $product_str = "<tr class='wishlist-item' id='list_id_"+$product_id+"'><td class='w-pname'>"+$product_name+"</td><td class='w-stock'>"+$product_stock+ ' ' + "</td><td class='w-price'>RM"+$product_price+"</td><td class='w-premove' wpid='"+$product_id+"'>x</td></tr>";
-			jQuery("#wish_list_item").append($product_str);	
-			wish_list.push($product_id);
-			show_message("Wishlist added");
+
+			$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+			var formData = {
+                'product_id': $product_id
+            };
+
+			$.ajax({
+                type: "POST",
+                url: '/wishlist',
+                data: formData,
+                dataType: 'json',
+                success: function( data ) {
+                    $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
+
+                    return true;
+                },
+                fail: function(){
+                    alert('fail');
+                }
+			});
+           // wish_list.push($product_id);
+			// show_message("Product added");
 		}
 		
 		count_items_in_wishlist_update();
@@ -34,7 +55,7 @@ jQuery(function(){
 		wish_list = jQuery.grep( wish_list, function( n, i ) {
 			return n != $product_id;
 		});
-		show_message("Wishlist removed");
+		show_message("Product removed");
 		count_items_in_wishlist_update();
 	});
 });
@@ -43,10 +64,10 @@ function show_message($msg){
 	$top = Math.max(0, ((jQuery(window).height() - jQuery("#msg").outerHeight()) / 2) + jQuery(window).scrollTop()) + "px";
     $left = Math.max(0,((jQuery(window).width() - jQuery("#msg").outerWidth()) / 2) + jQuery(window).scrollLeft()) + "px";
 	jQuery("#msg").css("left",$left);
-	jQuery("#msg").animate({opacity: 0.6,top: $top}, 400,function(){
+	jQuery("#msg").animate({opacity: 2.6,top: $top}, 2000,function(){
 		jQuery(this).css({'opacity':1});
 	}).show();
-	setTimeout(function(){jQuery("#msg").animate({opacity: 0.6,top: "0px"}, 400,function(){
+	setTimeout(function(){jQuery("#msg").animate({opacity: 2.6,top: "0px"}, 2000,function(){
 		jQuery(this).hide();
 	});},1000);
 }

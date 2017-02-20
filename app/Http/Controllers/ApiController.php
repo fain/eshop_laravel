@@ -19,6 +19,8 @@ use Eshop\MerchantReturn;
 use Eshop\ShippingRate;
 use Illuminate\Support\Facades\Auth;
 
+use Eshop\Wishlist;
+
 //for timestamp
 use Carbon\Carbon;
 
@@ -384,4 +386,30 @@ class ApiController extends Controller
         return Response::json($details);
     }
     /*******************************Merchant Return Details Ajax End*********************************/
+
+    public function wishlist(Request $request){
+            
+            $cur_datetime = Carbon::now();
+
+            // get user id
+            $userid = Auth::user()->id;
+
+            $wishlists = new Wishlist;
+          
+            $wishlists->user_id = $userid;
+            $wishlists->product_id = $request->product_id;
+            $wishlists->created_at = $cur_datetime;
+            $wishlists->updated_at = $cur_datetime;
+
+            $wishlists->save();
+
+            $msg = 'Your product had been added to Wishlist.';
+
+            $data = [
+            'message'=> $msg
+            ];
+
+
+            return Response::json($data);
+    }
 }

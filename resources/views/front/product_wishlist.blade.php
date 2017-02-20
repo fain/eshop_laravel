@@ -7,6 +7,7 @@
                 <h2 class="title text-center">My Wishlists</h2>
 
 	            
+            
     			<div class="table-responsive">
 						<table class="table table-striped">
 						<!-- 	 <div class="dropdown"  align="right">
@@ -27,9 +28,11 @@
 								<tr>
 									
 						            <th scope class="">Product</th>
-						            <th scope class="">Date</th>
+						            <th scope class="">Price</th>
+						            <th scope class="">Shipping Fee/Seller</th>
+						            <th scope class="">Satisfaction Rating</th>
 						            <th scope class="">Availability</th>
-									<th scope class="">Price</th>
+									<th scope class="">Manage</th>
 									<th scope class=""></th>
 									
 						        </tr>
@@ -38,9 +41,9 @@
 						    	@foreach ($products as $product)
 						        <tr>
 						            <td class=""><img src="{{asset('images/shop/product9.jpg')}}" alt="" />Code: {{$product->prod_code}} <br> {{$product->name}}</td>          
-						            <td class="">date</td>
-						            <td class="">{{$product->stock_quantity}}</td>          
-						            <td class="">RM {{$product->price}}</td>    
+						            <td class="">RM {{$product->price}}</td>  
+						            <td class="">{{$product->price}}</td>
+						            <td class="">{{$product->price}}</td>    
    						            <td class=""><a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a></td>          
      							@endforeach
 						      	</tr>

@@ -24,25 +24,31 @@ Route::get('auth/logout', 'Front@logout');
 Route::get('auth/register', 'Front@register');
 Route::post('auth/register_handler', 'Front@register_handler');
 
-
 // Registration routes...
 Route::post('/register', 'Front@register');
 
 Route::get('/','Front@index');
 
-Route::get('/products','Front@products');
+// Products/Shop
+Route::get('/products/{id}','Front@products');
+// 
+// cart
+Route::post('/cart', 'Front@cart');
+//
 Route::get('/products/details/{id}','Front@product_details');
 Route::get('/products/categories','Front@product_categories');
 Route::get('/products/brands','Front@product_brands');
 
-Route::get('/wishlists','Front@product_wishlist');
+
+
+Route::post('/wishlist','ApiController@wishlist');
+
 
 Route::get('/blog','Front@blog');
 Route::get('/blog/post/{id}','Front@blog_post');
 Route::get('/contact-us','Front@contact_us');
 Route::get('/login','Front@login');
 Route::get('/logout','Front@logout');
-Route::get('/cart','Front@cart');
 
 Route::get('/checkout', [
     'middleware' => 'auth',
@@ -51,7 +57,6 @@ Route::get('/checkout', [
 
 Route::get('/search/{query}','Front@search');
 
-Route::post('/cart', 'Front@cart');
 
 Route::get('/backend/login','Back@login');
 Route::get('/backend/logout','Back@logout');
@@ -125,3 +130,6 @@ Route::get('/backend/delete_opt_from_grp/{g_id}/{id}', 'Back@delete_opt_from_grp
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index');
+
+
+//testing shop

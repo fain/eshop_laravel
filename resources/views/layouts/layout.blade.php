@@ -61,7 +61,7 @@
 </head><!--/head-->
 
 <body>
-	<header id="header"><!--header-->
+<header id="header"><!--header-->
      <!--header_top-->
          <div class="header_top">
              <div class="container">
@@ -96,9 +96,48 @@
   
                 <div class="shop-menu pull-right">
                     <ul class="nav navbar-nav">
-                   	  	<li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>
+                   	    <!-- <li><a href="{{url('wishlists/')}}"><i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li> -->
+                <li>
+                    <div>
+                        <a>
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            <p class="wish_list_heading">
+                                <a href="{{url('wishlist')}}"><span id='listitem'>0</span>
+                                    <span id='p_label'>Product</span>
+                                </a>
+                            </p>
+<!--                             <table id='wish_list_item' border='0'></table>
+ -->                        </a>
+                    </div>
+                </li>
+
+<!-- Wishlist Ajax -->
+<!-- <div id='wish_list' class='col-s'>
+<p class="wish_list_heading">
+    <span id='listitem'>0</span>
+    <span id='p_label'>Product</span>
+</p>
+<table id='wish_list_item' border='0'></table>
+</div> -->
+<!-- Wishlist Ajax -->
+
                         <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
-                        <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+
+                        <li><ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> <span class="simpleCart_total"></span> - <span id="simpleCart_quantity" class="simpleCart_quantity"></span> Items<span class="caret"></span></a>
+                                    <ul class="dropdown-menu dropdown-cart" role="menu">
+                                        <li>
+                                            <span class="simpleCart_items"></span> <br />
+                                        </li>
+                                        <li><a href="{{url('checkout')}}" class="simpleCart_checkout center-block btn btn-default">Checkout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
                         <li class="main-dropdown">
 							<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
 							@if(Auth::check()) 
@@ -185,189 +224,6 @@
 <!-- {{url('products')}} -->
 
 @yield('content')
-
-<!--Footer HTML code from E-Shopper Template-->
-<footer id="footer"><!--Footer-->
-	<div class="footer-top">
-		<div class="container-footer">
-			<div class="row">
-
-		<!-- <div class="col-sm-2">
-					<div class="companyinfo">
-						<h2><span>E-Shop</span></h2>
-						<p>E-Shop is an online shopping portal for its members to purchase products and apply for financing from Koperasi.</p>
-					</div>
-				</div>
-
-				<div class="col-sm-7">
-					<div class="col-sm-3">
-						<div class="video-gallery text-center">
-							<a href="#">
-								<div class="iframe-img">
-									<img src="images/home/iframe1.png" alt="" />
-								</div>
-								<div class="overlay-icon">
-									<i class="fa fa-play-circle-o"></i>
-								</div>
-							</a>
-							<p>Circle of Hands</p>
-							<h2>24 DEC 2014</h2>
-						</div>
-					</div>
-					
-					<div class="col-sm-3">
-						<div class="video-gallery text-center">
-							<a href="#">
-								<div class="iframe-img">
-									<img src="images/home/iframe2.png" alt="" />
-								</div>
-								<div class="overlay-icon">
-									<i class="fa fa-play-circle-o"></i>
-								</div>
-							</a>
-							<p>Circle of Hands</p>
-							<h2>24 DEC 2014</h2>
-						</div>
-					</div>
-					
-					<div class="col-sm-3">
-						<div class="video-gallery text-center">
-							<a href="#">
-								<div class="iframe-img">
-									<img src="images/home/iframe3.png" alt="" />
-								</div>
-								<div class="overlay-icon">
-									<i class="fa fa-play-circle-o"></i>
-								</div>
-							</a>
-							<p>Circle of Hands</p>
-							<h2>24 DEC 2014</h2>
-						</div>
-					</div>
-					
-					<div class="col-sm-3">
-						<div class="video-gallery text-center">
-							<a href="#">
-								<div class="iframe-img">
-									<img src="images/home/iframe4.png" alt="" />
-								</div>
-								<div class="overlay-icon">
-									<i class="fa fa-play-circle-o"></i>
-								</div>
-							</a>
-							<p>Circle of Hands</p>
-							<h2>24 DEC 2014</h2>
-						</div>
-					</div>
-				</div> 
-
-				<div class="col-sm-3">
-					<div class="address">
-						<img src="{{asset('images/home/map.png')}}" alt="" />
-						<p>Angkasa Kuala Lumpur, Malaysia (MY)</p>
-					</div>
-				</div>-->
-				<div class="col-sm-6">
-					<div class="payment-methods text-left">
-						<div class="payment-methods">
-							<h2>Payment Methods</h2>
-							<img src="images/home/payment_methods/mastercard.png" alt="" />
-							<img src="images/home/payment_methods/visa.png" alt="" />
-							<img src="images/home/payment_methods/paypal.png" alt="" />
-							<img src="images/home/payment_methods/maybank2u.png" alt="" />
-							<img src="images/home/payment_methods/cimb_clicks.png" alt="" />
-							<img src="images/home/payment_methods/rhb_now.png" alt="" />
-							<img src="images/home/payment_methods/cod.png" alt="" />
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6">
-					<div class="delivery-services text-left">
-						<div class="delivery-services">
-							<h2>Delivery Services</h2>
-							<img src="images/home/delivery_services/gdex.png" alt="" />
-							<img src="images/home/delivery_services/ninja_van.png" alt="" />
-							<img src="images/home/delivery_services/taqbin.png" alt="" />
-							<img src="images/home/delivery_services/poslaju.png" alt="" />
-							<img src="images/home/delivery_services/skynet.png" alt="" />
-						</div>
-					</div>
-				</div>
-
-				
-			</div>
-		</div>
-	</div>
-	
-	<div class="footer-widget">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-2">
-					<div class="single-widget">
-						<h2>Service</h2>
-						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#">Online Help</a></li>
-							<li><a href="#">Contact Us</a></li>
-							<li><a href="#">Order Status</a></li>
-							<li><a href="#">Change Location</a></li>
-							<li><a href="#">FAQ’s</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="single-widget">
-						<h2>Policies</h2>
-						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#">Terms of Use</a></li>
-							<li><a href="#">Privecy Policy</a></li>
-							<li><a href="#">Refund Policy</a></li>
-							<li><a href="#">Billing System</a></li>
-							<li><a href="#">Ticket System</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="companyinfo">
-						<h2>About Angkasa E-Shop</h2>
-						<p>Angkasa E-Shop is pioneering e-commerce across some of the fastest growing 
-							countries in the world by offering a fast, secure and convenient online 
-							shopping experience with a broad product offering in categories ranging 
-							from fashion, consumer electronics to household goods, toys and sports 
-							equipment. Lazada is always striving to offer its customers the best possible
-							 offering – including multiple payment options, free returns and extensive 
-							 customer service and warranty commitments.
-						</p>
-					</div>
-				</div>
-				<div class="col-sm-4 col-sm-offset-1">
-					<div class="single-widget">
-						<h2>Top Categories & Brands</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">T-Shirt</a></li>
-								<li><a href="#">Mens</a></li>
-								<li><a href="#">Womens</a></li>
-								<li><a href="#">Gift Cards</a></li>
-								<li><a href="#">Shoes</a></li>
-							</ul>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-	
-	<div class="footer-bottom">
-		<div class="container">
-			<div class="row">
-				<p class="pull-right">© Angkasa E-Shop 2017</p>
-				<!-- <p class="pull-right">Designed by <span><a target="_blank" href="http://www.multibase.com.my">Multibase</a></span></p> -->
-			</div>
-		</div>
-	</div>
-	
-</footer><!--/Footer-->
-
 
 <script src="{{asset('js/jquery.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
@@ -562,6 +418,13 @@ jQuery(function ($) {
 <script type="text/javascript" src="{{asset('https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js')}}"></script>
 <script type="text/javascript">$(function() { $('pre').addClass('prettyprint');})</script>
 <!-- PreOrder Items-->
+
+
+<!-- Wishlist -->
+<script type="text/javascript" src="{{asset('js/script_wishlist.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jquery_wishlist.js')}}"></script>
+
+
 
 @yield('js_content')
 

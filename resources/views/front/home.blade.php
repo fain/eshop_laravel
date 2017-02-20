@@ -2,7 +2,6 @@
 @extends('layouts.layout')
 
 @section('content') 
-	<div id='msg'></div>
 	
 	@include('shared.topbar')
 
@@ -82,10 +81,14 @@
 
 
 <!--Featured product-->
+<div id='msg'></div>
+
 <div class="row">
 	<h2 class="title text-center">Featured Items</h2>
 
 	<div class="col-sm-10">
+
+		<div id="ajaxResponse"></div>
 	
 
 		<ul class="bxslider">
@@ -95,19 +98,30 @@
 		
 				<div class="product-image-wrapper">
 					<div class="single-products" id="products_container">
+					
 
 						<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-						
+							<!-- <input type="hidden" value="{{$product->id}}" name="all_prod"> -->
+
 							<button>
 								<div>+<div>
 							</button>
 
 							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-							<h2>RM{{$product->price}}</h2>
-                            <p>{{$product->prod_name}}</p>
+							<h4>RM{{number_format($product->price,2)}}</h4>
+                            <a href="{{ url('products', [$product->products_id])}}"><p>{{$product->prod_name}}</p></a>
 						
+							<form action="/cart" method="post" class="side-by-side">
+			                    {!! csrf_field() !!}
+			                    <input type="hidden" name="products_id" value="{{ $product->products_id }}">
+			                    <input type="hidden" name="prod_name" value="{{ $product->prod_name }}">
+			                    <input type="hidden" name="price" value="{{ $product->price }}">
+			                    <input type="submit" class="btn btn-default add-to-cart" value="Cart">
+			                </form>
+ 							alert(document.getElementById("{{ $product->products_id }}").value);  
+                          <!-- <a href='{{url("cart/$product->products_id")}}' class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a> -->
+                            
 
-                            <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
                             <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 
 
@@ -181,7 +195,7 @@
 							</button>
 
 						<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-						<h2>RM{{$product->price}}</h2>
+						<h4>RM{{number_format($product->price,2)}}</h4>
 	                    <p>{{$product->prod_name}}</p>
 
 	      
@@ -249,7 +263,7 @@
 							</button>
 
 							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-							<h2>RM{{$product->price}}</h2>
+							<h4>RM{{number_format($product->price,2)}}</h4>
                             <p>{{$product->prod_name}}</p>
 						
 
@@ -500,13 +514,13 @@
 						<div class="single-products" id="products_container">
 
 							<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-							
+							<!-- <input type="hidden" value="{{$product->id}}" id="prod_id"> -->
 								<button>
 									<div>+<div>
 								</button>
 
 								<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-								<h2>RM{{$product->price}}</h2>
+								<h4>RM{{number_format($product->price,2)}}</h4>
 				                <p>{{$product->prod_name}}</p>
 							
 
@@ -577,7 +591,7 @@
 
                     		<!-- Slide content - whatever you want -->
 							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-							<h2>RM{{$product->price}}</h2>
+							<h4>RM{{number_format($product->price,2)}}</h4>
 				       		 <br><br>
 				       		 <br><figcaption>{{$product->prod_name}}</figcaption>
 
@@ -621,50 +635,77 @@
 <h2 class="title text-center">Brands by Category</h2>
 <div class="row">
 	<div class="col-sm-12" style="border: 2px solid #F7F7F5; width: 1290px; height:210px; right: 0px; left:15px; top:5px">
-			<div id="mi-slider" class="mi-slider">
-					<ul>
-						@foreach($brands_by_electronics as $brand_by_electronic)
-						<li>
-							<a href="#">
-								<img src="../{{$brand_by_electronic->path}}{{$brand_by_electronic->brand_name}}"/>
-							</a></li>
-						@endforeach
-					</ul>
-					<ul>
-						@foreach($brands_by_womens as $brand_by_women)
-						<li>
-							<img src="../{{$brand_by_women->path}}{{$brand_by_women->brand_name}}"/>
-						@endforeach	</ul>
-					<ul>
-						@foreach($brands_by_mens as $brand_by_men)
-						<li>
-							<img src="../{{$brand_by_men->path}}{{$brand_by_men->brand_name}}"/>
-						@endforeach
-					</ul>
-					<nav>
-						@foreach($brands_main_categories as $brand_main_category)
-						<a href="#">{{$brand_main_category->main_cat}}</a>
-						@endforeach
-					</nav>
-				</div>
+		<div id="mi-slider" class="mi-slider">
+			<ul>
+				@foreach($brands_by_electronics as $brand_by_electronic)
+				<li>
+					<a href="#">
+						<img src="../{{$brand_by_electronic->path}}{{$brand_by_electronic->brand_name}}"/>
+					</a>
+				</li>
+				@endforeach
+			</ul>
+			<ul>
+				@foreach($brands_by_womens as $brand_by_women)
+				<li>
+					<img src="../{{$brand_by_women->path}}{{$brand_by_women->brand_name}}"/>
+				@endforeach	</ul>
+			<ul>
+				@foreach($brands_by_mens as $brand_by_men)
+				<li>
+					<img src="../{{$brand_by_men->path}}{{$brand_by_men->brand_name}}"/>
+				@endforeach
+			</ul>
+			<nav>
+				@foreach($brands_main_categories as $brand_main_category)
+				<a href="#">{{$brand_main_category->main_cat}}</a>
+				@endforeach
+			</nav>
+		 </div>
 	</div>
 </div>
 <!-- Brands by Category -->
 
 	<!-- Compare Features Items -->
 	<div id="animatedModal">
-	<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
-	<div  id="btn-close-modal" class="close-animatedModal"> 
-	    CLOSE
-	</div>
-    
-	<div class="modal-content-compare">
-	    <div class="modal-inner">
-	    	<div class="no-products">Select some products to compare first</div>  
-	    	<div class="modal-products"></div>     
-	    </div>
-	</div>
-
+		<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+		<div  id="btn-close-modal" class="close-animatedModal"> 
+		    CLOSE
+		</div>
+	    
+		<div class="modal-content-compare">
+		    <div class="modal-inner">
+		    	<div class="no-products">Select some products to compare first</div>  
+		    	<div class="modal-products"></div>     
+		    </div>
+		</div>
 	</div> <!--modal-features-items-->
+
+
+	
+	@include('shared.footerbar')
 </section>
 @endsection
+
+@section('js_section')
+<SCRIPT TYPE="text/javascript">
+
+ //    var user_id = $('#user_id').val();
+	// var formData = {
+ //                'user_id': user_id,
+ //                'product_id': $('#prod_id').val()
+ //            };
+
+ //            alert($('#prod_id').val());
+
+ //            var data = jQuery.extend(true, bs, formData);
+
+	// $.ajax({
+	//     type: "POST",
+	//     url: '/product_wishlist',
+	//     data: data,
+	//     dataType: 'json',
+	//     success: function( data ) {
+	//         $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
+
+</SCRIPT>

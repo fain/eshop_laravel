@@ -2,15 +2,18 @@
 
 namespace Eshop\Http\Controllers;
 
- use Illuminate\Http\Request;
-// use Illuminate\Http\Redirect;
-
 use Eshop\User;
 use Eshop\UserInfo;
+
 use Illuminate\Support\Facades\Auth;
+
+// use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 use Eshop\Http\Requests;
 
+use Eshop\Cart;
 use Eshop\Brand;
 use Eshop\Merchants;
 use Eshop\MerchantsInfo;
@@ -19,12 +22,11 @@ use Eshop\Product;
 use Eshop\ProductInfo;
 use Eshop\ShippingRate;
 use Eshop\ProductImage;
+use Eshop\Wishlist;
+
 
 use Eshop\Http\Controllers\Controller;
 
-//use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Redirect;
-use Cart;
 
 use Eshop\Post;
 
@@ -49,6 +51,8 @@ class Front extends Controller {
     var $products_image;
     var $title;
     var $description;
+    var $carts;
+    var $wishlists;
 
     public function __construct() {
         $this->brands = Brand::all(array('name'));
@@ -57,6 +61,9 @@ class Front extends Controller {
         $this->products = Product::all(array('id','category_id','brand_id', 'merchants_id'));
         $this->shipping_rate = ShippingRate::all(array('id'));
         $this->products_image = ProductImage::all(array('id'));
+        $this->carts = Cart::all(array('id'));
+        $this->wishlists = Wishlist::all(array('id'));
+
 
 
     }
@@ -212,82 +219,136 @@ class Front extends Controller {
                 'brands_by_mens' => $brand_by_men, 
                 'brands_main_categories' => $brand_main_category
 
-
-                
-
-
-
             )
         );
 
     }
 
-
-   
-
-    public function products() {
+    public function products($id) {
           $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
                                 ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
                                 ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
                                 ->where('product_image.primary_img', '=', 'Y')
-                                ->get();
-
-       $product_top_sale = DB::table('products')
-                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
-                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
-                                ->where('product_image.primary_img', '=', 'Y')
-                                ->where('products_info.type', '=', 'New')
-                                ->get();
-
-       $product_new = DB::table('products')
-                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
-                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
-                                ->where('product_image.primary_img', '=', 'Y')
-                                ->where('products_info.type', '=', 'New')
-                                ->get();                                
-
-       $product_used = DB::table('products')
-                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
-                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
-                                ->where('product_image.primary_img', '=', 'Y')
-                                ->where('products_info.type', '=', 'Used')
-                                ->get();                                
-
-       $product_pre_order = DB::table('products')
-                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-                                ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
-                                ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
-                                ->where('product_image.primary_img', '=', 'Y')
-                                ->where('products_info.type', '=', 'Pre-Order')
-                                ->get();                    
+                                ->where('products_info.products_id', '=', $id)
+                                ->first();
 
 
         return view('front.products',
             array('title' => 'Products Listing',
              'description' => '',
                 'page' => 'home',
-                'brands' => $product->p_name,
-                'merchantsinfo' => $this->merchantsinfo,
-                'categories' => $this->categories,
-                'products' => $product,
-                'products_top_sale' => $product_top_sale,
-                'products_new' => $product_new,
-                'products_used' => $product_used,
-                'products_pre_order' => $product_pre_order,
-                'products_image' => $this->products_image
+                'product' => $product
+                
             ));
     }
-
     
+    // public function cart(Request $request) {
+
+    //     $prod_name = $request->prod_name;
+
+    //     $product = DB::table('products')
+    //                             ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+    //                             ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+    //                             ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
+    //                             ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name', 'shipping_rate.*')
+    //                             ->first();
+
+      
+    //     return view('front.cart', 
+    //         array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
+    //             'description' => '',
+    //             'page' => 'products',
+    //             'prod_name' => $prod_name
+                
+    //             ));
+    // }
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function store(Request $request)
+    // {
+    //     if (Cart::search(['products_id' => $request->products_id])) {
+    //         return redirect('cart')->withSuccessMessage('Item is already in your cart!');
+    //     }
+
+    //     Cart::associate('Product','App')->add($request->products_id, $request->prod_name, 1, $request->price);
+    //     return redirect('cart')->withSuccessMessage('Item was added to your cart!');
+    // }
+
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\JsonResponse
+    //  */
+    // public function update(Request $request, $products_id)
+    // {
+    //     // Validation on max quantity
+    //     $validator = Validator::make($request->all(), [
+    //         'quantity' => 'required|numeric|between:1,5'
+    //     ]);
+
+    //      if ($validator->fails()) {
+    //         session()->flash('error_message', 'Quantity must be between 1 and 5.');
+    //         return response()->json(['success' => false]);
+    //      }
+
+    //     Cart::update($id, $request->quantity);
+    //     session()->flash('success_message', 'Quantity was updated successfully!');
+    //     return response()->json(['success' => true]);
+
+    // }
+
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy($products_id)
+    // {
+    //     Cart::remove($products_id);
+    //     return redirect('cart')->withSuccessMessage('Item has been removed!');
+    // }
+
+    // /**
+    //  * Remove the resource from storage.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function emptyCart()
+    // {
+    //     Cart::destroy();
+    //     return redirect('cart')->withSuccessMessage('Your cart his been cleared!');
+    // }
+
+    // /**
+    //  * Switch item from shopping cart to wishlist.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function switchToWishlist($products_id)
+    // {
+    //     $products = Cart::instance('main')->get($products_id);
+
+    //     Cart::instance('main')->remove($products_id);
+
+    //     if (Cart::instance('wishlist')->search(['products_id' => $products->products_id])) {
+    //         return redirect('cart')->withSuccessMessage('Item is already in your Wishlist!');
+    //     }
+
+    //     Cart::instance('wishlist')->associate('Product','App')->add($products->products_id, $products->prod_name, 1, $products->price);
+    //     return redirect('cart')->withSuccessMessage('Item has been moved to your Wishlist!');
+
+    // }
+
 
     public function product_details($id) {
         $product = DB::table('products')
@@ -312,11 +373,8 @@ class Front extends Controller {
  
   
 
-    public function product_wishlist(){
-     
-        return view('front.product_wishlist', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products', 'brands' => $this->brands, 'merchants' => $this->merchants, 'categories' => $this->categories, 'products' => $this->products));
+    
 
-    }
 
 
     public function product_merchants($id) {
@@ -456,37 +514,7 @@ class Front extends Controller {
         return redirect('/auth/login');
     }
 
-    public function cart() {
-        //update/ add new item to cart
-        if (Request::isMethod('post')) {
-            $product_id = Request::get('product_id');
-            $product = Product::find($product_id);
-            Cart::add(array('id' => $product_id, 'name' => $product->name, 'qty' => 1, 'price' => $product->price));
-        }
-
-        //increment the quantity
-        if (Request::get('product_id') && (Request::get('increment')) == 1) {
-            $rowId = Cart::search(array('id' => Request::get('product_id')));
-            $item = Cart::get($rowId[0]);
-
-            Cart::update($rowId[0], $item->qty + 1);
-        }
-
-        //decrease the quantity
-        if (Request::get('product_id') && (Request::get('decrease')) == 1) {
-            $rowId = Cart::search(array('id' => Request::get('product_id')));
-            $item = Cart::get($rowId[0]);
-
-            Cart::update($rowId[0], $item->qty - 1);
-        }
-
-        $cart = Cart::content();
-
-        return view('front.cart', array('cart' => $cart, 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More', 'description' => '', 'page' => 'home'));
-
-
-    }
-
+   
     public function checkout() {
         return view('front.checkout', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'home'));
     }
