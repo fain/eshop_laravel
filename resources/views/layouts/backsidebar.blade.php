@@ -23,7 +23,7 @@
                                     <a href="/backend/product_listing">Product Listing</a>
                                 </li>
                                 <li>
-                                    <a href="/backend/products">Product Bulk Listing</a>
+                                    <a href="/backend/product_bulk_list">Product Bulk Listing</a>
                                 </li>
                                 <li>
                                     <a href="/backend/products">Product Info. Management</a>
