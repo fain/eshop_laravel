@@ -1873,12 +1873,18 @@ class Back extends Controller
     public function product_bulk_list() {
         if(Auth::check()){
 
+            $added = "";
+            if(isset($inserted)){
+                $added = $inserted;
+            }
+
             return view('back.prod_bulk_list',
                 array(
                     'title' => 'Product Bulk Listing',
                     'description' => '',
                     'page' => 'product_bulk_listing',
-                    'mainmenu' => 'product_bulk_listing'
+                    'mainmenu' => 'product_bulk_listing',
+                    'added' => $added
                 ));
         }else{
 //            $request->session()->flush();
@@ -2177,16 +2183,16 @@ class Back extends Controller
                         }
 
                         Promotion::destroy($promo->id);
+                    }else{
+                        $inserted .= $product_id;
+                        $inserted .= ", ";
                     }
                 }
-
-                
             }
-
         }
 
         $request->session()->flash('success', 'Bulk Product List successfully inserted!');
-        return redirect('/backend/prod_bulk_list');
+        return redirect('/backend/prod_bulk_list')->with('inserted', $inserted);
     }
     /*******************************Product Bulk List ends*********************************/
 }

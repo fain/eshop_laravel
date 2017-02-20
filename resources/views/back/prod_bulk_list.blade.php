@@ -36,6 +36,8 @@
         <a href="/excel/bulk-upload-ver-1.xls" class="btn btn-default pull-right">Download Excel Format (Latest Version 1.0.1)</a>
     </div>
 
+    {{ $added }}
+
     <div class="col-md-12">
         <h3><i class="fa fa-angle-right" aria-hidden="true"></i> Bulk Listing Upload</h3>
 
