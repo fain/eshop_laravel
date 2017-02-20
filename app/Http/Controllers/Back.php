@@ -448,9 +448,17 @@ class Back extends Controller
                 $cat_id = $request->main_category;
             }
 
+
             $brands->category_id = $cat_id;
             $brands->name = $request->name;
             $brands->status = $request->status;
+
+ //            if(Brand::hasFile('image')){
+ //    $brands = Brand::file('image');
+ //    $brands = $file->move(public_path().'brand_uploads/". $id ."/',$file->getOriginalFileName());
+ //    $brands->path = $file->getRealPath();
+ // }
+
             $brands->updated_at = $cur_datetime;
             $brands->created_at = $cur_datetime;
             $brands->updated_at_ip = $request->ip;
@@ -461,6 +469,7 @@ class Back extends Controller
             $request->session()->flash('success', 'New brand successfully inserted!');
             return redirect('/backend/brand/');
         }
+        
     }
 
     public function edit_brand($brand) {

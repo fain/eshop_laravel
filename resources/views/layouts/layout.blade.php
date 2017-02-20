@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
 
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +23,6 @@
 	<!-- Lightbox home -->
 	<link href="{{asset('css/menu_lightbox.css')}}" rel="stylesheet">
 
-
 	<!-- Vertical tab -->
 	<link href="{{asset('css/vertical_tab.css')}}" rel="stylesheet">
 
@@ -34,10 +31,6 @@
 
 	<!-- Mega menu -->
 	<link href="{{asset('css/mega-menu.css')}}" rel="stylesheet">
-
-
-
-
 	
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -62,7 +55,6 @@
 	<link rel="stylesheet" href="{{asset('css/comparison.css')}}">
 
 	<!-- Wishlist Product CSS -->
-	<!-- <link rel="stylesheet" id="open-sans-css" href="{{asset('https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&amp;subset=latin%2Clatin-ext&amp;ver=4.4.2')}}" type="text/css" media="all"> -->
 	<link rel="stylesheet" id="style-css" href="{{asset('css/style.css')}}" type="text/css" media="all">
 
 
@@ -70,8 +62,7 @@
 
 <body>
 	<header id="header"><!--header-->
-         
-         <!--header_top-->
+     <!--header_top-->
          <div class="header_top">
              <div class="container">
                 <div class="row">
@@ -80,16 +71,12 @@
                             <ul class="nav navbar-nav">
 								<li class="main-dropdown">
 										<a href="{{Auth::check() ? '#' : url('backend/login')}}"> <i class="fa fa-user-secret" aria-hidden="true"></i>{{Auth::check() ? 'Seller Account' : 'Seller'}} 
-											<!-- <i class="fa fa-chevron-down fa-1x fa-border" style="font-size:10px; padding-top:2px" aria-hidden="true"></i> -->
 										</a>
 										@if(Auth::check()) 
 										<ul class="dropdown-menu dropdown-user">
 											<li>
 												<a href="{{Auth::check() ? '#' : url('backend/login')}}"> <i class="fa fa-user"></i>{{Auth::check() ? 'Profile' : 'Seller Office'}} </a>
 											</li>
-											<!-- <li>
-												<a href="{{Auth::check() ? '#' : url('backend/login')}}"> <i class="fa fa-sign-out"></i>{{Auth::check() ? 'Logout' : 'Seller Office'}} </a>
-											</li> -->
 										</ul>
 										@endif
 								</li>
@@ -97,244 +84,265 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <!-- <div class="social-icons pull-right">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            </ul>
-                        </div> -->
+                    <!-- <div class="social-icons pull-right">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div> -->
   
-                        <div class="shop-menu pull-right">
-                            <ul class="nav navbar-nav">
-                           	  <li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>
-
-
-
-                                <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
-                                <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li class="main-dropdown">
-									<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
-									@if(Auth::check()) 
-									<ul class="dropdown-menu dropdown-user">
-										<li>
-											<a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
-										</li>
-										<li>
-											<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-										</li>
-										<!-- <li class="divider"></li> -->
-										<li>
-											<a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-										</li>
-									</ul>
-									@endif
+                <div class="shop-menu pull-right">
+                    <ul class="nav navbar-nav">
+                   	  	<li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>
+                        <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
+                        <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                        <li class="main-dropdown">
+							<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
+							@if(Auth::check()) 
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
 								</li>
-                            </ul>
-                        </div>
-                        
-
-                    </div>
-                </div>
-            </div>
-        </div> 
-        <!--/header_top-->
-
-        <div class="header-middle"><!--header-middle-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="logo pull-left">
-                            <a href="{{url('')}}"><img src="{{asset('images/home/logo-eshop-angkasa.png')}}" alt="" height="40px;"/></a>
-                        </div>
-                    </div>
-					<div class="col-sm-3">
- 						<div class="search_box_home pull-right">
-                            <input type="text" placeholder="Search for products, brands, shops"/>
-                        </div>
-				    </div>
-                    
-                    <!-- old right menu -->
-                    <!-- <div class="col-sm-8">
-                       <div class="shop-menu pull-right">
-                            <ul class="nav navbar-nav">  -->
-                                <!-- <li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Account'}}</a></li> -->
-                                <!-- <li><a href="{{url('checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
-	                           
-								<!--<li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>-->
-
-                            <!--     <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
-                                <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li class="main-dropdown">
-									<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
-									@if(Auth::check())
-									<ul class="dropdown-menu dropdown-user">
-										<li>
-											<a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
-										</li>
-										<li>
-											<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-										</li>
-										<li class="divider"></li>
-										<li>
-											<a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-										</li>
-									</ul>
-									@endif
+								<li>
+									<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
 								</li>
-                            </ul>
-                        </div>  
-                    </div>-->
-                    <!-- old right menu -->
-
+								<!-- <li class="divider"></li> -->
+								<li>
+									<a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+								</li>
+							</ul>
+							@endif
+						</li>
+                    </ul>
                 </div>
             </div>
-        </div><!--/header-middle-->
-		
-		<!--header-bottom-->
-        <!-- <div class="header-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                        <div class="mainmenu pull-left">
-                            <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="{{url('')}}" {{$page == 'home' ? 'class=active' : ''}}>Home</a></li>
-                                <li><a href="{{url('products')}}" {{$page == 'products' ? 'class=active' : ''}}>Products</a></li>
-                                <li><a href="{{url('blog')}}" {{$page == 'blog' ? 'class=active' : ''}}>Blog</a></li>
+        </div>
+    </div>
+</div> 
+<!--/header_top-->
 
-                                <li><a id="compare" href="#animatedModal" disabled class="compare-products">Comparison List</a></li>
-
-                                <li><a href="{{url('contact-us')}}" {{$page == 'contact_us' ? 'class=active' : ''}}>Contact Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="search_box pull-right">
-                            <input type="text" placeholder="Search"/>
-                        </div>
-                    </div>
+<div class="header-middle"><!--header-middle-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="logo pull-left">
+                    <a href="{{url('')}}"><img src="{{asset('images/home/logo-eshop-angkasa.png')}}" alt="" height="40px;"/></a>
                 </div>
             </div>
-        </div>-->
+			<div class="col-sm-3">
+					<div class="search_box_home pull-right">
+                    <input type="text" placeholder="Search for products, brands, shops"/>
+                </div>
+		    </div>
+            
+            <!-- old right menu -->
+            <!-- <div class="col-sm-8">
+               <div class="shop-menu pull-right">
+                    <ul class="nav navbar-nav">  -->
+                        <!-- <li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Account'}}</a></li> -->
+                        <!-- <li><a href="{{url('checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
+                       
+						<!--<li><a href="{{url('wishlists/')}}"<i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li>-->
 
+                    <!--     <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
+                        <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                        <li class="main-dropdown">
+							<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::check() ? 'Logout' : 'Login'}}</a>
+							@if(Auth::check())
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+								</li>
+							</ul>
+							@endif
+						</li>
+                    </ul>
+                </div>  
+            </div>-->
+            <!-- old right menu -->
+
+        </div>
+    </div>
+</div><!--/header-middle-->
+
+<!--header-bottom-->
+<!-- <div class="header-bottom">
   
- <!--/header-bottom-->
+</div> -->
+<!--/header-bottom-->
 
-    </header><!--/header-->
-		<!-- {{url('products')}} -->
+</header><!--/header-->
+<!-- {{url('products')}} -->
 
-		@yield('content')
+@yield('content')
 
 <!--Footer HTML code from E-Shopper Template-->
-	<footer id="footer"><!--Footer-->
-		<div class="footer-top">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="companyinfo">
-							<h2><span>E-Shop</span></h2>
-							<p>E-Shop is an online shopping portal for its members to purchase products and apply for financing from Koperasi.</p>
-						</div>
+<footer id="footer"><!--Footer-->
+	<div class="footer-top">
+		<div class="container-footer">
+			<div class="row">
+
+		<!-- <div class="col-sm-2">
+					<div class="companyinfo">
+						<h2><span>E-Shop</span></h2>
+						<p>E-Shop is an online shopping portal for its members to purchase products and apply for financing from Koperasi.</p>
 					</div>
-					<div class="col-sm-7">
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe1.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-						
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe2.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-						
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe3.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-						
-						<div class="col-sm-3">
-							<div class="video-gallery text-center">
-								<a href="#">
-									<div class="iframe-img">
-										<img src="images/home/iframe4.png" alt="" />
-									</div>
-									<div class="overlay-icon">
-										<i class="fa fa-play-circle-o"></i>
-									</div>
-								</a>
-								<p>Circle of Hands</p>
-								<h2>24 DEC 2014</h2>
-							</div>
-						</div>
-					</div>
+				</div>
+
+				<div class="col-sm-7">
 					<div class="col-sm-3">
-						<div class="address">
-							<img src="{{asset('images/home/map.png')}}" alt="" />
-							<p>Angkasa Kuala Lumpur, Malaysia (MY)</p>
+						<div class="video-gallery text-center">
+							<a href="#">
+								<div class="iframe-img">
+									<img src="images/home/iframe1.png" alt="" />
+								</div>
+								<div class="overlay-icon">
+									<i class="fa fa-play-circle-o"></i>
+								</div>
+							</a>
+							<p>Circle of Hands</p>
+							<h2>24 DEC 2014</h2>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="video-gallery text-center">
+							<a href="#">
+								<div class="iframe-img">
+									<img src="images/home/iframe2.png" alt="" />
+								</div>
+								<div class="overlay-icon">
+									<i class="fa fa-play-circle-o"></i>
+								</div>
+							</a>
+							<p>Circle of Hands</p>
+							<h2>24 DEC 2014</h2>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="video-gallery text-center">
+							<a href="#">
+								<div class="iframe-img">
+									<img src="images/home/iframe3.png" alt="" />
+								</div>
+								<div class="overlay-icon">
+									<i class="fa fa-play-circle-o"></i>
+								</div>
+							</a>
+							<p>Circle of Hands</p>
+							<h2>24 DEC 2014</h2>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="video-gallery text-center">
+							<a href="#">
+								<div class="iframe-img">
+									<img src="images/home/iframe4.png" alt="" />
+								</div>
+								<div class="overlay-icon">
+									<i class="fa fa-play-circle-o"></i>
+								</div>
+							</a>
+							<p>Circle of Hands</p>
+							<h2>24 DEC 2014</h2>
+						</div>
+					</div>
+				</div> 
+
+				<div class="col-sm-3">
+					<div class="address">
+						<img src="{{asset('images/home/map.png')}}" alt="" />
+						<p>Angkasa Kuala Lumpur, Malaysia (MY)</p>
+					</div>
+				</div>-->
+				<div class="col-sm-6">
+					<div class="payment-methods text-left">
+						<div class="payment-methods">
+							<h2>Payment Methods</h2>
+							<img src="images/home/payment_methods/mastercard.png" alt="" />
+							<img src="images/home/payment_methods/visa.png" alt="" />
+							<img src="images/home/payment_methods/paypal.png" alt="" />
+							<img src="images/home/payment_methods/maybank2u.png" alt="" />
+							<img src="images/home/payment_methods/cimb_clicks.png" alt="" />
+							<img src="images/home/payment_methods/rhb_now.png" alt="" />
+							<img src="images/home/payment_methods/cod.png" alt="" />
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		
-		<div class="footer-widget">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Service</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Online Help</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Order Status</a></li>
-								<li><a href="#">Change Location</a></li>
-								<li><a href="#">FAQ’s</a></li>
-							</ul>
+
+				<div class="col-sm-6">
+					<div class="delivery-services text-left">
+						<div class="delivery-services">
+							<h2>Delivery Services</h2>
+							<img src="images/home/delivery_services/gdex.png" alt="" />
+							<img src="images/home/delivery_services/ninja_van.png" alt="" />
+							<img src="images/home/delivery_services/taqbin.png" alt="" />
+							<img src="images/home/delivery_services/poslaju.png" alt="" />
+							<img src="images/home/delivery_services/skynet.png" alt="" />
 						</div>
 					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Quock Shop</h2>
+				</div>
+
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="footer-widget">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="single-widget">
+						<h2>Service</h2>
+						<ul class="nav nav-pills nav-stacked">
+							<li><a href="#">Online Help</a></li>
+							<li><a href="#">Contact Us</a></li>
+							<li><a href="#">Order Status</a></li>
+							<li><a href="#">Change Location</a></li>
+							<li><a href="#">FAQ’s</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="single-widget">
+						<h2>Policies</h2>
+						<ul class="nav nav-pills nav-stacked">
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Privecy Policy</a></li>
+							<li><a href="#">Refund Policy</a></li>
+							<li><a href="#">Billing System</a></li>
+							<li><a href="#">Ticket System</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="companyinfo">
+						<h2>About Angkasa E-Shop</h2>
+						<p>Angkasa E-Shop is pioneering e-commerce across some of the fastest growing 
+							countries in the world by offering a fast, secure and convenient online 
+							shopping experience with a broad product offering in categories ranging 
+							from fashion, consumer electronics to household goods, toys and sports 
+							equipment. Lazada is always striving to offer its customers the best possible
+							 offering – including multiple payment options, free returns and extensive 
+							 customer service and warranty commitments.
+						</p>
+					</div>
+				</div>
+				<div class="col-sm-4 col-sm-offset-1">
+					<div class="single-widget">
+						<h2>Top Categories & Brands</h2>
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href="#">T-Shirt</a></li>
 								<li><a href="#">Mens</a></li>
@@ -342,112 +350,69 @@
 								<li><a href="#">Gift Cards</a></li>
 								<li><a href="#">Shoes</a></li>
 							</ul>
-						</div>
 					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Policies</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privecy Policy</a></li>
-								<li><a href="#">Refund Policy</a></li>
-								<li><a href="#">Billing System</a></li>
-								<li><a href="#">Ticket System</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Company Information</a></li>
-								<li><a href="#">Careers</a></li>
-								<li><a href="#">Store Location</a></li>
-								<li><a href="#">Affillate Program</a></li>
-								<li><a href="#">Copyright</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<form action="#" class="searchform">
-								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-								<p>Get the most recent updates from <br />our site and be updated your self...</p>
-							</form>
-						</div>
-					</div>
-					
 				</div>
+				
 			</div>
 		</div>
-		
-		<div class="footer-bottom">
-			<div class="container">
-				<div class="row">
-					<p class="pull-right">© Angkasa E-Shop 2016</p>
-					<!-- <p class="pull-right">Designed by <span><a target="_blank" href="http://www.multibase.com.my">Multibase</a></span></p> -->
-				</div>
-			</div>
-		</div>
-		
-	</footer><!--/Footer-->
+	</div>
 	
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="row">
+				<p class="pull-right">© Angkasa E-Shop 2017</p>
+				<!-- <p class="pull-right">Designed by <span><a target="_blank" href="http://www.multibase.com.my">Multibase</a></span></p> -->
+			</div>
+		</div>
+	</div>
+	
+</footer><!--/Footer-->
 
-  
-    <script src="{{asset('js/jquery.js')}}"></script>
-	<script src="{{asset('js/bootstrap.min.js')}}"></script>
-	<script src="{{asset('js/jquery.scrollUp.min.js')}}"></script>
-	<script src="{{asset('js/price-range.js')}}"></script>
-    <script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
+
+<script src="{{asset('js/jquery.js')}}"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/jquery.scrollUp.min.js')}}"></script>
+<script src="{{asset('js/price-range.js')}}"></script>
+<script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
+<script src="{{asset('js/main.js')}}"></script>
 
 
-
-
-   	<!-- Popover Click -->
-   <script type="text/javascript">
+<!-- Popover Click -->
+<script type="text/javascript">
 	$(document).ready(function(){
-	    $('[data-toggle="popover"]').popover();   
+	$('[data-toggle="popover"]').popover();   
 	});
-	</script>
-	<style type="text/css">
-		.popover-product{
-	        margin-bottom: 20px;
-	    }
-	</style>
+</script>
 
-    <!-- Zoom Product -->
-   <script src="{{asset('js/zoom_product.js')}}"></script>
-   
+<style type="text/css">
+	.popover-product{
+	    margin-bottom: 20px;
+	}
+</style>
 
-	<!-- Compare Product JS -->
-	<script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('js/jquery.comparison.js')}}"></script>
-	<script type="text/javascript" src="{{asset('js/animatedModal.min.js')}}"></script>
+<!-- Zoom Product -->
+<script src="{{asset('js/zoom_product.js')}}"></script>
 
-	<script>
-		$("#compare").animatedModal({
-		
-		    animatedIn:'lightSpeedIn',
-		    animatedOut:'bounceOutDown',
-		    color:'#3498db',
-		
-		});
-		
-		$(document).ready(function() {
-		
-		   $('.product').compare({			
-				compareButton: '.compare-products'
-			});
+<!-- Compare Product JS -->
+<script type="text/javascript" src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jquery.comparison.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/animatedModal.min.js')}}"></script>
 
+<script>
+$("#compare").animatedModal({
 
-		
-		});
-	
-	</script>
+    animatedIn:'lightSpeedIn',
+    animatedOut:'bounceOutDown',
+    color:'#3498db',
+});
 
+$(document).ready(function() {
+
+   $('.product').compare({			
+		compareButton: '.compare-products'
+	});
+});
+</script>
 
 
 <!-- Featured Products -->
@@ -493,9 +458,6 @@ $(document).ready(function(){
 });
 </script>
 
-
-
-
 <!-- Vertical tab home -->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -510,42 +472,42 @@ $(document).ready(function() {
 });
 </script>
 
-
 <!-- vertical preloved -->
 <script type="text/javascript" src="{{asset('js/jssor.slider-22.1.6.min.js')}}"></script>
 <script type="text/javascript">
-        jssor_1_slider_init = function() {
+jssor_1_slider_init = function() {
 
-            var jssor_1_options = {
-              $AutoPlay: true,
-              $DragOrientation: 2,
-              $PlayOrientation: 2,
-              $ArrowNavigatorOptions: {
-                $Class: $JssorArrowNavigator$
-              }
-            };
+    var jssor_1_options = {
+      $AutoPlay: true,
+      $DragOrientation: 2,
+      $PlayOrientation: 2,
+      $ArrowNavigatorOptions: {
+        $Class: $JssorArrowNavigator$
+      }
+    };
 
-            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
 
-            /*responsive code begin*/
-            /*you can remove responsive code if you don't want the slider scales while window resizing*/
-            function ScaleSlider() {
-                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
-                if (refSize) {
-                    refSize = Math.min(refSize, 600);
-                    jssor_1_slider.$ScaleWidth(refSize);
-                }
-                else {
-                    window.setTimeout(ScaleSlider, 30);
-                }
-            }
-            ScaleSlider();
-            $Jssor$.$AddEvent(window, "load", ScaleSlider);
-            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
-            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
-            /*responsive code end*/
-        };
-    </script>
+    /*responsive code begin*/
+    /*you can remove responsive code if you don't want the slider scales while window resizing*/
+    function ScaleSlider() {
+        var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+        if (refSize) {
+            refSize = Math.min(refSize, 600);
+            jssor_1_slider.$ScaleWidth(refSize);
+        }
+        else {
+            window.setTimeout(ScaleSlider, 30);
+        }
+    }
+    ScaleSlider();
+    $Jssor$.$AddEvent(window, "load", ScaleSlider);
+    $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+    $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+    /*responsive code end*/
+};
+</script>
+
 <script type="text/javascript">jssor_1_slider_init();</script>
 
 <!-- Bank Partner Slider -->
@@ -555,56 +517,53 @@ $(document).ready(function() {
 <link href="{{asset('css/multi_item_style.css')}}" rel="stylesheet">
 
 <script>
-	$(function() {
-
-		$( '#mi-slider' ).catslider();
-
-	});
+$(function() {
+	$( '#mi-slider' ).catslider();
+});
 </script>
 
 <!-- PreOrder Items-->
- <!-- Load modernizr or html5shiv -->
-    <script type="text/javascript" src="{{asset('//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js')}}"></script>
- 	<script>window.modernizr || document.write('<script src="../lib/modernizr/modernizr-custom.js"><\/script>')</script>
+<!-- Load modernizr or html5shiv -->
+<script type="text/javascript" src="{{asset('//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js')}}"></script>
+<script>window.modernizr || document.write('<script src="../lib/modernizr/modernizr-custom.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="../lib/jquery/jquery.js"><\/script>')</script>
 
-    <script>window.jQuery || document.write('<script src="../lib/jquery/jquery.js"><\/script>')</script>
+<!-- Load miSlider -->
+<link href="{{asset('css/mislider.css')}}" rel="stylesheet">
+<link href="{{asset('css/mislider-skin-cameo.css')}}" rel="stylesheet">
+<script type="text/javascript" src="{{asset('js/mislider.js')}}"></script>
+<script type="text/javascript">
+jQuery(function ($) {
+    var slider = $('.mis-stage').miSlider({
+        //  The height of the stage in px. Options: false or positive integer. false = height is calculated using maximum slide heights. Default: false
+        //stageHeight: 380,
+        //  Number of slides visible at one time. Options: false or positive integer. false = Fit as many as possible.  Default: 1
+        slidesOnStage: false,
+        //  The location of the current slide on the stage. Options: 'left', 'right', 'center'. Defualt: 'left'
+        slidePosition: 'center',
+        //  The slide to start on. Options: 'beg', 'mid', 'end' or slide number starting at 1 - '1','2','3', etc. Defualt: 'beg'
+        slideStart: 'mid',
+        //  The relative percentage scaling factor of the current slide - other slides are scaled down. Options: positive number 100 or higher. 100 = No scaling. Defualt: 100
+        slideScaling: 150,
+        //  The vertical offset of the slide center as a percentage of slide height. Options:  positive or negative number. Neg value = up. Pos value = down. 0 = No offset. Default: 0
+        offsetV: -5,
+        //  Center slide contents vertically - Boolean. Default: false
+        centerV: true,
+        //  Opacity of the prev and next button navigation when not transitioning. Options: Number between 0 and 1. 0 (transparent) - 1 (opaque). Default: .5
+        navButtonsOpacity: 1
+    });
+});
+</script>
 
-    <!-- Load miSlider -->
-    <link href="{{asset('css/mislider.css')}}" rel="stylesheet">
-	<link href="{{asset('css/mislider-skin-cameo.css')}}" rel="stylesheet">
-    <script type="text/javascript" src="{{asset('js/mislider.js')}}"></script>
-    <script type="text/javascript">
-        jQuery(function ($) {
-            var slider = $('.mis-stage').miSlider({
-                //  The height of the stage in px. Options: false or positive integer. false = height is calculated using maximum slide heights. Default: false
-                //stageHeight: 380,
-                //  Number of slides visible at one time. Options: false or positive integer. false = Fit as many as possible.  Default: 1
-                slidesOnStage: false,
-                //  The location of the current slide on the stage. Options: 'left', 'right', 'center'. Defualt: 'left'
-                slidePosition: 'center',
-                //  The slide to start on. Options: 'beg', 'mid', 'end' or slide number starting at 1 - '1','2','3', etc. Defualt: 'beg'
-                slideStart: 'mid',
-                //  The relative percentage scaling factor of the current slide - other slides are scaled down. Options: positive number 100 or higher. 100 = No scaling. Defualt: 100
-                slideScaling: 150,
-                //  The vertical offset of the slide center as a percentage of slide height. Options:  positive or negative number. Neg value = up. Pos value = down. 0 = No offset. Default: 0
-                offsetV: -5,
-                //  Center slide contents vertically - Boolean. Default: false
-                centerV: true,
-                //  Opacity of the prev and next button navigation when not transitioning. Options: Number between 0 and 1. 0 (transparent) - 1 (opaque). Default: .5
-                navButtonsOpacity: 1
-            });
-        });
-    </script>
+<!-- Apply other styles -->
+<link href="{{asset('css/styles_mislider.css')}}" rel="stylesheet">
 
-    <!-- Apply other styles -->
-    <link href="{{asset('css/styles_mislider.css')}}" rel="stylesheet">
-
-    <!-- google-code-prettify -->
-	<script type="text/javascript" src="{{asset('https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js')}}"></script>
-	<script type="text/javascript">$(function() { $('pre').addClass('prettyprint');})</script>
+<!-- google-code-prettify -->
+<script type="text/javascript" src="{{asset('https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js')}}"></script>
+<script type="text/javascript">$(function() { $('pre').addClass('prettyprint');})</script>
 <!-- PreOrder Items-->
 
-   	@yield('js_content')
+@yield('js_content')
 
 
 </body>

@@ -22,7 +22,6 @@
         list-style: none;
         overflow: visible;
         height: 100%;
-        margin-top: 0;
     }
         /*  Set slide width and padding */
         .mis-slide {
@@ -32,7 +31,6 @@
                 between slides */
             width: 100%;
             height: auto;
-            padding: 0;
             display: block;
             position: relative;
             float: left;
@@ -132,7 +130,7 @@
     .mis-slider {
         /*  Slider element does not need to be a specific height
             Here we use it to create a stylish bar behind slides */
-        margin-top: 138px;
+        margin-top: 120px;
         height: 80px;
         background-color: #eee;
     }
@@ -160,8 +158,8 @@
                 for single-item slider. Use padding to add space 
                 between slides */
             width: 360px;
-            height: 200px;
-            padding: 40px;
+            height: 320px;
+            padding: -10px;
             /*  Undo the margin added by slider element */
             margin-top: -138px
         }

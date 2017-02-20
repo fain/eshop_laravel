@@ -142,16 +142,50 @@ class Front extends Controller {
                                 ->with('subcat')
                                 ->get();
 
+        $brand_main_category = DB::table('products')
+                                     ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                     ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                     ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                     ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                     DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                     ->groupBy('main_cat')
+                                     ->orderBy('categories.id')
+                                     ->get(); 
 
-        // $product_subcategories = DB::table('products')
-        //                          ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-        //                          ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
-        //                         ->select('products.*', 'categories.*', 'products_info.*', 
-        //                          DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
-        //                         ->get(); 
+
+        $brand_by_electronic = DB::table('products')
+                                     ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                     ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                     ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                     ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                     DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                     ->WHERE('categories.name', '<>', 'Electronics')
+                                     ->WHERE('products.category_id', '=', 15)
+                                     ->groupBy('brands.name')
+                                     ->get(); 
 
 
+        $brand_by_women = DB::table('products')
+                                     ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                     ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                     ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                     ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                     DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                     ->WHERE('categories.name', '<>', 'Women\`s Fashion')
+                                     ->WHERE('products.category_id', '=', 17)
+                                     ->groupBy('brands.name')
+                                     ->get(); 
 
+        $brand_by_men = DB::table('products')
+                                     ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                     ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                     ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                     ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                     DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                     ->WHERE('categories.name', '<>', 'Men\`s Fashion')
+                                     ->WHERE('products.category_id', '=', 19)
+                                     ->groupBy('brands.name')
+                                     ->get(); 
 
 
         return view('front.home',
@@ -172,8 +206,12 @@ class Front extends Controller {
                 'thirtypercent_off' => $thirty_off,
                 'fiftypercent_off' => $fifty_off,
                 'seventypercent_off' => $seventy_off,
-                'treecat' => $treecats
-                // 'product_subcategory' => $product_subcategories
+                'treecat' => $treecats,
+                'brands_by_electronics' => $brand_by_electronic,
+                'brands_by_womens' => $brand_by_women,
+                'brands_by_mens' => $brand_by_men, 
+                'brands_main_categories' => $brand_main_category
+
 
                 
 

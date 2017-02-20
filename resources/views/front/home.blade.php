@@ -89,7 +89,7 @@
 	
 
 		<ul class="bxslider">
-			
+			<!-- all new -->
 	        @foreach ($products as $product)
 			<div class="col-xs-10 col-sm-6 col-md-2">
 		
@@ -433,7 +433,7 @@
                 <strong>
 				Shop 70% off and snag hot styles for less!*.
                 </strong> 
-				Shop the latest ELECTRONICS EQUIPMENTS at LOW PRICES! 
+				Shop ELECTRONICS at LOW PRICES! 
             </div>
             <div class="ends">
                 <small>
@@ -493,7 +493,7 @@
 		    </div>
 
 	    	<div data-u="slides" style="cursor:default;position:relative;top:40px;left:19px;width:250px;height:330px;overflow:hidden;">
-        		<!-- used_items -->
+        		<!-- products_used -->
         		@foreach ($products as $product)
 				<div class="col-sm-2">
 					<div class="product-image-wrapper">
@@ -548,27 +548,26 @@
 <!-- Preloved Items -->
  
 <!-- Preorder Items -->
+<br><br><h2 class="title text-center">PRE-ORDER ITEMS</h2>
 <div class="row">
-<br><!-- <h2 class="title text-center">Pre-Order Items</h2> -->
-<div class="col-sm-12" style="border: 2px solid #F7F7F5; width: 1290px; height:380px; right: 0px; left:15px;">
+<div class="col-sm-12" style="border: 2px solid #F7F7F5; width: 1290px; height:340px; right: 0px; left:15px; top:5px">
 	
-<div id="wrapper">
-<header>
-	<h2 class="title text-center">PRE-ORDER ITEMS</h2>
-</header>
+<div id="wrapper" style="width: 1256px; height:380px;">
+
 <figure>
     <div class="mis-stage">
         <!-- The element to select and apply miSlider to - the class is optional -->
         <ol class="mis-slider">
             <!-- The slider element - the class is optional - Set width of slide using CSS on this element -->
-  
+          	
+          	<!-- products_pre_order -->
             @foreach ($products as $product)
             <li class="mis-slide">
              <a class="mis-container">
 
              	<figure>
 					<div class="product-image-wrapper">
-						<div class="single-products" id="products_container">
+						<div class="single-products" id="products_container" style:"height: 290px">
 
 							<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
 							
@@ -579,7 +578,7 @@
                     		<!-- Slide content - whatever you want -->
 							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
 							<h2>RM{{$product->price}}</h2>
-				       		 <br>
+				       		 <br><br>
 				       		 <br><figcaption>{{$product->prod_name}}</figcaption>
 
 				       		 	<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
@@ -617,91 +616,55 @@
 </div> 
 <!-- Preorder Items -->
 
-<!-- Bank Partner -->
-<!-- <div class="row">
-<br><h2 class="title text-center">Bank Partner</h2>
-<div class="col-sm-12" style="border: 1px solid #F7F7F5; width: 530px; right: 0px; left:5px;">
-	
-				<div id="mi-slider" class="mi-slider">
+<!-- Brands by Category -->
+<br>
+<h2 class="title text-center">Brands by Category</h2>
+<div class="row">
+	<div class="col-sm-12" style="border: 2px solid #F7F7F5; width: 1290px; height:210px; right: 0px; left:15px; top:5px">
+			<div id="mi-slider" class="mi-slider">
 					<ul>
-						<li><a href="#"><img src="images/1.jpg" alt="img01"><h4>A</h4></a></li>
-						<li><a href="#"><img src="images/2.jpg" alt="img02"><h4>Oxfords</h4></a></li>
-						<li><a href="#"><img src="images/3.jpg" alt="img03"><h4>Loafers</h4></a></li>
-						<li><a href="#"><img src="images/4.jpg" alt="img04"><h4>Sneakers</h4></a></li>
+						@foreach($brands_by_electronics as $brand_by_electronic)
+						<li>
+							<a href="#">
+								<img src="../{{$brand_by_electronic->path}}{{$brand_by_electronic->brand_name}}"/>
+							</a></li>
+						@endforeach
 					</ul>
 					<ul>
-						<li><a href="#"><img src="images/1.jpg" alt="img01"><h4>B</h4></a></li>
-						<li><a href="#"><img src="images/2.jpg" alt="img02"><h4>Oxfords</h4></a></li>
-						<li><a href="#"><img src="images/3.jpg" alt="img03"><h4>Loafers</h4></a></li>
-						<li><a href="#"><img src="images/4.jpg" alt="img04"><h4>Sneakers</h4></a></li>
-					</ul>
+						@foreach($brands_by_womens as $brand_by_women)
+						<li>
+							<img src="../{{$brand_by_women->path}}{{$brand_by_women->brand_name}}"/>
+						@endforeach	</ul>
 					<ul>
-						<li><a href="#"><img src="images/1.jpg" alt="img01"><h4>C</h4></a></li>
-						<li><a href="#"><img src="images/2.jpg" alt="img02"><h4>Oxfords</h4></a></li>
-						<li><a href="#"><img src="images/3.jpg" alt="img03"><h4>Loafers</h4></a></li>
-						<li><a href="#"><img src="images/4.jpg" alt="img04"><h4>Sneakers</h4></a></li>
+						@foreach($brands_by_mens as $brand_by_men)
+						<li>
+							<img src="../{{$brand_by_men->path}}{{$brand_by_men->brand_name}}"/>
+						@endforeach
 					</ul>
-
-					<nav style="border-top: 5px solid #333; width: 430px; right: 0px; left:5px;">        		
-						<a href="#">Credit/Debit Cards</a>
-						<a href="#">Bank Transfer</a>
-						<a href="#">Online Banking</a>
+					<nav>
+						@foreach($brands_main_categories as $brand_main_category)
+						<a href="#">{{$brand_main_category->main_cat}}</a>
+						@endforeach
 					</nav>
 				</div>
-
-	</div>
-</div>  -->
-<!-- Bank Partner -->
-
-<h2 class="title text-center">Star Brands</h2>
-<div class="row">
-	            <div class="col-sm-12">
 	</div>
 </div>
+<!-- Brands by Category -->
 
-	<section>
-	    <div class="container">
-
-
-	        <div class="row">
-	            <div class="col-sm-12">
-
-
-        <!-- left sidebar -->
-
-        	<br/>
-        	<br/>
-
-
-
-
-		
-	        <div class="col-sm-8 padding-right">
-			
-					
-	             	
-	             <!-- right sidebar -->
-
-		           </div>
-	        </div>
-
+	<!-- Compare Features Items -->
+	<div id="animatedModal">
+	<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+	<div  id="btn-close-modal" class="close-animatedModal"> 
+	    CLOSE
+	</div>
+    
+	<div class="modal-content-compare">
+	    <div class="modal-inner">
+	    	<div class="no-products">Select some products to compare first</div>  
+	    	<div class="modal-products"></div>     
 	    </div>
+	</div>
 
-
-		<!-- Compare Features Items -->
-		<div id="animatedModal">
-		<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
-		<div  id="btn-close-modal" class="close-animatedModal"> 
-		    CLOSE
-		</div>
-		    
-		<div class="modal-content-compare">
-		    <div class="modal-inner">
-		    	<div class="no-products">Select some products to compare first</div>  
-		    	<div class="modal-products"></div>     
-		    </div>
-		</div>
-
-		</div> <!--modal-features-items-->
-	</section>
+	</div> <!--modal-features-items-->
+</section>
 @endsection

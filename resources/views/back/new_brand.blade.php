@@ -68,6 +68,13 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Image</label>
+                        <div class="col-md-3">
+                            <input id="input-1" type="file" class="file" name="images">
+                        </div>
+                    </div>
+
                     <div class="form-group text-center">
                         <button name="submit" class="btn btn-primary">Submit</button>
                     </div>
