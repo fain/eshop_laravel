@@ -601,19 +601,19 @@
 
 							</div>
 							<img src="images/home/pre-order.png" class="pre-order" alt="" />
+							
+							<div class="choose">
+								<ul>
+									<li><a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+										</a>
+									</li>
+								</ul>
+							</div>
 
 							<div class="clearfix"></div>
 						</div>
 
-						<div class="choose">
-				            <ul class="nav nav-pills nav-justified">
-				                <li>
-				                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
-									</a> 
-								</li>
-				            </ul>
-				    	</div>
 					</div>
 
                     </figure>

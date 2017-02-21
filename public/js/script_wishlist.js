@@ -6,7 +6,8 @@ jQuery(function(){
 		$product_name = jQuery(this).attr("product_name");
 		$prduct_price = jQuery(this).attr("product_price");
 		if(jQuery.inArray($product_id,wish_list)==-1){
-
+			wish_list.push($product_id);
+			
 			$.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -23,12 +24,15 @@ jQuery(function(){
                 data: formData,
                 dataType: 'json',
                 success: function( data ) {
-                    $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
-
+                    $("#ajaxResponse").empty().append('<div class="alert alert-success">'+'<strong>'+data.success_message+'</strong>'+'</div>').fadeIn(300).fadeOut(2500);
+                    
                     return true;
                 },
-                fail: function(){
-                    alert('fail');
+                failed: function(){
+                    $("#ajaxResponse").empty().append('<div class="alert alert-info">'+data.failed_message+'</div>').fadeIn(300).fadeOut(2500);
+                    alert('failed');
+                    return true;
+
                 }
 			});
            // wish_list.push($product_id);
@@ -72,10 +76,10 @@ function show_message($msg){
 	});},1000);
 }
 function count_items_in_wishlist_update(){
-	jQuery("#listitem").html(wish_list.length);
+	// jQuery("#listitem").html(wish_list.length);
 	if(wish_list.length>1){
-		jQuery("#p_label").html("Products");
+		jQuery("#p_label").html("Wishlists" + " (" + wish_list.length + ")");
 		}else{
-		jQuery("#p_label").html("Product");
+		jQuery("#p_label").html("Wishlist" + " (" + wish_list.length + ")");
 	}  
 }

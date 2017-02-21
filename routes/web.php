@@ -40,7 +40,7 @@ Route::get('/products/categories','Front@product_categories');
 Route::get('/products/brands','Front@product_brands');
 
 
-
+//Add to wishlists
 Route::post('/wishlist','ApiController@wishlist');
 
 

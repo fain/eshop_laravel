@@ -5081,6 +5081,7 @@ a.thumbnail.active {
 }
 .alert-info hr {
   border-top-color: #a6e1ec;
+  font-style: strong;
 }
 .alert-info .alert-link {
   color: #245269;

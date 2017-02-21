@@ -98,28 +98,13 @@
                     <ul class="nav navbar-nav">
                    	    <!-- <li><a href="{{url('wishlists/')}}"><i class="fa fa-heart" aria-hidden="true"></i> Wishlist ()</a></li> -->
                 <li>
-                    <div>
-                        <a>
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                            <p class="wish_list_heading">
-                                <a href="{{url('wishlist')}}"><span id='listitem'>0</span>
-                                    <span id='p_label'>Product</span>
-                                </a>
-                            </p>
-<!--                             <table id='wish_list_item' border='0'></table>
- -->                        </a>
-                    </div>
+                    <a href="{{url('wishlist')}}">
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                        <span id='p_label'>Wishlist</span>
+                    </a>
+                <!-- <table id='wish_list_item' border='0'></table> -->
                 </li>
 
-<!-- Wishlist Ajax -->
-<!-- <div id='wish_list' class='col-s'>
-<p class="wish_list_heading">
-    <span id='listitem'>0</span>
-    <span id='p_label'>Product</span>
-</p>
-<table id='wish_list_item' border='0'></table>
-</div> -->
-<!-- Wishlist Ajax -->
 
                         <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
 
