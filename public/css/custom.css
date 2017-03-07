@@ -321,6 +321,37 @@ list-style-type:none;
   -webkit-background-clip:padding-box;
   background-clip:padding-box;outline:0
 }
+.table.table-hover-cart th {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    width:100px;
+    background-color: #f9f9f9;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 14px;
+
+}
+.table.table-hover-cart td {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-style: center;
+
+
+}
+
+.table.table-hover-cart tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding-right: 140px;
+}
 
 
 .table.table-striped-wishlist th {
@@ -328,27 +359,31 @@ list-style-type:none;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    width:200px;
+    width:100px;
     background-color: #f9f9f9;
-    font-style: normal;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 14px;
 
 }
 .table.table-striped-wishlist td {
   border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    padding-right: 140px;
-    background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-style: center;
+
 
 }
 
 .table.table-striped-wishlist tr {
   border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    padding-right: 140px;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding-right: 140px;
 }
 
 .navbar-defaultmenu .navbar-collapse, .navbar-default .navbar-form{
@@ -481,3 +516,9 @@ img.brands_square{
   margin-bottom: 0px;
 
 }
+
+img.product-wishlist {
+  width:50px;
+  height: 50px;
+}
+

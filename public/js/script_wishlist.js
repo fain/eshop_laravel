@@ -6,6 +6,8 @@ jQuery(function(){
 		$product_name = jQuery(this).attr("product_name");
 		$prduct_price = jQuery(this).attr("product_price");
 		if(jQuery.inArray($product_id,wish_list)==-1){
+			$product_str = "<tr class='wishlist-item' id='list_id_"+$product_id+"'><td class='w-pname'>"+$product_name+"</td><td class='w-price'>$ "+$prduct_price+"</td><td class='w-premove' wpid='"+$product_id+"'>x</td></tr>";
+			jQuery("#wish_list_item").append($product_str);
 			wish_list.push($product_id);
 			
 			$.ajaxSetup({
@@ -22,18 +24,17 @@ jQuery(function(){
                 type: "POST",
                 url: '/wishlist',
                 data: formData,
-                dataType: 'json',
-                success: function( data ) {
-                    $("#ajaxResponse").empty().append('<div class="alert alert-success">'+'<strong>'+data.success_message+'</strong>'+'</div>').fadeIn(300).fadeOut(2500);
-                    
-                    return true;
+            	dataType: 'json',
+                success: function(data) {
+  
+                	$("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.success_message+'</div>').fadeIn(300).fadeOut(2800);
+                	
+                	return true;
                 },
-                failed: function(){
-                    $("#ajaxResponse").empty().append('<div class="alert alert-info">'+data.failed_message+'</div>').fadeIn(300).fadeOut(2500);
-                    alert('failed');
-                    return true;
-
+                fail: function (data) {
+				  	alert('fail');
                 }
+
 			});
            // wish_list.push($product_id);
 			// show_message("Product added");

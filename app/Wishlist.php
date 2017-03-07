@@ -4,11 +4,17 @@ namespace Eshop;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Wishlist extends BaseModel {
-    protected $primaryKey = 'id';
-    protected $table = 'wishlists';
-    protected $fillable = array('id', 'user_id', 'created_at', 'updated_at');
+class Wishlist extends Model 
+{
 
+    public function user()
+    {
+        return $this->belongsTo('Eshop\User');
+    }
 
+    public function wishlistItems()
+    {
+        return $this->hasMany('Eshop\WishlistItem');
+    }
 
 }

@@ -6,6 +6,8 @@
 	@include('shared.topbar')
 
  <div class="row">
+ 	
+
 	<div class="col-sm-12">
 	<!-- VERTICAL TAB -->
 	<div class="col-sm-4 bhoechie-tab-container">
@@ -51,6 +53,7 @@
             </div>
     </div> 
 	<!-- VERTICAL TAB -->
+ 	
 
 	<!--slideshow-->
 	<div class="col-sm-5-home">
@@ -84,12 +87,14 @@
 <div id='msg'></div>
 
 <div class="row">
+	
+	<h2 class="title text-center">E-shop's Products</h2>
+
+	<div id="ajaxResponse" style="font-size: 16; font-weight:bold"></div>
+
 	<h2 class="title text-center">Featured Items</h2>
 
 	<div class="col-sm-10">
-
-		<div id="ajaxResponse"></div>
-	
 
 		<ul class="bxslider">
 			<!-- all new -->
@@ -101,7 +106,6 @@
 					
 
 						<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-							<!-- <input type="hidden" value="{{$product->id}}" name="all_prod"> -->
 
 							<button>
 								<div>+<div>
@@ -111,17 +115,8 @@
 							<h4>RM{{number_format($product->price,2)}}</h4>
                             <a href="{{ url('products', [$product->products_id])}}"><p>{{$product->prod_name}}</p></a>
 						
-							<form action="/cart" method="post" class="side-by-side">
-			                    {!! csrf_field() !!}
-			                    <input type="hidden" name="products_id" value="{{ $product->products_id }}">
-			                    <input type="hidden" name="prod_name" value="{{ $product->prod_name }}">
-			                    <input type="hidden" name="price" value="{{ $product->price }}">
-			                    <input type="submit" class="btn btn-default add-to-cart" value="Cart">
-			                </form>
- 							alert(document.getElementById("{{ $product->products_id }}").value);  
-                          <!-- <a href='{{url("cart/$product->products_id")}}' class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a> -->
-                            
-
+							                            
+	                    	<a href="/addCart/{{$product->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
                             <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 
 
@@ -134,10 +129,9 @@
 					<div class="choose">
                         <ul class="nav nav-pills nav-justified">
                             <li>
-                            	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+                            	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
 									<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
 								</a> 
-								
 
           					</li>
                         </ul>
@@ -180,6 +174,8 @@
 	</div>
 	<div class="col-sm-10"> 
 		<div class="flexslider">
+
+
 	      <ul class="slides">
 
 			<!-- products_top_sale -->
@@ -199,8 +195,8 @@
 	                    <p>{{$product->prod_name}}</p>
 
 	      
-	                    <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-	                    <a href='{{url("products/cart/$product->id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+	                    <a href="/addCart/{{$product->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
+	                    <a href='{{url("products/cart/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 
 					</div>
 					<img src="images/home/top-seller.png" class="top-seller" alt="" />
@@ -210,7 +206,7 @@
 					<div class="choose">
 	                <ul class="nav nav-pills nav-justified">
 	                    <li>
-	                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+	                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
 								<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
 							</a>
 
@@ -250,7 +246,7 @@
 		<ul class="bxslider_newest">
 
 			<!-- products_new -->
-	        @foreach ($products as $product)
+	        @foreach ($products_new as $product_new)
 			<div class="col-xs-10 col-sm-6 col-md-2">
 		
 				<div class="product-image-wrapper">
@@ -262,13 +258,13 @@
 								<div>+<div>
 							</button>
 
-							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-							<h4>RM{{number_format($product->price,2)}}</h4>
-                            <p>{{$product->prod_name}}</p>
+							<img src="../{{$product_new->path}}{{$product_new->name}}" class="product-image"/>
+							<h4>RM{{number_format($product_new->price,2)}}</h4>
+                            <p>{{$product_new->prod_name}}</p>
 						
 
-                            <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-                            <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+                            <a href="/addCart/{{$product_new->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
+                            <a href='{{url("products/details/$product_new->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 
 
 						</div>
@@ -280,7 +276,7 @@
 					<div class="choose">
                         <ul class="nav nav-pills nav-justified">
                             <li>
-                            	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+                            	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
 									<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
 								</a> 
 								
@@ -508,7 +504,7 @@
 
 	    	<div data-u="slides" style="cursor:default;position:relative;top:40px;left:19px;width:250px;height:330px;overflow:hidden;">
         		<!-- products_used -->
-        		@foreach ($products as $product)
+        		@foreach ($products_used as $product_used)
 				<div class="col-sm-2">
 					<div class="product-image-wrapper">
 						<div class="single-products" id="products_container">
@@ -519,13 +515,13 @@
 									<div>+<div>
 								</button>
 
-								<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-								<h4>RM{{number_format($product->price,2)}}</h4>
-				                <p>{{$product->prod_name}}</p>
+								<img src="../{{$product_used->path}}{{$product_used->name}}" class="product-image"/>
+								<h4>RM{{number_format($product_used->price,2)}}</h4>
+				                <p>{{$product_used->prod_name}}</p>
 							
 
-				                <a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-				                <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+				                <a href="/addCart/{{$product_used->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
+				                <a href='{{url("products/details/$product_used->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 
 
 							</div>
@@ -537,7 +533,7 @@
 						<div class="choose">
 				            <ul class="nav nav-pills nav-justified">
 				                <li>
-				                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+				                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
 										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
 									</a> 
 								</li>
@@ -575,7 +571,7 @@
             <!-- The slider element - the class is optional - Set width of slide using CSS on this element -->
           	
           	<!-- products_pre_order -->
-            @foreach ($products as $product)
+            @foreach ($products_pre_order as $product_pre_order)
             <li class="mis-slide">
              <a class="mis-container">
 
@@ -590,13 +586,13 @@
 								</button>
 
                     		<!-- Slide content - whatever you want -->
-							<img src="../{{$product->path}}{{$product->name}}" class="product-image"/>
-							<h4>RM{{number_format($product->price,2)}}</h4>
+							<img src="../{{$product_pre_order->path}}{{$product_pre_order->name}}" class="product-image"/>
+							<h4>RM{{number_format($product_pre_order->price,2)}}</h4>
 				       		 <br><br>
-				       		 <br><figcaption>{{$product->prod_name}}</figcaption>
+				       		 <br><figcaption>{{$product_pre_order->prod_name}}</figcaption>
 
-				       		 	<a href="{{url('cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-				                <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+				       		 	<a href="/addCart/{{$product_pre_order->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
+				                <a href='{{url("products/details/$product_pre_order->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 
 
 							</div>
@@ -604,7 +600,7 @@
 							
 							<div class="choose">
 								<ul>
-									<li><a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+									<li><a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
 										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
 										</a>
 									</li>
@@ -690,22 +686,5 @@
 @section('js_section')
 <SCRIPT TYPE="text/javascript">
 
- //    var user_id = $('#user_id').val();
-	// var formData = {
- //                'user_id': user_id,
- //                'product_id': $('#prod_id').val()
- //            };
-
- //            alert($('#prod_id').val());
-
- //            var data = jQuery.extend(true, bs, formData);
-
-	// $.ajax({
-	//     type: "POST",
-	//     url: '/product_wishlist',
-	//     data: data,
-	//     dataType: 'json',
-	//     success: function( data ) {
-	//         $("#ajaxResponse").empty().append('<div class="alert alert-success">'+data.message+'</div>');
 
 </SCRIPT>

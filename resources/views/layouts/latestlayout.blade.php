@@ -12,9 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-<!-- this line supposely for title -->
-
+    <title>{{$title}}</title>
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet"> -->
     <link href="{{asset('css/prettyPhoto.css')}}" rel="stylesheet">
@@ -100,7 +98,6 @@
   
                 <div class="shop-menu pull-right">
                     <ul class="nav navbar-nav">
-                        @if(Auth::user())
                         <li>
                             <a href='{{url("products/wishlists/{id}")}}'>
                                 <i class="fa fa-heart" aria-hidden="true"></i>
@@ -110,19 +107,30 @@
 
                         <li><a href="{{url('backend/login')}}"><i class="fa fa-briefcase"></i> Merchants</a></li>
 
-            
+                       <!--  <li>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> <span class="simpleCart_total"></span><span id="simpleCart_quantity" class="simpleCart_quantity"></span> Cart<span class="caret"></span></a>
+                                    <ul class="dropdown-menu dropdown-cart" role="menu">
+                                        <li>
+                                            <span class="simpleCart_items"></span> <br />
+                                        </li>
+                                        <li><a href="{{url('checkout')}}" class="simpleCart_checkout center-block btn btn-default">Checkout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li> -->
                          <li>
-                             <a href="{{url('/product_carts')}}"><!-- class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" -->
+                             <a href="{{url('cart')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                <span id='p_labelcart'>Cart (0)</span> 
+                                <span id='p_labelcart'>Cart (0)</span>
                             </a>
-                 
                         </li>
-                        @endif
+
 
 
                         <li class="main-dropdown">
-							<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-lock"></i> {{Auth::check() ? 'Profile' : 'Login'}}<span class="caret"></span></a>
+							<a href="{{Auth::check() ? '#' : url('auth/login')}}"><i class="fa fa-user-circle-o"></i> {{Auth::check() ? 'Profile' : 'Login'}}<span class="caret"></span></a>
 							@if(Auth::check()) 
 							<ul class="dropdown-menu dropdown-user">
 								<li>
@@ -372,6 +380,7 @@ jQuery(function ($) {
 <!-- Wishlist -->
 <script type="text/javascript" src="{{asset('js/script_wishlist.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery_wishlist.js')}}"></script>
+
 
 
 @yield('js_content')

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\File;
+
 use Illuminate\Http\Request;
 
 use Eshop\Http\Requests;
@@ -51,8 +53,6 @@ class Front extends Controller {
     var $products_image;
     var $title;
     var $description;
-    var $carts;
-    var $wishlists;
 
     public function __construct() {
         $this->brands = Brand::all(array('name'));
@@ -63,6 +63,7 @@ class Front extends Controller {
         $this->products_image = ProductImage::all(array('id'));
         $this->carts = Cart::all(array('id'));
         $this->wishlists = Wishlist::all(array('id'));
+        $this->products_info = ProductInfo::all(array('id'));
 
 
 
@@ -78,13 +79,14 @@ class Front extends Controller {
                                 ->where('product_image.primary_img', '=', 'Y')
                                 ->get();
 
+// top sale change where to high profit
        $product_top_sale = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
                                 ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
                                 ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
                                 ->where('product_image.primary_img', '=', 'Y')
-                                ->where('products_info.type', '=', 'New')
+                                ->where('products_info.type', '=', 'Top Sale')
                                 ->get();
 
        $product_new = DB::table('products')
@@ -195,6 +197,15 @@ class Front extends Controller {
                                      ->get(); 
 
 
+        $total_wishlist_by_user = DB::table('users')
+                                     ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+                                     ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+                                     ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
+                                     ->WHERE('users.id', '=', 3)
+                                     ->groupBy('wishlists.product_id')
+                                     ->count();
+      
+
         return view('front.home',
             array(
                 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
@@ -217,7 +228,9 @@ class Front extends Controller {
                 'brands_by_electronics' => $brand_by_electronic,
                 'brands_by_womens' => $brand_by_women,
                 'brands_by_mens' => $brand_by_men, 
-                'brands_main_categories' => $brand_main_category
+                'brands_main_categories' => $brand_main_category,
+                'total_wishlists' => $total_wishlist_by_user
+
 
             )
         );
@@ -243,112 +256,6 @@ class Front extends Controller {
                 
             ));
     }
-    
-    // public function cart(Request $request) {
-
-    //     $prod_name = $request->prod_name;
-
-    //     $product = DB::table('products')
-    //                             ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
-    //                             ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
-    //                             ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
-    //                             ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name', 'shipping_rate.*')
-    //                             ->first();
-
-      
-    //     return view('front.cart', 
-    //         array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
-    //             'description' => '',
-    //             'page' => 'products',
-    //             'prod_name' => $prod_name
-                
-    //             ));
-    // }
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     if (Cart::search(['products_id' => $request->products_id])) {
-    //         return redirect('cart')->withSuccessMessage('Item is already in your cart!');
-    //     }
-
-    //     Cart::associate('Product','App')->add($request->products_id, $request->prod_name, 1, $request->price);
-    //     return redirect('cart')->withSuccessMessage('Item was added to your cart!');
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\JsonResponse
-    //  */
-    // public function update(Request $request, $products_id)
-    // {
-    //     // Validation on max quantity
-    //     $validator = Validator::make($request->all(), [
-    //         'quantity' => 'required|numeric|between:1,5'
-    //     ]);
-
-    //      if ($validator->fails()) {
-    //         session()->flash('error_message', 'Quantity must be between 1 and 5.');
-    //         return response()->json(['success' => false]);
-    //      }
-
-    //     Cart::update($id, $request->quantity);
-    //     session()->flash('success_message', 'Quantity was updated successfully!');
-    //     return response()->json(['success' => true]);
-
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($products_id)
-    // {
-    //     Cart::remove($products_id);
-    //     return redirect('cart')->withSuccessMessage('Item has been removed!');
-    // }
-
-    // /**
-    //  * Remove the resource from storage.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function emptyCart()
-    // {
-    //     Cart::destroy();
-    //     return redirect('cart')->withSuccessMessage('Your cart his been cleared!');
-    // }
-
-    // /**
-    //  * Switch item from shopping cart to wishlist.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function switchToWishlist($products_id)
-    // {
-    //     $products = Cart::instance('main')->get($products_id);
-
-    //     Cart::instance('main')->remove($products_id);
-
-    //     if (Cart::instance('wishlist')->search(['products_id' => $products->products_id])) {
-    //         return redirect('cart')->withSuccessMessage('Item is already in your Wishlist!');
-    //     }
-
-    //     Cart::instance('wishlist')->associate('Product','App')->add($products->products_id, $products->prod_name, 1, $products->price);
-    //     return redirect('cart')->withSuccessMessage('Item has been moved to your Wishlist!');
-
-    // }
-
 
     public function product_details($id) {
         $product = DB::table('products')
@@ -371,12 +278,69 @@ class Front extends Controller {
     }
 
  
-  
 
-    
+    public function product_wishlists($id) {
 
+        $id = Auth::user()->id;
+        $user_wishlist = DB::table('users')
+                                     ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+                                     ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+                                     ->leftjoin('products_info', 'wishlists.product_id', 'products_info.products_id')
+                                     ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                                     ->leftjoin('product_image', 'wishlists.product_id', 'product_image.products_id')
+                                     ->select('users.*', 'user_info.*', 'wishlists.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlists.id as pw_id') 
+                                     ->WHERE('users.id', '=', $id)
+                                     ->groupBy('wishlists.product_id')
+                                     ->get();
 
+      
+        return view('front.product_wishlists', 
+            array( 
+                'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
+                'description' => '',
+                'page' => 'product_wishlists',
+                'user_wish_list'  => $user_wishlist
 
+                
+                ));
+    }
+
+ 
+    //  public function delete_product_wishlist($pw_id) {
+
+    //     $wishlist = Wishlist::where('product_id', '=', $pw_id)->first();
+
+    //     dd($wishlist);
+
+    //         alert('satu');
+    //         if(isset($wishlist)){
+    //         $wishlist->delete();
+    //         alert('dua');
+    //     }
+
+    //     Session::flash('warning', 'Product wishlist had been successfully deleted!');
+    //     return redirect('/products/wishlists/{id}', Auth::user()->id);
+    // }
+
+    //     public function delete_product_wishlist($pw_id) {
+
+    //             $wishlists =  Wishlist::where('id', $pw_id)->delete();
+    //             dd($wishlists);
+
+    // }
+
+    public function delete_product_wishlist($pw_id) {
+     $wishlists = Wishlist::where('id', '=', $pw_id)->first();
+          
+
+        
+        dd($wishlists);
+
+        Session::flash('warning', 'Product wishlist had been successfully deleted!');
+        return redirect('/products/wishlists/{id}', Auth::user()->id);
+    }
+
+   
     public function product_merchants($id) {
         $merchantinfo = DB::table('merchantsinfo')
                                 ->leftjoin('merchants', 'merchants.id', '=', 'merchantsinfo.id')
@@ -431,6 +395,24 @@ class Front extends Controller {
                                 ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
                                 ->first();
 
+      // $user_wishlist = DB::table('users')
+      //                                ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+      //                                ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+      //                                ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
+      //                                ->WHERE('users.id', '=', $id)
+      //                                ->groupBy('wishlists.product_id')
+      //                                ->get();
+
+
+
+        // $total_wishlist_by_user = DB::table('users')
+        //                              ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+        //                              ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+        //                              ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
+        //                              ->WHERE('users.id', '=', 3)
+        //                              ->groupBy('wishlists.product_id')
+        //                              ->count();
+
          
         return view('front.login',
          array('title' => 'Log in or Sign Up',
@@ -439,6 +421,11 @@ class Front extends Controller {
             'brands' => $this->brands,
             'merchantsinfo' => $this->merchantsinfo,
             'categories' => $this->categories
+             // 'user_wish_list'  => $user_wishlist
+
+            // ,
+            // 'total_wishlists' => $total_wishlist_by_user
+
             
 
             )
@@ -506,6 +493,18 @@ class Front extends Controller {
             $request->session()->flash('success', 'You had been successfully Registered. You can log in now.');
             return redirect('/auth/login');
         }
+    }
+
+    public function getProfile()
+    {
+        $orders = Auth::user()->orders;
+        $orders->transform(function($order, $key)
+        {
+            $order->cart = unserialize($order->cart);
+            return $order;
+        });
+        return view('front.profile', ['orders' => $orders]);
+        
     }
 
     public function logout(){

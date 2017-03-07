@@ -1338,6 +1338,8 @@ class Back extends Controller
         $prod = new Product();
         $prod->destroy($pid);
 
+        dd($prod);
+
         $prod_info = ProductInfo::where("products_id", "=", $pid)->first();
         if(isset($prod_info)){
             $prod_info->delete();

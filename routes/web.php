@@ -17,6 +17,10 @@
 
 // Route::get('/', 'Main@index');
 
+
+
+
+
 // Authentication routes...
 Route::get('auth/login', 'Front@login');
 Route::post('auth/login_handler', 'Front@login_handler');
@@ -31,10 +35,15 @@ Route::get('/','Front@index');
 
 // Products/Shop
 Route::get('/products/{id}','Front@products');
-// 
+
 // cart
-Route::post('/cart', 'Front@cart');
-//
+Route::get('/addCart/{productId}', 'CartController@addCart');
+Route::get('/product_carts', 'CartController@showCart');
+Route::get('/removeCart/{productId}', 'CartController@removeCart');
+Route::get('/emptyCart', 'CartController@emptyCart');
+
+
+// details
 Route::get('/products/details/{id}','Front@product_details');
 Route::get('/products/categories','Front@product_categories');
 Route::get('/products/brands','Front@product_brands');
@@ -43,6 +52,11 @@ Route::get('/products/brands','Front@product_brands');
 //Add to wishlists
 Route::post('/wishlist','ApiController@wishlist');
 
+//View wishlists
+Route::get('/products/wishlists/{id}','Front@product_wishlists');
+
+//delete
+Route::get('/products/wishlists/{id}/delete_product_wishlist/{pw_id}','Front@delete_product_wishlist');
 
 Route::get('/blog','Front@blog');
 Route::get('/blog/post/{id}','Front@blog_post');
@@ -50,10 +64,12 @@ Route::get('/contact-us','Front@contact_us');
 Route::get('/login','Front@login');
 Route::get('/logout','Front@logout');
 
-Route::get('/checkout', [
-    'middleware' => 'auth',
-    'uses' => 'Front@checkout'
-]);
+Route::group(['middleware' => 'auth'], function (){
+	Route::get('/profile', [
+		'uses' => 'front@getProfile',
+		'as' => 'front.profile'
+	]);
+});
 
 Route::get('/search/{query}','Front@search');
 

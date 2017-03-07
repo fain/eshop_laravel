@@ -388,7 +388,7 @@ class ApiController extends Controller
     /*******************************Merchant Return Details Ajax End*********************************/
 
     /*******************************Wishlists Ajax Start*********************************/
-    public function wishlist(Request $request){
+    public function addWishlist(Request $request){
             
             $cur_datetime = Carbon::now();
 
@@ -404,12 +404,17 @@ class ApiController extends Controller
 
             $wishlists->save();
 
-            $success_msg = 'Your product had been added to Wishlist.';
-            $failed_msg = 'This product already in your Wishlist.';
+            $success_msg = 'Product was added to your Wishlist.';
+            $failed_msg = 'Product is already in your Wishlist!';
+            $login_msg = '<strong>Warning!</strong>+Please login first.';
+
+       
 
             $data = [
             'success_message'=> $success_msg,
-            'failed_message' => $failed_msg
+            'failed_message' => $failed_msg,
+            'login_message' => $login_msg
+
             ];
 
 

@@ -4,41 +4,21 @@ namespace Eshop;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model {
-
-    /**
-     * @var string
-     */
+class Cart extends Model 
+{
+    protected $primaryKey = 'id';
     protected $table = 'carts';
+    protected $fillable = array('user_id', 'created_at', 'updated_at');
 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'user_id', 'product_id', 'qty', 'total',
-    ];
-
-
-    /**
-     * A Product belongs to a Cart
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function ProductInfo() {
-        return $this->belongsTo('Eshop\ProductInfo', 'products_id');
+    public function user()
+    {
+        return $this->belongsTo('Eshop\User');
     }
 
-
-    /**
-     * A Cart belongs to a User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function UserInfo() {
-        return $this->belongsTo('Eshop\UserInfo', 'user_id');
+    public function cartItems()
+    {
+        return $this->hasMany('Eshop\CartItem');
     }
 
 }
