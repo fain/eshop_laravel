@@ -31,20 +31,29 @@ Route::post('auth/register_handler', 'Front@register_handler');
 // Registration routes...
 Route::post('/register', 'Front@register');
 
+//As a Guest
+Route::get('/shop','Front@shop');
+
+//After login, direct page to
 Route::get('/','Front@index');
 
-// Products/Shop
-Route::get('/products/{id}','Front@products');
+// Cart
 
-// cart
 Route::get('/addCart/{productId}', 'CartController@addCart');
 Route::get('/product_carts', 'CartController@showCart');
 Route::get('/removeCart/{productId}', 'CartController@removeCart');
-Route::get('/emptyCart', 'CartController@emptyCart');
+
+Route::delete('/emptyCart', 'CartController@emptyCart');
 
 
-// details
-Route::get('/products/details/{id}','Front@product_details');
+
+
+
+//Product Details
+Route::get('/products/details/{productId}','Front@details'); //Guest
+
+Route::get('/products/details/{id}/{productId}','Front@product_details'); //Logged in user
+
 Route::get('/products/categories','Front@product_categories');
 Route::get('/products/brands','Front@product_brands');
 

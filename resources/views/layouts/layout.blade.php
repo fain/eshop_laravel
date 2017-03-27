@@ -41,6 +41,7 @@
 
 	@yield('css_content')
 
+
     <!--[if lt IE 9]>
     {{--<script src="js/html5shiv.js"></script>--}}
     {{--<script src="js/respond.min.js"></script>--}}
@@ -50,6 +51,9 @@
     {{--<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">--}}
     {{--<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">--}}
     {{--<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">--}}
+
+    <!-- Sweetalert CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
 
 
 	<!-- Compare Product CSS -->
@@ -74,7 +78,7 @@
                         <div class="shop-menu pull-left">
                             <ul class="nav navbar-nav">
 								<li class="main-dropdown">
-										<a href="{{Auth::check() ? '#' : url('backend/login')}}"> <i class="fa fa-user-secret" aria-hidden="true"></i>{{Auth::check() ? 'Seller Account' : 'Seller'}} 
+										<a href="{{Auth::check() ? 'backend/profile' : url('backend/login')}}"> <i class="fa fa-user-secret" aria-hidden="true"></i>{{Auth::check() ? 'Seller Account' : 'Seller'}} 
 										<span class="caret"></span></a>
 										@if(Auth::check()) 
 										<ul class="dropdown-menu dropdown-user">
@@ -112,11 +116,21 @@
 
             
                          <li>
-                             <a href="{{url('/product_carts')}}"><!-- class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" -->
-                                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                <span id='p_labelcart'>Cart (0)</span> 
+                             <a href="{{url('/product_carts')}}">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <span id='p_labelcart'>
+                                
+                                @foreach($product_carts as $product_cart)
+                                @endforeach
+
+                                    @if ($product_cart->products_id)
+                                     Cart ({{ sizeof($product_carts) }})
+                                    @else
+                                        Cart (0)
+                                    @endif
+
+                                </span> 
                             </a>
-                 
                         </li>
                         @endif
 
@@ -151,7 +165,9 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="logo pull-left">
-                    <a href="{{url('')}}"><img src="{{asset('images/home/logo-eshop-angkasa.png')}}" alt="" height="40px;"/></a>
+                    <a href="{{Auth::check() ? url('/') : url('/shop')}} ">
+                        <img src="{{asset('images/home/logo-eshop-angkasa.png')}}" alt="" height="40px;"/>
+                    </a> 
                 </div>
             </div>
 			<div class="col-sm-3">
@@ -373,6 +389,14 @@ jQuery(function ($) {
 <script type="text/javascript" src="{{asset('js/script_wishlist.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery_wishlist.js')}}"></script>
 
+<!-- Sweetalert JS -->
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+
+
+
+
+
+@include('sweet::alert')
 
 @yield('js_content')
 

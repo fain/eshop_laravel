@@ -1,12 +1,16 @@
 
 @extends('layouts.layout')
-
 @section('content') 
-	
+
+<link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+@include('sweet::alert')
+
 	@include('shared.topbar')
 
  <div class="row">
  	
+   
 
 	<div class="col-sm-12">
 	<!-- VERTICAL TAB -->
@@ -84,7 +88,28 @@
 
 
 <!--Featured product-->
-<div id='msg'></div>
+@if (session()->has('success_message'))
+	<script>
+ 	swal({   
+	    title: "Successfully added!",
+	    text: "Your product has been added to your cart!",         
+	    type: "success",
+	    timer: 2000
+	  }); 
+	</script>
+@endif
+
+@if (session()->has('info_message'))
+	<script>
+		swal({   
+		    title: "Sorry..",
+		    text: "Product is already in your cart!",         
+		    type: "error",
+		    timer: 2000
+		 });
+	</script>
+@endif
+
 
 <div class="row">
 	
@@ -117,8 +142,15 @@
 						
 							                            
 	                    	<a href="/addCart/{{$product->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-                            <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+							
+							<a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
 
+							@if(Auth::check()) 
+
+                            <a href="/products/details/{{ Auth::user()->id }}/{{$product->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+                            @endif
+                          
 
 						</div>
 						<img src="images/home/features.png" class="features" alt="" />
@@ -163,7 +195,7 @@
 		<img src="images/home/slides_featured/1.png" class="offer_features" alt="" />
 	</div>
 </div>
-<!--Featured product-->
+<!--Featured product
 
 <!--Top Selling-->
 <h2 class="title text-center">Top Selling Items</h2>
@@ -196,7 +228,12 @@
 
 	      
 	                    <a href="/addCart/{{$product->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-	                    <a href='{{url("products/cart/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+                        <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+						@if(Auth::check()) 
+
+                        <a href="/products/details/{{ Auth::user()->id }}/{{$product->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+                        @endif
 
 					</div>
 					<img src="images/home/top-seller.png" class="top-seller" alt="" />
@@ -265,7 +302,11 @@
 
                             <a href="/addCart/{{$product_new->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
                             <a href='{{url("products/details/$product_new->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+							@if(Auth::check()) 
 
+	                        <a href="/products/details/{{ Auth::user()->id }}/{{$product_new->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+	                        @endif
 
 						</div>
 						<img src="images/home/new.png" class="new" alt="" />
@@ -522,7 +563,11 @@
 
 				                <a href="/addCart/{{$product_used->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
 				                <a href='{{url("products/details/$product_used->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+								@if(Auth::check()) 
 
+		                        <a href="/products/details/{{ Auth::user()->id }}/{{$product_used->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+		                        @endif
 
 							</div>
 							<img src="images/home/pre-loved.png" class="new" alt="" />
@@ -593,7 +638,11 @@
 
 				       		 	<a href="/addCart/{{$product_pre_order->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
 				                <a href='{{url("products/details/$product_pre_order->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+								@if(Auth::check()) 
 
+		                        <a href="/products/details/{{ Auth::user()->id }}/{{$product_pre_order->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
+		                        @endif
 
 							</div>
 							<img src="images/home/pre-order.png" class="pre-order" alt="" />

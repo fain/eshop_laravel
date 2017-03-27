@@ -522,3 +522,108 @@ img.product-wishlist {
   height: 50px;
 }
 
+div.cart_items{
+  width:1320px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.table.table-hover-calculation td.plus:before {
+    position: relative;
+    left: -98px;
+    top: 25px;
+    display: inline-block;
+    width: 33px;
+    height: 33px;
+    margin-top: -16px;
+    background: url("../../images/icon_symbols/symbol.png") no-repeat 0 -150px;
+    content: '';
+}
+
+.table.table-hover-calculation td.minus:before {
+    position: relative;
+    left: -78px;
+    top: 25px;
+    display: inline-block;
+    width: 33px;
+    height: 33px;
+    margin-top: -16px;
+    background: url("../../images/icon_symbols/symbol.png") no-repeat -35px -150px;
+    content: '';
+}
+.table.table-hover-calculation td.total:before {
+    position: relative;
+    left: -78px;
+    top: 25px;
+    display: inline-block;
+    width: 33px;
+    height: 33px;
+    margin-top: -16px;
+    background: url("../../images/icon_symbols/symbol.png") no-repeat -70px -150px;
+    content: '';
+}
+
+@-webkit-keyframes total {
+  from { background-color: red; }
+  to { background-color: rgba(255, 0, 0, 0.65); }
+}
+@-moz-keyframes total {
+  from { background-color: red; }
+  to { background-color: rgba(255, 0, 0, 0.65); }
+}
+@-o-keyframes total {
+  from { background-color: red; }
+  to { background-color: rgba(255, 0, 0, 0.65); }
+}
+@keyframes total {
+  from { background-color: red; }
+  to { background-color: rgba(255, 0, 0, 0.65); }
+}
+.total {
+  -webkit-animation: total 1s infinite; /* Safari 4+ */
+  -moz-animation:    total 1s infinite; /* Fx 5+ */
+  -o-animation:      total 1s infinite; /* Opera 12+ */
+  animation:         total 1s infinite; /* IE 10+ */
+}
+
+div.calculation {
+    width: 1320px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.table.table-hover-calculation th {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    width:100px;
+    background-color: #f9f9f9;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 14px;
+
+}
+.table.table-hover-calculation td {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-style: center;
+
+
+}
+
+.table.table-hover-calculation tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding-right: 140px;
+}
+
+table {
+  empty-cells: hide;
+}

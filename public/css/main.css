@@ -1557,7 +1557,27 @@ img.pre-order {
   /*width: 100%;*/
 }
 
-#success_message{ display: none;}
+#success_message{ 
+  display: none;
+}
+
+
+#info_message{ 
+  display: none;
+}
+
+#success_remove_cart_message{
+  display: none;
+}
+
+#success_empty_cart_message
+{
+  display: none;
+}
+
+#error_message{
+  display: none;
+}
 
 .register-form .form-horizontal .control-label{
   /*text-align:left;*/

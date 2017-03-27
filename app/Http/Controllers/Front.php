@@ -39,6 +39,7 @@ use Session;
 //for timestamp
 use Carbon\Carbon;
 
+use Alert;
 use DB;
 
 class Front extends Controller {
@@ -69,8 +70,8 @@ class Front extends Controller {
 
     }
 
-
-        public function index() {
+    // As a Guest
+    public function shop() {
         $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
@@ -79,7 +80,7 @@ class Front extends Controller {
                                 ->where('product_image.primary_img', '=', 'Y')
                                 ->get();
 
-// top sale change where to high profit
+    // top sale change where to high profit
        $product_top_sale = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
@@ -204,8 +205,8 @@ class Front extends Controller {
                                      ->WHERE('users.id', '=', 3)
                                      ->groupBy('wishlists.product_id')
                                      ->count();
-      
-
+                                     
+     
         return view('front.home',
             array(
                 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
@@ -232,13 +233,198 @@ class Front extends Controller {
                 'total_wishlists' => $total_wishlist_by_user
 
 
+
+            )
+        );
+
+    }
+
+
+    // After user login
+    public function index() {
+    $product = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                            ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                            ->where('product_image.primary_img', '=', 'Y')
+                            ->get();
+
+    // top sale change where to high profit
+    $product_top_sale = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                            ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                            ->where('product_image.primary_img', '=', 'Y')
+                            ->where('products_info.type', '=', 'Top Sale')
+                            ->get();
+
+    $product_new = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                            ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                            ->where('product_image.primary_img', '=', 'Y')
+                            ->where('products_info.type', '=', 'New')
+                            ->get();                                
+
+    $product_used = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                            ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
+                            ->where('product_image.primary_img', '=', 'Y')
+                            ->where('products_info.type', '=', 'Used')
+                            ->get();                                
+
+    $product_pre_order = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                            ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
+                            ->select('products.*', 'brands.*', 'categories.*', 'products_info.*', 'product_image.*', 'categories.name as main_cat',  'brands.name as p_brand')
+                            ->where('product_image.primary_img', '=', 'Y')
+                            ->where('products_info.type', '=', 'Pre-Order')
+                            ->get();   
+
+    $twenty_off = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->select('products.*', 'brands.*', 'products_info.*')
+                            ->where('products_info.discount_sel', '=', '20%')
+                            ->first();  
+
+    $thirty_off = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->select('products.*', 'brands.*', 'products_info.*')
+                            ->where('products_info.discount_sel', '=', '30%')
+                            ->first();  
+
+    $fifty_off = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->select('products.*', 'brands.*', 'products_info.*')
+                            ->where('products_info.discount_sel', '=', '50%')
+                            ->first();  
+
+
+    $seventy_off = DB::table('products')
+                            ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                            ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                            ->select('products.*', 'brands.*', 'products_info.*')
+                            ->where('products_info.discount_sel', '=', '70%')
+                            ->first();  
+
+    $treecats = Category::where('main_category_id', 0)
+                            ->where('menu_type', 'main')
+                            ->with('subcat')
+                            ->get();
+
+    $brand_main_category = DB::table('products')
+                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                 ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                 ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                 DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                 ->groupBy('main_cat')
+                                 ->orderBy('categories.id')
+                                 ->get(); 
+
+
+    $brand_by_electronic = DB::table('products')
+                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                 ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                 ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                 DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                 ->WHERE('categories.name', '<>', 'Electronics')
+                                 ->WHERE('products.category_id', '=', 15)
+                                 ->groupBy('brands.name')
+                                 ->get(); 
+
+
+    $brand_by_women = DB::table('products')
+                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                 ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                 ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                 DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                 ->WHERE('categories.name', '<>', 'Women\`s Fashion')
+                                 ->WHERE('products.category_id', '=', 17)
+                                 ->groupBy('brands.name')
+                                 ->get(); 
+
+    $brand_by_men = DB::table('products')
+                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                 ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                 ->select('products.*', 'categories.*', 'products_info.*', 'brands.*',
+                                 DB::raw('(SELECT c.name FROM categories c WHERE c.id = categories.main_category_id) as main_cat'))
+                                 ->WHERE('categories.name', '<>', 'Men\`s Fashion')
+                                 ->WHERE('products.category_id', '=', 19)
+                                 ->groupBy('brands.name')
+                                 ->get(); 
+
+
+    $total_wishlist_by_user = DB::table('users')
+                                 ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+                                 ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+                                 ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
+                                 ->WHERE('users.id', '=', 3)
+                                 ->groupBy('wishlists.product_id')
+                                 ->count();
+
+    $id = Auth::user()->id;
+
+    $product_cart = DB::table('carts')
+                     ->leftjoin('users', 'users.id', '=', 'carts.user_id')
+                     ->leftjoin('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
+                     ->leftjoin('products_info', 'cart_items.product_id', 'products_info.products_id')
+                     ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                     ->leftjoin('product_image', 'cart_items.product_id', 'product_image.products_id')
+                     ->select('users.name', 'cart_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'cart_items.id as id_ci') 
+                     ->WHERE('users.id', '=', $id)
+                     ->groupBy('cart_items.product_id')
+                     ->get();
+
+      
+
+        return view('front.home',
+            array(
+                'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
+                'description' => '',
+                'page' => 'home',
+                'brands' => $this->brands, 
+                'merchantsinfo' => $this->merchantsinfo,
+                'categories' => $this->categories,
+                'products' => $product,
+                'products_top_sale' => $product_top_sale,
+                'products_new' => $product_new,
+                'products_used' => $product_used,
+                'products_pre_order' => $product_pre_order,
+                'products_image' => $this->products_image,
+                'twentypercent_off' => $twenty_off,
+                'thirtypercent_off' => $thirty_off,
+                'fiftypercent_off' => $fifty_off,
+                'seventypercent_off' => $seventy_off,
+                'treecat' => $treecats,
+                'brands_by_electronics' => $brand_by_electronic,
+                'brands_by_womens' => $brand_by_women,
+                'brands_by_mens' => $brand_by_men, 
+                'brands_main_categories' => $brand_main_category,
+                'total_wishlists' => $total_wishlist_by_user,
+                'product_carts' => $product_cart
+
             )
         );
 
     }
 
     public function products($id) {
-          $product = DB::table('products')
+        
+        $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
                                 ->leftjoin('product_image', 'product_image.products_id', '=', 'products.id')
@@ -247,31 +433,69 @@ class Front extends Controller {
                                 ->where('products_info.products_id', '=', $id)
                                 ->first();
 
+        
 
         return view('front.products',
             array('title' => 'Products Listing',
              'description' => '',
                 'page' => 'home',
                 'product' => $product
+
                 
             ));
     }
 
-    public function product_details($id) {
+    //As guest
+    public function details($productId) {
         $product = DB::table('products')
                                 ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
                                 ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
                                 ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
                                 ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name', 'shipping_rate.*')
-                                ->where('products_info.products_id', '=', $id)
+                                ->where('products_info.products_id', '=', $productId)
                                 ->first();
 
+          
+        return view('front.product_details', 
+            array( 
+                'title' => $product->p_name,
+                'description' => '',
+                'page' => 'products',
+                'product' => $product           
+                ));
+    }
+
+    //As logged in user
+    public function product_details($id, $productId) {
+        $product = DB::table('products')
+                                ->leftjoin('products_info', 'products_info.products_id', '=', 'products.id')
+                                ->leftjoin('brands', 'brands.id', '=', 'products.brand_id')
+                                ->leftjoin('shipping_rate', 'shipping_rate.id', '=', 'products.id')
+                                ->select('products.*', 'products_info.*', 'brands.*', 'products_info.prod_name as p_name', 'shipping_rate.*')
+                                ->where('products_info.products_id', '=', $productId)
+                                ->first();
+
+        $id = Auth::user()->id;
+
+
+        $product_cart = DB::table('carts')
+                         ->leftjoin('users', 'users.id', '=', 'carts.user_id')
+                         ->leftjoin('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
+                         ->leftjoin('products_info', 'cart_items.product_id', 'products_info.products_id')
+                         ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                         ->leftjoin('product_image', 'cart_items.product_id', 'product_image.products_id')
+                         ->select('users.name', 'cart_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'cart_items.id as id_ci') 
+                         ->WHERE('users.id', '=', $id)
+                         ->groupBy('cart_items.product_id')
+                         ->get();
       
         return view('front.product_details', 
             array( 
                 'title' => $product->p_name,'description' => '',
                 'page' => 'products',
-                'product' => $product
+                'product' => $product,
+                'product_carts' => $product_cart               
+
 
                 
                 ));
@@ -395,25 +619,7 @@ class Front extends Controller {
                                 ->select('products.*', 'brands.*', 'products_info.*', 'product_image.*', 'brands.name as p_brand')
                                 ->first();
 
-      // $user_wishlist = DB::table('users')
-      //                                ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-      //                                ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-      //                                ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
-      //                                ->WHERE('users.id', '=', $id)
-      //                                ->groupBy('wishlists.product_id')
-      //                                ->get();
-
-
-
-        // $total_wishlist_by_user = DB::table('users')
-        //                              ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-        //                              ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-        //                              ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
-        //                              ->WHERE('users.id', '=', 3)
-        //                              ->groupBy('wishlists.product_id')
-        //                              ->count();
-
-         
+      
         return view('front.login',
          array('title' => 'Log in or Sign Up',
             'description' => '',
@@ -421,13 +627,6 @@ class Front extends Controller {
             'brands' => $this->brands,
             'merchantsinfo' => $this->merchantsinfo,
             'categories' => $this->categories
-             // 'user_wish_list'  => $user_wishlist
-
-            // ,
-            // 'total_wishlists' => $total_wishlist_by_user
-
-            
-
             )
          );
     }
