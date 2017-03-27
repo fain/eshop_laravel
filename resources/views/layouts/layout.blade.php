@@ -186,7 +186,6 @@
 <!--/header-bottom-->
 
 </header><!--/header-->
-<!-- {{url('products')}} -->
 
 @yield('content')
 

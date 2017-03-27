@@ -54,13 +54,12 @@
 
                 
 
-                <table id="myCart" class="table table-hover-cart">
+                <table class="table table-hover-cart">
                 <thead>
                    <tr>
                         <th style="text-align:center;">Product</th>
                         <th style="text-align:center;">Qty</th>
                         <th style="text-align:center;">Price</th>
-                        <th style="text-align:center;">Order Price</th>
                         <th style="text-align:center;">Discounted Price</th>
                         <th style="text-align:center;">Shipping Fee(RM)/Seller</th>
                         <th style="text-align:center;">Manage</th>
@@ -78,12 +77,11 @@
                     $grand_order_amount= 0;
                     $grand_shipping_amount = 0;
                     $grand_payment_amount = 0
-                    
                 ?>  
             
                 @foreach($product_carts as $product_cart)
                     <tr> 
-                        <td class="" width="30%">
+                        <td class="" width="35%">
                             <table style="float: right"><img src="../../{{$product_cart->path}}{{$product_cart->name}}" class="product-wishlist"/></table> 
                             {{$product_cart->prod_name}}
                         </td>          
@@ -93,40 +91,24 @@
                             $total_discount = $product_cart->price - $product_cart->discount_val;
                             $sum_total_price_quantity += $product_cart->quantity * $total_discount
                         ?>
-                            <select value="" class="quantity" name="quantity">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select> 
+                            <select id="quantity" data-id="{{ $product_cart->id_ci }}">
+                                <option {{ $product_cart->quantity == 1 ? 'selected' : '' }}>1</option>
+                                <option {{ $product_cart->quantity == 2 ? 'selected' : '' }}>2</option>
+                                <option {{ $product_cart->quantity == 3 ? 'selected' : '' }}>3</option>
+                                <option {{ $product_cart->quantity == 4 ? 'selected' : '' }}>4</option>
+                                <option {{ $product_cart->quantity == 5 ? 'selected' : '' }}>5</option>
+                            </select>                       
                         </td>  
                         
-                        <td class="" style="text-align:center;" width="10%">
+                        <td class="" style="text-align:center;" width="15%">
                             <?php
                                 $sum_total_discount_val += $product_cart->discount_val
                             ?>
-<!-- {{number_format($product_cart->price,2)}} -->
-                            <!-- RM <strong class="price">11.50</strong><br><h6 style="color:grey;">(- RM {{number_format($product_cart->discount_val,2)}})</h6> -->
-                                RM <input type="text" value="{{ $product_cart->price }}" class="price" readonly size="7%">
 
-
+                            RM <strong>{{number_format($product_cart->price,2)}}</strong><br><h6 style="color:grey;">(- RM {{number_format($product_cart->discount_val,2)}})</h6>
                         </td>
                         
-                   
-
-                        <!-- Order amount -->
-
-                        <td style="text-align:center;" width="10%">
-                        <?php  
-                            $amount=0
-                        ?>
-                        
-                        RM <strong id="amount" class="amount" style="color: black; font-size: 15px">{{number_format($amount,2)}}</strong>
-                        
-                        </td>     
-                        <!-- Order amount -->
-
-                        <td class="" style="text-align:center;" width="10%">
+                        <td class="" style="text-align:center;" width="15%">
                         <?php  
                             $total_discount = $product_cart->price - $product_cart->discount_val;
                             $sum_total_discount += $total_discount
@@ -134,8 +116,7 @@
                         
                         <strong style="color: red; font-size: 15px">RM {{number_format($total_discount,2)}}</strong>
                         
-                        </td>  
-
+                        </td>    
 
                         <td class="" style="text-align:center;" width="15%">
                         <?php
@@ -158,7 +139,7 @@
                         @endphp
 
                          {{$product_cart->ship_rate}} <p><u><a href=#><i class="fa fa-building"></i> {{$product_cart->store_name}}</a></u></p></td>
-                            <td class="" style="text-align:center;" width="15%">                    
+                            <td class="" style="text-align:center;">                    
 
                             <a href="/removeCart/{{$product_cart->id_ci}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete cart product {{$product_cart->prod_name}} ?')" >
                             <i class="fa fa-remove"></i> Remove</a>
@@ -198,16 +179,14 @@
                 <div class="calculation">
  
                 <table class="table table-hover-calculation">
-                                <td style="text-align:center; font-size: 19px; background-color: #f5f5f5" width="25%">  
+                                <td class="" style="text-align:center; font-size: 19px; background-color: #f5f5f5" width="25%">  
                                     Order Amount
                                     <br>
 
                                     <?php
-                                        $grand_order_amount = $sum_total_discount;
-                                        $total= 0;
-
+                                        $grand_order_amount = $sum_total_discount 
                                     ?>
-                                    RM <strong id="total" class="totalprice" style="font-size: 19px"> {{number_format($total,2)}}</strong>
+                                    RM<strong style="font-size: 19px"> {{number_format($grand_order_amount,2)}}</strong>
                                 </td>
                             
                                 <td class="plus" style="text-align:center; font-size: 19px; background-color: #f5f5f5" width="25%">  
@@ -261,6 +240,50 @@
 
     @endif
 
+<table id="myTable">
+    <thead>
+        <tr><th>Product name</th><th>Qty</th><th>Price</th>
+    <th align="center"><td id="amount" class="amount">Amount</td> </th></tr>
+    </thead>
+    <tfoot>
+        <tr><td colspan="2"></td><td align="right"><td id="total" class="totalprice">TOTAL</td> </td></tr>
+    </tfoot>
+    <tbody>
+    
+    <tr>
+    	<td>Product 1</td><td>
+			<select value="" class="quantity" name="quantity">
+			        <option value="1">1</option>
+			        <option value="2">2</option>
+			</select>
+		</td>
+		<td>
+			<input type="text" value="11.60" class="price">
+		</td>
+		
+		<td align="center"><td id="amount" class="amount">0</td> eur
+		</td>
+	</tr>
+
+    <tr>
+    	<td>Product 2</td>
+    	<td>
+    		<select value="" class="qty" name="qty">
+				<option value="1">1</option>
+				<option value="2">2</option>
+			</select>
+		</td>
+
+		<td>
+			<input type="text" value="15.26" class="price">
+		</td>
+
+
+		<td align="center"><td id="amount" class="amount">0</td> eur
+		</td>
+	</tr>
+        
+</tbody></table>
 
 @endsection
 
@@ -268,23 +291,30 @@
 
 @section('js_section')
 
- <script
+   <script
   src="{{asset('https://code.jquery.com/jquery-1.7.2.js')}}"></script>
 
 <script>
-$(document).ready(function(){
+// function format2(n, currency) {
+//     return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+// }
 
-    update_amounts();
+$(document).write(function(){
+
+    update_amounts(currency);
     $('.quantity').change(function() {
         update_amounts();
     });
 });
 
 
-function update_amounts()
+function update_amounts(currency)
 {
+	    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+
+
     var sum = 0.00;
-    $('#myCart > tbody  > tr').each(function() {
+    $('#myTable > tbody  > tr').each(function() {
         var quantity = $(this).find('option:selected').val();
         var price = $(this).find('.price').val();
         var amount = (quantity*price)
@@ -293,5 +323,20 @@ function update_amounts()
     });
     //just update the total to sum  
     $('.totalprice').text(sum);
+}
+
+
+<script>
+
+function format2(n, currency) {
+    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+}
+
+var numbers = [1, 12, 123, 1234, 12345, 123456, 1234567, 12345.67];
+
+
+document.write("<p>Format #2:</p>");
+for (var i = 0; i < numbers.length; i++) {
+    document.write(format2(numbers[i], "RM") + "<br />");
 }
 </script>

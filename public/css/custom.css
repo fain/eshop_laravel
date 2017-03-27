@@ -627,3 +627,7 @@ div.calculation {
 table {
   empty-cells: hide;
 }
+
+td buttonqty{
+  width=30px;
+}

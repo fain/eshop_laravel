@@ -67,6 +67,11 @@ Route::get('/products/wishlists/{id}','Front@product_wishlists');
 //delete
 Route::get('/products/wishlists/{id}/delete_product_wishlist/{pw_id}','Front@delete_product_wishlist');
 
+
+//Apply Loan
+Route::get('/apply_loan','Front@apply_loan');
+
+
 Route::get('/blog','Front@blog');
 Route::get('/blog/post/{id}','Front@blog_post');
 Route::get('/contact-us','Front@contact_us');

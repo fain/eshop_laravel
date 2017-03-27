@@ -564,6 +564,36 @@ class Front extends Controller {
         return redirect('/products/wishlists/{id}', Auth::user()->id);
     }
 
+
+ public function apply_loan() {
+      
+ $id = Auth::user()->id;
+
+
+        $product_cart = DB::table('carts')
+                         ->leftjoin('users', 'users.id', '=', 'carts.user_id')
+                         ->leftjoin('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
+                         ->leftjoin('products_info', 'cart_items.product_id', 'products_info.products_id')
+                         ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                         ->leftjoin('product_image', 'cart_items.product_id', 'product_image.products_id')
+                         ->select('users.name', 'cart_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'cart_items.id as id_ci') 
+                         ->WHERE('users.id', '=', $id)
+                         ->groupBy('cart_items.product_id')
+                         ->get();
+
+        return view('front.apply_loan',
+            array(
+                'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
+                'description' => '',
+                'page' => 'apply_loan',
+                                'product_carts' => $product_cart               
+
+
+            )
+        );
+
+    }
+
    
     public function product_merchants($id) {
         $merchantinfo = DB::table('merchantsinfo')
