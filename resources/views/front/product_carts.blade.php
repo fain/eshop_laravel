@@ -60,7 +60,6 @@
                         <th style="text-align:center;">Product</th>
                         <th style="text-align:center;">Qty</th>
                         <th style="text-align:center;">Price</th>
-                        <th style="text-align:center;">Order Price</th>
                         <th style="text-align:center;">Discounted Price</th>
                         <th style="text-align:center;">Shipping Fee(RM)/Seller</th>
                         <th style="text-align:center;">Manage</th>
@@ -68,16 +67,10 @@
                 </thead>
                 <tbody>
                <?php 
-                    $sum_total_discount = 0; 
-                    $sum_total_ship_rate = 0;
-                    $sum_total_discount_val = 0;
-                    $sum_total_price_quantity = 0;
-
-
-                    $grand_discount_amount = 0;
-                    $grand_order_amount= 0;
-                    $grand_shipping_amount = 0;
-                    $grand_payment_amount = 0
+                    $total_order = 0;
+                    $total_discount=0;
+                    $total_ship_rate = 0;
+                    $grand_payment_amount = 0;
                     
                 ?>  
             
@@ -89,83 +82,72 @@
                         </td>          
                         
                         <td class="" width="5%">
-                        <?php
-                            $total_discount = $product_cart->price - $product_cart->discount_val;
-                            $sum_total_price_quantity += $product_cart->quantity * $total_discount
-                        ?>
                             <select value="" class="quantity" name="quantity">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select> 
                         </td>  
                         
                         <td class="" style="text-align:center;" width="10%">
-                            <?php
-                                $sum_total_discount_val += $product_cart->discount_val
-                            ?>
-<!-- {{number_format($product_cart->price,2)}} -->
-                            <!-- RM <strong class="price">11.50</strong><br><h6 style="color:grey;">(- RM {{number_format($product_cart->discount_val,2)}})</h6> -->
-                                RM <input type="text" value="{{ $product_cart->price }}" class="price" readonly size="7%">
-
-
+                       
+                            <strong>RM {{number_format($product_cart->price,2)}}</strong>
+                            <input type="hidden" value="{{ $product_cart->price }}" class="price">
+                            
+                            <br>
+                            <h6 style="color:grey;">
+                                (- RM {{number_format($product_cart->discount_val,2)}})
+                                <input type="hidden" value="{{ $product_cart->discount_val }}" class="discount_val">
+                            </h6>
                         </td>
-                        
-                   
-
-                        <!-- Order amount -->
-
-                        <td style="text-align:center;" width="10%">
-                        <?php  
-                            $amount=0
-                        ?>
-                        
-                        RM <strong id="amount" class="amount" style="color: black; font-size: 15px">{{number_format($amount,2)}}</strong>
-                        
-                        </td>     
-                        <!-- Order amount -->
+                                        
 
                         <td class="" style="text-align:center;" width="10%">
-                        <?php  
-                            $total_discount = $product_cart->price - $product_cart->discount_val;
-                            $sum_total_discount += $total_discount
-                        ?>
-                        
-                        <strong style="color: red; font-size: 15px">RM {{number_format($total_discount,2)}}</strong>
-                        
+                            <?php  
+                                $total_discount = $product_cart->price - $product_cart->discount_val;
+                            ?>
+                            
+                            <strong style="color: red; font-size: 15px">RM {{number_format($total_discount,2)}}</strong>
+                            
                         </td>  
 
 
                         <td class="" style="text-align:center;" width="15%">
-                        <?php
-                            $sum_total_ship_rate += $product_cart->ship_rate
-                        ?>
 
+                            <input type="hidden" value="{{ $product_cart->ship_rate }}" class="ship_rate">
 
+                            @php
+                            switch ($product_cart->ship_rate) 
+                            {
+                                case "0.00":
 
-                        @php
-                        switch ($product_cart->ship_rate) 
-                        {
-                            case "0.00":
+                                    $product_cart->ship_rate = "FREE";
+                                    break;
 
-                                $product_cart->ship_rate = "FREE";
-                                break;
+                                default:
+                                    $product_cart->ship_rate;
+                            }
+                            @endphp
 
-                            default:
-                                $product_cart->ship_rate;
-                        }
-                        @endphp
-
-                         {{$product_cart->ship_rate}} <p><u><a href=#><i class="fa fa-building"></i> {{$product_cart->store_name}}</a></u></p></td>
-                            <td class="" style="text-align:center;" width="15%">                    
+                         {{$product_cart->ship_rate}} 
+                          <p><u><a href=#><i class="fa fa-building"></i> {{$product_cart->store_name}}</a></u></p>
+                     </td>
+                            
+                        <td class="" style="text-align:center;" width="15%">                    
 
                             <a href="/removeCart/{{$product_cart->id_ci}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete cart product {{$product_cart->prod_name}} ?')" >
                             <i class="fa fa-remove"></i> Remove</a>
 
                             <a href="{{url('cart')}}" class="btn btn-success btn-sm"><i class="fa fa-heart"></i> To Wishlist</a>
                       
-                            </td>
+                        </td>
                         
                     </tr>
                 @endforeach
@@ -177,14 +159,14 @@
                     <a href="{{url('')}}" class="btn btn-primary btn-sm">
                     <i class="fa fa-mail-reply"></i> Continue Shopping</a>
 
-                  <!--   <a href="/emptyCart" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to empty your list of cart?')" >
-                    <i class="fa fa-trash-o"></i> Empty Cart</a> -->
+                    <a href="/emptyCart" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to empty your list of cart?')" >
+                    <i class="fa fa-trash-o"></i> Empty Cart</a>
                 
-                    <form action="/emptyCart" method="POST" class="side-by-side">
+                <!--     <form action="/emptyCart" method="POST" class="side-by-side">
                         {!! csrf_field() !!}
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="submit" class="btn btn-danger btn-sm" value="Empty Cart">
-                    </form>
+                    </form> -->
 
                 </div>
                 
@@ -202,42 +184,30 @@
                                     Order Amount
                                     <br>
 
-                                    <?php
-                                        $grand_order_amount = $sum_total_discount;
-                                        $total= 0;
-
-                                    ?>
-                                    RM <strong id="total" class="totalprice" style="font-size: 19px"> {{number_format($total,2)}}</strong>
+                                   
+                                    RM <strong id="total_order" class="totalorder" style="font-size: 19px"> {{number_format($total_order,2)}}</strong>
                                 </td>
                             
                                 <td class="plus" style="text-align:center; font-size: 19px; background-color: #f5f5f5" width="25%">  
                                     Shipping Fee
                                     <br>
 
-                                    <?php
-                                         $grand_shipping_amount = $sum_total_ship_rate 
-                                    ?>
-                                    RM<strong style="font-size: 19px"> {{number_format($grand_shipping_amount,2)}}</strong>
+                                    RM <strong id="total_ship_rate" class="totalshiprate" style="font-size: 19px"> {{number_format($total_ship_rate,2)}}</strong>
                                 </td>
 
                                 <td class="minus" style="text-align:center; font-size: 19px; background-color: #f5f5f5" width="25%">  
                                     Discount Amount
                                     <br>
-                                    <?php 
-                                        $grand_discount_amount += $sum_total_discount_val
-                                    ?>
-                                    RM<strong style="font-size: 19px"> {{number_format($grand_discount_amount,2)}}</strong>
+                                    
+                                    RM <strong id="total_discount" class="totaldiscount" style="font-size: 19px"> {{number_format($total_discount,2)}}</strong>
                                 </td>
 
 
                                 <td class="total" style="text-align:center; font-size: 19px; background-color: rgba(19, 96, 183, 0.24);" width="25%">                               
                                     Payment Amount
-                                    <br >
-                                    <?php
-                                        $grand_payment_amount = $sum_total_price_quantity
-                                    ?>
+                                    <br>
 
-                                    <strong style="font-size: 19px; color: white">RM {{number_format($grand_payment_amount,2)}}</strong>
+                                    RM <strong id="grand_payment_amount" class="grandpaymentamount" style="font-size: 19px; color: white"> {{number_format($grand_payment_amount,2)}}</strong>
                                 </td>
 
                 </table>
@@ -268,10 +238,10 @@
 
 @section('js_section')
 
- <script
-  src="{{asset('https://code.jquery.com/jquery-1.7.2.js')}}"></script>
+<script src="{{asset('https://code.jquery.com/jquery-1.7.2.js')}}"></script>
 
 <script>
+
 $(document).ready(function(){
 
     update_amounts();
@@ -284,14 +254,46 @@ $(document).ready(function(){
 function update_amounts()
 {
     var sum = 0.00;
+    var sum_total_discount = 0.00;
+    var sum_total_ship_rate = 0.00;
+    var grand_payment_amount = 0.00;
+
+
     $('#myCart > tbody  > tr').each(function() {
+        //Order Price
         var quantity = $(this).find('option:selected').val();
+
         var price = $(this).find('.price').val();
-        var amount = (quantity*price)
-        sum+=amount;
-        $(this).find('.amount').text(''+amount);
+        var amount = (quantity*price);
+
+        sum += amount;
+        $(this).find('.amount').text(''+amount.toLocaleString('en-US', {minimumFractionDigits: 2}));
+
+        //Order Discount
+        var discount_val = $(this).find('.discount_val').val();
+        var total_discount = (quantity*discount_val);
+        sum_total_discount += total_discount;
+
+        //Ship Rate
+        var ship_rate = $(this).find('.ship_rate').val();
+        var product_ship_rate = (ship_rate*1);
+        sum_total_ship_rate += product_ship_rate;
+
+
+        //Grand Payment
+        grand_payment_amount = (sum + sum_total_ship_rate)- sum_total_discount;
+
     });
+
     //just update the total to sum  
-    $('.totalprice').text(sum);
+    $('.totalorder').text(sum.toLocaleString('en-US', {minimumFractionDigits: 2}));
+    $('.totaldiscount').text(sum_total_discount.toLocaleString('en-US', {minimumFractionDigits: 2}));
+    $('.totalshiprate').text(sum_total_ship_rate.toLocaleString('en-US', {minimumFractionDigits: 2}));
+
+    $('.grandpaymentamount').text(grand_payment_amount.toLocaleString('en-US', {minimumFractionDigits: 2}));
+
 }
+
+
+
 </script>

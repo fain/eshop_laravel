@@ -105,7 +105,8 @@
                                 $sum_total_discount_val += $product_cart->discount_val
                             ?>
 
-                            RM <strong>{{number_format($product_cart->price,2)}}</strong><br><h6 style="color:grey;">(- RM {{number_format($product_cart->discount_val,2)}})</h6>
+                            RM <strong>{{number_format($product_cart->price,2)}}</strong>
+                            <br><h6 style="color:grey;">(- RM {{number_format($product_cart->discount_val,2)}})</h6>
                         </td>
                         
                         <td class="" style="text-align:center;" width="15%">
@@ -295,24 +296,17 @@
   src="{{asset('https://code.jquery.com/jquery-1.7.2.js')}}"></script>
 
 <script>
-// function format2(n, currency) {
-//     return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-// }
 
-$(document).write(function(){
+$(document).ready(function(){
 
-    update_amounts(currency);
-    $('.quantity').change(function() {
+    update_amounts();
+    $('.qty').change(function() {
         update_amounts();
     });
 });
 
-
 function update_amounts(currency)
 {
-	    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-
-
     var sum = 0.00;
     $('#myTable > tbody  > tr').each(function() {
         var quantity = $(this).find('option:selected').val();
@@ -327,16 +321,3 @@ function update_amounts(currency)
 
 
 <script>
-
-function format2(n, currency) {
-    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-}
-
-var numbers = [1, 12, 123, 1234, 12345, 123456, 1234567, 12345.67];
-
-
-document.write("<p>Format #2:</p>");
-for (var i = 0; i < numbers.length; i++) {
-    document.write(format2(numbers[i], "RM") + "<br />");
-}
-</script>
