@@ -1,9 +1,11 @@
 @extends('layouts.layout')
 @section('content')
 <section>
-	<div class="container">
+	<div class="container"> 
 		<div class="row">
-			<div class="wishlist_items"><!-- wishlist -->
+
+			<!-- wishlist -->
+			<div class="wishlist_items">
 
                 <h2 class="title text-center">My Wishlists</h2>
             
@@ -56,30 +58,9 @@
 					</div>
 
 
-	         </div><!--wishlist-->
+	         </div>
+	         <!--wishlist-->
 
-
-<!-- wishlist 2 -->
-<!-- <div class="table-responsive" id="wishlist_item">
-						<table class="table table-striped">
-						    <thead> 
-						    	<p class="wish_list_heading">
-								<tr>
-									
-						            <th scope class="">Product</th>
-						            <th scope class="">Availability</th>
-									<th scope class="">Price</th>
-									<th scope class=""></th>
-									
-						        </tr>
-						    </thead>
-						    <tbody>
-						
-						    </tbody>
-						</table> 
-					</div>
-	         </div> -->
-<!-- wishlist 2 -->
 
 
 		</div>

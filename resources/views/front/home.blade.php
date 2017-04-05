@@ -6,7 +6,9 @@
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 @include('sweet::alert')
 
-	@include('shared.topbar')
+@include('shared.topbar')
+@include('shared.lightbox')
+
 
  <div class="row">
  	

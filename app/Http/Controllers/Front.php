@@ -198,13 +198,13 @@ class Front extends Controller {
                                      ->get(); 
 
 
-        $total_wishlist_by_user = DB::table('users')
-                                     ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-                                     ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-                                     ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
-                                     ->WHERE('users.id', '=', 3)
-                                     ->groupBy('wishlists.product_id')
-                                     ->count();
+        // $total_wishlist_by_user = DB::table('users')
+        //                              ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+        //                              ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+        //                              ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
+        //                              ->WHERE('users.id', '=', 3)
+        //                              ->groupBy('wishlists.product_id')
+        //                              ->count();
                                      
      
         return view('front.home',
@@ -229,8 +229,8 @@ class Front extends Controller {
                 'brands_by_electronics' => $brand_by_electronic,
                 'brands_by_womens' => $brand_by_women,
                 'brands_by_mens' => $brand_by_men, 
-                'brands_main_categories' => $brand_main_category,
-                'total_wishlists' => $total_wishlist_by_user
+                'brands_main_categories' => $brand_main_category
+                // 'total_wishlists' => $total_wishlist_by_user
 
 
 
@@ -368,13 +368,13 @@ class Front extends Controller {
                                  ->get(); 
 
 
-    $total_wishlist_by_user = DB::table('users')
-                                 ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-                                 ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-                                 ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
-                                 ->WHERE('users.id', '=', 3)
-                                 ->groupBy('wishlists.product_id')
-                                 ->count();
+    // $total_wishlist_by_user = DB::table('users')
+    //                              ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+    //                              ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+    //                              ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
+    //                              ->WHERE('users.id', '=', 3)
+    //                              ->groupBy('wishlists.product_id')
+    //                              ->count();
 
     $id = Auth::user()->id;
 
@@ -414,7 +414,7 @@ class Front extends Controller {
                 'brands_by_womens' => $brand_by_women,
                 'brands_by_mens' => $brand_by_men, 
                 'brands_main_categories' => $brand_main_category,
-                'total_wishlists' => $total_wishlist_by_user,
+                // 'total_wishlists' => $total_wishlist_by_user,
                 'product_carts' => $product_cart
 
             )
@@ -503,31 +503,47 @@ class Front extends Controller {
 
  
 
-    public function product_wishlists($id) {
+    // public function product_wishlists($id) {
 
-        $id = Auth::user()->id;
-        $user_wishlist = DB::table('users')
-                                     ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-                                     ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-                                     ->leftjoin('products_info', 'wishlists.product_id', 'products_info.products_id')
-                                     ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
-                                     ->leftjoin('product_image', 'wishlists.product_id', 'product_image.products_id')
-                                     ->select('users.*', 'user_info.*', 'wishlists.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlists.id as pw_id') 
-                                     ->WHERE('users.id', '=', $id)
-                                     ->groupBy('wishlists.product_id')
-                                     ->get();
+    //     $id = Auth::user()->id;
+    //     $user_wishlist = DB::table('users')
+    //                                  ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
+    //                                  ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
+    //                                  ->leftjoin('products_info', 'wishlists.product_id', 'products_info.products_id')
+    //                                  ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+    //                                  ->leftjoin('product_image', 'wishlists.product_id', 'product_image.products_id')
+    //                                  ->select('users.*', 'user_info.*', 'wishlists.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlists.id as pw_id') 
+    //                                  ->WHERE('users.id', '=', $id)
+    //                                  ->groupBy('wishlists.product_id')
+    //                                  ->get();
+
+
+    // $id = Auth::user()->id;
+
+    // $product_cart = DB::table('carts')
+    //                  ->leftjoin('users', 'users.id', '=', 'carts.user_id')
+    //                  ->leftjoin('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
+    //                  ->leftjoin('products_info', 'cart_items.product_id', 'products_info.products_id')
+    //                  ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+    //                  ->leftjoin('product_image', 'cart_items.product_id', 'product_image.products_id')
+    //                  ->select('users.name', 'cart_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'cart_items.id as id_ci') 
+    //                  ->WHERE('users.id', '=', $id)
+    //                  ->groupBy('cart_items.product_id')
+    //                  ->get();
+
 
       
-        return view('front.product_wishlists', 
-            array( 
-                'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
-                'description' => '',
-                'page' => 'product_wishlists',
-                'user_wish_list'  => $user_wishlist
+    //     return view('front.product_wishlists', 
+    //         array( 
+    //             'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
+    //             'description' => '',
+    //             'page' => 'product_wishlists',
+    //             'user_wish_list'  => $user_wishlist,
+    //             'product_carts' => $product_cart
 
                 
-                ));
-    }
+    //             ));
+    // }
 
  
     //  public function delete_product_wishlist($pw_id) {
@@ -553,16 +569,16 @@ class Front extends Controller {
 
     // }
 
-    public function delete_product_wishlist($pw_id) {
-     $wishlists = Wishlist::where('id', '=', $pw_id)->first();
+    // public function delete_product_wishlist($pw_id) {
+    //  $wishlists = Wishlist::where('id', '=', $pw_id)->first();
           
 
         
-        dd($wishlists);
+    //     dd($wishlists);
 
-        Session::flash('warning', 'Product wishlist had been successfully deleted!');
-        return redirect('/products/wishlists/{id}', Auth::user()->id);
-    }
+    //     Session::flash('warning', 'Product wishlist had been successfully deleted!');
+    //     return redirect('/products/wishlists/{id}', Auth::user()->id);
+    // }
 
 
  public function apply_loan() {

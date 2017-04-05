@@ -3,10 +3,11 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 
-
 @include('sweet::alert')
 
- <div class="row"><!-- row-->
+@include('shared.topbar')
+<!-- row-->
+<div class="row">
 
 <div class="cart_items">
 @if (session()->has('success_remove_cart_message'))
@@ -104,6 +105,11 @@
                             <br>
                             <h6 style="color:grey;">
                                 (- RM {{number_format($product_cart->discount_val,2)}})
+                                  <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" 
+                                            title="<b>Product Discount: RM</b>
+                                                {{number_format($product_cart->discount_val,2)}}" >
+
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
                                 <input type="hidden" value="{{ $product_cart->discount_val }}" class="discount_val">
                             </h6>
                         </td>
@@ -137,7 +143,21 @@
                             @endphp
 
                          {{$product_cart->ship_rate}} 
-                          <p><u><a href=#><i class="fa fa-building"></i> {{$product_cart->store_name}}</a></u></p>
+                            <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" 
+                                            title="<p><b>West Malaysia</b>
+                                                <p>RM 7.00 for up to 5 kg
+                                                <p>RM 1.00 for each additional 1 kg                             
+                                                <hr>
+                                                <b>Sabah</b>
+                                                <p>RM 12.00 for up to 1 kg 
+                                                <p>RM 11.00 for each additional 1 kg
+                                                <hr>
+                                                <p><b>Sarawak</b>
+                                                <p>RM 12.00 for up to 1 kg 
+                                                <p>RM 11.00 for each additional 1 kg" >
+                            <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+
+                        <p><u><a href=#><i class="fa fa-building"></i> {{$product_cart->store_name}}</a></u></p>
                      </td>
                             
                         <td class="" style="text-align:center;" width="15%">                    
@@ -232,16 +252,59 @@
     @endif
 
 
+<form id="example-form" action="#">
+    <div>
+        <h3>Account</h3>
+        <section>
+            <label for="userName">User name *</label>
+            <input id="userName" name="userName" type="text" class="required">
+            <label for="password">Password *</label>
+            <input id="password" name="password" type="text" class="required">
+            <label for="confirm">Confirm Password *</label>
+            <input id="confirm" name="confirm" type="text" class="required">
+            <p>(*) Mandatory</p>
+        </section>
+        <h3>Profile</h3>
+        <section>
+            <label for="name">First name *</label>
+            <input id="name" name="name" type="text" class="required">
+            <label for="surname">Last name *</label>
+            <input id="surname" name="surname" type="text" class="required">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="text" class="required email">
+            <label for="address">Address</label>
+            <input id="address" name="address" type="text">
+            <p>(*) Mandatory</p>
+        </section>
+        <h3>Hints</h3>
+        <section>
+            <ul>
+                <li>Foo</li>
+                <li>Bar</li>
+                <li>Foobar</li>
+            </ul>
+        </section>
+        <h3>Finish</h3>
+        <section>
+            <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+        </section>
+    </div>
+</form>
+
 @endsection
 
 
 
 @section('js_section')
 
+
+<!-- Quantity update -->
 <script src="{{asset('https://code.jquery.com/jquery-1.7.2.js')}}"></script>
 
-<script>
 
+
+
+<script>
 $(document).ready(function(){
 
     update_amounts();
@@ -249,7 +312,6 @@ $(document).ready(function(){
         update_amounts();
     });
 });
-
 
 function update_amounts()
 {
@@ -293,7 +355,4 @@ function update_amounts()
     $('.grandpaymentamount').text(grand_payment_amount.toLocaleString('en-US', {minimumFractionDigits: 2}));
 
 }
-
-
-
 </script>
