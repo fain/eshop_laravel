@@ -11,6 +11,7 @@ use Eshop\Http\Controllers\Controller;
 
 use Eshop\Wishlist;
 use Eshop\WishlistItem;
+use Eshop\CartItem;
 
 use Eshop\Category;
 
@@ -170,28 +171,34 @@ class WishlistController extends Controller
     public function switchToCart($productId)
     {
        
-        // $cartItem  = new Cartitem();
+        $cartItem  = new Cartitem();
 
-        // $id = Auth::user()->id; 
+        $wishlistItem = new Wishlistitem();
+        $wishlistItem->destroy($productId);
 
-        // $cart = DB::table('carts')
-        //             ->LEFTJOIN('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
-        //             ->SELECT('cart_items.product_id') 
-        //             ->WHERE('cart_id', '=', $id)
-        //             ->WHERE('cart_items.product_id', '=', $productId)
-        //             ->first();   
+        $id = Auth::user()->id; 
+        $cart = DB::table('carts')
+                    ->LEFTJOIN('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
+                    ->SELECT('cart_items.product_id') 
+                    ->WHERE('cart_id', '=', $id)
+                    ->WHERE('cart_items.product_id', '=', $productId)
+                    ->first();   
 
-        // if (is_null($cart))
-        // { 
+        $switchCart = WishlistItem::where("product_id", "=", $productId)->first();
+
+        if (is_null($cart) && isset($switchCart))
+        { 
          
-        //     $id = Auth::user()->id;
+            $id = Auth::user()->id;
 
-        //     $cartItem->product_id=$productId;
-        //     $cartItem->cart_id= $id;
+            $cartItem->product_id=$productId;
+            $cartItem->cart_id= $id;
         
-        //     $cartItem->save();
-        //     return redirect('/')->withSuccessCartMessage('');
-        // }
+            $cartItem->save();
+            $switchCart->delete();
+
+            return redirect('/product_wishlists')->withSuccessMoveCartMessage('');
+        }
   
         // else
         // {

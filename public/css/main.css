@@ -1557,6 +1557,14 @@ img.pre-order {
   /*width: 100%;*/
 }
 
+#success_move_cart_message{ 
+  display: none;
+}
+
+#success_move_wishlist_message{ 
+  display: none;
+}
+
 #success_cart_message{ 
   display: none;
 }

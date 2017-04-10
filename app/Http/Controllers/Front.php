@@ -498,99 +498,32 @@ class Front extends Controller {
                          ->WHERE('users.id', '=', $id)
                          ->groupBy('cart_items.product_id')
                          ->get();
+
+
+        $product_wishlist = DB::table('wishlists')
+                         ->leftjoin('users', 'users.id', '=', 'wishlists.user_id')
+                         ->leftjoin('wishlist_items', 'wishlists.user_id', '=', 'wishlist_items.wishlist_id')
+                         ->leftjoin('products_info', 'wishlist_items.product_id', 'products_info.products_id')
+                         ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                         ->leftjoin('product_image', 'wishlist_items.product_id', 'product_image.products_id')
+                         ->select('users.name', 'wishlist_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlist_items.id as id_wi') 
+                         ->WHERE('users.id', '=', $id)
+                         ->groupBy('wishlist_items.product_id')
+                         ->get();
+
       
         return view('front.product_details', 
             array( 
                 'title' => $product->p_name,'description' => '',
                 'page' => 'products',
                 'product' => $product,
-                'product_carts' => $product_cart               
-
-
-                
+                'product_carts' => $product_cart,
+                'product_wishlists' => $product_wishlist
+                             
                 ));
     }
 
  
-
-    // public function product_wishlists($id) {
-
-    //     $id = Auth::user()->id;
-    //     $user_wishlist = DB::table('users')
-    //                                  ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-    //                                  ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-    //                                  ->leftjoin('products_info', 'wishlists.product_id', 'products_info.products_id')
-    //                                  ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
-    //                                  ->leftjoin('product_image', 'wishlists.product_id', 'product_image.products_id')
-    //                                  ->select('users.*', 'user_info.*', 'wishlists.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlists.id as pw_id') 
-    //                                  ->WHERE('users.id', '=', $id)
-    //                                  ->groupBy('wishlists.product_id')
-    //                                  ->get();
-
-
-    // $id = Auth::user()->id;
-
-    // $product_cart = DB::table('carts')
-    //                  ->leftjoin('users', 'users.id', '=', 'carts.user_id')
-    //                  ->leftjoin('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
-    //                  ->leftjoin('products_info', 'cart_items.product_id', 'products_info.products_id')
-    //                  ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
-    //                  ->leftjoin('product_image', 'cart_items.product_id', 'product_image.products_id')
-    //                  ->select('users.name', 'cart_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'cart_items.id as id_ci') 
-    //                  ->WHERE('users.id', '=', $id)
-    //                  ->groupBy('cart_items.product_id')
-    //                  ->get();
-
-
-      
-    //     return view('front.product_wishlists', 
-    //         array( 
-    //             'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
-    //             'description' => '',
-    //             'page' => 'product_wishlists',
-    //             'user_wish_list'  => $user_wishlist,
-    //             'product_carts' => $product_cart
-
-                
-    //             ));
-    // }
-
- 
-    //  public function delete_product_wishlist($pw_id) {
-
-    //     $wishlist = Wishlist::where('product_id', '=', $pw_id)->first();
-
-    //     dd($wishlist);
-
-    //         alert('satu');
-    //         if(isset($wishlist)){
-    //         $wishlist->delete();
-    //         alert('dua');
-    //     }
-
-    //     Session::flash('warning', 'Product wishlist had been successfully deleted!');
-    //     return redirect('/products/wishlists/{id}', Auth::user()->id);
-    // }
-
-    //     public function delete_product_wishlist($pw_id) {
-
-    //             $wishlists =  Wishlist::where('id', $pw_id)->delete();
-    //             dd($wishlists);
-
-    // }
-
-    // public function delete_product_wishlist($pw_id) {
-    //  $wishlists = Wishlist::where('id', '=', $pw_id)->first();
-          
-
-        
-    //     dd($wishlists);
-
-    //     Session::flash('warning', 'Product wishlist had been successfully deleted!');
-    //     return redirect('/products/wishlists/{id}', Auth::user()->id);
-    // }
-
-
  public function apply_loan() {
       
  $id = Auth::user()->id;

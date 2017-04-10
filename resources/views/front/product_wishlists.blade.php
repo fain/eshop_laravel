@@ -1,7 +1,24 @@
 @extends('layouts.layout')
 @section('content')
 <section>
+
+<link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+@include('sweet::alert')
+
 @include('shared.topbar')
+
+@if (session()->has('success_move_cart_message'))
+    <script>
+    swal({   
+        title: "Successfully moved!",
+        text: "Product has been moved to your cart!",         
+        // type: "success",
+        imageUrl: 'images/error/add-cart.png',
+        timer: 2000
+      }); 
+    </script>
+@endif
 
 <div class="row">
 
@@ -10,6 +27,8 @@
 
         <h2 class="title text-center">My Wishlist</h2>
     
+
+
 
 
   @foreach($product_wishlists as $product_wishlist)
@@ -148,7 +167,7 @@
 					   		<i class="fa fa-remove"></i> Remove</a>
 
 
-					   		<a href="{{url('cart')}}" class="btn btn-success btn-sm"><i class="fa fa-cart-plus"></i> To Cart</a>
+					   		<a href="/switchToCart/{{$product_wishlist->products_id}}" class="btn btn-success btn-sm"><i class="fa fa-cart-plus"></i> To Cart</a>
 					   	</td>          
 			      	</tr>
                 @endforeach
