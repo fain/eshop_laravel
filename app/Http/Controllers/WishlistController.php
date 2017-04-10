@@ -12,6 +12,7 @@ use Eshop\Http\Controllers\Controller;
 use Eshop\Wishlist;
 use Eshop\WishlistItem;
 
+use Eshop\Category;
 
 use DB;
 
@@ -27,18 +28,26 @@ class WishlistController extends Controller
 
     public function addWishlist ($productId){
 
-      
+        // $cartItem  = new Cartitem();
         $wishlistItem  = new Wishlistitem();
  
         $id = Auth::user()->id; 
-        $wishlist = DB::table('carts')
+        $cart = DB::table('carts')
                     ->LEFTJOIN('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
                     ->SELECT('cart_items.product_id') 
                     ->WHERE('cart_id', '=', $id)
                     ->WHERE('cart_items.product_id', '=', $productId)
                     ->first();
+
+        $wishlist = DB::table('wishlists')
+                    ->LEFTJOIN('wishlist_items', 'wishlists.user_id', '=', 'wishlist_items.wishlist_id')
+                    ->SELECT('wishlist_items.product_id') 
+                    ->WHERE('wishlist_id', '=', $id)
+                    ->WHERE('wishlist_items.product_id', '=', $productId)
+                    ->first();
+
         
-        if (is_null($wishlist))
+        if (is_null($wishlist) && is_null($cart))
         { 
          
             $id = Auth::user()->id;
@@ -47,23 +56,26 @@ class WishlistController extends Controller
             $wishlistItem->wishlist_id= $id;
         
             $wishlistItem->save();
-            return redirect('/')->withSuccessMessage('');
+            return redirect('/')->withSuccessWishlistMessage('');
         }
-
+        elseif (isset($cart))
+        {
+            return redirect('/')->withInfoCartMessage('');
+        }
         else
         {
-           return redirect('/')->withInfoMessage('');
+            return redirect('/')->withInfoWishlistMessage('');
         }
 
     }
 
-    public function showCart(){
-        $cart = Cart::where('user_id',Auth::user()->id)->first();
+    public function showWishlist(){
+        $wishlist = Wishlist::where('user_id',Auth::user()->id)->first();
 
-        if(!$cart){
-            $cart =  new Cart();
-            $cart->user_id=Auth::user()->id;
-            $cart->save();
+        if(!$wishlist){
+            $wishlist =  new Wishlist();
+            $wishlist->user_id=Auth::user()->id;
+            $wishlist->save();
         }
 
         $id = Auth::user()->id;
@@ -79,21 +91,50 @@ class WishlistController extends Controller
                          ->groupBy('cart_items.product_id')
                          ->get();
 
+        $product_wishlist = DB::table('wishlists')
+                         ->leftjoin('users', 'users.id', '=', 'wishlists.user_id')
+                         ->leftjoin('wishlist_items', 'wishlists.user_id', '=', 'wishlist_items.wishlist_id')
+                         ->leftjoin('products_info', 'wishlist_items.product_id', 'products_info.products_id')
+                         ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                         ->leftjoin('product_image', 'wishlist_items.product_id', 'product_image.products_id')
+                         ->select('users.name', 'wishlist_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlist_items.id as id_wi') 
+                         ->WHERE('users.id', '=', $id)
+                         ->groupBy('wishlist_items.product_id')
+                         ->get();
 
-        $total_cart = DB::table('carts')
-                         ->leftjoin('users', 'users.id', '=', 'carts.user_id')
-                         ->leftjoin('cart_items', 'cart_items.cart_id', '=', 'carts.user_id')
-                         ->leftjoin('products_info', 'products_info.products_id', '=', 'cart_items.product_id')
-                         ->select('users.name', 'cart_items.product_id', 'products_info.*') 
-                         ->WHERE('cart_id', '=', $id)
-                         ->groupBy('cart_items.product_id')
+
+        // $total_cart = DB::table('carts')
+        //                  ->leftjoin('users', 'users.id', '=', 'carts.user_id')
+        //                  ->leftjoin('cart_items', 'cart_items.cart_id', '=', 'carts.user_id')
+        //                  ->leftjoin('products_info', 'products_info.products_id', '=', 'cart_items.product_id')
+        //                  ->select('users.name', 'cart_items.product_id', 'products_info.*') 
+        //                  ->WHERE('cart_id', '=', $id)
+        //                  ->groupBy('cart_items.product_id')
+        //                  ->count();
+
+
+        $total_wishlist = DB::table('wishlists')
+                         ->leftjoin('users', 'users.id', '=', 'wishlists.user_id')
+                         ->leftjoin('wishlist_items', 'wishlist_items.wishlist_id', '=', 'wishlists.user_id')
+                         ->leftjoin('products_info', 'products_info.products_id', '=', 'wishlist_items.product_id')
+                         ->select('users.name', 'wishlist_items.product_id', 'products_info.*') 
+                         ->WHERE('wishlist_id', '=', $id)
+                         ->groupBy('wishlist_items.product_id')
                          ->count();
 
+        $treecats = Category::where('main_category_id', 0)
+                        ->where('menu_type', 'main')
+                        ->with('subcat')
+                        ->get();
 
-        return view('front.product_carts',
+
+        return view('front.product_wishlists',
             [
             'product_carts' => $product_cart,
-            'total_carts' => $total_cart
+            // 'total_carts' => $total_cart,
+            'product_wishlists' => $product_wishlist,
+            'total_wishlists' => $total_wishlist,
+            'treecat' => $treecats
             ]);
     }
 
@@ -103,10 +144,10 @@ class WishlistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function removeCart($id){
+    public function removeWishlist($id){
 
-        CartItem::destroy($id);
-        return redirect('/product_carts')->withSuccessRemoveCartMessage('Product cart has been removed!');
+        WishlistItem::destroy($id);
+        return redirect('/product_wishlists')->withSuccessRemoveWishlistMessage('Product wishlist has been removed!');
     }
 
     /**
@@ -114,9 +155,49 @@ class WishlistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function emptyCart(){
+    public function emptyWishlist(){
 
-        CartItem::removeCart();
-        return redirect('/product_carts')->withSuccessEmptyCartMessage('');
+        WishlistItem::removeWishlist();
+        return redirect('/product_wishlists')->withSuccessEmptyWishlistMessage('');
     }
+
+    /**
+     * Switch item from wishlist to shopping cart.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function switchToCart($productId)
+    {
+       
+        // $cartItem  = new Cartitem();
+
+        // $id = Auth::user()->id; 
+
+        // $cart = DB::table('carts')
+        //             ->LEFTJOIN('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
+        //             ->SELECT('cart_items.product_id') 
+        //             ->WHERE('cart_id', '=', $id)
+        //             ->WHERE('cart_items.product_id', '=', $productId)
+        //             ->first();   
+
+        // if (is_null($cart))
+        // { 
+         
+        //     $id = Auth::user()->id;
+
+        //     $cartItem->product_id=$productId;
+        //     $cartItem->cart_id= $id;
+        
+        //     $cartItem->save();
+        //     return redirect('/')->withSuccessCartMessage('');
+        // }
+  
+        // else
+        // {
+        //     return redirect('/')->withInfoCartMessage('');
+        // }
+
+    }
+
 }

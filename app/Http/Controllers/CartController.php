@@ -46,8 +46,15 @@ class CartController extends Controller
                     ->WHERE('cart_id', '=', $id)
                     ->WHERE('cart_items.product_id', '=', $productId)
                     ->first();
+
+        $wishlist = DB::table('wishlists')
+                    ->LEFTJOIN('wishlist_items', 'wishlists.user_id', '=', 'wishlist_items.wishlist_id')
+                    ->SELECT('wishlist_items.product_id') 
+                    ->WHERE('wishlist_id', '=', $id)
+                    ->WHERE('wishlist_items.product_id', '=', $productId)
+                    ->first();            
         
-        if (is_null($cart))
+        if (is_null($cart) && is_null($wishlist))
         { 
          
             $id = Auth::user()->id;
@@ -56,12 +63,15 @@ class CartController extends Controller
             $cartItem->cart_id= $id;
         
             $cartItem->save();
-            return redirect('/')->withSuccessMessage('');
+            return redirect('/')->withSuccessCartMessage('');
         }
-
+        elseif (isset($wishlist))
+        {
+            return redirect('/')->withInfoWishlistMessage('');
+        }
         else
         {
-           return redirect('/')->withInfoMessage('');
+            return redirect('/')->withInfoCartMessage('');
         }
 
         // if(!$cart){
@@ -105,6 +115,17 @@ class CartController extends Controller
                          ->groupBy('cart_items.product_id')
                          ->get();
 
+        $product_wishlist = DB::table('wishlists')
+                         ->leftjoin('users', 'users.id', '=', 'wishlists.user_id')
+                         ->leftjoin('wishlist_items', 'wishlists.user_id', '=', 'wishlist_items.wishlist_id')
+                         ->leftjoin('products_info', 'wishlist_items.product_id', 'products_info.products_id')
+                         ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                         ->leftjoin('product_image', 'wishlist_items.product_id', 'product_image.products_id')
+                         ->select('users.name', 'wishlist_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlist_items.id as id_wi') 
+                         ->WHERE('users.id', '=', $id)
+                         ->groupBy('wishlist_items.product_id')
+                         ->get();
+
 
         $total_cart = DB::table('carts')
                          ->leftjoin('users', 'users.id', '=', 'carts.user_id')
@@ -133,6 +154,7 @@ class CartController extends Controller
             [
             // 'items' => $items,
             'product_carts' => $product_cart,
+            'product_wishlists' => $product_wishlist,
             // 'total'=>$total,
             'total_carts' => $total_cart,
             'treecat' => $treecats

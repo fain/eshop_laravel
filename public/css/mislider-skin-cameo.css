@@ -23,9 +23,9 @@
         .mis-slider li img {
             /*  Make max-width of image a little less than width of slide
                 to avoid some browser shinking bugs */
-            max-width: 90px;
+            max-width: 70px;
             /*  for really small screens make width 100% */
-            width: 100%;
+            width: 30%;
             /*  Make image round */
             border-radius: 135px;
             border: none;

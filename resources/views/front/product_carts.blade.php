@@ -10,6 +10,9 @@
 <div class="row">
 
 <div class="cart_items">
+
+            <h2 class="title text-center">My Cart</h2>
+
 @if (session()->has('success_remove_cart_message'))
                     <script>
                     $('button#removecart').on('click', function(){
@@ -50,6 +53,7 @@
             @endforeach
             
   @if  ($product_cart->products_id)
+
 
                 <div class="table-responsive">
 
@@ -157,12 +161,12 @@
                                                 <p>RM 11.00 for each additional 1 kg" >
                             <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
 
-                        <p><u><a href=#><i class="fa fa-building"></i> {{$product_cart->store_name}}</a></u></p>
+                        <p><u><a href=#> {{$product_cart->store_name}}</a></u></p>
                      </td>
                             
                         <td class="" style="text-align:center;" width="15%">                    
 
-                            <a href="/removeCart/{{$product_cart->id_ci}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete cart product {{$product_cart->prod_name}} ?')" >
+                            <a href="/removeCart/{{$product_cart->id_ci}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete product cart {{$product_cart->prod_name}} ?')" >
                             <i class="fa fa-remove"></i> Remove</a>
 
                             <a href="{{url('cart')}}" class="btn btn-success btn-sm"><i class="fa fa-heart"></i> To Wishlist</a>

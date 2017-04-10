@@ -7,9 +7,7 @@
     <script src="{{asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')}}">
     
-<script src="{{asset('js/jquery.easing.min.js')}}" type="text/javascript"></script>
-<script src="js/jsteps.js" type="text/javascript"></script> 
-<link href="css/jsteps.css" rel="stylesheet" type="text/css">
+
 
 
 
@@ -119,9 +117,20 @@
                     <ul class="nav navbar-nav">
                         @if(Auth::user())
                         <li>
-                            <a href='{{url("products/wishlists/{id}")}}'>
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                   <span id='p_label'>Wishlist (0) </span>
+                            <a href="{{url('/product_wishlists')}}">
+                                <i class="fa fa-gift fa-13x" aria-hidden="true"></i>
+                                    <span id='p_labelwishlist'>
+                                
+                                @foreach($product_wishlists as $product_wishlist)
+                                @endforeach
+
+                                    @if ($product_wishlist->products_id)
+                                     Wishlist ({{ sizeof($product_wishlists) }})
+                                    @else
+                                        Wishlist (0)
+                                    @endif
+
+                                </span> 
                             </a>
                         </li>
 

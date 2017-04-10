@@ -1557,12 +1557,12 @@ img.pre-order {
   /*width: 100%;*/
 }
 
-#success_message{ 
+#success_cart_message{ 
   display: none;
 }
 
 
-#info_message{ 
+#info_cart_message{ 
   display: none;
 }
 
@@ -1578,6 +1578,29 @@ img.pre-order {
 #error_message{
   display: none;
 }
+
+#success_wishlist_message{ 
+  display: none;
+}
+
+
+#info_wishlist_message{ 
+  display: none;
+}
+
+#success_remove_wishlist_message{
+  display: none;
+}
+
+#success_empty_wishlist_message
+{
+  display: none;
+}
+
+#error_wishlist_message{
+  display: none;
+}
+
 
 .register-form .form-horizontal .control-label{
   /*text-align:left;*/

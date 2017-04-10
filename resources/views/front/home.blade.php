@@ -90,27 +90,52 @@
 
 
 <!--Featured product-->
-@if (session()->has('success_message'))
+@if (session()->has('success_cart_message'))
 	<script>
  	swal({   
 	    title: "Successfully added!",
 	    text: "Your product has been added to your cart!",         
-	    type: "success",
+	    // type: "success",
+  	    imageUrl: 'images/error/add-cart.png',
 	    timer: 2000
 	  }); 
 	</script>
 @endif
 
-@if (session()->has('info_message'))
+@if (session()->has('info_cart_message'))
 	<script>
 		swal({   
 		    title: "Sorry..",
-		    text: "Product is already in your cart!",         
+		    text: "This product is already in your cart!",         
 		    type: "error",
 		    timer: 2000
 		 });
 	</script>
 @endif
+
+@if (session()->has('success_wishlist_message'))
+	<script>
+ 	swal({   
+	    title: "Successfully added!",
+	    text: "Your product has been added to your wishlist!",         
+	    // type: "success",
+	    imageUrl: 'images/error/wishlist.jpg',
+	    timer: 2000
+	  }); 
+	</script>
+@endif
+
+@if (session()->has('info_wishlist_message'))
+	<script>
+		swal({   
+		    title: "Sorry..",
+		    text: "This product is already in your wishlist!",  
+		    type: "error",     
+			timer: 2000
+		 });
+	</script>
+@endif
+
 
 
 <div class="row">
@@ -163,8 +188,8 @@
 					<div class="choose">
                         <ul class="nav nav-pills nav-justified">
                             <li>
-                            	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-									<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+                            	<a href="/addWishlist/{{$product->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+									<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
 								</a> 
 
           					</li>
@@ -245,8 +270,8 @@
 					<div class="choose">
 	                <ul class="nav nav-pills nav-justified">
 	                    <li>
-	                    	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-								<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+	                    	<a href="/addWishlist/{{$product->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+								<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
 							</a>
 
 	  					</li>
@@ -319,8 +344,8 @@
 					<div class="choose">
                         <ul class="nav nav-pills nav-justified">
                             <li>
-                            	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-									<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+                            	<a href="/addWishlist/{{$product_new->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+									<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
 								</a> 
 								
 
@@ -553,7 +578,6 @@
 						<div class="single-products" id="products_container">
 
 							<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
-							<!-- <input type="hidden" value="{{$product->id}}" id="prod_id"> -->
 								<button>
 									<div>+<div>
 								</button>
@@ -580,8 +604,8 @@
 						<div class="choose">
 				            <ul class="nav nav-pills nav-justified">
 				                <li>
-				                	<a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+				                	<a href="/addWishlist/{{$product_used->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+										<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
 									</a> 
 								</li>
 				            </ul>
@@ -650,12 +674,13 @@
 							<img src="images/home/pre-order.png" class="pre-order" alt="" />
 							
 							<div class="choose">
-								<ul>
-									<li><a class='wishlist' product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-										<i class="fa fa-heart" aria-hidden="true"></i>Add to Wishlist
+								<!-- <ul> -->
+									<!-- <li> -->
+										<a href="/addWishlist/{{$product_pre_order->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
+											<img src="images/home/add-wishlist-icon.png" class="add_wishlist_preorder" alt="" />Add to Wishlist
 										</a>
-									</li>
-								</ul>
+									<!-- </li> -->
+								<!-- </ul> -->
 							</div>
 
 							<div class="clearfix"></div>

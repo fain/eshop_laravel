@@ -38,14 +38,17 @@ Route::get('/shop','Front@shop');
 Route::get('/','Front@index');
 
 // Cart
-
 Route::get('/addCart/{productId}', 'CartController@addCart');
 Route::get('/product_carts', 'CartController@showCart');
 Route::get('/removeCart/{productId}', 'CartController@removeCart');
-
 Route::delete('/emptyCart', 'CartController@emptyCart');
 
-
+//Wishlist
+Route::get('/addWishlist/{productId}', 'WishlistController@addWishlist');
+Route::get('/product_wishlists', 'WishlistController@showWishlist');
+Route::get('/removeWishlist/{productId}', 'WishlistController@removeWishlist');
+Route::delete('/emptyWishlist', 'WishlistController@emptyWishlist');
+// Route::get('/switchToCart/{productId}', 'WishlistController@switchToCart');
 
 
 
