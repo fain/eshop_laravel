@@ -2,6 +2,9 @@
 @extends('layouts.layout')
 @section('content') 
 
+
+
+
 <link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 @include('sweet::alert')

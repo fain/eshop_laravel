@@ -8,7 +8,7 @@ class CartItem extends Model
 {
 	protected $primaryKey = 'id';
     protected $table = 'cart_items';
-    protected $fillable = array('cart_id', 'product_id', 'quantity', 'created_at', 'updated_at');
+    protected $fillable = array('cart_id', 'product_id', 'created_at', 'updated_at');
 
     public function cart()
     {

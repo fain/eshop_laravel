@@ -553,7 +553,7 @@ div.wishlist_items{
 
 .table.table-hover-calculation td.plus:before {
     position: relative;
-    left: -98px;
+    left: -64px;
     top: 25px;
     display: inline-block;
     width: 33px;
@@ -565,7 +565,7 @@ div.wishlist_items{
 
 .table.table-hover-calculation td.minus:before {
     position: relative;
-    left: -78px;
+    left: -45px;
     top: 25px;
     display: inline-block;
     width: 33px;
@@ -576,7 +576,7 @@ div.wishlist_items{
 }
 .table.table-hover-calculation td.total:before {
     position: relative;
-    left: -78px;
+    left: -45px;
     top: 25px;
     display: inline-block;
     width: 33px;
@@ -610,9 +610,8 @@ div.wishlist_items{
 }
 
 div.calculation {
-    width: 1320px;
-    padding-left: 15px;
-    padding-right: 15px;
+    width: 1028px;
+    padding-right: 10px;
 }
 
 .table.table-hover-calculation th {
@@ -655,54 +654,50 @@ td buttonqty{
   width=30px;
 }
 
-/*step wizard*/
-body{ 
-    margin-top:40px; 
+img.cart_list{
+  width:100px;
+  margin-top: -36px;
+  margin-right: 980px;
+  margin-bottom: 0px;
 }
 
-.stepwizard-step p {
-    margin-top: 10px;
+h2.cart_list{
+  width:970px;
+  height:18px;
+  margin-top: -40px;
+  margin-left: 90px;
+  margin-right: 0px;
+  margin-bottom: 0px;
 }
 
-.stepwizard-row {
-    display: table-row;
+.fa-heart-o {
+    margin-top: 15px;
+    border-radius: 50%;
 }
 
-.stepwizard {
-    display: table;
-    width: 100%;
-    position: relative;
+.fa-heart-o:hover {
+    background-color: #FFB6C1;
+    margin-right: 4px;
+    border-radius: 50%;
 }
 
-.stepwizard-step button[disabled] {
-    opacity: 1 !important;
-    filter: alpha(opacity=100) !important;
+.fa-search, .fa-cart-plus, .fa-pencil-square-o, .fa-upload, .fa-handshake-o, .fa-check-circle-o {
+  color: rgba(51, 51, 51);
 }
 
-.stepwizard-row:before {
-    top: 14px;
-    bottom: 0;
-    position: absolute;
-    content: " ";
-    width: 100%;
-    height: 1px;
-    background-color: #ccc;
-    z-order: 0;
+/*.fa-search, .fa-cart-plus, .fa-pencil-square-o, .fa-upload, .fa-handshake-o, .fa-check-circle-o {
+  color: #25BB22
+}*/
 
+
+.activestep {
+    color: #20b31d;
 }
 
-.stepwizard-step {
-    display: table-cell;
-    text-align: center;
-    position: relative;
+.activestep:focus {
+    color: #20b31d;
 }
 
-.btn-circle {
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  padding: 6px 0;
-  font-size: 12px;
-  line-height: 1.428571429;
-  border-radius: 15px;
+.select1, .select2, .select3, .select4, .select5, .last  {
+    color: #F58723;
 }

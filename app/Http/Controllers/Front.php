@@ -526,8 +526,7 @@ class Front extends Controller {
  
  public function apply_loan() {
       
- $id = Auth::user()->id;
-
+        $id = Auth::user()->id;
 
         $product_cart = DB::table('carts')
                          ->leftjoin('users', 'users.id', '=', 'carts.user_id')
@@ -540,12 +539,24 @@ class Front extends Controller {
                          ->groupBy('cart_items.product_id')
                          ->get();
 
+        $product_wishlist = DB::table('wishlists')
+                         ->leftjoin('users', 'users.id', '=', 'wishlists.user_id')
+                         ->leftjoin('wishlist_items', 'wishlists.user_id', '=', 'wishlist_items.wishlist_id')
+                         ->leftjoin('products_info', 'wishlist_items.product_id', 'products_info.products_id')
+                         ->leftjoin('merchants_info', 'products_info.merchant_shipping_id', 'merchants_info.id')
+                         ->leftjoin('product_image', 'wishlist_items.product_id', 'product_image.products_id')
+                         ->select('users.name', 'wishlist_items.*', 'products_info.*', 'merchants_info.*', 'product_image.*', 'wishlist_items.id as id_wi') 
+                         ->WHERE('users.id', '=', $id)
+                         ->groupBy('wishlist_items.product_id')
+                         ->get();
+
         return view('front.apply_loan',
             array(
                 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
                 'description' => '',
                 'page' => 'apply_loan',
-                                'product_carts' => $product_cart               
+                'product_carts' => $product_cart,
+                'product_wishlists' => $product_wishlist              
 
 
             )

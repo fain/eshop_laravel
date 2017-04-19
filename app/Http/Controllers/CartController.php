@@ -12,6 +12,7 @@ use Eshop\Http\Controllers\Controller;
 use Eshop\Cart;
 use Eshop\CartItem;
 use Eshop\Category;
+use Eshop\WishlistItem;
 
 use DB;
 
@@ -27,17 +28,8 @@ class CartController extends Controller
 
     public function addCart ($productId){
 
-      
         $cartItem  = new Cartitem();
 
-        //original
-        // $cart = Cart::where('user_id',Auth::user()->id)->first();
-
-        //2 tested
-        // $cart = Cart::where('user_id',Auth::user()->id)
-        //             ->leftjoin('cart_items', 'carts.user_id', '=', 'cart_items.cart_id')
-        //             ->where('product_id', '=', $cartItem->product_id)
-        //             ->first();
         $id = Auth::user()->id; 
 
         $cart = DB::table('carts')
@@ -73,27 +65,9 @@ class CartController extends Controller
         {
             return redirect('/')->withInfoCartMessage('');
         }
-
-        // if(!$cart){
-        //     $cart =  new Cart();
-        //     $cart->user_id=Auth::user()->id;
-        //     $cart->save();
-        // }
-        
-        //     $cartItem  = new Cartitem();
-        //     $cartItem->product_id=$productId;
-        //     $cartItem->cart_id= $cart->user_id;
-         
-
-        //     $cartItem->save();
-        //     return redirect('/')->withSuccessMessage('');
-
-
-
-
     }
 
-    public function showCart(){
+    public function showCart(Request $request){
         $cart = Cart::where('user_id',Auth::user()->id)->first();
 
         if(!$cart){
@@ -142,23 +116,12 @@ class CartController extends Controller
                                 ->with('subcat')
                                 ->get();
 
-        /**Cart total**/                 
-        // $items = $cart->cartItems;
-
-        // $total=0;
-        // foreach($product_carts as $product_cart){
-        //     $total+=$product_cart->price;
-        // }
-
         return view('front.product_carts',
             [
-            // 'items' => $items,
             'product_carts' => $product_cart,
             'product_wishlists' => $product_wishlist,
-            // 'total'=>$total,
             'total_carts' => $total_cart,
             'treecat' => $treecats
-
             ]);
     }
 
@@ -172,7 +135,6 @@ class CartController extends Controller
 
         CartItem::destroy($id);
         return redirect('/product_carts')->withSuccessRemoveCartMessage('Product cart has been removed!');
-        //->withSuccessRemoveCartMessage('Product cart has been removed!');
     }
 
     /**
@@ -190,22 +152,69 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validation on max quantity
-        $validator = Validator::make($request->all(), [
-            'quantity' => 'required|numeric|between:1,5'
-        ]);
+        // // Validation on max quantity
+        // $validator = Validator::make($request->all(), [
+        //     'quantity' => 'required|numeric|between:1,5'
+        // ]);
 
-         if ($validator->fails()) {
-            session()->flash('error_message', 'Quantity must be between 1 and 5.');
-            return response()->json(['success' => false]);
-         }
+        //  if ($validator->fails()) {
+        //     session()->flash('error_message', 'Quantity must be between 1 and 5.');
+        //     return response()->json(['success' => false]);
+        //  }
 
-        CartItem::update($id, $request->quantity);
-        session()->flash('success_message', 'Quantity was updated successfully!');
-        return response()->json(['success' => true]);
-
+        // CartItem::update($id, $request->quantity);
+        // session()->flash('success_message', 'Quantity was updated successfully!');
+        // return response()->json(['success' => true]);
+    
     }
 
+    /**
+     * Switch item from cart to wishlist.
+     *
+     * @param  int  $productId
+     * @return \Illuminate\Http\Response
+     */
+    public function switchToWishlist($productId)
+    {
+       
+        $wishlistItem  = new Wishlistitem();
+
+        $cartItem = new Cartitem();
+        $cartItem->destroy($productId);
+
+        $id = Auth::user()->id; 
+        $wishlist = DB::table('wishlists')
+                    ->LEFTJOIN('wishlist_items', 'wishlists.user_id', '=', 'wishlist_items.wishlist_id')
+                    ->SELECT('wishlist_items.product_id') 
+                    ->WHERE('wishlist_id', '=', $id)
+                    ->WHERE('wishlist_items.product_id', '=', $productId)
+                    ->first();
+
+        $switchWishlist = CartItem::where("product_id", "=", $productId)->first();
+
+        if (is_null($wishlist) && isset($switchWishlist))
+        { 
+         
+            $id = Auth::user()->id;
+
+            $wishlistItem->product_id=$productId;
+            $wishlistItem->wishlist_id= $id;
+        
+            $wishlistItem->save();
+            $switchWishlist->delete();
+
+            return redirect('/product_carts')->withSuccessMoveWishlistMessage('');
+        }
+    }
+
+    public function saveOrder(Request $request) 
+    {
+        $cartItem = new Cartitem();
+        $cartItem->where('cart_id', '=', $request->cart_id)
+                ->update(['quantity' => 'quantity - '. $request->quantity]);
+        
+        return redirect('order');
+    }
 
 
 }

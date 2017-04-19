@@ -42,6 +42,7 @@ Route::get('/addCart/{productId}', 'CartController@addCart');
 Route::get('/product_carts', 'CartController@showCart');
 Route::get('/removeCart/{productId}', 'CartController@removeCart');
 Route::delete('/emptyCart', 'CartController@emptyCart');
+Route::get('/switchToWishlist/{productId}', 'CartController@switchToWishlist');
 
 //Wishlist
 Route::get('/addWishlist/{productId}', 'WishlistController@addWishlist');

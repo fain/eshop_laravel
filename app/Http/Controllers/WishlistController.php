@@ -29,7 +29,6 @@ class WishlistController extends Controller
 
     public function addWishlist ($productId){
 
-        // $cartItem  = new Cartitem();
         $wishlistItem  = new Wishlistitem();
  
         $id = Auth::user()->id; 
@@ -104,16 +103,6 @@ class WishlistController extends Controller
                          ->get();
 
 
-        // $total_cart = DB::table('carts')
-        //                  ->leftjoin('users', 'users.id', '=', 'carts.user_id')
-        //                  ->leftjoin('cart_items', 'cart_items.cart_id', '=', 'carts.user_id')
-        //                  ->leftjoin('products_info', 'products_info.products_id', '=', 'cart_items.product_id')
-        //                  ->select('users.name', 'cart_items.product_id', 'products_info.*') 
-        //                  ->WHERE('cart_id', '=', $id)
-        //                  ->groupBy('cart_items.product_id')
-        //                  ->count();
-
-
         $total_wishlist = DB::table('wishlists')
                          ->leftjoin('users', 'users.id', '=', 'wishlists.user_id')
                          ->leftjoin('wishlist_items', 'wishlist_items.wishlist_id', '=', 'wishlists.user_id')
@@ -132,7 +121,6 @@ class WishlistController extends Controller
         return view('front.product_wishlists',
             [
             'product_carts' => $product_cart,
-            // 'total_carts' => $total_cart,
             'product_wishlists' => $product_wishlist,
             'total_wishlists' => $total_wishlist,
             'treecat' => $treecats
@@ -165,7 +153,7 @@ class WishlistController extends Controller
     /**
      * Switch item from wishlist to shopping cart.
      *
-     * @param  int  $id
+     * @param  int  $productId
      * @return \Illuminate\Http\Response
      */
     public function switchToCart($productId)
@@ -200,11 +188,6 @@ class WishlistController extends Controller
             return redirect('/product_wishlists')->withSuccessMoveCartMessage('');
         }
   
-        // else
-        // {
-        //     return redirect('/')->withInfoCartMessage('');
-        // }
-
     }
 
 }

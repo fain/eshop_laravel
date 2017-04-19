@@ -28,13 +28,17 @@
         <h2 class="title text-center">My Wishlist</h2>
     
 
+    @if (session()->has('success_remove_wishlist_message'))
+    <div class="alert alert-success alert-dismissible" style="font-weight:bold">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          {{ session()->get('success_remove_wishlist_message') }}
+    </div>
+    @endif
 
+    @foreach($product_wishlists as $product_wishlist)
+    @endforeach
 
-
-  @foreach($product_wishlists as $product_wishlist)
-  @endforeach
-
-  @if  ($product_wishlist->products_id)
+    @if  ($product_wishlist->products_id)
 
 		<div class="table-responsive">
 			<table class="table table-striped-wishlist">
@@ -201,7 +205,7 @@
  	@else
 
 
-        <strong style="font-size: 19px"><h3>You have no items in your wishlist</h3></strong>
+        <strong><h3>You have no items in your wishlist</h3></strong>
         
         <div style="float:right">
             <a href="{{url('')}}" class="btn btn-primary btn-sm">

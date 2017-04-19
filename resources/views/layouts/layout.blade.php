@@ -2,17 +2,12 @@
 <html lang="en">
 <head>
 
-	<!-- <link rel="stylesheet" href="{{asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')}}"> -->
-  	<script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')}}"></script>
-    <script src="{{asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')}}">
-    
-
-
-
 
 <script src="{{asset('js/jquery.js')}}"></script>
-<script src="{{asset('js/bootstrap.min.js')}}"></script>
+<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+<script src="{{asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')}}"></script>
+<link rel="stylesheet" href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')}}">
+
 <script src="{{asset('js/jquery.scrollUp.min.js')}}"></script>
 <script src="{{asset('js/price-range.js')}}"></script>
 <script src="{{asset('js/jquery.prettyPhoto.js')}}"></script>
@@ -25,7 +20,6 @@
     <meta name="author" content="">
 
 <!-- this line supposely for title -->
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/prettyPhoto.css')}}" rel="stylesheet">
     <link href="{{asset('css/price-range.css')}}" rel="stylesheet">
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
@@ -70,11 +64,6 @@
 	<link rel="stylesheet" href="{{asset('css/normalize.min.css')}}">
 	<link rel="stylesheet" href="{{asset('css/animate.min.css')}}">
 	<link rel="stylesheet" href="{{asset('css/comparison.css')}}">
-
-	<!-- Wishlist Product CSS -->
-	<link rel="stylesheet" id="style-css" href="{{asset('css/style.css')}}" type="text/css" media="all">
-
-
 
 
 </head><!--/head-->
@@ -267,10 +256,6 @@ setInterval(function() {
 }, 3000);
 </script>
 
-<!-- Wishlist Product JS -->
-<script type='text/javascript' src="{{asset('js/script.js')}}"></script>	 
-
-
 <!-- Mega menu -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -300,6 +285,62 @@ $(document).ready(function() {
     });
 });
 </script>
+
+
+
+<!-- Bank Partner Slider -->
+<script type="text/javascript" src="{{asset('js/jquery.catslider.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/modernizr.custom.63321.js')}}"></script>
+
+<link href="{{asset('css/multi_item_style.css')}}" rel="stylesheet">
+
+<script>
+$(function() {
+	$( '#mi-slider' ).catslider();
+});
+</script>
+
+<!-- PreOrder Items-->
+<!-- Load modernizr or html5shiv -->
+<script type="text/javascript" src="{{asset('//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js')}}"></script>
+<script>window.modernizr || document.write('<script src="../lib/modernizr/modernizr-custom.js"><\/script>')</script>
+
+<!-- Load miSlider -->
+<link href="{{asset('css/mislider.css')}}" rel="stylesheet">
+<link href="{{asset('css/mislider-skin-cameo.css')}}" rel="stylesheet">
+<script type="text/javascript" src="{{asset('js/mislider.js')}}"></script>
+<script type="text/javascript">
+jQuery(function ($) {
+    var slider = $('.mis-stage').miSlider({
+        //  The height of the stage in px. Options: false or positive integer. false = height is calculated using maximum slide heights. Default: false
+        //stageHeight: 380,
+        //  Number of slides visible at one time. Options: false or positive integer. false = Fit as many as possible.  Default: 1
+        slidesOnStage: false,
+        //  The location of the current slide on the stage. Options: 'left', 'right', 'center'. Defualt: 'left'
+        slidePosition: 'center',
+        //  The slide to start on. Options: 'beg', 'mid', 'end' or slide number starting at 1 - '1','2','3', etc. Defualt: 'beg'
+        slideStart: 'mid',
+        //  The relative percentage scaling factor of the current slide - other slides are scaled down. Options: positive number 100 or higher. 100 = No scaling. Defualt: 100
+        slideScaling: 150,
+        //  The vertical offset of the slide center as a percentage of slide height. Options:  positive or negative number. Neg value = up. Pos value = down. 0 = No offset. Default: 0
+        offsetV: -5,
+        //  Center slide contents vertically - Boolean. Default: false
+        centerV: true,
+        //  Opacity of the prev and next button navigation when not transitioning. Options: Number between 0 and 1. 0 (transparent) - 1 (opaque). Default: .5
+        navButtonsOpacity: 1
+    });
+});
+</script>
+
+
+<!-- Apply other styles -->
+<link href="{{asset('css/styles_mislider.css')}}" rel="stylesheet">
+
+<!-- google-code-prettify -->
+<script type="text/javascript" src="{{asset('https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js')}}"></script>
+<script type="text/javascript">$(function() { $('pre').addClass('prettyprint');})</script>
+<!-- PreOrder Items-->
+
 
 <!-- vertical preloved -->
 <script type="text/javascript" src="{{asset('js/jssor.slider-22.1.6.min.js')}}"></script>
@@ -339,70 +380,101 @@ jssor_1_slider_init = function() {
 
 <script type="text/javascript">jssor_1_slider_init();</script>
 
-<!-- Bank Partner Slider -->
-<script type="text/javascript" src="{{asset('js/jquery.catslider.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/modernizr.custom.63321.js')}}"></script>
-
-<link href="{{asset('css/multi_item_style.css')}}" rel="stylesheet">
-
-<script>
-$(function() {
-	$( '#mi-slider' ).catslider();
-});
-</script>
-
-<!-- PreOrder Items-->
-<!-- Load modernizr or html5shiv -->
-<script type="text/javascript" src="{{asset('//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js')}}"></script>
-<script>window.modernizr || document.write('<script src="../lib/modernizr/modernizr-custom.js"><\/script>')</script>
-<script>window.jQuery || document.write('<script src="../lib/jquery/jquery.js"><\/script>')</script>
-
-<!-- Load miSlider -->
-<link href="{{asset('css/mislider.css')}}" rel="stylesheet">
-<link href="{{asset('css/mislider-skin-cameo.css')}}" rel="stylesheet">
-<script type="text/javascript" src="{{asset('js/mislider.js')}}"></script>
-<script type="text/javascript">
-jQuery(function ($) {
-    var slider = $('.mis-stage').miSlider({
-        //  The height of the stage in px. Options: false or positive integer. false = height is calculated using maximum slide heights. Default: false
-        //stageHeight: 380,
-        //  Number of slides visible at one time. Options: false or positive integer. false = Fit as many as possible.  Default: 1
-        slidesOnStage: false,
-        //  The location of the current slide on the stage. Options: 'left', 'right', 'center'. Defualt: 'left'
-        slidePosition: 'center',
-        //  The slide to start on. Options: 'beg', 'mid', 'end' or slide number starting at 1 - '1','2','3', etc. Defualt: 'beg'
-        slideStart: 'mid',
-        //  The relative percentage scaling factor of the current slide - other slides are scaled down. Options: positive number 100 or higher. 100 = No scaling. Defualt: 100
-        slideScaling: 150,
-        //  The vertical offset of the slide center as a percentage of slide height. Options:  positive or negative number. Neg value = up. Pos value = down. 0 = No offset. Default: 0
-        offsetV: -5,
-        //  Center slide contents vertically - Boolean. Default: false
-        centerV: true,
-        //  Opacity of the prev and next button navigation when not transitioning. Options: Number between 0 and 1. 0 (transparent) - 1 (opaque). Default: .5
-        navButtonsOpacity: 1
-    });
-});
-</script>
-
-<!-- Apply other styles -->
-<link href="{{asset('css/styles_mislider.css')}}" rel="stylesheet">
-
-<!-- google-code-prettify -->
-<script type="text/javascript" src="{{asset('https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js')}}"></script>
-<script type="text/javascript">$(function() { $('pre').addClass('prettyprint');})</script>
-<!-- PreOrder Items-->
-
-
-<!-- Wishlist -->
-<script type="text/javascript" src="{{asset('js/script_wishlist.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/jquery_wishlist.js')}}"></script>
 
 <!-- Sweetalert JS -->
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 
+<!-- Cart Steps Circular-->
+<script type="text/javascript">
+//initialization options for the progress bar
+var progress = $("#progress").shieldProgressBar({
+    min: 0,
+    max: 100,
+    value: 20,
+    layout: "circular",
+    layoutOptions: {
+        circular: {
+            borderColor: "#3366ff",
+            width: 17,
+            borderWidth: 3,
+            color: "#F58723",
+            backgroundColor: "transparent"
+        }
+    },
+    text: {
+        enabled: true,
+        template: '<span style="font-size:47px; color: #F58723">{0:n1}%</span>'
+    },
+}).swidget();
+
+
+function resetActive(event, percent, step) {
+    progress.value(percent);
+
+    $(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
+    $(".progress-completed").text(percent + "%");
+
+    $("div").each(function () {
+        if ($(this).hasClass("activestep")) {
+            $(this).removeClass("activestep");
+        }
+    });
+
+    if (event.target.className == "col-md-2") {
+        $(event.target).addClass("activestep");
+    }
+    else {
+        $(event.target.parentNode).addClass("activestep");
+    }
+
+    hideSteps();
+    showCurrentStepInfo(step);
+}
+
+function hideSteps() {
+    $("div").each(function () {
+        if ($(this).hasClass("activeStepInfo")) {
+            $(this).removeClass("activeStepInfo");
+            $(this).addClass("hiddenStepInfo");
+        }
+    });
+}
+
+function showCurrentStepInfo(step) {
+    var id = "#" + step;
+    $(id).addClass("activeStepInfo");
+}
+</script>
 
 
 
+<script type="text/javascript">
+$( "div#div1" ).click(function() {
+  $(this).toggleClass( "select1" );
+});
+
+$( "div#step2" ).click(function() {
+  $(this).toggleClass( "select2" );
+});
+
+$( "div#step3" ).click(function() {
+  $(this).toggleClass( "select3" );
+});
+
+$( "div#step4" ).click(function() {
+  $(this).toggleClass( "select4" );
+});
+
+$( "div#step5" ).click(function() {
+  $(this).toggleClass( "select5" );
+});
+
+$( "div#finish" ).click(function() {
+  $(this).toggleClass( "last" );
+});
+
+
+</script>
 
 @include('sweet::alert')
 
