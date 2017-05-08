@@ -8,6 +8,9 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 
+
+<script src="{{asset('js/process_steps.js')}}"></script>
+
 @include('sweet::alert')
 
 @include('shared.topbar')
@@ -53,42 +56,44 @@
     </div>
 @endif
 
-
-<div class="page-header">
-    <h1 style="margin-left:-910px; margin-bottom:-20px;">Shopping Cart </h1>
-    <img src="images/cart/cart list.png" class="cart_list" alt="" />
-</div>
+    <h2 class="title text-center">My Cart</h2>
 
 
-
-<!-- Steps Circular Progress - START --> 
+    <!-- Steps Circular Progress - START --> 
     <div class="row" style="margin-right:5px; margin-left:5px">
         
         <div class="row step" style="margin-right:-8px; margin-left:-8px">
-            <div id="div1" class="col-md-2" onclick="javascript: resetActive(event, 0, 'step-1');">
+            
+            <div id="div1" class="col-md-2 activestep" >
                 <span class="fa fa-search"></span>
                 <p style="color: black;" >Browse Catalogue</p>
             </div>
-            <div id="step2" class="col-md-2 activestep" onclick="javascript: resetActive(event, 20, 'step-2');">
-                <span class="fa fa-cart-plus"></span>
-                <p style="color: black;">Cart Product</p>
+
+            <div id="step2" class="col-md-2 activestep"     >
+                <button type="button" class="btn btn-info btn-circle" data-toggle="tab" href="#step3"><span class="fa fa-cart-plus"></span>
+                <p style="color: black;">Cart Product</p></button>
             </div>
+
             <div id="step3" class="col-md-2" onclick="javascript: resetActive(event, 40, 'step-3');">
-                <span class="fa fa-pencil-square-o"></span>
+               <span class="fa fa-pencil-square-o"></span>
                 <p style="color: black;">Apply Loan</p>
             </div>
+
             <div id="step4" class="col-md-2" onclick="javascript: resetActive(event, 60, 'step-4');">
                 <span class="fa fa-upload"></span>
                 <p style="color: black;">Submit Loan</p>
             </div>
+
             <div id="step5" class="col-md-2" onclick="javascript: resetActive(event, 80, 'step-5');">
                 <span class="fa fa-handshake-o"></span>
                 <p style="color: black;">Approvement Status</p>
             </div>
+
             <div id="finish" class="col-md-2" onclick="javascript: resetActive(event, 100, 'step-6');">
                 <span class="fa fa-check-circle-o"></span>
                 <p style="color: black;">Submit Order</p>
             </div>
+
         </div>
 
         <div class="col-xs-12 col-md-12 col-lg-12">
@@ -113,12 +118,44 @@
 
                 <div class="row setup-content activeStepInfo" id="step-2">
                     <div>
-                        <div class="well" style="width:1050px; height:550px; margin-left:-90px; margin-top:10">
+                        <div class="well" style="width:1050px; height:1050px; margin-left:-90px; margin-top:10">
                             <h4 class="underline" style="text-align:left;">STEP 2: Shopping List</h4>
+                                <br>
+                            
+                                    <button type="button" class="btn btn-info next-step">Next <i class="fa fa-chevron-right"></i></button>
+
+                                @foreach($product_carts as $product_cart)
+                                @endforeach
                                 
-                                <small style="color:black; text-align:left;">The products added to your shopping cart will be stored for maximum 30 days.
+                                @if  ($product_cart->products_id)
+                            <i class="fa fa-info-circle"></i> <small style="color:black; text-align:left;">The products added to your shopping cart will be stored for maximum 30 days.
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                        <a href="#" data-toggle="tooltip" data-placement="left" data-html="true" 
+                                                title="<p><b>West Malaysia</b>
+                                                    <p>RM 7.00 for up to 5 kg
+                                                    <p>RM 1.00 for each additional 1 kg                             
+                                                    <hr>
+                                                    <b>Sabah</b>
+                                                    <p>RM 12.00 for up to 1 kg 
+                                                    <p>RM 11.00 for each additional 1 kg
+                                                    <hr>
+                                                    <p><b>Sarawak</b>
+                                                    <p>RM 12.00 for up to 1 kg 
+                                                    <p>RM 11.00 for each additional 1 kg" >
+                                             <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                        </a>
+                                    Shipping Fee
                                 </small>
-                               
+
                                 @if (session()->has('success_remove_cart_message'))
                                 <div class="alert alert-success alert-dismissible" style="font-weight:bold">
                                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -126,12 +163,6 @@
                                 </div>
                                 @endif
 
-
-
-                                @foreach($product_carts as $product_cart)
-                                @endforeach
-                                
-                                @if  ($product_cart->products_id)
 
                                 <div class="table-responsive">
 
@@ -142,7 +173,7 @@
                                             <th style="text-align:center;">Qty</th>
                                             <th style="text-align:center;">Price</th>
                                             <th style="text-align:center;">Discounted Price</th>
-                                            <th style="text-align:center;">Shipping Fee(RM)/Seller</th>
+                                            <th style="text-align:center;">Shipping Fee/Seller</th>
                                             <th style="text-align:center;"></th>
                                          </tr>
                                     </thead>
@@ -211,7 +242,6 @@
                                             <td class="" style="text-align:center;" width="15%">
 
                                                 <input type="hidden" value="{{ $product_cart->ship_rate }}" class="ship_rate">
-
                                                 @php
                                                 switch ($product_cart->ship_rate) 
                                                 {
@@ -221,24 +251,11 @@
                                                         break;
 
                                                     default:
-                                                        $product_cart->ship_rate;
+                                                        $product_cart->ship_rate = "RM ".$product_cart->ship_rate;
                                                 }
                                                 @endphp
 
-                                                 <a href="#" data-toggle="tooltip" data-placement="left" data-html="true" 
-                                                                title="<p><b>West Malaysia</b>
-                                                                    <p>RM 7.00 for up to 5 kg
-                                                                    <p>RM 1.00 for each additional 1 kg                             
-                                                                    <hr>
-                                                                    <b>Sabah</b>
-                                                                    <p>RM 12.00 for up to 1 kg 
-                                                                    <p>RM 11.00 for each additional 1 kg
-                                                                    <hr>
-                                                                    <p><b>Sarawak</b>
-                                                                    <p>RM 12.00 for up to 1 kg 
-                                                                    <p>RM 11.00 for each additional 1 kg" >
-                                                <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-
+                  
                                                 {{$product_cart->ship_rate}} 
                                                
                                                 <p><u><a href=#> {{$product_cart->store_name}}</a></u></p>
@@ -246,7 +263,7 @@
                                                 
                                              <td class="" style="text-align:center;" width="">                    
                                                 <a href="/switchToWishlist/{{$product_cart->products_id}}" data-toggle="tooltip" data-placement="top" data-html="true" 
-                                                title="Move to wishlist"><i class="fa fa-heart-o fa-1x"></i></a>
+                                                title="Move to wishlist"><i class="fa fa-heart-o fa-1x" style="margin-top:15px; margin-left:0px;"></i></a>
                                             </td> 
                                                 
                                         </tr>
@@ -254,15 +271,13 @@
 
                                     </tbody>        
                                 </table>
-
+                                    
                                     <div style="float:right">
                                         <a href="{{url('')}}" class="btn btn-primary btn-sm">
                                         <i class="fa fa-mail-reply"></i> Continue Shopping</a>
 
                                         <a href="/emptyCart" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to empty your list of cart?')" >
-                                        <i class="fa fa-trash-o"></i> Empty Cart</a>
-                          
-
+                                        <i class="fa fa-trash-o"></i> Empty Cart</a> 
                                     </div>
                                         
                                     <table class="table table-hover-cart"></table>
@@ -307,12 +322,14 @@
                                         <div style="float:right">
                                             <a href="{{url('/apply_loan')}}" class="btn btn-info btn-sm">
                                             <i class="fa fa-wpforms"></i> Apply Loan  <i class="fa fa-caret-right"></i></a>
+                                       
+
                                         </div>
                                     </div><!-- end calculation -->
 
                                 @else
 
-                                    <strong><h3>You have no items in your shopping cart</h3></strong>
+                                    <strong><h3>You have no products in your shopping cart</h3></strong>
                                     
                                     <div style="float:right">
                                         <a href="{{url('')}}" class="btn btn-primary btn-sm">
@@ -491,4 +508,6 @@ function update_amounts()
     $('.grandpaymentamount').text(grand_payment_amount.toLocaleString('en-US', {minimumFractionDigits: 2}));
 
 }
+
+
 </script>

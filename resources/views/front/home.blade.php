@@ -3,8 +3,6 @@
 @section('content') 
 
 
-
-
 <link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.css')}}">
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 @include('sweet::alert')
@@ -15,8 +13,6 @@
 
  <div class="row">
  	
-   
-
 	<div class="col-sm-12">
 	<!-- VERTICAL TAB -->
 	<div class="col-sm-4 bhoechie-tab-container">
@@ -170,11 +166,10 @@
 							<h4>RM{{number_format($product->price,2)}}</h4>
                             <a href="{{ url('products', [$product->products_id])}}"><p>{{$product->prod_name}}</p></a>
 						
-							                            
+							<a href="/addWishlist/{{$product->products_id}}" class="btn add-wishlist-all"><i class="fa fa-heart-o fa-2x"></i></a>
 	                    	<a href="/addCart/{{$product->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
-							
 							<a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
-
+														
 							@if(Auth::check()) 
 
                             <a href="/products/details/{{ Auth::user()->id }}/{{$product->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
@@ -187,19 +182,6 @@
 
 						<div class="clearfix"></div>
 					</div>
-			
-					<div class="choose">
-                        <ul class="nav nav-pills nav-justified">
-                            <li>
-                            	<a href="/addWishlist/{{$product->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-									<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
-								</a> 
-
-          					</li>
-                        </ul>
-                	</div>
-	
-
 				</div>
 			</div>
 			@endforeach
@@ -256,9 +238,10 @@
 						<h4>RM{{number_format($product->price,2)}}</h4>
 	                    <p>{{$product->prod_name}}</p>
 
-	      
+						<a href="/addWishlist/{{$product->products_id}}" class="btn add-wishlist-top-sale"><i class="fa fa-heart-o fa-2x"></i></a>
 	                    <a href="/addCart/{{$product->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
                         <a href='{{url("products/details/$product->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
 						@if(Auth::check()) 
 
                         <a href="/products/details/{{ Auth::user()->id }}/{{$product->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
@@ -270,16 +253,7 @@
 
 						<div class="clearfix"></div>
 				</div>
-					<div class="choose">
-	                <ul class="nav nav-pills nav-justified">
-	                    <li>
-	                    	<a href="/addWishlist/{{$product->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-								<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
-							</a>
 
-	  					</li>
-	                </ul>
-	        		</div>
 				</div>
 			</div>
 			@endforeach
@@ -319,7 +293,7 @@
 				<div class="product-image-wrapper">
 					<div class="single-products" id="products_container">
 
-						<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
+						<div class="product" data-id="{{$product_new->id}}" data-name="{{$product_new->prod_name}}" data-code="{{$product_new->prod_code}}" data-price="{{$product_new->price}}"  data-shortdetails="{{$product_new->short_details}}" data-brand="{{$product_new->p_brand}}">
 						
 							<button>
 								<div>+<div>
@@ -329,9 +303,10 @@
 							<h4>RM{{number_format($product_new->price,2)}}</h4>
                             <p>{{$product_new->prod_name}}</p>
 						
-
+							<a href="/addWishlist/{{$product_new->products_id}}" class="btn add-wishlist-new"><i class="fa fa-heart-o fa-2x"></i></a>
                             <a href="/addCart/{{$product_new->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
                             <a href='{{url("products/details/$product_new->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
 							@if(Auth::check()) 
 
 	                        <a href="/products/details/{{ Auth::user()->id }}/{{$product_new->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
@@ -343,20 +318,6 @@
 
 						<div class="clearfix"></div>
 					</div>
-			
-					<div class="choose">
-                        <ul class="nav nav-pills nav-justified">
-                            <li>
-                            	<a href="/addWishlist/{{$product_new->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-									<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
-								</a> 
-								
-
-          					</li>
-                        </ul>
-                	</div>
-	
-
 				</div>
 			</div>
 			@endforeach
@@ -580,7 +541,7 @@
 					<div class="product-image-wrapper">
 						<div class="single-products" id="products_container">
 
-							<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
+							<div class="product" data-id="{{$product_used->id}}" data-name="{{$product_used->prod_name}}" data-code="{{$product_used->prod_code}}" data-price="{{$product_used->price}}"  data-shortdetails="{{$product_used->short_details}}" data-brand="{{$product_used->p_brand}}">
 								<button>
 									<div>+<div>
 								</button>
@@ -589,9 +550,10 @@
 								<h4>RM{{number_format($product_used->price,2)}}</h4>
 				                <p>{{$product_used->prod_name}}</p>
 							
-
+								<a href="/addWishlist/{{$product_used->products_id}}" class="btn add-wishlist-used"><i class="fa fa-heart-o fa-2x"></i></a>
 				                <a href="/addCart/{{$product_used->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
 				                <a href='{{url("products/details/$product_used->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+
 								@if(Auth::check()) 
 
 		                        <a href="/products/details/{{ Auth::user()->id }}/{{$product_used->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
@@ -603,16 +565,6 @@
 
 							<div class="clearfix"></div>
 						</div>
-
-						<div class="choose">
-				            <ul class="nav nav-pills nav-justified">
-				                <li>
-				                	<a href="/addWishlist/{{$product_used->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-										<img src="images/home/add-wishlist-icon.png" class="add_wishlist" alt="" />Add to Wishlist
-									</a> 
-								</li>
-				            </ul>
-				    	</div>
 					</div>
 				</div>
 				@endforeach
@@ -653,12 +605,14 @@
 					<div class="product-image-wrapper">
 						<div class="single-products" id="products_container" style:"height: 290px">
 
-							<div class="product" data-id="{{$product->id}}" data-name="{{$product->prod_name}}" data-code="{{$product->prod_code}}" data-price="{{$product->price}}"  data-shortdetails="{{$product->short_details}}" data-brand="{{$product->p_brand}}">
+							<div class="product" data-id="{{$product_pre_order->id}}" data-name="{{$product_pre_order->prod_name}}" data-code="{{$product_pre_order->prod_code}}" data-price="{{$product_pre_order->price}}"  data-shortdetails="{{$product_pre_order->short_details}}" data-brand="{{$product_pre_order->p_brand}}">
 							
+							<i class="fa fa-heart-o"></i>
 								<button>
 									<a>+</a>
 								</button>
-
+								<!-- c-->
+                    		
                     		<!-- Slide content - whatever you want -->
 							<img src="../{{$product_pre_order->path}}{{$product_pre_order->name}}" class="product-image"/>
 							<h4>RM{{number_format($product_pre_order->price,2)}}</h4>
@@ -667,6 +621,10 @@
 
 				       		 	<a href="/addCart/{{$product_pre_order->products_id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cart</a>
 				                <a href='{{url("products/details/$product_pre_order->products_id")}}' class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
+								<a href="/addWishlist/{{$product_pre_order->products_id}}" class="">
+									 <i class="fa fa-heart-o fa-2x" style="margin-top:25px; margin-left:190px;"></i>
+								</a>
+
 								@if(Auth::check()) 
 
 		                        <a href="/products/details/{{ Auth::user()->id }}/{{$product_pre_order->products_id}}" class="btn btn-default view-details"><i class="fa fa-info"></i> Details</a>
@@ -676,16 +634,6 @@
 							</div>
 							<img src="images/home/pre-order.png" class="pre-order" alt="" />
 							
-							<div class="choose">
-								<!-- <ul> -->
-									<!-- <li> -->
-										<a href="/addWishlist/{{$product_pre_order->products_id}}" product_name='{{$product->prod_name}}' product_id='{{$product->products_id}}' product_price='{{$product->price}}' product_stock='{{$product->stock_quantity}}'>
-											<img src="images/home/add-wishlist-icon.png" class="add_wishlist_preorder" alt="" />Add to Wishlist
-										</a>
-									<!-- </li> -->
-								<!-- </ul> -->
-							</div>
-
 							<div class="clearfix"></div>
 						</div>
 

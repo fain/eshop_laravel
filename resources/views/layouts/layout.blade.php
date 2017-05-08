@@ -182,9 +182,11 @@
                 </div>
             </div>
 			<div class="col-sm-3">
-					<div class="search_box_home pull-right">
+
+				<div class="search_box_home pull-right">
                     <input type="text" placeholder="Search for products, brands, shops"/>
                 </div>
+
 		    </div>
         </div>
     </div>
@@ -472,9 +474,50 @@ $( "div#step5" ).click(function() {
 $( "div#finish" ).click(function() {
   $(this).toggleClass( "last" );
 });
+</script>
 
+
+<script type="text/javascript">// <![CDATA[
+      $("#searchterm").keyup(function(e){
+        var q = $("#searchterm").val();
+        $.getJSON("http://en.wikipedia.org/w/api.php?callback=?",
+        {
+          srsearch: q,
+          action: "query",
+          list: "search",
+          format: "json"
+        },
+        function(data) {
+          $("#results").empty();
+          $("#results").append("
+
+Results for <b>" + q + "</b>
+
+");
+          $.each(data.query.search, function(i,item){
+            $("#results").append("
+<div><a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(item.title) + "'>" + item.title + "</a>" + item.snippet + "</div>
+");
+          });
+        });
+      });
+</script>
+
+
+<script type="text/javascript">
+$('#div11').bind("click");
+$("#div1").addClass("disabledbutton");
+
+$("#step3").addClass("disabledbutton");
+
+$("#step4").addClass("disabledbutton");
+
+$("#step5").addClass("disabledbutton");
+
+$("#finish").addClass("disabledbutton");
 
 </script>
+
 
 @include('sweet::alert')
 

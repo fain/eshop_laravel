@@ -197,16 +197,6 @@ class Front extends Controller {
                                      ->groupBy('brands.name')
                                      ->get(); 
 
-
-        // $total_wishlist_by_user = DB::table('users')
-        //                              ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-        //                              ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-        //                              ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
-        //                              ->WHERE('users.id', '=', 3)
-        //                              ->groupBy('wishlists.product_id')
-        //                              ->count();
-                                     
-     
         return view('front.home',
             array(
                 'title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More',
@@ -367,15 +357,6 @@ class Front extends Controller {
                                  ->groupBy('brands.name')
                                  ->get(); 
 
-
-    // $total_wishlist_by_user = DB::table('users')
-    //                              ->leftjoin('user_info', 'user_info.user_id', '=', 'users.id')
-    //                              ->leftjoin('wishlists', 'wishlists.user_id', '=', 'user_info.user_id')
-    //                              ->select('users.*', 'user_info.gender', 'wishlists.product_id') 
-    //                              ->WHERE('users.id', '=', 3)
-    //                              ->groupBy('wishlists.product_id')
-    //                              ->count();
-
     $id = Auth::user()->id;
 
     $product_cart = DB::table('carts')
@@ -423,7 +404,6 @@ class Front extends Controller {
                 'brands_by_womens' => $brand_by_women,
                 'brands_by_mens' => $brand_by_men, 
                 'brands_main_categories' => $brand_main_category,
-                // 'total_wishlists' => $total_wishlist_by_user,
                 'product_carts' => $product_cart,
                 'product_wishlists' => $product_wishlist
 
@@ -717,7 +697,14 @@ class Front extends Controller {
         return view('front.checkout', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'home'));
     }
 
-    public function search($query) {
+    public function search() {
+
+        $search = \Request::get('search'); //<-- we use global request to get the param of URI
+     
+        $products = ProductInfo::where('prod_name','like','%'.$search.'%')
+            ->orderBy('prod_name')
+            ->paginate(20);
+
         return view('front.products', array('title' => 'Shop Online at Angkasa E-Shop | Buy Electronics, Fashion & More','description' => '','page' => 'products'));
     }
 }

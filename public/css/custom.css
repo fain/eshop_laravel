@@ -403,10 +403,14 @@ font-size: 1em;
 .fa-12x{font-size: 0.9em;}
 .fa-13x{font-size: 1.2em;}.
 .fa-15x{font-size: 1.6em;}.
-.fa-2x{font-size: 2em;}.
 .fa-3x{font-size: 3em;}
 .fa-4x{font-size: 4em;}
 .fa-5x{font-size: 5em;}
+
+.fa-2x {
+  font-size: 2em;
+}
+
 
 .header-middle
 {
@@ -671,24 +675,87 @@ h2.cart_list{
 }
 
 .fa-heart-o {
-    margin-top: 15px;
-    border-radius: 50%;
+  margin-top: 40px;
+  margin-left: 45px;
 }
 
 .fa-heart-o:hover {
     background-color: #FFB6C1;
-    margin-right: 4px;
+    margin-top: 40px;
+    margin-left: 45px;
     border-radius: 50%;
 }
+
+
+.fa-cart-arrow-down {
+  margin-top: 40px;
+  margin-left: 45px;
+}
+
+.fa-cart-arrow-down:hover {
+    color: green;
+    margin-top: 40px;
+    margin-left: 45px;
+    border-radius: 50%;
+}
+
+.fa-remove {
+    color: red;
+}
+
+div.product a.add-wishlist-all:hover {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+div.product a.add-wishlist-all {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+div.product a.add-wishlist-top-sale:hover {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+div.product a.add-wishlist-top-sale {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+div.product a.add-wishlist-new:hover {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+div.product a.add-wishlist-new {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+div.product a.add-wishlist-used:hover {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+div.product a.add-wishlist-used {
+    right: 35%;
+    bottom: 9%;
+    top: 43%;
+}
+
+
 
 .fa-search, .fa-cart-plus, .fa-pencil-square-o, .fa-upload, .fa-handshake-o, .fa-check-circle-o {
   color: rgba(51, 51, 51);
 }
-
-/*.fa-search, .fa-cart-plus, .fa-pencil-square-o, .fa-upload, .fa-handshake-o, .fa-check-circle-o {
-  color: #25BB22
-}*/
-
 
 .activestep {
     color: #20b31d;
@@ -700,4 +767,32 @@ h2.cart_list{
 
 .select1, .select2, .select3, .select4, .select5, .last  {
     color: #F58723;
+}
+
+s, strike {
+    text-decoration: none;    /*we're replacing the default line-through*/
+    position: relative;
+    display: inline-block; /* don't wrap to multiple lines */
+}
+
+s:after, strike:after {
+    content:"";    /* required property */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+        color:red;
+
+    border-top: 2px solid red;
+    height: 45%;    /* adjust as necessary, depending on line thickness */
+    /* or use calc() if you don't need to support IE8: */
+    height: calc(50% - 1px); /* 1px = half the line thickness */
+    width: 100%;
+    transform: rotateZ(-4deg);
+}
+
+
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
 }
